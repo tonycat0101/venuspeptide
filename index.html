@@ -57,36 +57,50 @@
     modal.style.display = 'none';
   }
 </script>
-  <!-- ── NAV ───────────────────────────────────────────────── -->
-  <nav class="nav">
+  <!-- ── NAV (Consistente con todo el sitio con menú Soporte) ─────────────────────────────── -->
+<nav class="nav">
     <div class="nav__inner">
-      <a href="index.html" class="nav__logo">
-        <div class="nav__logo-icon">V</div>
-        Venus Peptide
-      </a>
-      <div class="nav__links">
-        <a href="index.html" class="active">Inicio</a>
-        <a href="categorias.html">Categorías</a>
-        <a href="vertodos.html">Ver todos</a>
-        <a href="contacto.html">Contacto</a>
-        <a href="nosotros.html">Nosotros</a>
-      </div>
-      <div class="nav__burger" id="burgerBtn">
-        <span></span><span></span><span></span>
-      </div>
+        <a href="index.html" class="nav__logo">
+            <div class="nav__logo-icon">V</div>
+            Venus Peptide
+        </a>
+        <div class="nav__links">
+            <a href="index.html">Inicio</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="vertodos.html">Ver todos</a>
+            <a href="nosotros.html">Nosotros</a>
+            
+            <!-- Menú Desplegable de Soporte (Hereda tus estilos interactivos) -->
+            <div style="position: relative; display: inline-block;" 
+                 onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
+                 onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+                
+                <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
+                    Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
+                </a>
+                
+                <!-- Contenedor del Submenú Absoluto -->
+                <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
+                    <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
+                    <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
+                </div>
+            </div>
+        </div>
+        <div class="nav__burger" id="burgerBtn">
+            <span></span><span></span><span></span>
+        </div>
     </div>
-  </nav>
+</nav>
 
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobileMenu">
+<!-- Menú móvil (Despliega las opciones de soporte de forma limpia y directa) -->
+<div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
-     <a href="categorias.html">Categorías</a>
+    <a href="categorias.html">Categorías</a>
     <a href="vertodos.html">Ver todos</a>
-    <a href="contacto.html">Contacto</a>
     <a href="nosotros.html">Nosotros</a>
-
-  </div>
-
+    <a href="contacto.html">Contacto</a>
+    <a href="calculadora.html">Calculadora de Reconstitución</a>
+</div>
   <!-- ── HERO ──────────────────────────────────────────────── -->
   <section class="hero">
     <div class="container">
