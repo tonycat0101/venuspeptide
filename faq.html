@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preguntas Frecuentes (FAQ) — Venus Peptide</title>
+  <meta name="description" content="Centro de soporte oficial y preguntas frecuentes de Venus Peptide.">
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* ── ESTILOS EXCLUSIVOS DE LA SECCIÓN FAQ (Estilo Venus) ── */
+    .faq-section { padding: 140px 0 100px 0; background: #fbfbfb; min-height: 80vh; }
+    .faq-container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    
+    .faq-header { text-align: center; margin-bottom: 50px; }
+    .faq-header h1 { font-size: 32px; font-weight: 700; color: #1e293b; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 12px; }
+    .faq-header p { color: #64748b; font-size: 16px; max-width: 550px; margin: 0 auto; }
+
+    .faq-category-title { font-size: 14px; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: 0.05em; margin: 45px 0 20px 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; }
+
+    /* Acordeones Estilo Premium */
+    .faq-item { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 14px; overflow: hidden; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+    .faq-item:hover { border-color: #cbd5e1; }
+    
+    .faq-trigger { width: 100%; padding: 20px 24px; background: none; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 16px; font-weight: 600; color: #0f172a; gap: 16px; }
+    .faq-trigger:focus { outline: none; }
+    
+    .faq-icon { font-size: 18px; color: #64748b; transition: transform 0.2s ease; display: inline-block; font-weight: 400; }
+    
+    .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; background: #ffffff; }
+    .faq-content-inner { padding: 0 24px 20px 24px; color: #475569; font-size: 14.5px; line-height: 1.6; }
+    .faq-content-inner p { margin-bottom: 12px; }
+    .faq-content-inner p:last-child { margin-bottom: 0; }
+    
+    /* Estados Activos */
+    .faq-item.active { border-color: #2563eb; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.03); }
+    .faq-item.active .faq-icon { transform: rotate(45deg); color: #2563eb; }
+
+    @media (max-width: 640px) {
+      .faq-section { padding: 100px 0 60px 0; }
+      .faq-header h1 { font-size: 26px; }
+      .faq-trigger { padding: 16px 20px; font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV (Consistente globalmente) ───────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">V</div>
+        Venus Peptide
+      </a>
+      <div class="nav__links">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="vertodos.html">Ver todos</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="nav__burger" id="burgerBtn">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Inicio</a>
+    <a href="categorias.html">Categorías</a>
+    <a href="vertodos.html">Ver todos</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+  </div>
+
+  <!-- ── SECCIÓN DE PREGUNTAS FRECUENTES ───────────────────────────────── -->
+  <section class="faq-section">
+    <div class="faq-container">
+      
+      <div class="faq-header">
+        <h1>Preguntas Frecuentes</h1>
+        <p>Encuentre respuestas detalladas sobre nuestros estándares de pureza, directrices de almacenamiento técnico y logística.</p>
+      </div>
+
+      <!-- CATEGORÍA 1: SOBRE LOS PRODUCTOS -->
+      <div class="faq-category-title">Información de Productos y Calidad</div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Los productos son para uso humano? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            <p><strong>No.</strong> Todos los productos suministrados por Venus Peptide están destinados única y estrictamente a la investigación de laboratorio, estudios analíticos y de desarrollo químico (I+D).</p>
+            <p>No están diseñados, formulados ni destinados para el consumo humano, diagnóstico clínico, uso veterinario, ni para ser administrados como medicamentos, alimentos o cosméticos. Al adquirir estos compuestos, el investigador confirma estar calificado para manejarlos bajo estrictas condiciones de laboratorio.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Cuál es la pureza de sus péptidos? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            Todos nuestros lotes de péptidos son sometidos a rigurosas verificaciones analíticas independientes. Garantizamos una pureza mínima del 98%, situándose la gran mayoría de nuestro catálogo por encima del 99% de pureza molecular, verificada mediante pruebas de cromatografía de líquidos de alta eficacia (HPLC) y espectrometría de masas (MS).
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Qué es un péptido liofilizado? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            La liofilización es un proceso de deshidratación por congelación al vacío utilizado para estabilizar compuestos sensibles. Al eliminar el agua, el péptido se convierte en un polvo altamente estable, lo que permite su almacenamiento seguro y transporte a temperatura ambiente sin que sufra degradación molecular inmediata.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Cómo se deben almacenar los péptidos? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            <p><strong>En polvo (Liofilizados):</strong> Deben mantenerse en un lugar fresco, seco y oscuro. Para almacenamiento a corto y mediano plazo (menos de un año), se recomienda refrigeración entre 2°C y 8°C. Para almacenamiento a largo plazo, se deben congelar a -20°C.</p>
+            <p><strong>En solución (Reconstituidos):</strong> Una vez que el polvo se disuelve en agua estéril o bacteriostática para su análisis, el vial debe mantenerse obligatoriamente en refrigeración constante (2°C a 8°C). No se deben congelar los péptidos una vez reconstituidos, ya que los cristales de hielo pueden romper las cadenas de aminoácidos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Qué líquido se utiliza para reconstituir los compuestos? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            Para fines de investigación y pruebas analíticas, los péptidos liofilizados suelen ser reconstituidos utilizando agua bacteriostática (la cual contiene un porcentaje de alcohol bencílico que previene el crecimiento bacteriano) o agua estéril para inyección, dependiendo estrictamente del protocolo de laboratorio que esté ejecutando. *Nota: Venus Peptide provee únicamente los viales de reactivos; no distribuimos líquidos de disolución ni suministros médicos.*
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORÍA 2: PAGOS Y PROCESAMIENTO -->
+      <div class="faq-category-title">Órdenes y Métodos de Pago</div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Cómo puedo pagar mi pedido? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            Aceptamos múltiples opciones seguras y encriptadas que se muestran dinámicamente en nuestra pantalla de Checkout al finalizar el carrito. Trabajamos con pasarelas de procesamiento cifrado que cumplen con los estándares internacionales de seguridad SSL para proteger toda su información transaccional.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Recibiré una confirmación de mi orden? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            Sí. Inmediatamente después de colocar su orden, nuestro sistema le enviará un correo electrónico automatizado con el resumen de su compra. Si no lo visualiza en su bandeja de entrada principal en los siguientes 5 minutos, por favor revise sus carpetas de correo no deseado (Spam) o Promociones.
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORÍA 3: ENVÍOS Y LOGÍSTICA -->
+      <div class="faq-category-title">Envíos y Políticas de Entrega</div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Cuánto tarda en procesarse y enviarse mi paquete? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            Los pedidos se procesan y empaquetan en un plazo de 24 a 48 horas hábiles tras recibir la validación exitosa del pago. Los despachos logísticos se realizan de lunes a viernes. Tan pronto como la empresa de paquetería recolecte el envío, recibirá un correo con el número de seguimiento (tracking) correspondiente.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Los envíos son discretos? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            Completamente. Entendemos la importancia de salvaguardar el material científico. Todos los pedidos son despachados en cajas o sobres de mensajería estándar, totalmente neutros y sellados, sin leyendas llamativas ni menciones externas explícitas sobre el contenido del paquete.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Qué pasa si mi pedido se retrasa o hay un problema con la entrega? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            Una vez que el paquete es entregado a la empresa de mensajería externa, los tiempos de tránsito definitivos están sujetos a la operación de dicha paquetería. Si nota un retraso inusual o anomalía en su código de rastreo, puede escribir directamente a nuestro canal de atención en la página de Contacto para que nuestro equipo le asista en la gestión del reporte técnico con la logística.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger">¿Cuál es su política de reembolsos y devoluciones? <span class="faq-icon">+</span></button>
+        <div class="faq-content">
+          <div class="faq-content-inner">
+            Debido a la naturaleza química y científica de los compuestos, y bajo estrictas normativas para garantizar la integridad y no contaminación de los reactivos de laboratorio, no podemos aceptar devoluciones de producto ni cambios una vez que los paquetes han salido de nuestro centro de distribución. Si existiese alguna incidencia de origen atribuible al embalaje de la orden, deberá reportarse con soporte mediante evidencias fotográficas claras dentro de las primeras 48 horas de haber recibido el paquete.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER OPTIMIZADO (Consistente Horizontal) ── -->
+  <footer class="footer">
+    <div class="container">
+      
+      <div class="footer__top" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+        <div class="footer__brand">
+          <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
+          <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Navegación</div>
+          <a href="index.html">Inicio</a>
+          <a href="categorias.html">Categorías</a>
+          <a href="vertodos.html">Ver todos</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="contacto.html">Contacto</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Categorías</div>
+          <a href="vertodos.html?cat=metabolicos">Investigación Metabólica</a>
+          <a href="vertodos.html?cat=gh">Moduladores GH</a>
+          <a href="vertodos.html?cat=cognitivas">Neuro-Cognición</a>
+          <a href="vertodos.html?cat=desempeno">Desempeño Celular</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom-horizontal" style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: var(--text-muted, #94a3b8);">
+          <div>Copyright ©2026 Venus Peptide, All Rights Reserved.</div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <style>
+              .inline-legal-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+              .inline-legal-link:hover { color: #fff; }
+              .inline-separator { color: rgba(255, 255, 255, 0.2); font-size: 12px; user-select: none; }
+            </style>
+            <a href="faq.html" class="inline-legal-link">FAQ</a><span class="inline-separator">|</span>
+            <a href="terminos.html" class="inline-legal-link">Terms & Conditions</a><span class="inline-separator">|</span>
+            <a href="envios.html" class="inline-legal-link">Shipping & Returns</a><span class="inline-separator">|</span>
+            <a href="privacidad.html" class="inline-legal-link">Privacy Policy</a><span class="inline-separator">|</span>
+            <a href="contacto.html" class="inline-legal-link">Contact Us</a>
+          </div>
+        </div>
+        <p style="text-align: center; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-weight: 600; letter-spacing: 0.01em;">
+          Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. Debe tener la edad legal requerida para adquirir estos compuestos. Los productos NO son para consumo humano ni veterinario de ningún tipo. Las declaraciones hechas dentro de este sitio web no han sido evaluadas por ninguna administración de alimentos o medicamentos. Estos reactivos no están destinados a diagnosticar, tratar, curar o prevenir ninguna enfermedad.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+
+  <!-- ── LOGICA SCRIPT DEL ACORDEÓN INTERACTIVO ── -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const faqItems = document.querySelectorAll('.faq-item');
+
+      faqItems.forEach(item => {
+        const trigger = item.querySelector('.faq-trigger');
+        const content = item.querySelector('.faq-content');
+
+        trigger.addEventListener('click', () => {
+          const isOpen = item.classList.contains('active');
+
+          // Cierra los demás acordeones para un efecto colapsable limpio e intuitivo
+          faqItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('active');
+              otherItem.querySelector('.faq-content').style.maxHeight = null;
+            }
+          });
+
+          // Conmutar el acordeón seleccionado
+          if (isOpen) {
+            item.classList.remove('active');
+            content.style.maxHeight = null;
+          } else {
+            item.classList.add('active');
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
