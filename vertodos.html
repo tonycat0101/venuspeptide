@@ -8,12 +8,12 @@
   <link rel="stylesheet" href="styles.css">
   
   <style>
-    /* ── ESTILOS EXCLUSIVOS DE LA CUADRÍCULA (Estilo image_43d3f6.jpg) ── */
+    /* ── ESTILOS EXCLUSIVOS DE LA CUADRÍCULA ── */
     .catalog-section { padding: 140px 0 100px 0; background: #fbfbfb; }
     .catalog-header { max-width: 1200px; margin: 0 auto 40px auto; padding: 0 20px; }
     .catalog-header h1 { font-size: 28px; font-weight: 700; color: #1e293b; letter-spacing: -0.02em; text-transform: uppercase; }
     
-    /* Grid de 3 columnas idéntico a la referencia */
+    /* Grid de 3 columnas */
     .catalog-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -64,7 +64,7 @@
       margin-bottom: 20px;
       background: #ffffff;
     }
-    /* Estilización del vial vectorial para simular la consistencia de renderizado de la imagen */
+    /* Vial vectorial */
     .p-vial-mock {
       width: 80px;
       height: 150px;
@@ -79,7 +79,7 @@
       top: -12px; left: 50%; transform: translateX(-50%);
       width: 44px; height: 12px; background: #2563eb; border-radius: 4px 4px 2px 2px;
     }
-    .p-vial-mock.pink::before { background: #db2777; } /* Vial Melanotan */
+    .p-vial-mock.pink::before { background: #db2777; }
     .p-vial-label {
       position: absolute;
       top: 30px; left: 6px; right: 6px; bottom: 40px;
@@ -95,7 +95,7 @@
     .p-specs { font-size: 13px; color: #64748b; margin-bottom: 12px; }
     .p-price { font-size: 18px; font-weight: 700; color: #0f172a; margin-top: auto; margin-bottom: 16px; }
 
-    /* Botón estilo image_43d3f6.jpg */
+    /* Botones */
     .p-btn {
       display: block;
       width: 100%;
@@ -119,7 +119,6 @@
 </head>
 <body>
 
-  <!-- ── NAV (Consistente) ───────────────────────────────────────────────── -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo">
@@ -129,7 +128,7 @@
       <div class="nav__links">
         <a href="index.html">Inicio</a>
         <a href="categorias.html">Categorías</a>
-        <a href="todos.html" class="active">Ver todos</a>
+        <a href="vertodos.html" class="active">Ver todos</a>
         <a href="nosotros.html">Nosotros</a>
         <a href="contacto.html">Contacto</a>
       </div>
@@ -142,12 +141,11 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
-    <a href="todos.html" class="active">Ver todos</a>
+    <a href="vertodos.html" class="active">Ver todos</a>
     <a href="nosotros.html">Nosotros</a>
     <a href="contacto.html">Contacto</a>
   </div>
 
-  <!-- ── SECCIÓN DE CATÁLOGO COMPLETO ───────────────────────────────────── -->
   <section class="catalog-section">
     <div class="catalog-header">
       <h1>Shop Peptides / Catálogo Analítico</h1>
@@ -155,92 +153,79 @@
 
     <div class="catalog-grid">
 
-      <!-- FILA 1 -->
-      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">BPC-157</div></div></div><h3 class="p-title">BPC-157</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.5% Pureza | 5mg</p><p class="p-price">$45.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">BPC-157</div></div></div><h3 class="p-title">BPC-157</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.5% Pureza | 5mg</p><p class="p-price">$45.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TB-500</div></div></div><h3 class="p-title">TB-500</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.3% Pureza | 5mg</p><p class="p-price">$49.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TB-500</div></div></div><h3 class="p-title">TB-500</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.3% Pureza | 5mg</p><p class="p-price">$49.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">SEMA</div></div></div><h3 class="p-title">Semaglutide</h3><div class="p-stars">★★★★★<span>(5.0)</span></div><p class="p-specs">99.7% Pureza | 5mg</p><p class="p-price">$65.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="metabolicos"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">SEMA</div></div></div><h3 class="p-title">Semaglutide</h3><div class="p-stars">★★★★★<span>(5.0)</span></div><p class="p-specs">99.7% Pureza | 5mg</p><p class="p-price">$65.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 2 -->
-      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TIRZE</div></div></div><h3 class="p-title">Tirzepatide</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.8% Pureza | 10mg</p><p class="p-price">$95.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="metabolicos"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TIRZE</div></div></div><h3 class="p-title">Tirzepatide</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.8% Pureza | 10mg</p><p class="p-price">$95.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">RETA</div></div></div><h3 class="p-title">Retatrutide</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.4% Pureza | 4mg</p><p class="p-price">$110.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="metabolicos"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">RETA</div></div></div><h3 class="p-title">Retatrutide</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.4% Pureza | 4mg</p><p class="p-price">$110.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><span class="p-badge new">New</span><div class="p-img-box"><div class="p-vial-mock pink"><div class="p-vial-label">MT-II</div></div></div><h3 class="p-title">Melanotan II</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.1% Pureza | 10mg</p><p class="p-price">$38.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><span class="p-badge new">New</span><div class="p-img-box"><div class="p-vial-mock pink"><div class="p-vial-label">MT-II</div></div></div><h3 class="p-title">Melanotan II</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.1% Pureza | 10mg</p><p class="p-price">$38.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 3 -->
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">IPAM</div></div></div><h3 class="p-title">Ipamorelin</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.5% Pureza | 5mg</p><p class="p-price">$42.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">IPAM</div></div></div><h3 class="p-title">Ipamorelin</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.5% Pureza | 5mg</p><p class="p-price">$42.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">CJC</div></div></div><h3 class="p-title">CJC-1295 No DAC</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.2% Pureza | 5mg</p><p class="p-price">$44.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">CJC</div></div></div><h3 class="p-title">CJC-1295 No DAC</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.2% Pureza | 5mg</p><p class="p-price">$44.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">CJC-DAC</div></div></div><h3 class="p-title">CJC-1295 With DAC</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.3% Pureza | 2mg</p><p class="p-price">$52.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">CJC-DAC</div></div></div><h3 class="p-title">CJC-1295 With DAC</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.3% Pureza | 2mg</p><p class="p-price">$52.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 4 -->
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">PT-141</div></div></div><h3 class="p-title">PT-141 (Bremelanotide)</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.6% Pureza | 10mg</p><p class="p-price">$48.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="cognitivas"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">PT-141</div></div></div><h3 class="p-title">PT-141 (Bremelanotide)</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.6% Pureza | 10mg</p><p class="p-price">$48.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">EPIT</div></div></div><h3 class="p-title">Epitalon</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.5% Pureza | 10mg</p><p class="p-price">$55.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">EPIT</div></div></div><h3 class="p-title">Epitalon</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.5% Pureza | 10mg</p><p class="p-price">$55.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GHK-CU</div></div></div><h3 class="p-title">GHK-Cu</h3><div class="p-stars">★★★★★<span>(5.0)</span></div><p class="p-specs">99.8% Pureza | 50mg</p><p class="p-price">$68.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GHK-CU</div></div></div><h3 class="p-title">GHK-Cu</h3><div class="p-stars">★★★★★<span>(5.0)</span></div><p class="p-specs">99.8% Pureza | 50mg</p><p class="p-price">$68.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 5 -->
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">AOD</div></div></div><h3 class="p-title">AOD-9604</h3><div class="p-stars">★★★★★<span>(4.5)</span></div><p class="p-specs">99.1% Pureza | 2mg</p><p class="p-price">$49.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="metabolicos"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">AOD</div></div></div><h3 class="p-title">AOD-9604</h3><div class="p-stars">★★★★★<span>(4.5)</span></div><p class="p-specs">99.1% Pureza | 2mg</p><p class="p-price">$49.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">FRAG</div></div></div><h3 class="p-title">HGH Fragment 176-191</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$46.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">FRAG</div></div></div><h3 class="p-title">HGH Fragment 176-191</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$46.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">IGF-1</div></div></div><h3 class="p-title">IGF-1 LR3</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.7% Pureza | 1mg</p><p class="p-price">$85.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">IGF-1</div></div></div><h3 class="p-title">IGF-1 LR3</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.7% Pureza | 1mg</p><p class="p-price">$85.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 6 -->
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TESA</div></div></div><h3 class="p-title">Tesamorelin</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.5% Pureza | 5mg</p><p class="p-price">$72.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TESA</div></div></div><h3 class="p-title">Tesamorelin</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.5% Pureza | 5mg</p><p class="p-price">$72.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><span class="p-badge new">New</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">SERM</div></div></div><h3 class="p-title">Sermorelin</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.3% Pureza | 5mg</p><p class="p-price">$39.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><span class="p-badge new">New</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">SERM</div></div></div><h3 class="p-title">Sermorelin</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.3% Pureza | 5mg</p><p class="p-price">$39.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">HEXA</div></div></div><h3 class="p-title">Hexarelin</h3><div class="p-stars">★★★★★<span>(4.5)</span></div><p class="p-specs">99.2% Pureza | 2mg</p><p class="p-price">$36.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">HEXA</div></div></div><h3 class="p-title">Hexarelin</h3><div class="p-stars">★★★★★<span>(4.5)</span></div><p class="p-specs">99.2% Pureza | 2mg</p><p class="p-price">$36.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 7 -->
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GHRP2</div></div></div><h3 class="p-title">GHRP-2</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$34.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GHRP2</div></div></div><h3 class="p-title">GHRP-2</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$34.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GHRP6</div></div></div><h3 class="p-title">GHRP-6</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$34.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GHRP6</div></div></div><h3 class="p-title">GHRP-6</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$34.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock" style="opacity: 0.5;"><div class="p-vial-label">DSIP</div></div></div><h3 class="p-title">DSIP (Sleep Peptide)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.6% Pureza | 5mg</p><p class="p-price" style="color: #94a3b8;">Agotado</p><a href="#" class="p-btn out">Agotado</a></div>
+      <div class="p-card" data-category="cognitivas"><div class="p-img-box"><div class="p-vial-mock" style="opacity: 0.5;"><div class="p-vial-label">DSIP</div></div></div><h3 class="p-title">DSIP (Sleep Peptide)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.6% Pureza | 5mg</p><p class="p-price" style="color: #94a3b8;">Agotado</p><a href="#" class="p-btn out">Agotado</a></div>
 
-      <!-- FILA 8 -->
-      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">NAD+</div></div></div><h3 class="p-title">NAD+</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.9% Pureza | 500mg</p><p class="p-price">$60.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">NAD+</div></div></div><h3 class="p-title">NAD+</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.9% Pureza | 500mg</p><p class="p-price">$60.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GW</div></div></div><h3 class="p-title">Cardarine (GW-501516)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.5% Pureza | 10mg</p><p class="p-price">$45.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="metabolicos"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GW</div></div></div><h3 class="p-title">Cardarine (GW-501516)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.5% Pureza | 10mg</p><p class="p-price">$45.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">MK2866</div></div></div><h3 class="p-title">Ostarine (MK-2866)</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 10mg</p><p class="p-price">$42.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">MK2866</div></div></div><h3 class="p-title">Ostarine (MK-2866)</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 10mg</p><p class="p-price">$42.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 9 -->
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">LGD</div></div></div><h3 class="p-title">Ligandrol (LGD-4033)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.3% Pureza | 10mg</p><p class="p-price">$48.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">LGD</div></div></div><h3 class="p-title">Ligandrol (LGD-4033)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.3% Pureza | 10mg</p><p class="p-price">$48.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">MK677</div></div></div><h3 class="p-title">Ibutamoren (MK-677)</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.6% Pureza | 10mg</p><p class="p-price">$54.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="gh"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">MK677</div></div></div><h3 class="p-title">Ibutamoren (MK-677)</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.6% Pureza | 10mg</p><p class="p-price">$54.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">RAD</div></div></div><h3 class="p-title">Testolone (RAD-140)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.5% Pureza | 10mg</p><p class="p-price">$50.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">RAD</div></div></div><h3 class="p-title">Testolone (RAD-140)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.5% Pureza | 10mg</p><p class="p-price">$50.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 10 -->
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">SR9009</div></div></div><h3 class="p-title">Stenabolic (SR-9009)</h3><div class="p-stars">★★★★★<span>(4.5)</span></div><p class="p-specs">99.2% Pureza | 10mg</p><p class="p-price">$46.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="metabolicos"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">SR9009</div></div></div><h3 class="p-title">Stenabolic (SR-9009)</h3><div class="p-stars">★★★★★<span>(4.5)</span></div><p class="p-specs">99.2% Pureza | 10mg</p><p class="p-price">$46.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">OXY</div></div></div><h3 class="p-title">Oxytocin</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.7% Pureza | 5mg</p><p class="p-price">$35.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="cognitivas"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">OXY</div></div></div><h3 class="p-title">Oxytocin</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.7% Pureza | 5mg</p><p class="p-price">$35.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TESO</div></div></div><h3 class="p-title">Tesofensine</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.6% Pureza | 500mcg</p><p class="p-price">$79.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="metabolicos"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TESO</div></div></div><h3 class="p-title">Tesofensine</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.6% Pureza | 500mcg</p><p class="p-price">$79.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 11 -->
-      <div class="p-card"><span class="p-badge new">New</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TIRZ+G</div></div></div><h3 class="p-title">Tirzepatide + Glycine</h3><div class="p-stars">★★★★★<span>(5.0)</span></div><p class="p-specs">Fórmula Combinada | 10mg</p><p class="p-price">$105.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="metabolicos"><span class="p-badge new">New</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TIRZ+G</div></div></div><h3 class="p-title">Tirzepatide + Glycine</h3><div class="p-stars">★★★★★<span>(5.0)</span></div><p class="p-specs">Fórmula Combinada | 10mg</p><p class="p-price">$105.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box" style="gap:4px;"><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">BPC</div></div><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">TB</div></div></div><h3 class="p-title">BPC-157 + TB-500 Blend</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">Mezcla Cinética | 5mg + 5mg</p><p class="p-price">$85.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><span class="p-badge sale">Sale</span><div class="p-img-box" style="gap:4px;"><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">BPC</div></div><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">TB</div></div></div><h3 class="p-title">BPC-157 + TB-500 Blend</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">Mezcla Cinética | 5mg + 5mg</p><p class="p-price">$85.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box" style="gap:4px;"><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">SEMA</div></div><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">BPC</div></div></div><h3 class="p-title">Semaglutide + BPC Blend</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">Sinergia Analítica | 5mg + 5mg</p><p class="p-price">$99.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="metabolicos"><span class="p-badge sale">Sale</span><div class="p-img-box" style="gap:4px;"><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">SEMA</div></div><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">BPC</div></div></div><h3 class="p-title">Semaglutide + BPC Blend</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">Sinergia Analítica | 5mg + 5mg</p><p class="p-price">$99.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      <!-- FILA 12 -->
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">KPV</div></div></div><h3 class="p-title">KPV</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$45.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="cognitivas"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">KPV</div></div></div><h3 class="p-title">KPV</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$45.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">LL-37</div></div></div><h3 class="p-title">LL-37</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.5% Pureza | 2mg</p><p class="p-price">$58.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      <div class="p-card" data-category="desempeno"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">LL-37</div></div></div><h3 class="p-title">LL-37</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.5% Pureza | 2mg</p><p class="p-price">$58.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
     </div>
   </section>
 
-  <!-- ── FOOTER OPTIMIZADO (Estilo Horizontal como Ascension Peptides) ── -->
   <footer class="footer">
     <div class="container">
       
@@ -253,16 +238,16 @@
           <div class="footer__col-title">Navegación</div>
           <a href="index.html">Inicio</a>
           <a href="categorias.html">Categorías</a>
-          <a href="todos.html">Ver todos</a>
+          <a href="vertodos.html">Ver todos</a>
           <a href="nosotros.html">Nosotros</a>
           <a href="contacto.html">Contacto</a>
         </div>
         <div class="footer__col">
           <div class="footer__col-title">Categorías</div>
-          <a href="todos.html?cat=metabolicos">Investigación Metabólica</a>
-          <a href="todos.html?cat=gh">Moduladores GH</a>
-          <a href="todos.html?cat=cognitivas">Neuro-Cognición</a>
-          <a href="todos.html?cat=desempeno">Desempeño Celular</a>
+          <a href="vertodos.html?cat=metabolicos">Investigación Metabólica</a>
+          <a href="vertodos.html?cat=gh">Moduladores GH</a>
+          <a href="vertodos.html?cat=cognitivas">Neuro-Cognición</a>
+          <a href="vertodos.html?cat=desempeno">Desempeño Celular</a>
         </div>
       </div>
 
@@ -292,7 +277,6 @@
 
   <script src="main.js"></script>
 
-<!-- ── SCRIPT FILTRADO INTELIGENTE DE CATEGORÍAS ── -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       // 1. Analizar si la URL contiene una categoría (?cat=...)
@@ -301,7 +285,6 @@
 
       if (categoryParam) {
         const cards = document.querySelectorAll('.p-card');
-        let productosEncontrados = 0;
 
         cards.forEach(card => {
           const cardCategory = card.getAttribute('data-category');
@@ -309,9 +292,8 @@
           // 2. Mostrar solo los productos que coinciden con la categoría
           if (cardCategory === categoryParam) {
             card.style.display = 'flex';
-            productosEncontrados++;
           } else {
-            card.style.style.setProperty('display', 'none', 'important'); // Oculta el resto
+            card.style.setProperty('display', 'none', 'important'); // Oculta el resto
           }
         });
 
