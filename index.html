@@ -8,27 +8,23 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<!-- ── AGE GATE LEGAL (EL MÁS SEGURO) ── -->
-<div id="ageModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); display: flex; align-items: center; justify-content: center; z-index: 9999;">
-  <div style="max-width: 450px; width: 90%; text-align: center; background: #fff;">
+<div id="ageModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); display: flex; align-items: center; justify-content: center; z-index: 999999; padding: 20px;">
+  <div style="background: #ffffff; padding: 40px; max-width: 500px; width: 100%; border-radius: 8px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
     
-    <div style="font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">Venus Peptide</div>
-    <div style="height: 2px; width: 40px; background: #2563eb; margin: 0 auto 30px auto;"></div>
+    <div style="font-size: 26px; font-weight: 800; color: #1e293b; margin-bottom: 20px; letter-spacing: -0.5px;">VENUS PEPTIDE</div>
     
-    <p style="color: #64748b; font-size: 14px; margin-bottom: 25px; line-height: 1.5;">
-      Bienvenido. Este portal es para investigadores calificados. Al entrar, usted certifica que es mayor de 21 años y que utilizará estos compuestos únicamente para investigación in-vitro.
+    <p style="color: #475569; font-size: 14px; line-height: 1.6; margin-bottom: 25px; text-align: justify;">
+      Todos los productos son para investigación de laboratorio únicamente — no aptos para consumo humano o animal. No evaluados por la FDA. No se proporcionan declaraciones médicas, guías de dosificación ni instrucciones de uso. Al entrar, usted asume la plena responsabilidad legal por el cumplimiento de todas las leyes aplicables en su jurisdicción.
     </p>
 
-    <!-- EL CHECKBOX LEGAL -->
-    <div style="text-align: left; margin-bottom: 25px; font-size: 13px; color: #475569;">
-      <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
-        <input type="checkbox" id="legalCheck" style="margin-top: 4px;">
-        <span>He leído y acepto los <a href="terminos.html" target="_blank" style="color: #2563eb; text-decoration: underline;">Términos de Servicio</a>, <a href="privacidad.html" target="_blank" style="color: #2563eb; text-decoration: underline;">Política de Privacidad</a> y la <a href="envios.html" target="_blank" style="color: #2563eb; text-decoration: underline;">Política de Reembolsos</a>.</span>
+    <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin-bottom: 25px; text-align: left; border: 1px solid #e2e8f0;">
+      <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13px; color: #334155;">
+        <input type="checkbox" id="legalCheck" style="margin-top: 3px; transform: scale(1.2);">
+        <span>Certifico que tengo al menos 21 años, soy un investigador calificado o profesional autorizado, y que todos los productos serán utilizados exclusivamente para investigación legal. He leído y acepto los <a href="terminos.html" style="color: #2563eb; font-weight: 600; text-decoration: none;">Términos de Servicio</a>.</span>
       </label>
     </div>
 
-    <!-- BOTÓN DESHABILITADO POR DEFECTO -->
-    <button id="enterBtn" disabled style="width: 100%; background: #cbd5e1; color: white; border: none; padding: 15px; border-radius: 6px; font-weight: 600; cursor: not-allowed; transition: all 0.3s;">
+    <button id="enterBtn" disabled style="width: 100%; background: #94a3b8; color: white; border: none; padding: 16px; border-radius: 4px; font-weight: 700; cursor: not-allowed; transition: all 0.3s; font-size: 15px;">
       ENTRAR AL PORTAL
     </button>
   </div>
@@ -39,16 +35,15 @@
   const btn = document.getElementById('enterBtn');
   const modal = document.getElementById('ageModal');
 
-  // Lógica: Habilitar botón solo si marcan el checkbox
   checkbox.addEventListener('change', () => {
     if (checkbox.checked) {
       btn.disabled = false;
       btn.style.cursor = 'pointer';
-      btn.style.background = '#1e293b'; // Color oscuro elegante
+      btn.style.background = '#1e293b'; // Azul marino serio
     } else {
       btn.disabled = true;
       btn.style.cursor = 'not-allowed';
-      btn.style.background = '#cbd5e1';
+      btn.style.background = '#94a3b8';
     }
   });
 
@@ -57,6 +52,7 @@
     modal.style.display = 'none';
   });
 
+  // Verificar estado
   if (localStorage.getItem('ageVerified') === 'true') {
     modal.style.display = 'none';
   }
