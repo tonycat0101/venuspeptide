@@ -3,12 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Analítico — Venus Peptide</title>
-  <meta name="description" content="Catálogo completo de compuestos peptídicos premium para investigación avanzada en laboratorio.">
+  <title>Catálogo Completo — Venus Peptide</title>
+  <meta name="description" content="Catálogo completo de compuestos peptídicos analíticos y reactivos premium de Venus Peptide.">
   <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* ── ESTILOS EXCLUSIVOS DE LA CUADRÍCULA (Estilo image_43d3f6.jpg) ── */
+    .catalog-section { padding: 140px 0 100px 0; background: #fbfbfb; }
+    .catalog-header { max-width: 1200px; margin: 0 auto 40px auto; padding: 0 20px; }
+    .catalog-header h1 { font-size: 28px; font-weight: 700; color: #1e293b; letter-spacing: -0.02em; text-transform: uppercase; }
+    
+    /* Grid de 3 columnas idéntico a la referencia */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Tarjeta de Producto */
+    .p-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .p-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Etiquetas (Badges) */
+    .p-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+    .p-badge.sale { background: #ef4444; color: #ffffff; }
+    .p-badge.new { background: #3b82f6; color: #ffffff; }
+
+    /* Contenedor de Imagen */
+    .p-img-box {
+      width: 100%;
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      background: #ffffff;
+    }
+    /* Estilización del vial vectorial para simular la consistencia de renderizado de la imagen */
+    .p-vial-mock {
+      width: 80px;
+      height: 150px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px 8px 16px 16px;
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 60%, #f1f5f9 60%);
+    }
+    .p-vial-mock::before {
+      content: '';
+      position: absolute;
+      top: -12px; left: 50%; transform: translateX(-50%);
+      width: 44px; height: 12px; background: #2563eb; border-radius: 4px 4px 2px 2px;
+    }
+    .p-vial-mock.pink::before { background: #db2777; } /* Vial Melanotan */
+    .p-vial-label {
+      position: absolute;
+      top: 30px; left: 6px; right: 6px; bottom: 40px;
+      background: #ffffff; border: 1px solid #e2e8f0; border-radius: 2px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: bold; color: #1e293b; text-align: center;
+    }
+
+    /* Detalles del texto */
+    .p-title { font-size: 18px; font-weight: 600; color: #0f172a; margin-bottom: 6px; }
+    .p-stars { color: #f59e0b; font-size: 13px; margin-bottom: 8px; display: flex; gap: 2px; align-items: center; }
+    .p-stars span { color: #64748b; font-size: 12px; margin-left: 6px; font-weight: 500; }
+    .p-specs { font-size: 13px; color: #64748b; margin-bottom: 12px; }
+    .p-price { font-size: 18px; font-weight: 700; color: #0f172a; margin-top: auto; margin-bottom: 16px; }
+
+    /* Botón estilo image_43d3f6.jpg */
+    .p-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+      background: #2563eb;
+      color: #ffffff;
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+    .p-btn:hover { background: #1d4ed8; }
+    .p-btn.out { background: #94a3b8; cursor: not-allowed; }
+
+    /* Responsivo */
+    @media (max-width: 992px) { .catalog-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .catalog-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
 
+  <!-- ── NAV (Consistente) ───────────────────────────────────────────────── -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo">
@@ -18,7 +129,7 @@
       <div class="nav__links">
         <a href="index.html">Inicio</a>
         <a href="categorias.html">Categorías</a>
-        <a href="vertodos.html" class="active">Ver todos</a>
+        <a href="todos.html" class="active">Ver todos</a>
         <a href="nosotros.html">Nosotros</a>
         <a href="contacto.html">Contacto</a>
       </div>
@@ -31,99 +142,113 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
-    <a href="vertodos.html" class="active">Ver todos</a>
+    <a href="todos.html" class="active">Ver todos</a>
     <a href="nosotros.html">Nosotros</a>
     <a href="contacto.html">Contacto</a>
   </div>
 
-  <section style="padding-top: 140px; padding-bottom: 40px;">
-    <div class="container">
-      <div class="fade-up">
-        <h1 id="catalogTitle" style="font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; color: var(--text-main); margin-bottom: 12px; letter-spacing: -0.02em;">
-          Catálogo Completo
-        </h1>
-        <p id="catalogSubtitle" style="color: var(--text-muted); font-size: 16px; max-width: 700px; line-height: 1.5;">
-          Mostrando todos los reactivos analíticos liofilizados disponibles para ensayos de laboratorio.
-        </p>
-      </div>
+  <!-- ── SECCIÓN DE CATÁLOGO COMPLETO ───────────────────────────────────── -->
+  <section class="catalog-section">
+    <div class="catalog-header">
+      <h1>Shop Peptides / Catálogo Analítico</h1>
     </div>
-  </section>
 
-  <section style="padding-bottom: 100px;">
-    <div class="container">
+    <div class="catalog-grid">
+
+      <!-- FILA 1 -->
+      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">BPC-157</div></div></div><h3 class="p-title">BPC-157</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.5% Pureza | 5mg</p><p class="p-price">$45.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
       
-      <div class="products-grid">
+      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TB-500</div></div></div><h3 class="p-title">TB-500</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.3% Pureza | 5mg</p><p class="p-price">$49.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">SEMA</div></div></div><h3 class="p-title">Semaglutide</h3><div class="p-stars">★★★★★<span>(5.0)</span></div><p class="p-specs">99.7% Pureza | 5mg</p><p class="p-price">$65.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-        <div class="product-card fade-up" data-category="metabolicos">
-          <div class="product-card__badge">99.2% Pureza</div>
-          <div class="product-card__img-container">
-            <div style="font-size: 48px;">🧪</div>
-          </div>
-          <h3 class="product-card__title">Compuesto VP-GLP1</h3>
-          <p class="product-card__category">Investigación Metabolica</p>
-          <div class="product-card__footer">
-            <span class="product-card__price">$64.99</span>
-            <a href="detalles.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Ficha Técnica</a>
-          </div>
-        </div>
+      <!-- FILA 2 -->
+      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TIRZE</div></div></div><h3 class="p-title">Tirzepatide</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.8% Pureza | 10mg</p><p class="p-price">$95.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">RETA</div></div></div><h3 class="p-title">Retatrutide</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.4% Pureza | 4mg</p><p class="p-price">$110.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><span class="p-badge new">New</span><div class="p-img-box"><div class="p-vial-mock pink"><div class="p-vial-label">MT-II</div></div></div><h3 class="p-title">Melanotan II</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.1% Pureza | 10mg</p><p class="p-price">$38.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-        <div class="product-card fade-up" data-category="gh">
-          <div class="product-card__badge">99.5% Pureza</div>
-          <div class="product-card__img-container">
-            <div style="font-size: 48px;">🧪</div>
-          </div>
-          <h3 class="product-card__title">Sermorelin Acetate</h3>
-          <p class="product-card__category">Moduladores GH</p>
-          <div class="product-card__footer">
-            <span class="product-card__price">$59.00</span>
-            <a href="detalles.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Ficha Técnica</a>
-          </div>
-        </div>
+      <!-- FILA 3 -->
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">IPAM</div></div></div><h3 class="p-title">Ipamorelin</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.5% Pureza | 5mg</p><p class="p-price">$42.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">CJC</div></div></div><h3 class="p-title">CJC-1295 No DAC</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.2% Pureza | 5mg</p><p class="p-price">$44.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">CJC-DAC</div></div></div><h3 class="p-title">CJC-1295 With DAC</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.3% Pureza | 2mg</p><p class="p-price">$52.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-        <div class="product-card fade-up" data-category="cognitivas">
-          <div class="product-card__badge">99.1% Pureza</div>
-          <div class="product-card__img-container">
-            <div style="font-size: 48px;">🧪</div>
-          </div>
-          <h3 class="product-card__title">Semax Peptide</h3>
-          <p class="product-card__category">Neuro-Cognición</p>
-          <div class="product-card__footer">
-            <span class="product-card__price">$72.50</span>
-            <a href="detalles.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Ficha Técnica</a>
-          </div>
-        </div>
+      <!-- FILA 4 -->
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">PT-141</div></div></div><h3 class="p-title">PT-141 (Bremelanotide)</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.6% Pureza | 10mg</p><p class="p-price">$48.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">EPIT</div></div></div><h3 class="p-title">Epitalon</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.5% Pureza | 10mg</p><p class="p-price">$55.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GHK-CU</div></div></div><h3 class="p-title">GHK-Cu</h3><div class="p-stars">★★★★★<span>(5.0)</span></div><p class="p-specs">99.8% Pureza | 50mg</p><p class="p-price">$68.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-        <div class="product-card fade-up" data-category="desempeno">
-          <div class="product-card__badge">99.6% Pureza</div>
-          <div class="product-card__img-container">
-            <div style="font-size: 48px;">🧪</div>
-          </div>
-          <h3 class="product-card__title">BPC-157 Analítico</h3>
-          <p class="product-card__category">Desempeño Celular</p>
-          <div class="product-card__footer">
-            <span class="product-card__price">$68.00</span>
-            <a href="detalles.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Ficha Técnica</a>
-          </div>
-        </div>
+      <!-- FILA 5 -->
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">AOD</div></div></div><h3 class="p-title">AOD-9604</h3><div class="p-stars">★★★★★<span>(4.5)</span></div><p class="p-specs">99.1% Pureza | 2mg</p><p class="p-price">$49.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">FRAG</div></div></div><h3 class="p-title">HGH Fragment 176-191</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$46.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">IGF-1</div></div></div><h3 class="p-title">IGF-1 LR3</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.7% Pureza | 1mg</p><p class="p-price">$85.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
 
-      </div>
+      <!-- FILA 6 -->
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TESA</div></div></div><h3 class="p-title">Tesamorelin</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.5% Pureza | 5mg</p><p class="p-price">$72.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><span class="p-badge new">New</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">SERM</div></div></div><h3 class="p-title">Sermorelin</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.3% Pureza | 5mg</p><p class="p-price">$39.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">HEXA</div></div></div><h3 class="p-title">Hexarelin</h3><div class="p-stars">★★★★★<span>(4.5)</span></div><p class="p-specs">99.2% Pureza | 2mg</p><p class="p-price">$36.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+
+      <!-- FILA 7 -->
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GHRP2</div></div></div><h3 class="p-title">GHRP-2</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$34.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GHRP6</div></div></div><h3 class="p-title">GHRP-6</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$34.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock" style="opacity: 0.5;"><div class="p-vial-label">DSIP</div></div></div><h3 class="p-title">DSIP (Sleep Peptide)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.6% Pureza | 5mg</p><p class="p-price" style="color: #94a3b8;">Agotado</p><a href="#" class="p-btn out">Agotado</a></div>
+
+      <!-- FILA 8 -->
+      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">NAD+</div></div></div><h3 class="p-title">NAD+</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.9% Pureza | 500mg</p><p class="p-price">$60.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">GW</div></div></div><h3 class="p-title">Cardarine (GW-501516)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.5% Pureza | 10mg</p><p class="p-price">$45.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">MK2866</div></div></div><h3 class="p-title">Ostarine (MK-2866)</h3><div class="p-stars">★★★★★<span>(4.6)</span></div><p class="p-specs">99.4% Pureza | 10mg</p><p class="p-price">$42.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+
+      <!-- FILA 9 -->
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">LGD</div></div></div><h3 class="p-title">Ligandrol (LGD-4033)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.3% Pureza | 10mg</p><p class="p-price">$48.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">MK677</div></div></div><h3 class="p-title">Ibutamoren (MK-677)</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.6% Pureza | 10mg</p><p class="p-price">$54.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">RAD</div></div></div><h3 class="p-title">Testolone (RAD-140)</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.5% Pureza | 10mg</p><p class="p-price">$50.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+
+      <!-- FILA 10 -->
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">SR9009</div></div></div><h3 class="p-title">Stenabolic (SR-9009)</h3><div class="p-stars">★★★★★<span>(4.5)</span></div><p class="p-specs">99.2% Pureza | 10mg</p><p class="p-price">$46.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">OXY</div></div></div><h3 class="p-title">Oxytocin</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">99.7% Pureza | 5mg</p><p class="p-price">$35.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TESO</div></div></div><h3 class="p-title">Tesofensine</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.6% Pureza | 500mcg</p><p class="p-price">$79.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+
+      <!-- FILA 11 -->
+      <div class="p-card"><span class="p-badge new">New</span><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">TIRZ+G</div></div></div><h3 class="p-title">Tirzepatide + Glycine</h3><div class="p-stars">★★★★★<span>(5.0)</span></div><p class="p-specs">Fórmula Combinada | 10mg</p><p class="p-price">$105.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box" style="gap:4px;"><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">BPC</div></div><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">TB</div></div></div><h3 class="p-title">BPC-157 + TB-500 Blend</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">Mezcla Cinética | 5mg + 5mg</p><p class="p-price">$85.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><span class="p-badge sale">Sale</span><div class="p-img-box" style="gap:4px;"><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">SEMA</div></div><div class="p-vial-mock" style="width:50px;height:110px;"><div class="p-vial-label" style="font-size:8px;">BPC</div></div></div><h3 class="p-title">Semaglutide + BPC Blend</h3><div class="p-stars">★★★★★<span>(4.9)</span></div><p class="p-specs">Sinergia Analítica | 5mg + 5mg</p><p class="p-price">$99.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+
+      <!-- FILA 12 -->
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">KPV</div></div></div><h3 class="p-title">KPV</h3><div class="p-stars">★★★★★<span>(4.7)</span></div><p class="p-specs">99.4% Pureza | 5mg</p><p class="p-price">$45.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+      
+      <div class="p-card"><div class="p-img-box"><div class="p-vial-mock"><div class="p-vial-label">LL-37</div></div></div><h3 class="p-title">LL-37</h3><div class="p-stars">★★★★★<span>(4.8)</span></div><p class="p-specs">99.5% Pureza | 2mg</p><p class="p-price">$58.00 USD</p><a href="#" class="p-btn">Ver Detalles</a></div>
+
     </div>
   </section>
 
- <!-- ── FOOTER OPTIMIZADO (Estilo Horizontal como Ascension Peptides) ── -->
+  <!-- ── FOOTER OPTIMIZADO (Estilo Horizontal como Ascension Peptides) ── -->
   <footer class="footer">
     <div class="container">
       
-      <!-- Parte superior: Reducida a 3 columnas fluidas -->
       <div class="footer__top" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-        
-        <!-- Columna 1: Marca -->
         <div class="footer__brand">
           <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
           <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
         </div>
-
-        <!-- Columna 2: Navegación básica -->
         <div class="footer__col">
           <div class="footer__col-title">Navegación</div>
           <a href="index.html">Inicio</a>
@@ -132,8 +257,6 @@
           <a href="nosotros.html">Nosotros</a>
           <a href="contacto.html">Contacto</a>
         </div>
-
-        <!-- Columna 3: Categorías científicas -->
         <div class="footer__col">
           <div class="footer__col-title">Categorías</div>
           <a href="todos.html?cat=metabolicos">Investigación Metabólica</a>
@@ -141,87 +264,32 @@
           <a href="todos.html?cat=cognitivas">Neuro-Cognición</a>
           <a href="todos.html?cat=desempeno">Desempeño Celular</a>
         </div>
-
       </div>
 
-      <!-- Parte inferior: Estilo idéntico a la referencia de Ascension -->
       <div class="footer__bottom-horizontal" style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
-        
-        <!-- Fila 1: Copyright a la izquierda, Enlaces en línea a la derecha -->
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: var(--text-muted, #94a3b8);">
-          
-          <!-- Izquierda: Copyright de marca -->
-          <div>
-            Copyright ©2026 Venus Peptide, All Rights Reserved.
-          </div>
-          
-          <!-- Derecha: Enlaces divididos por barras flotantes -->
+          <div>Copyright ©2026 Venus Peptide, All Rights Reserved.</div>
           <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <style>
-              .inline-legal-link {
-                color: inherit;
-                text-decoration: none;
-                transition: color 0.2s ease;
-              }
-              .inline-legal-link:hover {
-                color: #fff;
-              }
-              .inline-separator {
-                color: rgba(255, 255, 255, 0.2);
-                font-size: 12px;
-                user-select: none;
-              }
+              .inline-legal-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+              .inline-legal-link:hover { color: #fff; }
+              .inline-separator { color: rgba(255, 255, 255, 0.2); font-size: 12px; user-select: none; }
             </style>
-            
-            <a href="faq.html" class="inline-legal-link">FAQ</a>
-            <span class="inline-separator">|</span>
-            <a href="terminos.html" class="inline-legal-link">Terms & Conditions</a>
-            <span class="inline-separator">|</span>
-            <a href="envios.html" class="inline-legal-link">Shipping & Returns</a>
-            <span class="inline-separator">|</span>
-            <a href="privacidad.html" class="inline-legal-link">Privacy Policy</a>
-            <span class="inline-separator">|</span>
+            <a href="faq.html" class="inline-legal-link">FAQ</a><span class="inline-separator">|</span>
+            <a href="terminos.html" class="inline-legal-link">Terms & Conditions</a><span class="inline-separator">|</span>
+            <a href="envios.html" class="inline-legal-link">Shipping & Returns</a><span class="inline-separator">|</span>
+            <a href="privacidad.html" class="inline-legal-link">Privacy Policy</a><span class="inline-separator">|</span>
             <a href="contacto.html" class="inline-legal-link">Contact Us</a>
           </div>
         </div>
-
-        <!-- Fila 2: Descargo de responsabilidad clínico (Centrado y en negrita) -->
         <p style="text-align: center; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-weight: 600; letter-spacing: 0.01em;">
           Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. Debe tener la edad legal requerida para adquirir estos compuestos. Los productos NO son para consumo humano ni veterinario de ningún tipo. Las declaraciones hechas dentro de este sitio web no han sido evaluadas por ninguna administración de alimentos o medicamentos. Estos reactivos no están destinados a diagnosticar, tratar, curar o prevenir ninguna enfermedad.
         </p>
-
       </div>
 
     </div>
   </footer>
 
   <script src="main.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const parametros = new URLSearchParams(window.location.search);
-      const categoriaSeleccionada = parametros.get('cat');
-
-      const nombresCategorias = {
-        'metabolicos': 'Investigación Metabólica',
-        'gh': 'Moduladores y Secretagogos GH',
-        'cognitivas': 'Neuro-Investigación y Cognición',
-        'desempeno': 'Regeneración y Desempeño Celular'
-      };
-
-      if (categoriaSeleccionada && nombresCategorias[categoriaSeleccionada]) {
-        document.getElementById('catalogTitle').textContent = nombresCategorias[categoriaSeleccionada];
-        document.getElementById('catalogSubtitle').textContent = `Resultados de reactivos específicos optimizados para la línea de ${nombresCategorias[categoriaSeleccionada].toLowerCase()}.`;
-
-        const productos = document.querySelectorAll('.product-card');
-        productos.forEach(producto => {
-          if (producto.getAttribute('data-category') !== categoriaSeleccionada) {
-            producto.style.display = 'none';
-          }
-        });
-      }
-    });
-  </script>
-
 </body>
 </html>
