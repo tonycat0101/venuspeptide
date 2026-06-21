@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Líneas de Investigación — Venus Peptide</title>
+  <meta name="description" content="Categorías analíticas de péptidos de alta pureza clasificadas por mecanismos de acción molecular.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ── NAV (Consistente con todo el sitio) ─────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">V</div>
+        Venus Peptide
+      </a>
+      <div class="nav__links">
+        <a href="index.html">Inicio</a>
+        <a href="productos.html" class="active">Productos</a>
+        <a href="todos.html">Ver todos</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="nav__burger" id="burgerBtn">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Inicio</a>
+    <a href="productos.html" class="active">Productos</a>
+    <a href="todos.html">Ver todos</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+  </div>
+
+  <!-- ── HERO DE LA PÁGINA (Estilo asimétrico de image_4eb481.jpg) ───────── -->
+  <section class="hero" style="padding-top: 140px; padding-bottom: 80px; min-height: auto;">
+    <div class="container">
+      <div class="hero__inner" style="align-items: center; gap: 40px;">
+
+        <!-- Texto Izquierda -->
+        <div class="fade-up">
+          <div class="hero__eyebrow" style="margin-bottom: 16px;">
+            <div class="hero__dot"></div>
+            Catálogo Analítico Avanzado
+          </div>
+          <h1 class="hero__title" style="font-size: clamp(2.2rem, 4vw, 3.2rem); margin-bottom: 16px; line-height: 1.15;">
+            Soluciones Moleculares para la Investigación Moderna
+          </h1>
+          <p class="hero__sub" style="margin-bottom: 24px; max-width: 550px;">
+            Acceda a nuestro catálogo de compuestos liofilizados sintetizados bajo estrictos estándares analíticos para optimizar la reproducibilidad en sus ensayos científicos.
+          </p>
+          <div class="hero__actions">
+            <a href="todos.html" class="btn btn-primary">Ver catálogo completo</a>
+          </div>
+        </div>
+
+        <!-- Visual Derecha (Caja abstracta científica inspirada en la imagen) -->
+        <div class="hero__visual fade-up" style="justify-content: center;">
+          <div style="width: 100%; max-width: 440px; aspect-ratio: 1.2 / 1; background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.05) 0%, rgba(var(--primary-rgb), 0.15) 100%); border: 1px solid var(--border); border-radius: 20px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.02);">
+            <!-- Icono científico flotante central -->
+            <div style="font-size: 64px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.05)); z-index: 2;">🌐</div>
+            <!-- Efecto de red abstracta de fondo simulando el gráfico de la referencia -->
+            <div style="position: absolute; width: 150%; height: 150%; border: 1px dashed rgba(var(--primary-rgb), 0.2); border-radius: 50%; animation: spin 60s linear infinite;"></div>
+            <div style="position: absolute; width: 100%; height: 100%; border: 1px dashed rgba(var(--primary-rgb), 0.1); border-radius: 50%; animation: spin 30s linear reverse infinite;"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN DE CATEGORÍAS / LÍNEAS DE INVESTIGACIÓN ────────────────── -->
+  <section class="section" style="background: var(--bg-white); border-top: 1px solid var(--border); padding-top: 80px; padding-bottom: 100px;">
+    <div class="container">
+      
+      <!-- Encabezado de la Sección -->
+      <div class="fade-up" style="text-align: center; max-width: 650px; margin: 0 auto 50px auto;">
+        <h2 class="section-title" style="font-size: 32px; margin-bottom: 12px; font-weight: 700; letter-spacing: -0.01em;">
+          Líneas de Investigación
+        </h2>
+        <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+          Compuestos clasificados rigurosamente según su estructura molecular, afinidad de receptores y mecanismo de acción en entornos de evaluación experimental.
+        </p>
+      </div>
+
+      <!-- Cuadrícula de Categorías (2x2 Altamente Científica) -->
+      <div class="products-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 32px;">
+        <style>
+          @media (max-width: 500px) {
+            .products-grid { grid-template-columns: 1fr !important; }
+          }
+        </style>
+
+        <!-- Categoría 1: Metabólicos -->
+        <div class="product-card fade-up" style="text-align: left; align-items: flex-start; padding: 40px; border-radius: 16px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+          <div>
+            <div style="font-size: 28px; margin-bottom: 16px; color: var(--primary);">📊</div>
+            <h3 style="font-size: 18px; font-weight: 600; color: var(--text-main); margin-bottom: 10px;">Investigación Metabólica</h3>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
+              Ligandos y agonistas de receptores peptídicos orientados al estudio de las rutas de la homeostasis glucémica, señalización de insulina y perfiles cinéticos de la oxidación lipídica celular in-vitro.
+            </p>
+          </div>
+          <a href="todos.html?cat=metabolicos" style="color: var(--primary); font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-top: auto;">
+            Explorar línea <span style="font-size: 16px;">→</span>
+          </a>
+        </div>
+
+        <!-- Categoría 2: Investigación GH -->
+        <div class="product-card fade-up" style="text-align: left; align-items: flex-start; padding: 40px; border-radius: 16px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+          <div>
+            <div style="font-size: 28px; margin-bottom: 16px; color: var(--primary);">🧬</div>
+            <h3 style="font-size: 18px; font-weight: 600; color: var(--text-main); margin-bottom: 10px;">Moduladores y Secretagogos GH</h3>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
+              Análogos sintéticos y compuestos secretagogos diseñados para la evaluación del eje somatotrópico, liberación endógena hormonal y la modulación de los factores de crecimiento tisular.
+            </p>
+          </div>
+          <a href="todos.html?cat=gh" style="color: var(--primary); font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-top: auto;">
+            Explorar línea <span style="font-size: 16px;">→</span>
+          </a>
+        </div>
+
+        <!-- Categoría 3: Funciones Cognitivas -->
+        <div class="product-card fade-up" style="text-align: left; align-items: flex-start; padding: 40px; border-radius: 16px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+          <div>
+            <div style="font-size: 28px; margin-bottom: 16px; color: var(--primary);">🧠</div>
+            <h3 style="font-size: 18px; font-weight: 600; color: var(--text-main); margin-bottom: 10px;">Neuro-Investigación y Cognición</h3>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
+              Secuencias peptídicas y nootrópicos experimentales desarrollados para el análisis de los procesos de neuroprotección, modulación de neurotransmisores y plasticidad sináptica en modelos neurológicos.
+            </p>
+          </div>
+          <a href="todos.html?cat=cognitivas" style="color: var(--primary); font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-top: auto;">
+            Explorar línea <span style="font-size: 16px;">→</span>
+          </a>
+        </div>
+
+        <!-- Categoría 4: Desempeño y Recuperación -->
+        <div class="product-card fade-up" style="text-align: left; align-items: flex-start; padding: 40px; border-radius: 16px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+          <div>
+            <div style="font-size: 28px; margin-bottom: 16px; color: var(--primary);">⚡</div>
+            <h3 style="font-size: 18px; font-weight: 600; color: var(--text-main); margin-bottom: 10px;">Regeneración y Desempeño Celular</h3>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
+              Compuestos orientados a la evaluación de la angiogénesis acelerada, expresión de transcripción de ARN mitocondrial, reparación de miofibrillas y respuestas adaptativas celulares ante el estrés molecular.
+            </p>
+          </div>
+          <a href="todos.html?cat=desempeno" style="color: var(--primary); font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-top: auto;">
+            Explorar línea <span style="font-size: 16px;">→</span>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER (Consistente con todo el sitio) ─────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <div class="footer__logo-icon">V</div>
+            Venus Peptide
+          </div>
+          <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Navegación</div>
+          <a href="index.html">Inicio</a>
+          <a href="productos.html">Productos</a>
+          <a href="todos.html">Ver todos</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="contacto.html">Contacto</a>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Categorías</div>
+          <a href="todos.html?cat=metabolicos">Investigación Metabólica</a>
+          <a href="todos.html?cat=gh">Moduladores GH</a>
+          <a href="todos.html?cat=cognitivas">Neuro-Cognición</a>
+          <a href="todos.html?cat=desempeno">Desempeño Celular</a>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Contacto</div>
+          <a href="mailto:info@venuspeptide.com">info@venuspeptide.com</a>
+          <a href="contacto.html">Formulario de contacto</a>
+        </div>
+
+      </div>
+
+      <p class="footer__disclaimer">
+        Todos los productos son exclusivamente para investigación científica en laboratorio. No están destinados al diagnóstico, tratamiento, cura o prevención de ninguna enfermedad. Solo para uso por profesionales e instituciones de investigación calificadas.
+      </p>
+
+      <div class="footer__bottom">
+        <span>© 2026 Venus Peptide. Todos los derechos reservados.</span>
+        <span>Para uso en investigación únicamente.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

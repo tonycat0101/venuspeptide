@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Analítico — Venus Peptide</title>
+  <meta name="description" content="Catálogo completo de compuestos peptídicos premium para investigación avanzada en laboratorio.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">V</div>
+        Venus Peptide
+      </a>
+      <div class="nav__links">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="todos.html" class="active">Ver todos</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="nav__burger" id="burgerBtn">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Inicio</a>
+    <a href="categorias.html">Categorías</a>
+    <a href="todos.html" class="active">Ver todos</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+  </div>
+
+  <section style="padding-top: 140px; padding-bottom: 40px;">
+    <div class="container">
+      <div class="fade-up">
+        <h1 id="catalogTitle" style="font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; color: var(--text-main); margin-bottom: 12px; letter-spacing: -0.02em;">
+          Catálogo Completo
+        </h1>
+        <p id="catalogSubtitle" style="color: var(--text-muted); font-size: 16px; max-width: 700px; line-height: 1.5;">
+          Mostrando todos los reactivos analíticos liofilizados disponibles para ensayos de laboratorio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-bottom: 100px;">
+    <div class="container">
+      
+      <div class="products-grid">
+
+        <div class="product-card fade-up" data-category="metabolicos">
+          <div class="product-card__badge">99.2% Pureza</div>
+          <div class="product-card__img-container">
+            <div style="font-size: 48px;">🧪</div>
+          </div>
+          <h3 class="product-card__title">Compuesto VP-GLP1</h3>
+          <p class="product-card__category">Investigación Metabólica</p>
+          <div class="product-card__footer">
+            <span class="product-card__price">$64.99</span>
+            <a href="detalles.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Ficha Técnica</a>
+          </div>
+        </div>
+
+        <div class="product-card fade-up" data-category="gh">
+          <div class="product-card__badge">99.5% Pureza</div>
+          <div class="product-card__img-container">
+            <div style="font-size: 48px;">🧪</div>
+          </div>
+          <h3 class="product-card__title">Sermorelin Acetate</h3>
+          <p class="product-card__category">Moduladores GH</p>
+          <div class="product-card__footer">
+            <span class="product-card__price">$59.00</span>
+            <a href="detalles.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Ficha Técnica</a>
+          </div>
+        </div>
+
+        <div class="product-card fade-up" data-category="cognitivas">
+          <div class="product-card__badge">99.1% Pureza</div>
+          <div class="product-card__img-container">
+            <div style="font-size: 48px;">🧪</div>
+          </div>
+          <h3 class="product-card__title">Semax Peptide</h3>
+          <p class="product-card__category">Neuro-Cognición</p>
+          <div class="product-card__footer">
+            <span class="product-card__price">$72.50</span>
+            <a href="detalles.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Ficha Técnica</a>
+          </div>
+        </div>
+
+        <div class="product-card fade-up" data-category="desempeno">
+          <div class="product-card__badge">99.6% Pureza</div>
+          <div class="product-card__img-container">
+            <div style="font-size: 48px;">🧪</div>
+          </div>
+          <h3 class="product-card__title">BPC-157 Analítico</h3>
+          <p class="product-card__category">Desempeño Celular</p>
+          <div class="product-card__footer">
+            <span class="product-card__price">$68.00</span>
+            <a href="detalles.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Ficha Técnica</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
+          <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Navegación</div>
+          <a href="index.html">Inicio</a>
+          <a href="categorias.html">Categorías</a>
+          <a href="todos.html">Ver todos</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="contacto.html">Contacto</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Categorías</div>
+          <a href="todos.html?cat=metabolicos">Investigación Metabólica</a>
+          <a href="todos.html?cat=gh">Moduladores GH</a>
+          <a href="todos.html?cat=cognitivas">Neuro-Cognición</a>
+          <a href="todos.html?cat=desempeno">Desempeño Celular</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Contacto</div>
+          <a href="mailto:info@venuspeptide.com">info@venuspeptide.com</a>
+          <a href="contacto.html">Formulario de contacto</a>
+        </div>
+      </div>
+      <p class="footer__disclaimer">
+        Todos los productos son exclusivamente para investigación científica en laboratorio. No están destinados al diagnóstico, tratamiento, cura o prevención de ninguna enfermedad.
+      </p>
+      <div class="footer__bottom">
+        <span>© 2026 Venus Peptide. Todos los derechos reservados.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 1. Buscamos si hay un parámetro "?cat=" en la URL de la barra de direcciones
+      const parametros = new URLSearchParams(window.location.search);
+      const categoriaSeleccionada = parametros.get('cat');
+
+      // Diccionario para traducir los códigos técnicos a títulos elegantes en la web
+      const nombresCategorias = {
+        'metabolicos': 'Investigación Metabólica',
+        'gh': 'Moduladores y Secretagogos GH',
+        'cognitivas': 'Neuro-Investigación y Cognición',
+        'desempeno': 'Regeneración y Desempeño Celular'
+      };
+
+      // 2. Si el usuario eligió una categoría, ejecutamos el filtro
+      if (categoriaSeleccionada && nombresCategorias[categoriaSeleccionada]) {
+        
+        // Cambiamos el título principal y subtítulo dinámicamente
+        document.getElementById('catalogTitle').textContent = nombresCategorias[categoriaSeleccionada];
+        document.getElementById('catalogSubtitle').textContent = `Resultados de reactivos específicos optimizados para la línea de ${nombresCategorias[categoriaSeleccionada].toLowerCase()}.`;
+
+        // Seleccionamos todas las tarjetas de productos
+        const productos = document.querySelectorAll('.product-card');
+
+        productos.forEach(producto => {
+          // Si el atributo data-category del HTML NO coincide con la URL, lo escondemos
+          if (producto.getAttribute('data-category') !== categoriaSeleccionada) {
+            producto.style.display = 'none';
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
