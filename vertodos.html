@@ -291,5 +291,46 @@
   </footer>
 
   <script src="main.js"></script>
+
+<!-- ── SCRIPT FILTRADO INTELIGENTE DE CATEGORÍAS ── -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Analizar si la URL contiene una categoría (?cat=...)
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryParam = urlParams.get('cat');
+
+      if (categoryParam) {
+        const cards = document.querySelectorAll('.p-card');
+        let productosEncontrados = 0;
+
+        cards.forEach(card => {
+          const cardCategory = card.getAttribute('data-category');
+          
+          // 2. Mostrar solo los productos que coinciden con la categoría
+          if (cardCategory === categoryParam) {
+            card.style.display = 'flex';
+            productosEncontrados++;
+          } else {
+            card.style.style.setProperty('display', 'none', 'important'); // Oculta el resto
+          }
+        });
+
+        // 3. Cambiar dinámicamente el título principal de la página
+        const h1 = document.querySelector('.catalog-header h1');
+        if (h1) {
+          const nombresCategorias = {
+            'metabolicos': 'Investigación Metabólica',
+            'gh': 'Moduladores GH / Secretagogos',
+            'cognitivas': 'Neuro-Cognición y Ciclos de Sueño',
+            'desempeno': 'Desempeño y Regeneración Celular'
+          };
+          if (nombresCategorias[categoryParam]) {
+            h1.textContent = nombresCategorias[categoryParam];
+          }
+        }
+      }
+    });
+  </script>
+  
 </body>
 </html>
