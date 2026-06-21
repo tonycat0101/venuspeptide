@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Reconstitución de Péptidos | Venus Peptide</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ── NAV (Consistente con todo el sitio con menú Soporte) ─────────────────────────────── -->
+    <nav class="nav">
+        <div class="nav__inner">
+            <a href="index.html" class="nav__logo">
+                <div class="nav__logo-icon">V</div>
+                Venus Peptide
+            </a>
+            <div class="nav__links">
+                <a href="index.html">Inicio</a>
+                <a href="categorias.html">Categorías</a>
+                <a href="vertodos.html">Ver todos</a>
+                <a href="nosotros.html">Nosotros</a>
+                
+                <!-- Menú Desplegable de Soporte -->
+                <div style="position: relative; display: inline-block;" 
+                     onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
+                     onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+                    
+                    <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
+                        Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
+                    </a>
+                    
+                    <!-- Contenedor del Submenú Absoluto -->
+                    <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
+                        <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
+                        <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left; font-weight: 600;">Calculadora de Reconstitución</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav__burger" id="burgerBtn">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menú móvil (Despliega las opciones directas) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="vertodos.html">Ver todos</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="calculadora.html" style="font-weight: 600;">Calculadora de Reconstitución</a>
+    </div>
+
+    <!-- ── CONTENIDO PRINCIPAL ───────────────────────────────────────────── -->
+    <main class="section" style="padding-top: 140px;">
+        <div class="container">
+            
+            <span class="section-eyebrow">Herramientas de Laboratorio</span>
+            <h1 class="section-title" style="margin-bottom: 40px;">Calculadora de Reconstitución</h1>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: start;">
+                
+                <!-- Columna Izquierda: Entradas de datos -->
+                <div style="background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 32px; box-shadow: var(--shadow-card);">
+                    
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">1. Cantidad total del vial (Péptido)</label>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="number" id="peptideMg" value="5" min="0.1" step="any" style="flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 15px; color: var(--text-dark);" oninput="calcularReconstitucion()">
+                            <span style="font-size: 14px; font-weight: 600; color: var(--text-muted); width: 40px;">mg</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">2. Volumen de diluyente (Agua estéril/bacteriostática)</label>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="number" id="waterMl" value="2" min="0.1" step="any" style="flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 15px; color: var(--text-dark);" oninput="calcularReconstitucion()">
+                            <span style="font-size: 14px; font-weight: 600; color: var(--text-muted); width: 40px;">mL</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">3. Tipo de jeringa utilizada</label>
+                        <select id="syringeType" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 15px; color: var(--text-dark); background: var(--bg-white);" onchange="calcularReconstitucion()">
+                            <option value="100">Jeringa U-100 (1.0 mL / 100 Unidades)</option>
+                            <option value="50">Jeringa U-50 (0.5 mL / 50 Unidades)</option>
+                            <option value="30">Jeringa U-30 (0.3 mL / 30 Unidades)</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 8px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">4. Dosis de investigación requerida</label>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="number" id="doseMcg" value="250" min="1" step="any" style="flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 15px; color: var(--text-dark);" oninput="calcularReconstitucion()">
+                            <span style="font-size: 14px; font-weight: 600; color: var(--text-muted); width: 40px;">mcg</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Columna Derecha: Resultados -->
+                <div style="background: var(--bg-light); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 32px; box-shadow: var(--shadow-card);">
+                    <h3 style="font-family: var(--font-display); font-size: 20px; color: var(--text-dark); margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">Resultados del Análisis</h3>
+                    
+                    <div style="text-align: center; background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;">
+                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); display: block; margin-bottom: 4px;">Extraer en la Jeringa</span>
+                        <div id="resultUnits" style="font-family: var(--font-display); font-size: 44px; font-weight: 800; color: var(--text-dark); line-height: 1;">10</div>
+                        <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Unidades (o marcas de escala)</span>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px dotted var(--border); padding-bottom: 8px;">
+                            <span style="color: var(--text-muted);">Concentración total del vial:</span>
+                            <strong id="totalMcg" style="color: var(--text-dark);">5,000 mcg</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px dotted var(--border); padding-bottom: 8px;">
+                            <span style="color: var(--text-muted);">Concentración por cada unidad:</span>
+                            <strong id="mcgPerUnit" style="color: var(--text-dark);">25 mcg/unidad</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 14px;">
+                            <span style="color: var(--text-muted);">Volumen líquido de la dosis:</span>
+                            <strong id="doseMl" style="color: var(--text-dark);">0.10 mL</strong>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 11px; line-height: 1.5; color: var(--text-muted); margin-top: 28px; background: rgba(37,99,235,0.05); padding: 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--blue);">
+                        * Asegúrese de comprobar siempre la calibración de la jeringa antes de cualquier procedimiento de dosificación en entornos controlados de laboratorio.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ── PIE DE PÁGINA (Actualizado manteniendo la cuadrícula limpia) ── -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__top">
+                <div class="footer__brand">
+                    <div class="footer__logo">
+                        <div class="footer__logo-icon">V</div>
+                        Venus Peptide
+                    </div>
+                    <p>Compuestos de alta pureza destinados exclusivamente para la investigación científica in-vitro y desarrollo analítico de laboratorio.</p>
+                </div>
+                <div class="footer__col">
+                    <div class="footer__col-title">Navegación</div>
+                    <a href="index.html">Inicio</a>
+                    <a href="categorias.html">Categorías</a>
+                    <a href="vertodos.html">Ver todos</a>
+                    <a href="nosotros.html">Nosotros</a>
+                </div>
+                <div class="footer__col">
+                    <div class="footer__col-title">Legal</div>
+                    <a href="terminos.html">Términos de Uso</a>
+                    <a href="privacidad.html">Política de Privacidad</a>
+                </div>
+                <div class="footer__col">
+                    <div class="footer__col-title">Soporte</div>
+                    <a href="contacto.html">Contacto</a>
+                    <a href="calculadora.html">Calculadora</a>
+                    <a href="mailto:support@venuspeptide.com">Soporte Técnico</a>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <div>© 2026 Venus Peptide. Todos los derechos reservados.</div>
+            </div>
+            
+            <p class="footer__disclaimer">Descargo de responsabilidad: Todos los compuestos químicos disponibles en este sitio web están destinados estrictamente para uso de laboratorio, investigación analítica y estudios in-vitro. No aptos para el consumo humano ni animal bajo ninguna circunstancia.</p>
+        </div>
+    </footer>
+
+    <!-- ── LÓGICA DE CÁLCULO CIENTÍFICO ── -->
+    <script>
+        function calcularReconstitucion() {
+            const peptideMg = parseFloat(document.getElementById('peptideMg').value) || 0;
+            const waterMl = parseFloat(document.getElementById('waterMl').value) || 0;
+            const syringeUnitsMax = parseFloat(document.getElementById('syringeType').value) || 100;
+            const doseMcg = parseFloat(document.getElementById('doseMcg').value) || 0;
+
+            const resultUnits = document.getElementById('resultUnits');
+            const totalMcgText = document.getElementById('totalMcg');
+            const mcgPerUnitText = document.getElementById('mcgPerUnit');
+            const doseMlText = document.getElementById('doseMl');
+
+            if (peptideMg <= 0 || waterMl <= 0 || doseMcg <= 0) {
+                resultUnits.innerText = "0";
+                totalMcgText.innerText = "0 mcg";
+                mcgPerUnitText.innerText = "0 mcg/unidad";
+                doseMlText.innerText = "0.00 mL";
+                return;
+            }
+
+            const totalMcg = peptideMg * 1000;
+            const totalLiquidUnits = waterMl * 100;
+            const mcgPerUnit = totalMcg / totalLiquidUnits;
+            const finalUnitsRequired = doseMcg / mcgPerUnit;
+            const doseMl = (doseMcg / totalMcg) * waterMl;
+
+            totalMcgText.innerText = totalMcg.toLocaleString('es-ES') + " mcg";
+            mcgPerUnitText.innerText = mcgPerUnit.toFixed(2) + " mcg/unidad";
+            doseMlText.innerText = doseMl.toFixed(3) + " mL";
+            
+            if (finalUnitsRequired > totalLiquidUnits) {
+                resultUnits.innerText = "Excede capacidad";
+                resultUnits.style.fontSize = "24px";
+                resultUnits.style.color = "#ef4444";
+            } else {
+                resultUnits.innerText = finalUnitsRequired.toFixed(1);
+                resultUnits.style.fontSize = "44px";
+                resultUnits.style.color = "var(--text-dark)";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', calcularReconstitucion);
+    </script>
+
+</body>
+</html>
