@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instrucciones de Pago | Venus Peptide</title>
   
-  <!-- Enlace a tu CSS global principal -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Estilos Premium para la pantalla de Instrucciones -->
   <style>
     .instructions-section {
       padding: calc(var(--nav-h) + 60px) 0 100px;
@@ -61,7 +59,7 @@
       margin-bottom: 30px;
     }
 
-    /* Caja de datos clave */
+    /* Caja de datos optimizada a 3 columnas */
     .summary-box {
       background: var(--bg-light);
       border: 1px solid var(--border);
@@ -69,14 +67,21 @@
       padding: 20px;
       margin-bottom: 30px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 15px;
       text-align: left;
     }
 
+    @media (max-width: 550px) {
+      .summary-box {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
     .summary-item label {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
       text-transform: uppercase;
       font-weight: 600;
@@ -84,12 +89,11 @@
     }
 
     .summary-item span {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       color: var(--text-dark);
     }
 
-    /* Contenedor dinámico de pasos */
     .steps-container {
       text-align: left;
       border-top: 1px solid var(--border);
@@ -108,7 +112,6 @@
       color: var(--text-dark);
     }
 
-    /* Caja contenedora para copiar el tag/correo de pago */
     .copy-data-box {
       background: #f8fafc;
       border: 2px dashed #cbd5e1;
@@ -128,6 +131,17 @@
       font-weight: 800;
     }
 
+    .warning-note {
+      background: #fff5f5;
+      border-left: 4px solid #ef4444;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      margin-top: 15px;
+      font-size: 13.5px;
+      color: #991b1b;
+      line-height: 1.5;
+    }
+
     .action-footer-btn {
       display: inline-flex;
       align-items: center;
@@ -144,7 +158,6 @@
 </head>
 <body>
 
-  <!-- NAVEGACIÓN GLOBAL -->
   <nav class="nav">
     <div class="nav__inner">
         <a href="index.html" class="nav__logo">
@@ -181,7 +194,6 @@
     </div>
   </nav>
 
-  <!-- MENÚ MÓVIL GLOBAL -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
@@ -194,7 +206,6 @@
     </a>
   </div>
 
-  <!-- SECCIÓN PRINCIPAL DE INSTRUCCIONES -->
   <main class="instructions-section">
     <div class="container instructions-container">
       <div class="instructions-card">
@@ -206,31 +217,30 @@
           Para proceder con la preparación y envío asegurado de tus compuestos de investigación, realiza la transferencia manual siguiendo las indicaciones detalladas abajo.
         </p>
 
-        <!-- Resumen financiero rápido -->
+        <!-- Resumen financiero modificado con el identificador -->
         <div class="summary-box">
           <div class="summary-item">
-            <label>Monto total a transferir</label>
+            <label>Monto a transferir</label>
             <span id="displayTotal" class="highlight-price">$0.00 USD</span>
           </div>
           <div class="summary-item">
-            <label>Método seleccionado</label>
+            <label>Método de Pago</label>
             <span id="displayMetodo">Cargando...</span>
+          </div>
+          <div class="summary-item">
+            <label>Código de Referencia</label>
+            <span id="displayCodigo" style="color: #2563eb;">-</span>
           </div>
         </div>
 
-        <!-- Pasos exactos según el método (Inyectados por JS) -->
-        <div class="steps-container" id="paymentDetailsBox">
-          <!-- Dinámico -->
-        </div>
+        <div class="steps-container" id="paymentDetailsBox"></div>
 
-        <!-- Botón para volver o cerrar -->
         <a href="index.html" class="btn btn-primary action-footer-btn">Volver al Inicio</a>
         
       </div>
     </div>
   </main>
 
-  <!-- FOOTER GLOBAL -->
   <footer class="footer">
     <div class="container">
         <div class="footer__top">
@@ -263,7 +273,6 @@
   <script src="main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Menú hamburguesa móvil funcional
       const burgerBtn = document.getElementById('burgerBtn');
       const mobileMenu = document.getElementById('mobileMenu');
       if (burgerBtn && mobileMenu) {
@@ -273,36 +282,49 @@
         });
       }
 
-      // Lógica de lectura y despliegue del pago retenido
       const total = sessionStorage.getItem('pending_order_total') || '0.00';
       const metodo = sessionStorage.getItem('pending_order_method') || 'Zelle';
+      const codigo = sessionStorage.getItem('pending_order_id') || 'VP-0000';
 
       document.getElementById('displayTotal').textContent = `$${total} USD`;
       document.getElementById('displayMetodo').textContent = metodo;
+      document.getElementById('displayCodigo').textContent = codigo;
 
       const detailBox = document.getElementById('paymentDetailsBox');
       let html = '';
 
       if (metodo === 'Zelle') {
         html = `
-          <p class="instruction-step">1. Abre tu aplicación bancaria de preferencia y accede a la sección de <strong>Zelle</strong>.</p>
-          <p class="instruction-step">2. Envía el importe exacto de <strong class="highlight-price">$${total} USD</strong> al siguiente correo electrónico de cuenta comercial:</p>
+          <p class="instruction-step">1. Abre tu aplicación bancaria y accede a la sección de <strong>Zelle</strong>.</p>
+          <p class="instruction-step">2. Envía el importe exacto de <strong class="highlight-price">$${total} USD</strong> a la siguiente cuenta comercial:</p>
           <div class="copy-data-box">pagos@venuspeptide.com</div>
-          <p class="instruction-step">3. Una vez completado el envío, guarda tu comprobante digital. Tu orden cambiará a estado de procesamiento en cuanto nuestro departamento de validación identifique los fondos.</p>
+          <div class="warning-note">
+            <strong>⚠️ REGLA DE SEGURIDAD CRUCIAL EN ZELLE:</strong><br>
+            En el campo <strong>"Memo", "Mensaje" o "Motivo"</strong> de la transferencia, escribe <strong>ÚNICAMENTE</strong> el código de referencia: <strong>${codigo}</strong>.<br><br>
+            <em>*Queda estrictamente prohibido escribir "Venus Peptide", nombres de viales o cualquier término comercial. Si incluyes texto prohibido, el pago no podrá validarse.*</em>
+          </div>
         `;
       } else if (metodo === 'CashApp') {
         html = `
-          <p class="instruction-step">1. Abre la aplicación de <strong>CashApp</strong> en tu dispositivo móvil.</p>
-          <p class="instruction-step">2. Introduce el monto exacto de <strong class="highlight-price">$${total} USD</strong> y envíalo al siguiente identificador oficial ($Cashtag):</p>
+          <p class="instruction-step">1. Abre la aplicación de <strong>CashApp</strong> en tu teléfono.</p>
+          <p class="instruction-step">2. Envía los <strong class="highlight-price">$${total} USD</strong> exactos al siguiente $Cashtag oficial:</p>
           <div class="copy-data-box">$VenusPeptide</div>
-          <p class="instruction-step">3. Por favor, añade tu nombre completo en la sección de notas del envío para agilizar la sincronización de tu paquete en el laboratorio.</p>
+          <div class="warning-note">
+            <strong>⚠️ REGLA DE SEGURIDAD CRUCIAL EN CASHAPP:</strong><br>
+            En la sección de notas (donde dice <strong>"For"</strong>), introduce <strong>SÓLO</strong> tu código: <strong>${codigo}</strong>.<br><br>
+            <em>*No agregues palabras adicionales ni menciones químicos o productos. Deja únicamente el código para mantener la privacidad de la transacción.*</em>
+          </div>
         `;
       } else if (metodo === 'Venmo') {
         html = `
-          <p class="instruction-step">1. Accede a tu cuenta en la aplicación oficial de <strong>Venmo</strong>.</p>
-          <p class="instruction-step">2. Realiza la transferencia del monto total neto de <strong class="highlight-price">$${total} USD</strong> a la siguiente cuenta asignada:</p>
+          <p class="instruction-step">1. Accede a tu aplicación de <strong>Venmo</strong>.</p>
+          <p class="instruction-step">2. Transfiere el monto total de <strong class="highlight-price">$${total} USD</strong> al usuario asignado:</p>
           <div class="copy-data-box">@VenusPeptide</div>
-          <p class="instruction-step">3. Evita usar palabras relacionadas con compuestos farmacéuticos o químicos en la nota pública para mantener los criterios de privacidad de la cuenta.</p>
+          <div class="warning-note">
+            <strong>⚠️ REGLA DE SEGURIDAD CRUCIAL EN VENMO:</strong><br>
+            En la nota del concepto de pago, coloca <strong>ÚNICAMENTE</strong> el código: <strong>${codigo}</strong>.<br><br>
+            <em>*Por protección del canal, no utilices emojis relacionados ni nombres de la web. Cualquier transacción con descripciones inadecuadas será rebotada de inmediato.*</em>
+          </div>
         `;
       }
 
