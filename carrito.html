@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tu Carrito de Compras | Venus Peptide</title>
-  
+  <meta name="description" content="Revisa y gestiona los compuestos peptídicos en tu carrito de investigación Venus Peptide.">
   <link rel="stylesheet" href="styles.css">
 
   <style>
@@ -13,7 +13,6 @@
       background: var(--bg-light);
       min-height: 75vh;
     }
-
     .cart-layout {
       display: grid;
       grid-template-columns: 1fr 380px;
@@ -21,187 +20,64 @@
       align-items: start;
       margin-top: 40px;
     }
-
     @media (max-width: 992px) {
-      .cart-layout {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
+      .cart-layout { grid-template-columns: 1fr; gap: 32px; }
     }
-
-    .cart-items-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
+    .cart-items-list { display: flex; flex-direction: column; gap: 20px; }
     .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      padding: 24px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      background: var(--bg-white);
-      box-shadow: var(--shadow-card);
+      display: flex; align-items: center; gap: 24px; padding: 24px;
+      border: 1px solid var(--border); border-radius: var(--radius-md);
+      background: var(--bg-white); box-shadow: var(--shadow-card);
     }
-
     .item-vial-preview {
-      width: 52px;
-      height: 88px;
-      border: 2px solid var(--border);
-      border-radius: 8px 8px 5px 5px;
-      position: relative;
-      background: var(--bg-white);
-      flex-shrink: 0;
+      width: 52px; height: 88px; border: 2px solid var(--border);
+      border-radius: 8px 8px 5px 5px; position: relative;
+      background: var(--bg-white); flex-shrink: 0;
     }
     .item-vial-cap {
-      width: 100%;
-      height: 12px;
-      border-radius: 5px 5px 0 0;
-      position: absolute;
-      top: -1px;
-      left: 0;
+      width: 100%; height: 12px; border-radius: 5px 5px 0 0;
+      position: absolute; top: -1px; left: 0;
     }
     .item-vial-text {
-      position: absolute;
-      top: 40%;
-      left: 0;
-      width: 100%;
-      font-size: 8.5px;
-      font-weight: 700;
-      color: var(--text-dark);
-      text-align: center;
-      line-height: 1.1;
-      padding: 0 4px;
-      word-wrap: break-word;
+      position: absolute; top: 40%; left: 0; width: 100%;
+      font-size: 8.5px; font-weight: 700; color: var(--text-dark);
+      text-align: center; line-height: 1.1; padding: 0 4px; word-wrap: break-word;
     }
-
-    .item-details {
-      flex: 1;
-    }
-    .item-name {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: 4px;
-    }
-    .item-pureza {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .item-qty-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 12px;
-    }
-
+    .item-details { flex: 1; }
+    .item-name { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+    .item-pureza { font-size: 13px; color: var(--text-muted); }
+    .item-qty-actions { display: flex; align-items: center; gap: 16px; margin-top: 12px; }
     .qty-box {
-      display: flex;
-      align-items: center;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      height: 36px;
-      background: var(--bg-white);
-      overflow: hidden;
+      display: flex; align-items: center; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); height: 36px; background: var(--bg-white); overflow: hidden;
     }
     .qty-btn {
-      background: none;
-      border: none;
-      width: 32px;
-      height: 100%;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--text-body);
-      transition: background 0.2s;
+      background: none; border: none; width: 32px; height: 100%;
+      font-size: 16px; font-weight: 600; cursor: pointer; color: var(--text-body); transition: background 0.2s;
     }
-    .qty-btn:hover {
-      background: var(--bg-light);
-    }
-    .qty-val {
-      width: 36px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-dark);
-      border: none;
-      outline: none;
-    }
-
-    .btn-delete {
-      background: none;
-      border: none;
-      color: #ef4444;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-delete:hover {
-      text-decoration: underline;
-    }
-
-    .item-price-total {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text-dark);
-      text-align: right;
-      min-width: 110px;
-    }
-
+    .qty-btn:hover { background: var(--bg-light); }
+    .qty-val { width: 36px; text-align: center; font-size: 14px; font-weight: 700; color: var(--text-dark); border: none; outline: none; }
+    .btn-delete { background: none; border: none; color: #ef4444; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-delete:hover { text-decoration: underline; }
+    .item-price-total { font-family: var(--font-display); font-size: 20px; font-weight: 800; color: var(--text-dark); text-align: right; min-width: 110px; }
     .cart-summary {
-      background: var(--bg-white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 32px;
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      background: var(--bg-white); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 32px; box-shadow: var(--shadow-card);
+      display: flex; flex-direction: column; gap: 20px;
     }
-    .summary-title {
-      font-family: var(--font-display);
-      font-size: 19px;
-      font-weight: 700;
-      color: var(--text-dark);
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 14px;
-    }
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-    .summary-row.total {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text-dark);
-      border-top: 1px solid var(--border);
-      padding-top: 16px;
-      margin-top: 8px;
-    }
-
+    .summary-title { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--text-dark); border-bottom: 1px solid var(--border); padding-bottom: 14px; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted); }
+    .summary-row.total { font-size: 22px; font-weight: 800; color: var(--text-dark); border-top: 1px solid var(--border); padding-top: 16px; margin-top: 8px; }
     .empty-cart-box {
-      text-align: center;
-      padding: 80px 24px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      background: var(--bg-white);
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
+      text-align: center; padding: 80px 24px; border: 1px solid var(--border);
+      border-radius: var(--radius-md); background: var(--bg-white); box-shadow: var(--shadow-card);
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
     }
   </style>
 </head>
 <body>
 
+  <!-- NAV estándar del sitio (igual al resto de páginas) -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo">
@@ -210,12 +86,44 @@
       </a>
       <div class="nav__links">
         <a href="index.html">Inicio</a>
-        <a href="vertodos.html">Catálogo</a>
-        <a href="index.html#contacto">Contacto</a>
-        <a href="carrito.html" class="active">Carrito <span id="navCartCount">(0)</span></a>
+        <a href="categorias.html">Categorías</a>
+        <a href="vertodos.html">Ver todos</a>
+        <a href="nosotros.html">Nosotros</a>
+        <div style="position: relative; display: inline-block;"
+             onmouseenter="this.querySelector('.nav__submenu').style.display='block'"
+             onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+          <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
+            Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
+          </a>
+          <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
+            <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
+            <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
+          </div>
+        </div>
+        <a href="carrito.html" style="display: inline-flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff !important; padding: 8px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; margin-left: 15px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span>Carrito</span>
+          <span id="navCartCount" style="background: rgba(255,255,255,0.2); padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 700;">(0)</span>
+        </a>
+      </div>
+      <div class="nav__burger" id="burgerBtn">
+        <span></span><span></span><span></span>
       </div>
     </div>
   </nav>
+
+  <!-- Menú móvil (igual al resto de páginas) -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Inicio</a>
+    <a href="categorias.html">Categorías</a>
+    <a href="vertodos.html">Ver todos</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="calculadora.html">Calculadora de Reconstitución</a>
+    <a href="carrito.html" style="margin-top: 15px; background: #2563eb; color: white !important; text-align: center; padding: 12px; border-radius: 6px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      Ver Carrito
+    </a>
+  </div>
 
   <main class="cart-section">
     <div class="container">
@@ -224,41 +132,87 @@
     </div>
   </main>
 
+  <!-- Footer estándar del sitio (igual al index) -->
   <footer class="footer">
     <div class="container">
-      <div class="footer__top">
+
+      <div class="footer__top" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+
         <div class="footer__brand">
-          <div class="footer__logo">
-            <div class="footer__logo-icon">V</div>
-            Venus Peptide
-          </div>
-          <p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p>
+          <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
+          <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
         </div>
+
         <div class="footer__col">
           <div class="footer__col-title">Navegación</div>
           <a href="index.html">Inicio</a>
-          <a href="vertodos.html">Catálogo</a>
+          <a href="categorias.html">Categorías</a>
+          <a href="vertodos.html">Ver todos</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="contacto.html">Contacto</a>
         </div>
+
         <div class="footer__col">
-          <div class="footer__col-title">Soporte</div>
-          <a href="index.html#contacto">Contacto</a>
+          <div class="footer__col-title">Categorías</div>
+          <a href="vertodos.html?cat=metabolicos">Investigación Metabólica</a>
+          <a href="vertodos.html?cat=gh">Moduladores GH</a>
+          <a href="vertodos.html?cat=cognitivas">Neuro-Cognición</a>
+          <a href="vertodos.html?cat=desempeno">Desempeño Celular</a>
         </div>
+
       </div>
-      <div class="footer__bottom">
-        <div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div>
+
+      <div class="footer__bottom-horizontal" style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: var(--text-muted, #94a3b8);">
+          <div>Copyright ©2026 Venus Peptide, All Rights Reserved.</div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <style>
+              .inline-legal-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+              .inline-legal-link:hover { color: #fff; }
+              .inline-separator { color: rgba(255, 255, 255, 0.2); font-size: 12px; user-select: none; }
+            </style>
+            <a href="faq.html" class="inline-legal-link">FAQ</a>
+            <span class="inline-separator">|</span>
+            <a href="terminos.html" class="inline-legal-link">Terms &amp; Conditions</a>
+            <span class="inline-separator">|</span>
+            <a href="envios.html" class="inline-legal-link">Shipping &amp; Returns</a>
+            <span class="inline-separator">|</span>
+            <a href="privacidad.html" class="inline-legal-link">Privacy Policy</a>
+            <span class="inline-separator">|</span>
+            <a href="contacto.html" class="inline-legal-link">Contact Us</a>
+          </div>
+        </div>
+
+        <p style="text-align: center; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-weight: 600; letter-spacing: 0.01em;">
+          Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. Debe tener la edad legal requerida para adquirir estos compuestos. Los productos NO son para consumo humano ni veterinario de ningún tipo. Las declaraciones hechas dentro de este sitio web no han sido evaluadas por ninguna administración de alimentos o medicamentos. Estos reactivos no están destinados a diagnosticar, tratar, curar o prevenir ninguna enfermedad.
+        </p>
+
       </div>
+
     </div>
   </footer>
 
   <script src="main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => { renderizarCarrito(); });
+    document.addEventListener('DOMContentLoaded', () => {
+      // Burger móvil
+      const burgerBtn = document.getElementById('burgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (burgerBtn && mobileMenu) {
+        burgerBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('active');
+          burgerBtn.classList.toggle('active');
+        });
+      }
+
+      renderizarCarrito();
+    });
 
     function renderizarCarrito() {
       const container = document.getElementById('cartWrapper');
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
-      // Actualizar el contador de la barra de navegación dinámicamente
       const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
       const navCount = document.getElementById('navCartCount');
       if (navCount) navCount.textContent = `(${totalArticulos})`;
@@ -338,7 +292,6 @@
       renderizarCarrito();
     };
 
-    /* Redirección directa al formulario de datos de envío y pago seguro */
     window.procesarOrden = function() {
       window.location.href = 'checkout.html';
     };
