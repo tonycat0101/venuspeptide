@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finalizar Pedido | Venus Peptide</title>
   
-  <!-- Enlace a tu CSS global principal -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Estilos Premium específicos para el Checkout -->
   <style>
     .checkout-section {
       padding: calc(var(--nav-h) + 60px) 0 100px;
@@ -31,7 +29,6 @@
       }
     }
 
-    /* Tarjetas de Contenido */
     .checkout-card {
       background: var(--bg-white);
       border: 1px solid var(--border);
@@ -54,7 +51,6 @@
       gap: 10px;
     }
 
-    /* Formularios */
     .form-group {
       margin-bottom: 22px;
     }
@@ -104,7 +100,6 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
-    /* Métodos de Pago */
     .payment-options {
       display: flex;
       flex-direction: column;
@@ -143,7 +138,6 @@
       color: var(--text-dark);
     }
 
-    /* Lista del Resumen de Compra */
     .summary-products-list {
       display: flex;
       flex-direction: column;
@@ -179,7 +173,6 @@
       margin-top: 6px;
     }
 
-    /* Casilla de Verificación de Edad y Términos */
     .legal-checkbox-container {
       margin-top: 24px;
       padding-top: 18px;
@@ -207,7 +200,6 @@
 </head>
 <body>
 
-  <!-- NAVEGACIÓN GLOBAL -->
   <nav class="nav">
     <div class="nav__inner">
         <a href="index.html" class="nav__logo">
@@ -244,7 +236,6 @@
     </div>
   </nav>
 
-  <!-- MENÚ MÓVIL GLOBAL -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
@@ -257,7 +248,6 @@
     </a>
   </div>
 
-  <!-- CONTENIDO DE CHECKOUT -->
   <main class="checkout-section">
     <div class="container">
       <h1 class="section-title">Finalizar Orden</h1>
@@ -265,7 +255,6 @@
       <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
         <div class="checkout-layout">
           
-          <!-- COLUMNA IZQUIERDA: Formulario de Envíos -->
           <div>
             <div class="checkout-card">
               <h2>📋 Información de Envío (Investigación)</h2>
@@ -307,7 +296,6 @@
               </div>
             </div>
 
-            <!-- Métodos de Pago Corregidos -->
             <div class="checkout-card">
               <h2>🔒 Métodos de Pago Seguros</h2>
               <div class="payment-options">
@@ -333,13 +321,10 @@
             </div>
           </div>
 
-          <!-- COLUMNA DERECHA: Resumen de Compra -->
           <div class="checkout-card" style="position: sticky; top: 100px;">
             <h2>Resumen del Pedido</h2>
             
-            <div id="checkoutItemsContainer" class="summary-products-list">
-              <!-- Cargado dinámicamente mediante JS -->
-            </div>
+            <div id="checkoutItemsContainer" class="summary-products-list"></div>
 
             <div class="summary-totals-box">
               <div class="summary-line">
@@ -356,7 +341,6 @@
               </div>
             </div>
 
-            <!-- Casilla Legal Obligatoria -->
             <div class="legal-checkbox-container">
               <label class="legal-label">
                 <input type="checkbox" id="checkoutLegal" required>
@@ -366,7 +350,6 @@
               </label>
             </div>
 
-            <!-- Botón de Envío de Orden -->
             <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 24px; border-radius: var(--radius-sm); font-size: 15px;">
               Completar mi Pedido
             </button>
@@ -377,7 +360,6 @@
     </div>
   </main>
 
-  <!-- FOOTER GLOBAL -->
   <footer class="footer">
     <div class="container">
         <div class="footer__top">
@@ -410,7 +392,6 @@
   <script src="main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Sincronización Menú Móvil
       const burgerBtn = document.getElementById('burgerBtn');
       const mobileMenu = document.getElementById('mobileMenu');
       if (burgerBtn && mobileMenu) {
@@ -477,14 +458,14 @@
         }
       });
 
-      // Guardamos la información crítica del flujo en sessionStorage para instrucciones.html
+      // CAMBIO CLAVE: Generación automática de código de referencia único (Ej: VP-7294)
+      const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
+
       sessionStorage.setItem('pending_order_total', total.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
+      sessionStorage.setItem('pending_order_id', codigoReferencia); // Se almacena en la sesión
 
-      // Limpiamos el carrito local para evitar duplicados
       localStorage.removeItem('venus_cart');
-
-      // Redirección inmediata a las instrucciones de transferencia manual
       window.location.href = 'instrucciones.html';
     }
   </script>
