@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tu Carrito de Compras | Venus Peptide</title>
   
+  <link rel="stylesheet" href="styles.css">
+  
   <style>
+    /* ── ESTILOS EXCLUSIVOS DE LA VISTA DE CARRITO ── */
     :root {
       --primary: #2563eb;
       --primary-hover: #1d4ed8;
@@ -14,185 +16,242 @@
       --slate: #64748b;
       --light: #f8fafc;
       --border: #e2e8f0;
-      --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --shadow: 0 4px 20px rgba(15, 30, 53, 0.05);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
-    body { background-color: #ffffff; color: var(--dark); line-height: 1.5; }
-
-    /* NAVEGACIÓN */
-    .nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: #fff; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; border-bottom: 1px solid var(--border); }
-    .nav__logo { font-size: 20px; font-weight: 800; color: var(--dark); text-decoration: none; letter-spacing: -0.03em; }
-    .nav__logo span { color: var(--primary); }
-    .nav__links { display: flex; gap: 32px; list-style: none; align-items: center; }
-    .nav__links a { text-decoration: none; color: var(--slate); font-weight: 600; font-size: 14px; }
-    .nav__links a:hover, .nav__links a.active { color: var(--dark); }
-    .nav__cart { background: var(--light); padding: 8px 16px; border-radius: 20px; color: var(--dark) !important; font-weight: 700 !important; display: flex; align-items: center; gap: 6px; }
-
-    /* CONTENEDOR INTERNO */
-    .cart-container { max-width: 1200px; margin: 120px auto 60px auto; padding: 0 24px; }
-    .cart-title { font-size: 32px; font-weight: 800; margin-bottom: 30px; letter-spacing: -0.02em; }
-
-    /* GRID DEL CARRITO */
-    .cart-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
+    .cart-container { max-width: 1200px; margin: 140px auto 80px auto; padding: 0 24px; }
+    .cart-title { font-size: 28px; font-weight: 700; color: var(--dark); margin-bottom: 32px; letter-spacing: -0.02em; text-transform: uppercase; }
     
-    /* Lista de Productos (Izquierda) */
-    .cart-items-list { display: flex; flex-direction: column; gap: 20px; }
-    .cart-item { display: flex; align-items: center; gap: 20px; padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+    .cart-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start; }
     
-    /* Mini Vial Autogenerado */
-    .item-vial-preview { width: 50px; height: 85px; border: 2px solid #cbd5e1; border-radius: 8px 8px 5px 5px; position: relative; background: #fff; flex-shrink: 0; }
-    .item-vial-cap { width: 100%; height: 10px; background: var(--primary); border-radius: 6px 6px 0 0; position: absolute; top: -1px; left: 0; }
-    .item-vial-text { position: absolute; top: 35%; left: 0; width: 100%; font-size: 8px; font-weight: 800; color: #334155; text-align: center; line-height: 1; padding: 0 2px; word-wrap: break-word; }
-
-    .item-details { flex: 1; }
-    .item-name { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
-    .item-pureza { font-size: 13px; color: var(--slate); }
-
-    /* Controles de cantidad en línea */
-    .item-qty-actions { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
-    .qty-box { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; height: 34px; background: #fff; }
-    .qty-btn { background: none; border: none; width: 30px; height: 100%; font-size: 16px; font-weight: 600; cursor: pointer; }
-    .qty-val { width: 35px; text-align: center; font-size: 14px; font-weight: 700; border: none; outline: none; }
-    .btn-delete { background: none; border: none; color: #ef4444; font-size: 13px; font-weight: 600; cursor: pointer; }
-    .btn-delete:hover { text-decoration: underline; }
-
-    .item-price-total { font-size: 18px; font-weight: 800; color: var(--dark); text-align: right; min-width: 100px; }
-
-    /* Resumen de Compra (Derecha) */
-    .cart-summary { background: var(--light); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-    .summary-title { font-size: 18px; font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
-    .summary-row { display: flex; justify-content: space-between; font-size: 15px; color: var(--slate); font-weight: 500; }
-    .summary-row.total { font-size: 20px; font-weight: 800; color: var(--dark); border-top: 1px solid var(--border); padding-top: 14px; margin-top: 4px; }
+    /* Tabla y Productos */
+    .cart-items-panel { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .cart-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .cart-table th { background: var(--light); padding: 16px 24px; font-size: 13px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
+    .cart-table td { padding: 24px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     
-    .btn-checkout { background: var(--primary); color: white; border: none; width: 100%; height: 50px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+    .cart-product-cell { display: flex; align-items: center; gap: 16px; }
+    .cart-product-vial { width: 40px; height: 70px; border: 2px solid #cbd5e1; border-radius: 6px; position: relative; background: #fff; flex-shrink: 0; }
+    .cart-product-vial .cap { width: 100%; height: 8px; background: var(--primary); border-radius: 4px 4px 0 0; position: absolute; top: -1px; left: 0; }
+    .cart-product-vial .text { position: absolute; top: 35%; left: 0; width: 100%; font-size: 8px; font-weight: 800; text-align: center; color: var(--dark); }
+    
+    .cart-prod-name { font-size: 16px; font-weight: 700; color: var(--dark); text-decoration: none; }
+    .cart-prod-name:hover { color: var(--primary); }
+    .cart-prod-pureza { font-size: 13px; color: var(--slate); margin-top: 2px; }
+    
+    .btn-remove { background: none; border: none; color: #ef4444; font-size: 13px; font-weight: 600; cursor: pointer; padding: 4px 0; transition: opacity 0.2s; }
+    .btn-remove:hover { opacity: 0.7; text-decoration: underline; }
+    
+    /* Selector de Cantidad en Tabla */
+    .cart-qty-control { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; width: 100px; height: 36px; overflow: hidden; background: white; }
+    .cart-qty-btn { background: none; border: none; width: 30px; height: 100%; font-size: 16px; font-weight: 600; cursor: pointer; color: var(--dark); }
+    .cart-qty-btn:hover { background: var(--light); }
+    .cart-qty-input { width: 40px; height: 100%; border: none; text-align: center; font-size: 14px; font-weight: 700; color: var(--dark); outline: none; }
+
+    /* Panel de Resumen de Pago */
+    .cart-summary-panel { background: var(--light); border: 1px solid var(--border); border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+    .summary-title { font-size: 18px; font-weight: 700; color: var(--dark); border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    
+    .summary-row { display: flex; justify-content: space-between; font-size: 15px; color: #475569; }
+    .summary-row.total { font-size: 20px; font-weight: 800; color: var(--dark); border-top: 1px solid var(--border); padding-top: 16px; margin-top: 8px; }
+    
+    .btn-checkout { background: var(--primary); color: white; border: none; border-radius: 6px; padding: 16px; font-size: 15px; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; }
     .btn-checkout:hover { background: var(--primary-hover); }
+    
+    .btn-continue-shopping { display: block; text-align: center; color: var(--primary); font-size: 14px; font-weight: 600; text-decoration: none; margin-top: 8px; }
+    .btn-continue-shopping:hover { text-decoration: underline; }
 
-    /* Estado de Carrito Vacío */
-    .empty-cart-box { text-align: center; padding: 60px 20px; border: 1px solid var(--border); border-radius: 12px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-    .btn-go-shop { display: inline-block; background: var(--primary); color: white; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; }
+    .empty-cart-box { text-align: center; padding: 80px 24px; background: var(--light); border: 1px solid var(--border); border-radius: 8px; }
 
-    @media (max-width: 850px) {
-      .cart-layout { grid-template-columns: 1fr; gap: 30px; }
+    @media (max-width: 992px) {
+      .cart-layout { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 600px) {
+      .cart-table th:nth-child(2), .cart-table td:nth-child(2) { display: none; }
     }
   </style>
 </head>
 <body>
 
   <nav class="nav">
-    <a href="index.html" class="nav__logo">VENUS<span>PEPTIDE</span></a>
-    <ul class="nav__links">
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="vertodos.html">Catálogo</a></li>
-      <li><a href="index.html#contacto">Contacto</a></li>
-      <li><a href="carrito.html" class="nav__cart">Carrito <span id="navCartCount">(0)</span></a></li>
-    </ul>
+    <div class="nav__inner">
+        <a href="index.html" class="nav__logo">
+            <div class="nav__logo-icon">V</div>
+            Venus Peptide
+        </a>
+        <div class="nav__links" style="display: flex; align-items: center;">
+            <a href="index.html">Inicio</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="vertodos.html">Ver todos</a>
+            <a href="nosotros.html">Nosotros</a>
+            
+            <div style="position: relative; display: inline-block;" 
+                 onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
+                 onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+                
+                <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
+                    Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
+                </a>
+                
+                <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: #ffffff; border: 1px solid var(--border); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-width: 260px; padding: 8px 0; z-index: 1100;">
+                    <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
+                    <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
+                </div>
+            </div>
+
+            <a href="carrito.html" class="nav__cart-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff !important; padding: 8px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; margin-left: 15px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span>Carrito</span>
+                <span id="navCartCount" style="background: rgba(255,255,255,0.2); padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 700;">(0)</span>
+            </a>
+        </div>
+        <div class="nav__burger" id="burgerBtn">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
   </nav>
 
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Inicio</a>
+    <a href="categorias.html">Categorías</a>
+    <a href="vertodos.html">Ver todos</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="calculadora.html">Calculadora de Reconstitución</a>
+    <a href="carrito.html" style="margin-top: 15px; background: #2563eb; color: white !important; text-align: center; padding: 12px; border-radius: 6px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        Ver Carrito
+    </a>
+  </div>
+
   <main class="cart-container">
-    <h1 class="cart-title">Tu Carrito</h1>
+    <h1 class="cart-title">Tu Línea de Orden</h1>
     
-    <div id="cartWrapper">
+    <div id="cartContent">
       </div>
   </main>
 
   <script src="main.js"></script>
+  
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
       renderizarCarrito();
     });
 
     function renderizarCarrito() {
-      const container = document.getElementById('cartWrapper');
+      const container = document.getElementById('cartContent');
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
-      // 1. Validar si el carrito está vacío
+      // Si la base de datos global aún no se carga, reintentar brevemente
+      if (!window.productosData) {
+        setTimeout(renderizarCarrito, 100);
+        return;
+      }
+
       if (cart.length === 0) {
         container.innerHTML = `
           <div class="empty-cart-box">
-            <p style="font-size: 16px; color: var(--slate); font-weight: 500;">Tu carrito está vacío actualmente.</p>
-            <a href="vertodos.html" class="btn-go-shop">Explorar Péptidos</a>
-          </div>`;
+            <h2 style="font-size: 22px; color: var(--dark); margin-bottom: 12px;">Tu carrito está vacío</h2>
+            <p style="color: var(--slate); margin-bottom: 24px;">No has añadido ningún compuesto para tus protocolos de investigación analítica.</p>
+            <a href="vertodos.html" class="btn-checkout" style="display:inline-flex; width:auto; padding: 12px 32px;">Explorar Catálogo Completo</a>
+          </div>
+        `;
         actualizarContadoresGlobales(0);
         return;
       }
 
-      // 2. Construir la estructura del Grid
-      let itemsHTML = '';
+      let tablaCuerpo = '';
       let subtotal = 0;
       let totalArticulos = 0;
 
-      cart.forEach((item, index) => {
-        const prod = window.productosData ? window.productosData[item.id] : null;
-        if (!prod) return; // Saltarse IDs inválidos si se modificó la DB
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (prod) {
+          const itemTotal = prod.precio * item.qty;
+          subtotal += itemTotal;
+          totalArticulos += item.qty;
 
-        const itemTotal = prod.precio * item.qty;
-        subtotal += itemTotal;
-        totalArticulos += item.qty;
+          const capColor = prod.vialColor === 'pink' ? '#db2777' : '#2563eb';
 
-        // Color del vial
-        const capColor = prod.vialColor === 'pink' ? '#db2777' : '#2563eb';
-        const textoVial = prod.isBlend ? `${prod.vialTexto1}+${prod.vialTexto2}` : prod.vialTexto;
-
-        itemsHTML += `
-          <div class="cart-item">
-            <div class="item-vial-preview">
-              <div class="item-vial-cap" style="background: ${capColor};"></div>
-              <div class="item-vial-text">${textoVial}</div>
-            </div>
-            <div class="item-details">
-              <div class="item-name">${prod.nombre}</div>
-              <div class="item-pureza">${prod.pureza}</div>
-              <div class="item-qty-actions">
-                <div class="qty-box">
-                  <button class="qty-btn" onclick="cambiarCantidad('${item.id}', -1)">−</button>
-                  <input type="text" class="qty-val" value="${item.qty}" readonly>
-                  <button class="qty-btn" onclick="cambiarCantidad('${item.id}', 1)">+</button>
+          tablaCuerpo += `
+            <tr>
+              <td>
+                <div class="cart-product-cell">
+                  <div class="cart-product-vial">
+                    <div class="cap" style="background: ${capColor}"></div>
+                    <div class="text">${prod.vialTexto || 'V'}</div>
+                  </div>
+                  <div>
+                    <a href="producto.html?id=${prod.id}" class="cart-prod-name">${prod.nombre}</a>
+                    <div class="cart-prod-pureza">${prod.pureza}</div>
+                    <button class="btn-remove" onclick="eliminarArticulo('${prod.id}')">Eliminar</button>
+                  </div>
                 </div>
-                <button class="btn-delete" onclick="eliminarArticulo('${item.id}')">Eliminar</button>
-              </div>
-            </div>
-            <div class="item-price-total">$${itemTotal.toFixed(2)} USD</div>
-          </div>`;
+              </td>
+              <td>
+                <div class="cart-qty-control">
+                  <button class="cart-qty-btn" onclick="alterarCantidad('${prod.id}', -1)">-</button>
+                  <input type="number" class="cart-qty-input" value="${item.qty}" readonly>
+                  <button class="cart-qty-btn" onclick="alterarCantidad('${prod.id}', 1)">+</button>
+                </div>
+              </td>
+              <td style="font-weight: 700; color: var(--dark); text-align: right; font-size: 16px;">
+                $${itemTotal.toFixed(2)} USD
+              </td>
+            </tr>
+          `;
+        }
       });
 
-      actualizarContadoresGlobales(totalArticulos);
-
-      // 3. Renderizar el layout completo con la barra lateral
       container.innerHTML = `
         <div class="cart-layout">
-          <div class="cart-items-list">
-            ${itemsHTML}
+          <div class="cart-items-panel">
+            <table class="cart-table">
+              <thead>
+                <tr>
+                  <th>Compuesto de Ensayo</th>
+                  <th>Cantidad</th>
+                  <th style="text-align: right;">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${tablaCuerpo}
+              </tbody>
+            </table>
           </div>
           
-          <div class="cart-summary">
-            <div class="summary-title">Resumen del Pedido</div>
+          <div class="cart-summary-panel">
+            <h2 class="summary-title">Resumen de Investigación</h2>
             <div class="summary-row">
-              <span>Subtotal</span>
-              <span>$${subtotal.toFixed(2)} USD</span>
+              <span>Compuestos Seleccionados</span>
+              <span style="font-weight: 600;">${totalArticulos} unidades</span>
             </div>
             <div class="summary-row">
-              <span>Envío</span>
-              <span style="color: #22c55e; font-weight: 700;">Gratis</span>
+              <span>Envío Internacional</span>
+              <span style="color: #10b981; font-weight: 700;">Gratuito</span>
             </div>
             <div class="summary-row total">
-              <span>Total</span>
+              <span>Total Orden</span>
               <span>$${subtotal.toFixed(2)} USD</span>
             </div>
-            <button class="btn-checkout" onclick="procesarOrden()">Proceder al Pago</button>
+            
+            <button class="btn-checkout" onclick="procesarOrden()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              Enviar Orden por WhatsApp
+            </button>
+            <a href="vertodos.html" class="btn-continue-shopping">← Continuar explorando reactivos</a>
           </div>
-        </div>`;
+        </div>
+      `;
+
+      actualizarContadoresGlobales(totalArticulos);
     }
 
-    // Funciones de control lógico internas
-    window.cambiarCantidad = function(id, cambio) {
+    window.alterarCantidad = function(id, cambio) {
       let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
       const item = cart.find(i => i.id === id);
       if (item) {
         item.qty += cambio;
-        if (item.qty <= 0) {
-          cart = cart.filter(i => i.id !== id);
-        }
+        if (item.qty < 1) item.qty = 1;
         localStorage.setItem('venus_cart', JSON.stringify(cart));
         renderizarCarrito();
       }
@@ -208,12 +267,15 @@
     function actualizarContadoresGlobales(total) {
       const navCount = document.getElementById('navCartCount');
       if (navCount) navCount.textContent = `(${total})`;
+      
+      if (typeof window.actualizarNumeroNavGlobal === 'function') {
+        window.actualizarNumeroNavGlobal();
+      }
     }
 
-    // Integración de envío de orden por WhatsApp
     window.procesarOrden = function() {
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-      let mensaje = '¡Hola Venus Peptide! Me gustaría realizar el siguiente pedido para investigación:\n\n';
+      let mensaje = '¡Hola Venus Peptide! Me gustaría realizar el siguiente pedido para protocolos de investigación:\n\n';
       let total = 0;
 
       cart.forEach(item => {
@@ -224,15 +286,23 @@
         }
       });
 
-      mensaje += `\n*Total a Pagar:* $${total.toFixed(2)} USD\n`;
-      mensaje += '*Envío:* Solicitud de envío Gratuito.';
+      mensaje += `\n*Total de la Orden:* $${total.toFixed(2)} USD\n`;
+      mensaje += '*Envío:* Solicitud de Cobertura de Envío Premium Gratuito.\n\nQuedo atento a las instrucciones de pago.';
 
-      // Reemplaza el número de abajo con tu teléfono real (código de país + número, sin espacios ni símbolos)
+      // Número destino real de tu negocio (Código de país + número, sin espacios)
       const tuTelefono = "1234567890"; 
-      const url = `https://api.whatsapp.com/send?phone=${tuTelefono}&text=${encodeURIComponent(mensaje)}`;
-      
-      window.open(url, '_blank');
+      window.open(`https://api.whatsapp.com/send?phone=${tuTelefono}&text=${encodeURIComponent(mensaje)}`, '_blank');
     };
+
+    // Manejo básico de Menú Móvil (Burger)
+    const burgerBtn = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (burgerBtn && mobileMenu) {
+        burgerBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            burgerBtn.classList.toggle('active');
+        });
+    }
   </script>
 </body>
 </html>
