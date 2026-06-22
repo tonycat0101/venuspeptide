@@ -458,14 +458,19 @@
         }
       });
 
-      // CAMBIO CLAVE: Generación automática de código de referencia único (Ej: VP-7294)
       const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
 
+      // 1. Guardado en sessionStorage estándar
       sessionStorage.setItem('pending_order_total', total.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
-      sessionStorage.setItem('pending_order_id', codigoReferencia); // Se almacena en la sesión
+      sessionStorage.setItem('pending_order_id', codigoReferencia);
 
-      localStorage.removeItem('venus_cart');
+      // 2. CORRECCIÓN ERROR 4: Guardado de respaldo en localStorage contra recargas accidentales
+      localStorage.setItem('backup_order_total', total.toFixed(2));
+      localStorage.setItem('backup_order_method', metodoPago);
+      localStorage.setItem('backup_order_id', codigoReferencia);
+
+      // CORRECCIÓN CRÍTICA ERROR 2: Se eliminó 'localStorage.removeItem' de aquí para proteger la UX.
       window.location.href = 'instrucciones.html';
     }
   </script>
