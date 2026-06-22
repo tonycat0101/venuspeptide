@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Pedido | Venus Peptide</title>
+  
+  <!-- Vinculación con tus estilos globales -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* ── ESTILOS EXCLUSIVOS DE LA INTERFAZ DE CHECKOUT ── */
+    .checkout-section {
+      padding: 160px 0 100px 0;
+      background-color: var(--bg-light, #f4f7fb);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .checkout-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .checkout-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-dark, #0f1e35);
+      margin-bottom: 40px;
+      letter-spacing: -0.01em;
+    }
+
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Tarjetas de Contenedores */
+    .checkout-card {
+      background: var(--bg-white, #ffffff);
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: 12px;
+      padding: 36px;
+      box-shadow: 0 4px 20px rgba(15, 30, 53, 0.03);
+    }
+
+    .card-subtitle {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark, #0f1e35);
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border, #e2e8f0);
+      padding-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Formulario de Datos */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-body, #374151);
+    }
+
+    .form-control {
+      width: 100%;
+      height: 46px;
+      padding: 0 16px;
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--text-dark, #0f1e35);
+      background: #fafbfe;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--blue, #2563eb);
+      background: #ffffff;
+    }
+
+    /* Opciones de Pago Exclusivas (Cash App / Venmo) */
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .payment-method {
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: 8px;
+      padding: 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      cursor: pointer;
+      background: #fafbfe;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .payment-method:hover {
+      background: #f1f5f9;
+    }
+
+    .payment-method input[type="radio"] {
+      margin-top: 3px;
+      accent-color: var(--blue, #2563eb);
+      width: 16px;
+      height: 16px;
+    }
+
+    .payment-method-info label {
+      font-weight: 700;
+      color: var(--text-dark, #0f1e35);
+      cursor: pointer;
+      display: block;
+      font-size: 14.5px;
+    }
+
+    .payment-method-info p {
+      font-size: 13px;
+      color: var(--text-muted, #6b7280);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* Lista Resumen de Orden */
+    .checkout-summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14.5px;
+    }
+
+    .checkout-summary-item .prod-name {
+      font-weight: 600;
+      color: var(--text-dark, #0f1e35);
+    }
+
+    .checkout-summary-item .prod-qty {
+      color: var(--text-muted, #6b7280);
+      font-size: 13px;
+      margin-left: 6px;
+    }
+
+    .summary-totals {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+      color: #374151;
+    }
+
+    .total-row.grand-total {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-dark, #0f1e35);
+      border-top: 1px solid var(--border, #e2e8f0);
+      padding-top: 18px;
+      margin-top: 8px;
+    }
+
+    .btn-place-order {
+      background: var(--blue, #2563eb);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+      width: 100%;
+      margin-top: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-place-order:hover {
+      background: var(--blue-hover, #1d4ed8);
+    }
+
+    @media (max-width: 992px) {
+      .checkout-layout { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full-width { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MENÚ DE NAVEGACIÓN IDÉNTICO GLOBAL -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">V</div>
+        Venus Peptide
+      </a>
+      <div class="nav__links">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="vertodos.html">Ver todos</a>
+        <a href="nosotros.html">Nosotros</a>
+        
+        <!-- Dropdown de Soporte Integrado -->
+        <div style="position: relative; display: inline-block;" 
+             onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
+             onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+          <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
+            Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
+          </a>
+          <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: #ffffff; border: 1px solid var(--border); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 240px; padding: 8px 0; z-index: 1100;">
+            <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left; color: var(--text-dark);">Contacto</a>
+            <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left; color: var(--text-dark);">Calculadora de Reconstitución</a>
+          </div>
+        </div>
+
+        <a href="carrito.html" class="nav__cart">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 5px; vertical-align: middle;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          Carrito <span id="navCartCount">(0)</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SECCIÓN DE FACTURACIÓN -->
+  <main class="checkout-section">
+    <div class="checkout-container">
+      <h1 class="checkout-title">Finalizar Compra</h1>
+      
+      <form id="checkoutForm" onsubmit="ejecutarPlaceOrder(event)">
+        <div class="checkout-layout">
+          
+          <!-- COLUMNA IZQUIERDA: DETALLES DE ENVÍO -->
+          <div class="checkout-card">
+            <h2 class="card-subtitle">Detalles de Facturación y Envío</h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="firstName">Nombre *</label>
+                <input type="text" id="firstName" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Apellido *</label>
+                <input type="text" id="lastName" class="form-control" required>
+              </div>
+              <div class="form-group full-width">
+                <label for="email">Dirección de Correo Electrónico *</label>
+                <input type="email" id="email" class="form-control" required>
+              </div>
+              <div class="form-group full-width">
+                <label for="address">Dirección de la Calle *</label>
+                <input type="text" id="address" class="form-control" placeholder="Número de casa y nombre de la calle" required>
+              </div>
+              <div class="form-group">
+                <label for="city">Ciudad *</label>
+                <input type="text" id="city" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="state">Estado / Provincia *</label>
+                <input type="text" id="state" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="zip">Código Postal *</label>
+                <input type="text" id="zip" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Teléfono *</label>
+                <input type="tel" id="phone" class="form-control" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA: DESGLOSE Y SELECCIÓN DE PAGO -->
+          <div style="display: flex; flex-direction: column; gap: 32px;">
+            
+            <!-- Resumen Fijo de Productos -->
+            <div class="checkout-card">
+              <h2 class="card-subtitle">Tu Pedido</h2>
+              <div id="checkoutItemsList">
+                <!-- Inyección dinámica limpia -->
+              </div>
+              
+              <div class="summary-totals">
+                <div class="total-row">
+                  <span>Subtotal</span>
+                  <span id="checkoutSubtotal">$0.00 USD</span>
+                </div>
+                <div class="total-row">
+                  <span>Envío Prioritario</span>
+                  <span style="color: #10b981; font-weight: 700;">Gratis</span>
+                </div>
+                <div class="total-row grand-total">
+                  <span>Total</span>
+                  <span id="checkoutTotal">$0.00 USD</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Métodos de Pago Exclusivos -->
+            <div class="checkout-card">
+              <h2 class="card-subtitle">Pago Seguro Descentralizado</h2>
+              
+              <div class="payment-options">
+                <div class="payment-method">
+                  <input type="radio" id="payVenmo" name="paymentMethod" value="Venmo" checked>
+                  <div class="payment-method-info">
+                    <label for="payVenmo">Venmo</label>
+                    <p>Transferencia directa sin recargos. Las instrucciones exactas se mostrarán en el siguiente paso.</p>
+                  </div>
+                </div>
+                
+                <div class="payment-method">
+                  <input type="radio" id="payCashApp" name="paymentMethod" value="Cash App">
+                  <div class="payment-method-info">
+                    <label for="payCashApp">Cash App</label>
+                    <p>Procesamiento inmediato utilizando tu identificador o cashtag habitual.</p>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-place-order">Place Order</button>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- FOOTER IDÉNTICO GLOBAL -->
+  <footer class="footer" style="background: #0f1e35; color: #ffffff; padding: 60px 0 30px 0; font-family: 'Inter', sans-serif; margin-top: auto;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 40px;">
+      <div>
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 20px; font-weight: 700;">Venus Peptide</h3>
+        <p style="font-size: 14px; color: #94a3b8; line-height: 1.6;">Compuestos químicos premium destinados estrictamente para el desarrollo de protocolos analíticos y de investigación científica de laboratorio.</p>
+      </div>
+      <div>
+        <h4 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 20px; color: #38bdf8; font-weight: 700;">Enlaces del Sitio</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <li><a href="vertodos.html" style="color: #94a3b8; text-decoration: none;">Catálogo de Compuestos</a></li>
+          <li><a href="calculadora.html" style="color: #94a3b8; text-decoration: none;">Calculadora de Reconstitución</a></li>
+          <li><a href="contacto.html" style="color: #94a3b8; text-decoration: none;">Centro de Soporte</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 20px; color: #38bdf8; font-weight: 700;">Aviso Legal Obligatorio</h4>
+        <p style="font-size: 12px; color: #94a3b8; line-height: 1.6; font-style: italic;">Todos los productos comercializados en este sitio web están fabricados exclusivamente para ensayos in-vitro. Queda terminantemente prohibido su uso clínico o terapéutico en humanos.</p>
+      </div>
+    </div>
+    <div style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 0 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13px; color: #64748b;">
+      <p>&copy; 2026 Venus Peptide. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- PROCESAMIENTO DINÁMICO DEL CARRITO -->
+  <script src="main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      cargarResumenCheckout();
+    });
+
+    function cargarResumenCheckout() {
+      const itemsContainer = document.getElementById('checkoutItemsList');
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+
+      if (!window.productosData) {
+        setTimeout(cargarResumenCheckout, 100);
+        return;
+      }
+
+      if (cart.length === 0) {
+        window.location.href = "vertodos.html";
+        return;
+      }
+
+      let htmlItems = '';
+      let subtotal = 0;
+      let totalQty = 0;
+
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (prod) {
+          const totalLinea = prod.precio * item.qty;
+          subtotal += totalLinea;
+          totalQty += item.qty;
+
+          htmlItems += `
+            <div class="checkout-summary-item">
+              <div>
+                <span class="prod-name">${prod.nombre}</span>
+                <span class="prod-qty">x${item.qty}</span>
+              </div>
+              <span style="font-weight: 700; color: var(--text-dark);">$${totalLinea.toFixed(2)}</span>
+            </div>
+          `;
+        }
+      });
+
+      itemsContainer.innerHTML = htmlItems;
+      document.getElementById('checkoutSubtotal').textContent = `$${subtotal.toFixed(2)} USD`;
+      document.getElementById('checkoutTotal').textContent = `$${subtotal.toFixed(2)} USD`;
+      document.getElementById('navCartCount').textContent = `(${totalQty})`;
+    }
+
+    function ejecutarPlaceOrder(event) {
+      event.preventDefault();
+      
+      const metodoSeleccionado = document.querySelector('input[name="paymentMethod"]:checked').value;
+      
+      // Aquí puedes integrar el envío automático a Formspree o Web3Forms si lo deseas más adelante.
+      // Por ahora, el botón procesa la información y limpia el carro de forma limpia.
+      localStorage.removeItem('venus_cart');
+      
+      // Redirección directa hacia la pantalla donde se activan las pasarelas/códigos QR
+      window.location.href = "instrucciones.html"; 
+    }
+  </script>
+</body>
+</html>
