@@ -335,9 +335,18 @@
     };
 
     window.procesarOrden = function() {
-  // En lugar de enviar a WhatsApp aquí, redirigimos al checkout
-  window.location.href = 'checkout.html';
-};
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      let mensaje = '¡Hola! Me gustaría realizar el siguiente pedido:\n\n';
+      let total = 0;
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (prod) {
+          mensaje += `• ${item.qty}x ${prod.nombre} — $${(prod.precio * item.qty).toFixed(2)} USD\n`;
+          total += prod.precio * item.qty;
+        }
+      });
+      mensaje += `\n*Total:* $${total.toFixed(2)} USD`;
+      window.open(`https://api.whatsapp.com/send?phone=1234567890&text=${encodeURIComponent(mensaje)}`, '_blank');
     };
   </script>
 </body>
