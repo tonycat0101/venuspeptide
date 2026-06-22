@@ -20,7 +20,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
     body { background-color: #ffffff; color: var(--dark); line-height: 1.5; }
 
-    /* ── NAVEGACIÓN (Idéntica a tu diseño) ── */
+    /* ── NAVEGACIÓN ── */
     .nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: #fff; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; border-bottom: 1px solid var(--border); }
     .nav__logo { font-size: 20px; font-weight: 800; color: var(--dark); text-decoration: none; letter-spacing: -0.03em; }
     .nav__logo span { color: var(--primary); }
@@ -33,7 +33,7 @@
     /* ── CONTENEDOR PRINCIPAL ── */
     .product-container { max-width: 1200px; margin: 120px auto 60px auto; padding: 0 24px; }
     
-    /* Breadcrumbs (Migas de pan) */
+    /* Breadcrumbs */
     .breadcrumbs { font-size: 14px; color: var(--slate); margin-bottom: 32px; font-weight: 500; }
     .breadcrumbs a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
@@ -69,7 +69,7 @@
     .disclaimer-title { font-size: 13px; font-weight: 700; color: #b78103; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.03em; }
     .disclaimer-text { font-size: 13px; color: #745203; line-height: 1.5; }
 
-    /* Estado de No Encontrado o Agotado */
+    /* Estado de No Encontrado */
     .not-found-box { text-align: center; padding: 100px 24px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
     .btn-back { display: inline-block; background: var(--primary); color: white; padding: 14px 28px; border-radius: 6px; font-weight: 700; text-decoration: none; }
 
@@ -102,14 +102,72 @@
 
   <script src="main.js"></script>
   <script>
+    // BASE DE DATOS LOCAL (Garantiza que siempre encuentre los productos al entrar al detalle)
+    window.productosData = {
+      "cjc-1295-no-dac": {
+        id: "cjc-1295-no-dac",
+        nombre: "CJC-1295 No DAC",
+        precio: 44.00,
+        pureza: "99.2% Pureza | 5mg",
+        rating: "4.7",
+        vialColor: "blue",
+        vialTexto: "CJC",
+        badge: "sale",
+        descripcion: "CJC-1295 No DAC (también conocido como MOD GRF 1-29) es un péptido sintético análogo del factor liberador de la hormona del crecimiento (GHRH). Desarrollado para investigaciones biológicas avanzadas de estabilidad celular in-vitro."
+      },
+      "cjc-1295-with-dac": {
+        id: "cjc-1295-with-dac",
+        nombre: "CJC-1295 With DAC",
+        precio: 52.00,
+        pureza: "99.3% Pureza | 2mg",
+        rating: "4.6",
+        vialColor: "blue",
+        vialTexto: "CJC-DAC",
+        badge: "sale",
+        descripcion: "Variante de alta afinidad molecular que incluye el Complejo de Afinidad de Medicamentos (DAC). Diseñado específicamente para prolongar la vida media del péptido en entornos de estudio analítico continuo."
+      },
+      "bpc-157": {
+        id: "bpc-157",
+        nombre: "BPC-157",
+        precio: 49.00,
+        pureza: "99.5% Pureza | 5mg",
+        rating: "4.9",
+        vialColor: "blue",
+        vialTexto: "BPC-157",
+        badge: "new",
+        descripcion: "Body Protection Compound-157 es un pentadecapéptido de 15 aminoácidos. Ampliamente utilizado en modelos de investigación celular para evaluar la tasa de angiogénesis y modulación de reparación de tejidos."
+      },
+      "selank": {
+        id: "selank",
+        nombre: "Selank",
+        precio: 45.00,
+        pureza: "99.1% Pureza | 10mg",
+        rating: "4.8",
+        vialColor: "pink",
+        vialTexto: "SELANK",
+        badge: "sale",
+        descripcion: "Selank es un péptido sintético heptapéptido análogo de la tuftsina. Utilizado en ensayos moleculares de neurociencia para investigar las uniones de neurotransmisores e inmunomodulación celular."
+      }
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       const mainContent = document.getElementById('mainContent');
+      
+      // Actualizar número del carrito superior inmediatamente al cargar la página
+      const actualizarBadgeNavInicial = () => {
+        const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+        const totalArt = cart.reduce((s, i) => s + i.qty, 0);
+        document.querySelectorAll('.nav__cart span').forEach(b => {
+          b.textContent = `(${totalArt})`;
+        });
+      };
+      actualizarBadgeNavInicial();
       
       // 1. Capturar el ID desde la URL (?id=bpc-157)
       const urlParams = new URLSearchParams(window.location.search);
       const productoId = urlParams.get('id');
 
-      // 2. Verificar que la base de datos exista y contenga el producto
+      // 2. Verificar que el producto exista en los registros locales
       if (!productoId || !window.productosData || !window.productosData[productoId]) {
         mostrarProductoNoEncontrado();
         return;
@@ -117,17 +175,17 @@
 
       const prod = window.productosData[productoId];
 
-      // 3. Actualizar el título de la pestaña del navegador de forma elegante
+      // 3. Actualizar el título de la pestaña del navegador
       document.title = `${prod.nombre} — Compra Investigación Analítica | Venus Peptide`;
 
       // 4. Configurar el Badge (Sale / New)
       let badgeHTML = '';
       if (prod.badge) {
-        const badgeColor = prod.badge === 'sale' ? '#ef4444' : '#3b82f6';
+        const badgeColor = prod.badge.toLowerCase() === 'sale' ? '#ef4444' : '#3b82f6';
         badgeHTML = `<span class="info-badge" style="background: ${badgeColor};">${prod.badge}</span>`;
       }
 
-      // 5. Configurar el Render del Frasco/Vial Gigante a escala premium
+      // 5. Configurar el Render del Frasco/Vial
       let vialHTML = '';
       if (prod.isBlend) {
         vialHTML = `
@@ -154,7 +212,7 @@
           </div>`;
       }
 
-      // 6. Configurar la caja de acción según stock (Disponibilidad / Agotado)
+      // 6. Configurar la caja de acción según stock
       let actionHTML = '';
       if (prod.agotado) {
         actionHTML = `
@@ -213,7 +271,7 @@
         </div>
       `;
 
-      // 8. Programar lógica interna del selector de cantidad (+ / -)
+      // 8. Programar lógica interna del selector de cantidad e inserción
       if (!prod.agotado) {
         const btnMinus = document.getElementById('btnMinus');
         const btnPlus = document.getElementById('btnPlus');
@@ -235,9 +293,40 @@
           if (isNaN(val) || val < 1) qtyInput.value = 1;
         });
 
-        // Evento temporal para conectar en el siguiente paso del carrito
+        // Evento Conectado Correctamente con tu Carrito Local
         btnAddToCart.addEventListener('click', () => {
-          alert(`¡Listo! Añadiste ${qtyInput.value} unidad(es) de ${prod.nombre} al carrito (Lógica de almacenamiento lista).`);
+          let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+          const cantidadAAgregar = parseInt(qtyInput.value) || 1;
+
+          // Comprobar si el péptido ya estaba en el carrito para solo sumarle la cantidad
+          const productoExistente = cart.find(item => item.id === prod.id);
+          
+          if (productoExistente) {
+            productoExistente.qty += cantidadAAgregar;
+          } else {
+            cart.push({ id: prod.id, qty: cantidadAAgregar });
+          }
+
+          // Guardar en la memoria del navegador
+          localStorage.setItem('venus_cart', JSON.stringify(cart));
+          
+          // Actualizar el número de la nav al instante sin recargar la página
+          document.querySelectorAll('.nav__cart span').forEach(b => {
+            const totalArt = cart.reduce((s, i) => s + i.qty, 0);
+            b.textContent = `(${totalArt})`;
+          });
+
+          // Efecto visual elegante en el botón
+          const textoOriginal = btnAddToCart.textContent;
+          btnAddToCart.textContent = '¡Añadido con éxito! ✓';
+          btnAddToCart.style.background = '#22c55e'; // Cambia a verde temporalmente
+          btnAddToCart.disabled = true;
+
+          setTimeout(() => {
+            btnAddToCart.textContent = textoOriginal;
+            btnAddToCart.style.background = '';
+            btnAddToCart.disabled = false;
+          }, 2000);
         });
       }
     });
