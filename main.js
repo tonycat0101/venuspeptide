@@ -558,5 +558,17 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+/* ── Control Automático del Contador de la Nav ── */
+function actualizarNumeroNavGlobal() {
+  const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  
+  // Busca cualquier enlace del menú que diga "Carrito" y le pone el número real
+  document.querySelectorAll('.nav__cart span, #navCartCount').forEach(badge => {
+    badge.textContent = `(${totalQty})`;
+  });
+}
 
+// Ejecutar inmediatamente al abrir cualquier página que use main.js
+document.addEventListener('DOMContentLoaded', actualizarNumeroNavGlobal);
 });
