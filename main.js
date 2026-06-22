@@ -8,7 +8,7 @@ const productosData = {
     precio: 44.00,
     rating: "4.7",
     pureza: "99.2% Pureza | 5mg",
-    categoria: "secretagogos", // Debe coincidir con el data-cat de tus pestañas
+    categoria: "gh", // CORREGIDO: Coincide exactamente con tu enlace ?cat=gh
     vialTexto: "CJC",
     descripcion: "CJC-1295 No DAC (también conocido como Modified GRF 1-29) es un péptido análogo sintético del factor liberador de la hormona del crecimiento (GHRH). Ideal para ensayos analíticos estandarizados de mapeo hormonal in-vitro."
   },
@@ -18,7 +18,7 @@ const productosData = {
     precio: 52.00,
     rating: "4.6",
     pureza: "99.3% Pureza | 2mg",
-    categoria: "secretagogos",
+    categoria: "gh", // CORREGIDO: Coincide exactamente con tu enlace ?cat=gh
     vialTexto: "CJC-DAC",
     descripcion: "CJC-1295 con Complejo de Afinidad a la Droga (DAC) incrementa significativamente la vida media de la estructura molecular al unirse de forma selectiva a la albúmina en entornos de laboratorio controlados."
   },
@@ -28,7 +28,7 @@ const productosData = {
     precio: 45.00,
     rating: "4.9",
     pureza: "99.5% Pureza | 10mg",
-    categoria: "nootropicos", // Ejemplo de otra categoría
+    categoria: "cognitivas", // CORREGIDO: Coincide exactamente con tu enlace ?cat=cognitivas
     vialTexto: "SELANK",
     descripcion: "Compuesto liofilizado de alta pureza diseñado para la investigación analítica de receptores y la estabilidad estructural peptídica en ensayos biológicos complejos."
   }
@@ -43,10 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const gridProductos = document.getElementById('gridProductos');
   
   if (gridProductos) {
-    // Limpiamos el contenedor por si acaso hay algo escrito en el HTML
     gridProductos.innerHTML = '';
 
-    // Recorremos nuestra base de datos para dibujar cada tarjeta
     Object.values(productosData).forEach(prod => {
       gridProductos.innerHTML += `
         <div class="product-wrap" data-cat="${prod.categoria}">
@@ -144,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Filtro de categorías (productos.html / categorias.html) ── */
   const tabs  = document.querySelectorAll('.cat-tab');
-  const cards = document.querySelectorAll('.product-wrap'); // Volverá a leer las tarjetas ya inyectadas por JS
+  const cards = document.querySelectorAll('.product-wrap');
   if (tabs.length && cards.length) {
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
@@ -156,16 +154,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     });
+  }
 
-    /* Auto-activar desde URL ?cat= */
-    const cat = new URLSearchParams(window.location.search).get('cat');
-    if (cat) {
-      tabs.forEach(t => {
+  /* Auto-activar filtro desde URL ?cat= */
+  const catUrl = new URLSearchParams(window.location.search).get('cat');
+  if (catUrl) {
+    const cardsParaFiltrar = document.querySelectorAll('.product-wrap');
+    const tabsParaFiltrar  = document.querySelectorAll('.cat-tab');
+    
+    if(tabsParaFiltrar.length) {
+      tabsParaFiltrar.forEach(t => {
         t.classList.remove('active');
-        if (t.dataset.cat === cat) t.classList.add('active');
+        if (t.dataset.cat === catUrl) t.classList.add('active');
       });
-      cards.forEach(c => {
-        c.style.display = c.dataset.cat === cat ? '' : 'none';
+    }
+    if(cardsParaFiltrar.length) {
+      cardsParaFiltrar.forEach(c => {
+        c.style.display = c.dataset.cat === catUrl ? '' : 'none';
       });
     }
   }
