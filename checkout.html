@@ -8,7 +8,7 @@
   <!-- Enlace a tu CSS global principal -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Estilos Premium específicos para el Checkout (Estilo Verified Peptides) -->
+  <!-- Estilos Premium específicos para el Checkout -->
   <style>
     .checkout-section {
       padding: calc(var(--nav-h) + 60px) 0 100px;
@@ -54,7 +54,7 @@
       gap: 10px;
     }
 
-    /* Formularios Avanzados */
+    /* Formularios */
     .form-group {
       margin-bottom: 22px;
     }
@@ -104,7 +104,7 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
-    /* Métodos de Pago Profesionales */
+    /* Métodos de Pago */
     .payment-options {
       display: flex;
       flex-direction: column;
@@ -203,15 +203,11 @@
       flex-shrink: 0;
       margin-top: 2px;
     }
-
-    .legal-label strong {
-      color: var(--text-dark);
-    }
   </style>
 </head>
 <body>
 
-  <!-- NAVEGACIÓN GLOBAL (Idéntica a categorias.html) -->
+  <!-- NAVEGACIÓN GLOBAL -->
   <nav class="nav">
     <div class="nav__inner">
         <a href="index.html" class="nav__logo">
@@ -248,7 +244,7 @@
     </div>
   </nav>
 
-  <!-- MENÚ MÓVIL GLOBAL (Idéntico a categorias.html) -->
+  <!-- MENÚ MÓVIL GLOBAL -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
@@ -269,7 +265,7 @@
       <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
         <div class="checkout-layout">
           
-          <!-- COLUMNA IZQUIERDA: Formulario de Recopilación de Datos -->
+          <!-- COLUMNA IZQUIERDA: Formulario de Envíos -->
           <div>
             <div class="checkout-card">
               <h2>📋 Información de Envío (Investigación)</h2>
@@ -311,32 +307,33 @@
               </div>
             </div>
 
+            <!-- Métodos de Pago Corregidos -->
             <div class="checkout-card">
               <h2>🔒 Métodos de Pago Seguros</h2>
               <div class="payment-options">
                 <label class="pay-option">
                   <input type="radio" name="metodo_pago" value="Zelle" checked>
                   <div class="pay-option-text">
-                    <span class="pay-title">Zelle (Procesamiento Inmediato)</span>
+                    <span class="pay-title">Zelle</span>
                   </div>
                 </label>
                 <label class="pay-option">
-                  <input type="radio" name="metodo_pago" value="Criptomonedas">
+                  <input type="radio" name="metodo_pago" value="CashApp">
                   <div class="pay-option-text">
-                    <span class="pay-title">Criptomonedas (USDT / BTC — 5% Descuento)</span>
+                    <span class="pay-title">CashApp</span>
                   </div>
                 </label>
                 <label class="pay-option">
-                  <input type="radio" name="metodo_pago" value="Transferencia Bancaria">
+                  <input type="radio" name="metodo_pago" value="Venmo">
                   <div class="pay-option-text">
-                    <span class="pay-title">Transferencia Bancaria Nacional (Wire / ACH)</span>
+                    <span class="pay-title">Venmo</span>
                   </div>
                 </label>
               </div>
             </div>
           </div>
 
-          <!-- COLUMNA DERECHA: Resumen de Compra Fijo con Checkbox Legal -->
+          <!-- COLUMNA DERECHA: Resumen de Compra -->
           <div class="checkout-card" style="position: sticky; top: 100px;">
             <h2>Resumen del Pedido</h2>
             
@@ -359,18 +356,19 @@
               </div>
             </div>
 
-            <!-- CASILLA DE VERIFICACIÓN LEGAL ADICIONADA -->
+            <!-- Casilla Legal Obligatoria -->
             <div class="legal-checkbox-container">
               <label class="legal-label">
                 <input type="checkbox" id="checkoutLegal" required>
                 <span>
-                  Confirmo que **soy mayor de edad** (18 años o más) y acepto los términos de adquisición. Declaro bajo responsabilidad que el uso de estos compuestos es estrictamente para fines de **investigación científica y desarrollo en laboratorio in-vitro**.
+                  Confirmo que <strong>soy mayor de edad</strong> (18 años o más) y acepto los términos de adquisición. Declaro bajo responsabilidad que el uso de estos compuestos es estrictamente para fines de <strong>investigación científica y desarrollo en laboratorio in-vitro</strong>.
                 </span>
               </label>
             </div>
 
+            <!-- Botón de Envío de Orden -->
             <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 24px; border-radius: var(--radius-sm); font-size: 15px;">
-              Confirmar y Solicitar por WhatsApp
+              Completar mi Pedido
             </button>
           </div>
 
@@ -379,7 +377,7 @@
     </div>
   </main>
 
-  <!-- FOOTER GLOBAL (Idéntico a categorias.html) -->
+  <!-- FOOTER GLOBAL -->
   <footer class="footer">
     <div class="container">
         <div class="footer__top">
@@ -412,7 +410,7 @@
   <script src="main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Sincronización del Menú Hamburguesa Móvil
+      // Sincronización Menú Móvil
       const burgerBtn = document.getElementById('burgerBtn');
       const mobileMenu = document.getElementById('mobileMenu');
       if (burgerBtn && mobileMenu) {
@@ -462,52 +460,32 @@
     function enviarPedidoFormulario(e) {
       e.preventDefault();
 
-      // Validación explícita de seguridad por si acaso
       const legalChecked = document.getElementById('checkoutLegal').checked;
       if(!legalChecked) {
         alert("Debe confirmar que es mayor de edad y acepta los términos de uso científico.");
         return;
       }
 
-      const nombre = document.getElementById('checkoutNombre').value;
-      const email = document.getElementById('checkoutEmail').value;
-      const telefono = document.getElementById('checkoutTelefono').value;
-      const direccion = document.getElementById('checkoutDireccion').value;
-      const ciudad = document.getElementById('checkoutCiudad').value;
-      const estado = document.getElementById('checkoutEstado').value;
-      const zip = document.getElementById('checkoutZip').value;
       const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
       
-      // Formateo Profesional del mensaje de pedidos de laboratorio
-      let mensaje = `🔬 *NUEVO PEDIDO DE LABORATORIO — VENUS PEPTIDE*\n\n`;
-      mensaje += `*DATOS DEL INVESTIGADOR:*\n`;
-      mensaje += `• *Nombre:* ${nombre}\n`;
-      mensaje += `• *Email:* ${email}\n`;
-      mensaje += `• *Teléfono:* ${telefono}\n\n`;
-      
-      mensaje += `*DIRECCIÓN DE ENTREGA:*\n`;
-      mensaje += `• *Dirección:* ${direccion}\n`;
-      mensaje += `• *Ciudad/Estado:* ${ciudad}, ${estado}\n`;
-      mensaje += `• *ZIP Code:* ${zip}\n\n`;
-
-      mensaje += `*DETALLE DEL COMPUESTO:*\n`;
       let total = 0;
       cart.forEach(item => {
-        const prod = window.productosData[item.id];
+        const prod = window.productosData ? window.productosData[item.id] : null;
         if (prod) {
-          mensaje += `  - ${item.qty}x ${prod.nombre} (${prod.pureza}) — $${(prod.precio * item.qty).toFixed(2)} USD\n`;
           total += prod.precio * item.qty;
         }
       });
 
-      mensaje += `\n*MÉTODO DE PAGO:* ${metodoPago}\n`;
-      mensaje += `*TOTAL A TRANSFERIR:* $${total.toFixed(2)} USD\n\n`;
-      mensaje += `✓ _Declaración legal de mayoría de edad y uso exclusivo analítico in-vitro aceptada por el solicitante._`;
+      // Guardamos la información crítica del flujo en sessionStorage para instrucciones.html
+      sessionStorage.setItem('pending_order_total', total.toFixed(2));
+      sessionStorage.setItem('pending_order_method', metodoPago);
 
-      const numeroVentas = "1234567890"; // Reemplaza por tu número real de WhatsApp
+      // Limpiamos el carrito local para evitar duplicados
       localStorage.removeItem('venus_cart');
-      window.open(`https://api.whatsapp.com/send?phone=${numeroVentas}&text=${encodeURIComponent(mensaje)}`, '_blank');
+
+      // Redirección inmediata a las instrucciones de transferencia manual
+      window.location.href = 'instrucciones.html';
     }
   </script>
 </body>
