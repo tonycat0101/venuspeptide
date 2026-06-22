@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Carrito de Compras | Venus Peptide</title>
+  
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --dark: #0f172a;
+      --slate: #64748b;
+      --light: #f8fafc;
+      --border: #e2e8f0;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
+    body { background-color: #ffffff; color: var(--dark); line-height: 1.5; }
+
+    /* NAVEGACIÓN */
+    .nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: #fff; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; border-bottom: 1px solid var(--border); }
+    .nav__logo { font-size: 20px; font-weight: 800; color: var(--dark); text-decoration: none; letter-spacing: -0.03em; }
+    .nav__logo span { color: var(--primary); }
+    .nav__links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav__links a { text-decoration: none; color: var(--slate); font-weight: 600; font-size: 14px; }
+    .nav__links a:hover, .nav__links a.active { color: var(--dark); }
+    .nav__cart { background: var(--light); padding: 8px 16px; border-radius: 20px; color: var(--dark) !important; font-weight: 700 !important; display: flex; align-items: center; gap: 6px; }
+
+    /* CONTENEDOR INTERNO */
+    .cart-container { max-width: 1200px; margin: 120px auto 60px auto; padding: 0 24px; }
+    .cart-title { font-size: 32px; font-weight: 800; margin-bottom: 30px; letter-spacing: -0.02em; }
+
+    /* GRID DEL CARRITO */
+    .cart-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
+    
+    /* Lista de Productos (Izquierda) */
+    .cart-items-list { display: flex; flex-direction: column; gap: 20px; }
+    .cart-item { display: flex; align-items: center; gap: 20px; padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+    
+    /* Mini Vial Autogenerado */
+    .item-vial-preview { width: 50px; height: 85px; border: 2px solid #cbd5e1; border-radius: 8px 8px 5px 5px; position: relative; background: #fff; flex-shrink: 0; }
+    .item-vial-cap { width: 100%; height: 10px; background: var(--primary); border-radius: 6px 6px 0 0; position: absolute; top: -1px; left: 0; }
+    .item-vial-text { position: absolute; top: 35%; left: 0; width: 100%; font-size: 8px; font-weight: 800; color: #334155; text-align: center; line-height: 1; padding: 0 2px; word-wrap: break-word; }
+
+    .item-details { flex: 1; }
+    .item-name { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+    .item-pureza { font-size: 13px; color: var(--slate); }
+
+    /* Controles de cantidad en línea */
+    .item-qty-actions { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+    .qty-box { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; height: 34px; background: #fff; }
+    .qty-btn { background: none; border: none; width: 30px; height: 100%; font-size: 16px; font-weight: 600; cursor: pointer; }
+    .qty-val { width: 35px; text-align: center; font-size: 14px; font-weight: 700; border: none; outline: none; }
+    .btn-delete { background: none; border: none; color: #ef4444; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-delete:hover { text-decoration: underline; }
+
+    .item-price-total { font-size: 18px; font-weight: 800; color: var(--dark); text-align: right; min-width: 100px; }
+
+    /* Resumen de Compra (Derecha) */
+    .cart-summary { background: var(--light); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .summary-title { font-size: 18px; font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 15px; color: var(--slate); font-weight: 500; }
+    .summary-row.total { font-size: 20px; font-weight: 800; color: var(--dark); border-top: 1px solid var(--border); padding-top: 14px; margin-top: 4px; }
+    
+    .btn-checkout { background: var(--primary); color: white; border: none; width: 100%; height: 50px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+    .btn-checkout:hover { background: var(--primary-hover); }
+
+    /* Estado de Carrito Vacío */
+    .empty-cart-box { text-align: center; padding: 60px 20px; border: 1px solid var(--border); border-radius: 12px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .btn-go-shop { display: inline-block; background: var(--primary); color: white; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; }
+
+    @media (max-width: 850px) {
+      .cart-layout { grid-template-columns: 1fr; gap: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">VENUS<span>PEPTIDE</span></a>
+    <ul class="nav__links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="vertodos.html">Catálogo</a></li>
+      <li><a href="index.html#contacto">Contacto</a></li>
+      <li><a href="carrito.html" class="nav__cart">Carrito <span id="navCartCount">(0)</span></a></li>
+    </ul>
+  </nav>
+
+  <main class="cart-container">
+    <h1 class="cart-title">Tu Carrito</h1>
+    
+    <div id="cartWrapper">
+      </div>
+  </main>
+
+  <script src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderizarCarrito();
+    });
+
+    function renderizarCarrito() {
+      const container = document.getElementById('cartWrapper');
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+
+      // 1. Validar si el carrito está vacío
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="empty-cart-box">
+            <p style="font-size: 16px; color: var(--slate); font-weight: 500;">Tu carrito está vacío actualmente.</p>
+            <a href="vertodos.html" class="btn-go-shop">Explorar Péptidos</a>
+          </div>`;
+        actualizarContadoresGlobales(0);
+        return;
+      }
+
+      // 2. Construir la estructura del Grid
+      let itemsHTML = '';
+      let subtotal = 0;
+      let totalArticulos = 0;
+
+      cart.forEach((item, index) => {
+        const prod = window.productosData ? window.productosData[item.id] : null;
+        if (!prod) return; // Saltarse IDs inválidos si se modificó la DB
+
+        const itemTotal = prod.precio * item.qty;
+        subtotal += itemTotal;
+        totalArticulos += item.qty;
+
+        // Color del vial
+        const capColor = prod.vialColor === 'pink' ? '#db2777' : '#2563eb';
+        const textoVial = prod.isBlend ? `${prod.vialTexto1}+${prod.vialTexto2}` : prod.vialTexto;
+
+        itemsHTML += `
+          <div class="cart-item">
+            <div class="item-vial-preview">
+              <div class="item-vial-cap" style="background: ${capColor};"></div>
+              <div class="item-vial-text">${textoVial}</div>
+            </div>
+            <div class="item-details">
+              <div class="item-name">${prod.nombre}</div>
+              <div class="item-pureza">${prod.pureza}</div>
+              <div class="item-qty-actions">
+                <div class="qty-box">
+                  <button class="qty-btn" onclick="cambiarCantidad('${item.id}', -1)">−</button>
+                  <input type="text" class="qty-val" value="${item.qty}" readonly>
+                  <button class="qty-btn" onclick="cambiarCantidad('${item.id}', 1)">+</button>
+                </div>
+                <button class="btn-delete" onclick="eliminarArticulo('${item.id}')">Eliminar</button>
+              </div>
+            </div>
+            <div class="item-price-total">$${itemTotal.toFixed(2)} USD</div>
+          </div>`;
+      });
+
+      actualizarContadoresGlobales(totalArticulos);
+
+      // 3. Renderizar el layout completo con la barra lateral
+      container.innerHTML = `
+        <div class="cart-layout">
+          <div class="cart-items-list">
+            ${itemsHTML}
+          </div>
+          
+          <div class="cart-summary">
+            <div class="summary-title">Resumen del Pedido</div>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>$${subtotal.toFixed(2)} USD</span>
+            </div>
+            <div class="summary-row">
+              <span>Envío</span>
+              <span style="color: #22c55e; font-weight: 700;">Gratis</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>$${subtotal.toFixed(2)} USD</span>
+            </div>
+            <button class="btn-checkout" onclick="procesarOrden()">Proceder al Pago</button>
+          </div>
+        </div>`;
+    }
+
+    // Funciones de control lógico internas
+    window.cambiarCantidad = function(id, cambio) {
+      let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.qty += cambio;
+        if (item.qty <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        }
+        localStorage.setItem('venus_cart', JSON.stringify(cart));
+        renderizarCarrito();
+      }
+    };
+
+    window.eliminarArticulo = function(id) {
+      let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      cart = cart.filter(i => i.id !== id);
+      localStorage.setItem('venus_cart', JSON.stringify(cart));
+      renderizarCarrito();
+    };
+
+    function actualizarContadoresGlobales(total) {
+      const navCount = document.getElementById('navCartCount');
+      if (navCount) navCount.textContent = `(${total})`;
+    }
+
+    // Integración de envío de orden por WhatsApp
+    window.procesarOrden = function() {
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      let mensaje = '¡Hola Venus Peptide! Me gustaría realizar el siguiente pedido para investigación:\n\n';
+      let total = 0;
+
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (prod) {
+          mensaje += `• ${item.qty}x ${prod.nombre} (${prod.pureza}) — $${(prod.precio * item.qty).toFixed(2)} USD\n`;
+          total += prod.precio * item.qty;
+        }
+      });
+
+      mensaje += `\n*Total a Pagar:* $${total.toFixed(2)} USD\n`;
+      mensaje += '*Envío:* Solicitud de envío Gratuito.';
+
+      // Reemplaza el número de abajo con tu teléfono real (código de país + número, sin espacios ni símbolos)
+      const tuTelefono = "1234567890"; 
+      const url = `https://api.whatsapp.com/send?phone=${tuTelefono}&text=${encodeURIComponent(mensaje)}`;
+      
+      window.open(url, '_blank');
+    };
+  </script>
+</body>
+</html>
