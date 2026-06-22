@@ -4,223 +4,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instrucciones de Pago | Venus Peptide</title>
-  
-  <!-- Enlace a tu CSS global principal -->
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Estilos Premium para la pantalla de Instrucciones Inteligente -->
   <style>
     .instructions-section {
       padding: calc(var(--nav-h) + 60px) 0 100px;
       background: var(--bg-light);
       min-height: 85vh;
-      display: flex;
-      align-items: center;
     }
-
-    .instructions-container {
-      max-width: 650px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
     .instructions-card {
       background: var(--bg-white);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       padding: 40px;
       box-shadow: var(--shadow-card);
-      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
     }
-
-    .status-badge {
+    .order-badge {
       display: inline-block;
-      padding: 8px 16px;
-      background: #fef3c7;
-      color: #d97706;
-      font-size: 13px;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--blue);
       font-weight: 700;
-      border-radius: 50px;
-      margin-bottom: 24px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .instructions-card h1 {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--text-dark);
-      margin-bottom: 12px;
-    }
-
-    .instructions-subtitle {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 30px;
-    }
-
-    /* Caja de datos optimizada a 3 columnas */
-    .summary-box {
-      background: var(--bg-light);
-      border: 1px solid var(--border);
+      padding: 6px 14px;
       border-radius: var(--radius-sm);
-      padding: 20px;
-      margin-bottom: 30px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 15px;
-      text-align: left;
+      font-size: 14px;
+      margin-bottom: 20px;
     }
-
-    @media (max-width: 550px) {
-      .summary-box {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-    }
-
-    .summary-item label {
-      display: block;
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .summary-item span {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-dark);
-    }
-
-    .steps-container {
-      text-align: left;
-      border-top: 1px solid var(--border);
-      padding-top: 25px;
-      margin-bottom: 25px;
-    }
-
-    .instruction-step {
-      font-size: 14.5px;
-      color: var(--text-body);
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-
-    .instruction-step strong {
-      color: var(--text-dark);
-    }
-
-    .copy-data-box {
-      background: #f8fafc;
-      border: 2px dashed #cbd5e1;
-      padding: 14px;
-      font-family: monospace;
-      font-size: 18px;
-      font-weight: 700;
-      color: #2563eb;
-      text-align: center;
-      margin: 15px 0;
-      border-radius: var(--radius-sm);
-      letter-spacing: 0.5px;
-    }
-
-    .warning-note {
-      background: #fff5f5;
+    .warning-box {
+      background: #fef2f2;
       border-left: 4px solid #ef4444;
-      padding: 14px;
+      padding: 16px;
       border-radius: var(--radius-sm);
-      margin-top: 15px;
+      margin: 25px 0;
       font-size: 13.5px;
       color: #991b1b;
       line-height: 1.5;
     }
-
-    /* Estilos para los bloques inteligentes (QR / Botón) */
-    .smart-payment-block {
-      background: #f8fafc;
+    .payment-details-box {
+      background: var(--bg-light);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 25px;
-      margin-bottom: 30px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .detail-row {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .qr-container {
-      display: block;
-    }
-
-    .qr-image {
-      width: 160px;
-      height: 160px;
-      background: #ffffff;
-      padding: 8px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-    }
-
-    .qr-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
-    .mobile-app-btn {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #00d632; /* Color adaptativo por JS */
-      color: #ffffff;
-      padding: 14px 24px;
-      font-size: 15px;
-      font-weight: 700;
-      border-radius: var(--radius-sm);
-      text-decoration: none;
-      width: 100%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.2s;
-    }
-
-    .mobile-app-btn:active {
-      transform: scale(0.98);
-    }
-
-    /* Detectamos pantallas táctiles/móviles mediante CSS para alternar la interfaz */
-    @media (pointer: coarse), (max-width: 768px) {
-      .qr-container {
-        display: none !important; /* Oculta el QR en celulares */
-      }
-      .mobile-app-btn {
-        display: inline-flex !important; /* Muestra el botón de apertura directa */
-      }
-    }
-
-    .action-footer-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 15px;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dotted var(--border);
       font-size: 14.5px;
-      font-weight: 700;
-      border-radius: var(--radius-sm);
-      text-decoration: none;
-      background: var(--text-dark);
-      color: var(--bg-white);
+    }
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+    .copy-btn {
+      background: var(--blue);
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover {
+      background: var(--blue-hover);
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVEGACIÓN GLOBAL -->
   <nav class="nav">
     <div class="nav__inner">
         <a href="index.html" class="nav__logo">
@@ -232,210 +86,101 @@
             <a href="categorias.html">Categorías</a>
             <a href="vertodos.html">Ver todos</a>
             <a href="nosotros.html">Nosotros</a>
-            
-            <div style="position: relative; display: inline-block;" 
-                 onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
-                 onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
-                
-                <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
-                    Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
-                </a>
-                
-                <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
-                    <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
-                    <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
-                </div>
-            </div>
-
-            <a href="carrito.html" style="font-weight: 700; color: #2563eb; display: inline-flex; align-items: center; gap: 4px; margin-left: 8px;">
-                🛒 Carrito (<span id="cartCountNav">0</span>)
-            </a>
-        </div>
-        <div class="nav__burger" id="burgerBtn">
-            <span></span><span></span><span></span>
+            <a href="carrito.html" style="font-weight: 700; color: #2563eb;">🛒 Regresar al Carrito</a>
         </div>
     </div>
   </nav>
 
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Inicio</a>
-    <a href="categorias.html">Categorías</a>
-    <a href="vertodos.html">Ver todos</a>
-    <a href="nosotros.html">Nosotros</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="calculadora.html">Calculadora de Reconstitución</a>
-    <a href="carrito.html" style="font-weight: 700; color: #2563eb; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 15px;">
-        🛒 Mi Carrito (<span id="cartCountNavMobile">0</span>)
-    </a>
-  </div>
-
-  <!-- SECCIÓN PRINCIPAL -->
   <main class="instructions-section">
-    <div class="container instructions-container">
+    <div class="container">
       <div class="instructions-card">
+        <span class="section-eyebrow">Paso Final</span>
+        <h1 class="section-title" style="font-size: 28px; margin-bottom: 10px;">Instrucciones de Transferencia</h1>
         
-        <div class="status-badge">Pedido Retenido - Esperando Pago</div>
-        
-        <h1>Tu orden ha sido registrada</h1>
-        <p class="instructions-subtitle">
-          Para proceder con la preparación y envío de tus compuestos, realiza la transferencia manual siguiendo los accesos rápidos optimizados para tu dispositivo.
+        <div id="renderOrderId" class="order-badge">Referencia: Cargando...</div>
+
+        <p style="font-size: 15px; color: var(--text-body);">
+          Para proceder con la liberación de los reactivos de su orden, complete la transferencia electrónica utilizando los siguientes datos seguros de asignación comercial.
         </p>
 
-        <!-- Resumen Financiero Dinámico -->
-        <div class="summary-box">
-          <div class="summary-item">
-            <label>Monto a transferir</label>
-            <span id="displayTotal" class="highlight-price">$0.00 USD</span>
+        <div class="payment-details-box">
+          <div class="detail-row">
+            <span>Método Seleccionado:</span>
+            <strong id="renderMetodo">-</strong>
           </div>
-          <div class="summary-item">
-            <label>Método de Pago</label>
-            <span id="displayMetodo">Cargando...</span>
+          <div class="detail-row">
+            <span>Cuenta / Destinatario:</span>
+            <div>
+              <strong id="renderCuenta">pagos@venuspeptide.com</strong> 
+              <button class="copy-btn" onclick="copiarTexto('renderCuenta')">Copiar</button>
+            </div>
           </div>
-          <div class="summary-item">
-            <label>Código Obligatorio</label>
-            <span id="displayCodigo" style="color: #2563eb;">-</span>
+          <div class="detail-row" style="font-size: 18px; font-weight: 800; border-top: 1px solid var(--border); padding-top: 15px;">
+            <span>Monto Total Neto:</span>
+            <span id="renderTotal" style="color: var(--text-dark);">$0.00 USD</span>
           </div>
         </div>
 
-        <!-- BLOQUE INTELIGENTE ADAPTATIVO (QR o Botón Móvil) -->
-        <div class="smart-payment-block">
-          <!-- Vista Computadora: Generador automático de QR de alta resolución libre de APIs de pago -->
-          <div class="qr-container" id="qrWrapper">
-            <img src="" id="qrImage" class="qr-image" alt="Escanear para pagar">
-            <div class="qr-text">📸 Abre la cámara de tu teléfono para escanear el acceso directo</div>
-          </div>
-
-          <!-- Vista Celular: Enlace de redirección profunda a la App correspondiente -->
-          <a href="#" id="mobileAppBtn" class="mobile-app-btn" target="_blank">
-             Abrir Aplicación en mi Celular
-          </a>
+        <div class="warning-box">
+          <strong>⚠️ NOTA DE SEGURIDAD CRÍTICA PARA EL CANAL DE ENVÍO:</strong><br>
+          Al procesar su transferencia, mantenga el campo de "Concepto", "Nota" o "Memo" **completamente vacío** o coloque únicamente el código de referencia alfanumérico arriba indicado. **Bajo ninguna circunstancia** escriba palabras restringidas como <em>"péptidos", "químicos", "laboratorio", "viales" o "Venus"</em>, ya que esto causará la retención inmediata de los fondos por auditoría bancaria.
         </div>
 
-        <!-- Instrucciones Escritas -->
-        <div class="steps-container" id="paymentDetailsBox"></div>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 25px;">
+          Una vez ejecutada la transacción, haga clic en el botón de abajo para consolidar la orden y proceder al envío de la captura de pantalla de su comprobante a nuestra área de control analítico.
+        </p>
 
-        <a href="index.html" class="action-footer-btn">Volver al Inicio</a>
-        
+        <button onclick="confirmarYFinalizarPedido()" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; font-size: 15px; border-radius: var(--radius-sm);">
+          He realizado el pago y deseo enviar el comprobante
+        </button>
       </div>
     </div>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-        <div class="footer__top">
-            <div class="footer__brand">
-                <div class="footer__logo">
-                    <div class="footer__logo-icon">V</div>
-                    Venus Peptide
-                </div>
-                <p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p>
-            </div>
-            <div class="footer__col">
-                <div class="footer__col-title">Navegación</div>
-                <a href="index.html">Inicio</a>
-                <a href="categorias.html">Categorías</a>
-                <a href="vertodos.html">Ver todos</a>
-                <a href="nosotros.html">Nosotros</a>
-            </div>
-            <div class="footer__col">
-                <div class="footer__col-title">Soporte</div>
-                <a href="contacto.html">Contacto</a>
-                <a href="calculadora.html">Calculadora de Reconstitución</a>
-            </div>
-        </div>
-        <div class="footer__bottom">
-            <div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div>
-        </div>
-    </div>
-  </footer>
-
-  <script src="main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const burgerBtn = document.getElementById('burgerBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
-      if (burgerBtn && mobileMenu) {
-        burgerBtn.addEventListener('click', () => {
-          mobileMenu.classList.toggle('active');
-          burgerBtn.classList.toggle('active');
-        });
-      }
+      // IMPLEMENTACIÓN ERROR 4: Lectura con fallback resiliente ante recargas de página
+      let total = sessionStorage.getItem('pending_order_total') || localStorage.getItem('backup_order_total') || '0.00';
+      let metodo = sessionStorage.getItem('pending_order_method') || localStorage.getItem('backup_order_method') || 'Zelle';
+      let orderId = sessionStorage.getItem('pending_order_id') || localStorage.getItem('backup_order_id') || 'VP-0000';
 
-      // Recuperación de variables de sesión del Checkout
-      const total = sessionStorage.getItem('pending_order_total') || '0.00';
-      const metodo = sessionStorage.getItem('pending_order_method') || 'Zelle';
-      const codigo = sessionStorage.getItem('pending_order_id') || 'VP-0000';
+      document.getElementById('renderTotal').textContent = `$${total} USD`;
+      document.getElementById('renderMetodo').textContent = metodo;
+      document.getElementById('renderOrderId').textContent = `Referencia de Rastreo: ${orderId}`;
 
-      document.getElementById('displayTotal').textContent = `$${total} USD`;
-      document.getElementById('displayMetodo').textContent = metodo;
-      document.getElementById('displayCodigo').textContent = codigo;
-
-      const detailBox = document.getElementById('paymentDetailsBox');
-      const mobileBtn = document.getElementById('mobileAppBtn');
-      const qrImg = document.getElementById('qrImage');
-      
-      let htmlInstructions = '';
-
-      // Configuración dinámica basada en el método elegido
-      if (metodo === 'Zelle') {
-        // Enlaces de Zelle corporativos generales (Redirige a landing de bancos)
-        mobileBtn.href = "https://www.zellepay.com/go";
-        mobileBtn.style.backgroundColor = "#7414CA"; // Color Zelle
-        mobileBtn.innerHTML = "📱 Abrir Zelle / Banca Móvil";
-        
-        // QR Informativo general de Zelle
-        qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.zellepay.com/go";
-
-        htmlInstructions = `
-          <p class="instruction-step">1. Accede a tu banca en línea o app de <strong>Zelle</strong>.</p>
-          <p class="instruction-step">2. Envía la cantidad exacta de <strong class="highlight-price">$${total} USD</strong> a nuestra cuenta comercial oficial:</p>
-          <div class="copy-data-box">pagos@venuspeptide.com</div>
-          <div class="warning-note">
-            <strong>⚠️ REGLA CRUCIAL DE NOTAS (MEMO):</strong><br>
-            Coloca <strong>ÚNICAMENTE</strong> tu código de referencia en el motivo: <strong>${codigo}</strong>.<br>
-            <em>No menciones palabras como "peptides", viales o el nombre de la tienda bajo ninguna circunstancia.</em>
-          </div>
-        `;
-      } else if (metodo === 'CashApp') {
-        const cashAppLink = "https://cash.app/$VenusPeptide";
-        mobileBtn.href = cashAppLink;
-        mobileBtn.style.backgroundColor = "#00D632"; // Color CashApp
-        mobileBtn.innerHTML = "📱 Transferir Directo en CashApp";
-        
-        // Genera un QR dinámico real que abre tu perfil de CashApp al escanearlo
-        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(cashAppLink)}`;
-
-        htmlInstructions = `
-          <p class="instruction-step">1. Envía el monto neto de <strong class="highlight-price">$${total} USD</strong> a nuestro identificador verificado:</p>
-          <div class="copy-data-box">$VenusPeptide</div>
-          <div class="warning-note">
-            <strong>⚠️ REGLA CRUCIAL DE NOTAS:</strong><br>
-            En el campo de mensaje (donde dice <strong>"For"</strong>), introduce <strong>SÓLO</strong> el código: <strong>${codigo}</strong>.<br>
-            <em>Cualquier descripción adicional o palabras comerciales inhabilitará el procesamiento automático de tu orden.</em>
-          </div>
-        `;
+      // Configuración dinámica de cuentas destino de ejemplo
+      if(metodo === 'CashApp') {
+        document.getElementById('renderCuenta').textContent = '$VenusPeptidePay';
       } else if (metodo === 'Venmo') {
-        const venmoLink = "https://venmo.com/u/VenusPeptide";
-        mobileBtn.href = venmoLink;
-        mobileBtn.style.backgroundColor = "#008CFF"; // Color Venmo
-        mobileBtn.innerHTML = "📱 Transferir Directo en Venmo";
-        
-        // Genera un QR dinámico real que abre tu cuenta de Venmo al ser escaneado con la cámara
-        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(venmoLink)}`;
-
-        htmlInstructions = `
-          <p class="instruction-step">1. Transfiere la suma de <strong class="highlight-price">$${total} USD</strong> a la cuenta asignada de soporte:</p>
-          <div class="copy-data-box">@VenusPeptide</div>
-          <div class="warning-note">
-            <strong>⚠️ REGLA CRUCIAL DE NOTAS:</strong><br>
-            En la nota pública de Venmo escribe <strong>EXCLUSIVAMENTE</strong>: <strong>${codigo}</strong>.<br>
-            <em>No coloques emojis de laboratorios, jeringas ni textos que comprometan el canal privado de transferencias.</em>
-          </div>
-        `;
+        document.getElementById('renderCuenta').textContent = '@VenusPeptide';
+      } else {
+        document.getElementById('renderCuenta').textContent = 'pagos@venuspeptide.com'; // Zelle
       }
-
-      detailBox.innerHTML = htmlInstructions;
     });
+
+    function copiarTexto(elementId) {
+      const texto = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(texto).then(() => {
+        alert('Copiado al portapapeles con éxito.');
+      });
+    }
+
+    function confirmarYFinalizarPedido() {
+      let orderId = sessionStorage.getItem('pending_order_id') || localStorage.getItem('backup_order_id') || 'VP-0000';
+      let total = sessionStorage.getItem('pending_order_total') || localStorage.getItem('backup_order_total') || '0.00';
+
+      // SOLUCIÓN ERROR 2: El carrito se borra ÚNICAMENTE en el paso final absoluto
+      localStorage.removeItem('venus_cart');
+
+      // Limpieza opcional de respaldos locales
+      localStorage.removeItem('backup_order_total');
+      localStorage.removeItem('backup_order_method');
+      localStorage.removeItem('backup_order_id');
+
+      // Redirección directa para enviar confirmación vía Mail o WhatsApp
+      const mensaje = `Hola Venus Peptide, confirmo que he realizado el pago de mi orden con Referencia ${orderId} por un total de $${total} USD. Adjunto mi comprobante de transferencia.`;
+      window.location.href = `contacto.html?msg=${encodeURIComponent(mensaje)}`;
+    }
   </script>
 </body>
 </html>
