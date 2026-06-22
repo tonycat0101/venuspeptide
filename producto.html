@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargando Producto... | Venus Peptide</title>
+  
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --dark: #0f172a;
+      --slate: #64748b;
+      --light: #f8fafc;
+      --border: #e2e8f0;
+      --shadow: 0 4px 20px rgba(15, 30, 53, 0.05);
+      --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
+    body { background-color: #ffffff; color: var(--dark); line-height: 1.5; }
+
+    /* ── NAVEGACIÓN (Idéntica a tu diseño) ── */
+    .nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: #fff; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; border-bottom: 1px solid var(--border); }
+    .nav__logo { font-size: 20px; font-weight: 800; color: var(--dark); text-decoration: none; letter-spacing: -0.03em; }
+    .nav__logo span { color: var(--primary); }
+    .nav__links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav__links a { text-decoration: none; color: var(--slate); font-weight: 600; font-size: 14px; transition: color 0.2s; }
+    .nav__links a:hover, .nav__links a.active { color: var(--dark); }
+    .nav__cart { background: var(--light); padding: 8px 16px; border-radius: 20px; color: var(--dark) !important; font-weight: 700 !important; display: flex; align-items: center; gap: 6px; }
+    .nav__burger { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--dark); }
+
+    /* ── CONTENEDOR PRINCIPAL ── */
+    .product-container { max-width: 1200px; margin: 120px auto 60px auto; padding: 0 24px; }
+    
+    /* Breadcrumbs (Migas de pan) */
+    .breadcrumbs { font-size: 14px; color: var(--slate); margin-bottom: 32px; font-weight: 500; }
+    .breadcrumbs a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+    /* Layout Detalle */
+    .product-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+
+    /* Columna Izquierda: Visual del Vial */
+    .visual-column { background: var(--light); border: 1px solid var(--border); border-radius: 12px; padding: 60px; display: flex; justify-content: center; align-items: center; min-height: 450px; position: relative; }
+    
+    /* Columna Derecha: Información */
+    .info-column { display: flex; flex-direction: column; gap: 20px; }
+    .info-badge { align-self: flex-start; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; color: white; }
+    .info-title { font-size: 36px; font-weight: 800; color: var(--dark); letter-spacing: -0.02em; line-height: 1.1; }
+    .info-rating { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #f59e0b; font-weight: 600; }
+    .info-rating span { color: var(--slate); }
+    .info-pureza { font-size: 16px; color: var(--slate); font-weight: 600; background: #f1f5f9; padding: 6px 12px; border-radius: 6px; align-self: flex-start; }
+    .info-price { font-size: 28px; font-weight: 800; color: var(--dark); margin-top: 10px; }
+    .info-desc { font-size: 16px; color: #475569; line-height: 1.6; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; }
+
+    /* Caja de Compra */
+    .purchase-box { display: flex; gap: 16px; align-items: center; margin-top: 10px; }
+    .qty-selector { display: flex; align-items: center; border: 2px solid var(--border); border-radius: 8px; height: 50px; background: #fff; overflow: hidden; }
+    .qty-btn { background: none; border: none; width: 45px; height: 100%; font-size: 18px; font-weight: 600; cursor: pointer; color: var(--dark); transition: background 0.2s; }
+    .qty-btn:hover { background: var(--light); }
+    .qty-input { border: none; width: 50px; height: 100%; text-align: center; font-size: 16px; font-weight: 700; color: var(--dark); outline: none; -moz-appearance: textfield; }
+    .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    
+    .btn-add-cart { flex: 1; height: 50px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-add-cart:hover { background: var(--primary-hover); }
+
+    /* Aviso Científico */
+    .disclaimer-box { background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; padding: 16px; margin-top: 15px; display: flex; gap: 12px; }
+    .disclaimer-title { font-size: 13px; font-weight: 700; color: #b78103; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .disclaimer-text { font-size: 13px; color: #745203; line-height: 1.5; }
+
+    /* Estado de No Encontrado o Agotado */
+    .not-found-box { text-align: center; padding: 100px 24px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .btn-back { display: inline-block; background: var(--primary); color: white; padding: 14px 28px; border-radius: 6px; font-weight: 700; text-decoration: none; }
+
+    /* ── RESPONSIVO ── */
+    @media (max-width: 868px) {
+      .product-detail-grid { grid-template-columns: 1fr; gap: 40px; }
+      .visual-column { min-height: 320px; padding: 40px; }
+      .info-title { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">VENUS<span>PEPTIDE</span></a>
+    <ul class="nav__links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="vertodos.html" class="active">Catálogo</a></li>
+      <li><a href="index.html#contacto">Contacto</a></li>
+      <li><a href="carrito.html" class="nav__cart">Carrito <span>(0)</span></a></li>
+    </ul>
+    <button class="nav__burger">☰</button>
+  </nav>
+
+  <main class="product-container" id="mainContent">
+    <div style="text-align: center; padding: 100px 0; color: var(--slate); font-weight: 600;">
+      Cargando especificaciones del péptido...
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mainContent = document.getElementById('mainContent');
+      
+      // 1. Capturar el ID desde la URL (?id=bpc-157)
+      const urlParams = new URLSearchParams(window.location.search);
+      const productoId = urlParams.get('id');
+
+      // 2. Verificar que la base de datos exista y contenga el producto
+      if (!productoId || !window.productosData || !window.productosData[productoId]) {
+        mostrarProductoNoEncontrado();
+        return;
+      }
+
+      const prod = window.productosData[productoId];
+
+      // 3. Actualizar el título de la pestaña del navegador de forma elegante
+      document.title = `${prod.nombre} — Compra Investigación Analítica | Venus Peptide`;
+
+      // 4. Configurar el Badge (Sale / New)
+      let badgeHTML = '';
+      if (prod.badge) {
+        const badgeColor = prod.badge === 'sale' ? '#ef4444' : '#3b82f6';
+        badgeHTML = `<span class="info-badge" style="background: ${badgeColor};">${prod.badge}</span>`;
+      }
+
+      // 5. Configurar el Render del Frasco/Vial Gigante a escala premium
+      let vialHTML = '';
+      if (prod.isBlend) {
+        vialHTML = `
+          <div style="display: flex; gap: 20px; justify-content: center; align-items: center;">
+            <div style="width: 80px; height: 160px; border: 3px solid #cbd5e1; border-radius: 14px 14px 8px 8px; position: relative; background: #fff; box-shadow: var(--shadow);">
+              <div style="width: 100%; height: 18px; background: #2563eb; border-radius: 10px 10px 0 0; position: absolute; top: -1px; left: 0;"></div>
+              <div style="width: 36px; height: 8px; background: #cbd5e1; position: absolute; top: -10px; left: 22px; border-radius: 3px 3px 0 0;"></div>
+              <div style="position: absolute; top: 38%; left: 0; width: 100%; font-size: 13px; font-weight: 800; color: #334155; text-align: center; line-height: 1.1; padding: 0 4px; word-wrap: break-word;">${prod.vialTexto1}</div>
+            </div>
+            <div style="width: 80px; height: 160px; border: 3px solid #cbd5e1; border-radius: 14px 14px 8px 8px; position: relative; background: #fff; box-shadow: var(--shadow);">
+              <div style="width: 100%; height: 18px; background: #2563eb; border-radius: 10px 10px 0 0; position: absolute; top: -1px; left: 0;"></div>
+              <div style="width: 36px; height: 8px; background: #cbd5e1; position: absolute; top: -10px; left: 22px; border-radius: 3px 3px 0 0;"></div>
+              <div style="position: absolute; top: 38%; left: 0; width: 100%; font-size: 13px; font-weight: 800; color: #334155; text-align: center; line-height: 1.1; padding: 0 4px; word-wrap: break-word;">${prod.vialTexto2}</div>
+            </div>
+          </div>`;
+      } else {
+        const capColor = prod.vialColor === 'pink' ? '#db2777' : '#2563eb';
+        const opacityStyle = prod.agotado ? 'opacity: 0.4;' : '';
+        vialHTML = `
+          <div style="width: 110px; height: 200px; border: 3px solid #cbd5e1; border-radius: 16px 16px 10px 10px; position: relative; background: #fff; box-shadow: var(--shadow); ${opacityStyle}">
+            <div style="width: 100%; height: 20px; background: ${capColor}; border-radius: 12px 12px 0 0; position: absolute; top: -1px; left: 0;"></div>
+            <div style="width: 46px; height: 8px; background: #cbd5e1; position: absolute; top: -10px; left: 32px; border-radius: 3px 3px 0 0;"></div>
+            <div style="position: absolute; top: 38%; left: 0; width: 100%; font-size: 16px; font-weight: 800; color: #334155; text-align: center; line-height: 1.1; padding: 0 4px; word-wrap: break-word;">${prod.vialTexto}</div>
+          </div>`;
+      }
+
+      // 6. Configurar la caja de acción según stock (Disponibilidad / Agotado)
+      let actionHTML = '';
+      if (prod.agotado) {
+        actionHTML = `
+          <div style="font-size: 24px; font-weight: 800; color: #94a3b8;">Producto Agotado</div>
+          <button disabled class="btn-add-cart" style="background: #94a3b8; cursor: not-allowed;">
+            Temporalmente sin Stock
+          </button>`;
+      } else {
+        actionHTML = `
+          <div class="info-price">$${prod.precio.toFixed(2)} USD</div>
+          <div class="purchase-box">
+            <div class="qty-selector">
+              <button class="qty-btn" id="btnMinus">−</button>
+              <input type="number" class="qty-input" id="qtyInput" value="1" min="1" max="99">
+              <button class="qty-btn" id="btnPlus">+</button>
+            </div>
+            <button class="btn-add-cart" id="btnAddToCart">
+              Añadir al Carrito
+            </button>
+          </div>`;
+      }
+
+      // 7. Renderizado final de toda la estructura de la página
+      mainContent.innerHTML = `
+        <div class="breadcrumbs">
+          <a href="index.html">Inicio</a> / <a href="vertodos.html">Catálogo</a> / <span>${prod.nombre}</span>
+        </div>
+
+        <div class="product-detail-grid">
+          <div class="visual-column">
+            ${vialHTML}
+          </div>
+          
+          <div class="info-column">
+            ${badgeHTML}
+            <h1 class="info-title">${prod.nombre}</h1>
+            
+            <div class="info-rating">
+              ★★★★★ <span>(${prod.rating} / 5.0 — Calidad Certificada)</span>
+            </div>
+            
+            <div class="info-pureza">${prod.pureza}</div>
+            
+            <p class="info-desc">${prod.descripcion}</p>
+            
+            ${actionHTML}
+
+            <div class="disclaimer-box">
+              <div style="font-size: 20px;">🔬</div>
+              <div>
+                <div class="disclaimer-title">Exclusivo para Investigación de Laboratorio</div>
+                <div class="disclaimer-text">Este producto químico liofilizado se suministra únicamente con fines de investigación científica in-vitro y ensayos analíticos de desarrollo corporativo. No apto para uso humano ni terapéutico directo.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // 8. Programar lógica interna del selector de cantidad (+ / -)
+      if (!prod.agotado) {
+        const btnMinus = document.getElementById('btnMinus');
+        const btnPlus = document.getElementById('btnPlus');
+        const qtyInput = document.getElementById('qtyInput');
+        const btnAddToCart = document.getElementById('btnAddToCart');
+
+        btnMinus.addEventListener('click', () => {
+          let val = parseInt(qtyInput.value) || 1;
+          if (val > 1) qtyInput.value = val - 1;
+        });
+
+        btnPlus.addEventListener('click', () => {
+          let val = parseInt(qtyInput.value) || 1;
+          qtyInput.value = val + 1;
+        });
+
+        qtyInput.addEventListener('change', () => {
+          let val = parseInt(qtyInput.value);
+          if (isNaN(val) || val < 1) qtyInput.value = 1;
+        });
+
+        // Evento temporal para conectar en el siguiente paso del carrito
+        btnAddToCart.addEventListener('click', () => {
+          alert(`¡Listo! Añadiste ${qtyInput.value} unidad(es) de ${prod.nombre} al carrito (Lógica de almacenamiento lista).`);
+        });
+      }
+    });
+
+    function mostrarProductoNoEncontrado() {
+      document.getElementById('mainContent').innerHTML = `
+        <div class="not-found-box">
+          <h2 style="font-size: 28px; color: var(--dark);">Péptido No Encontrado</h2>
+          <p style="color: var(--slate); max-width: 400px;">El producto que estás intentando buscar no existe en nuestros registros analíticos o ha sido modificado.</p>
+          <a href="vertodos.html" class="btn-back">Regresar al Catálogo</a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
