@@ -64,7 +64,7 @@ const productosData = {
     categoria: "desempeno",
     badge: "new",
     vialTexto: "MT-II",
-    vialColor: "pink", // Color especial rosa de tu diseño original
+    vialColor: "pink",
     descripcion: "Análogo sintético de la hormona estimulante de melanocitos alfa para la investigación de la melanogénesis sistémica y la foto-protección celular en entornos analíticos."
   },
   "ipamorelin": {
@@ -219,7 +219,7 @@ const productosData = {
     pureza: "99.6% Pureza | 5mg",
     categoria: "cognitivas",
     vialTexto: "DSIP",
-    agotado: true, // Propiedad especial de producto agotado
+    agotado: true,
     descripcion: "Nonapéptido modulador de los ritmos circadianos y la actividad electroencefalográfica subcortical en entornos de simulación neurológica controlada."
   },
   "nad-plus": {
@@ -332,7 +332,7 @@ const productosData = {
     pureza: "Mezcla Cinética | 5mg + 5mg",
     categoria: "desempeno",
     badge: "sale",
-    isBlend: true, // Indica estructura especial de doble vial
+    isBlend: true,
     vialTexto1: "BPC",
     vialTexto2: "TB",
     descripcion: "Formulación combinada líquida/liofilizada de péptidos reparadores diseñada para estudiar interacciones sinérgicas en la cascada celular de curación tisular."
@@ -345,7 +345,7 @@ const productosData = {
     pureza: "Sinergia Analítica | 5mg + 5mg",
     categoria: "metabolicos",
     badge: "sale",
-    isBlend: true, // Indica estructura especial de doble vial
+    isBlend: true,
     vialTexto1: "SEMA",
     vialTexto2: "BPC",
     descripcion: "Solución analítica combinada para evaluar la modulación protectora e integral de la mucosa gástrica frente a la estimulación metabólica por GLP-1."
@@ -382,10 +382,29 @@ const productosData = {
   }
 };
 
+// Exponer la base de datos de manera explícita al entorno global
+window.productosData = productosData;
+
+/* ── Control Automático del Contador de la Nav ── */
+function actualizarNumeroNavGlobal() {
+  const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  
+  document.querySelectorAll('.nav__cart span, #navCartCount').forEach(badge => {
+    badge.textContent = `(${totalQty})`;
+  });
+}
+
+// Exponer la función para que vistas hijas puedan llamarla al añadir productos
+window.actualizarNumeroNavGlobal = actualizarNumeroNavGlobal;
+
 /* ============================================================
    VENUS PEPTIDE — LÓGICA DE LA WEB
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
+
+  // Sincronizar el estado del carrito inmediatamente al cargar el DOM
+  actualizarNumeroNavGlobal();
 
   /* ── 1. Renderizar tarjetas de productos automáticamente ── */
   const gridProductos = document.getElementById('gridProductos');
@@ -404,7 +423,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Configurar apariencia del vial (Individual vs Blend)
       let vialBoxHTML = '';
       if (prod.isBlend) {
-        // Estructura especial con 2 mini frascos para los Blends
         vialBoxHTML = `
           <div style="background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 6px; padding: 30px; display: flex; justify-content: center; align-items: center; min-height: 180px; gap: 6px;">
             <div style="width: 50px; height: 110px; border: 2px solid #cbd5e1; border-radius: 10px 10px 6px 6px; position: relative; background: #fff;">
@@ -419,7 +437,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>`;
       } else {
-        // Estructura normal de 1 frasco solo
         const capColor = prod.vialColor === 'pink' ? '#db2777' : '#2563eb';
         const opacityStyle = prod.agotado ? 'opacity: 0.5;' : '';
         vialBoxHTML = `
@@ -432,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>`;
       }
 
-      // Configurar visualización de precio y botones según stock
+      // Configurar visualización según stock
       let actionBoxHTML = '';
       if (prod.agotado) {
         actionBoxHTML = `
@@ -448,7 +465,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </a>`;
       }
 
-      // Inyección completa de la tarjeta en la cuadrícula
       gridProductos.innerHTML += `
         <div class="product-wrap" data-cat="${prod.categoria}">
           <div class="product-card" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
@@ -513,7 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) {
     form.addEventListener('submit', e => {
       e.preventDefault();
-      const btn = form.querySelector('button[type=\"submit\"]');
+      const btn = form.querySelector('button[type="submit"]');
       btn.textContent = '¡Mensaje enviado! ✓';
       btn.disabled = true;
       setTimeout(() => {
@@ -558,17 +574,5 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
-/* ── Control Automático del Contador de la Nav ── */
-function actualizarNumeroNavGlobal() {
-  const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-  
-  // Busca cualquier enlace del menú que diga "Carrito" y le pone el número real
-  document.querySelectorAll('.nav__cart span, #navCartCount').forEach(badge => {
-    badge.textContent = `(${totalQty})`;
-  });
-}
 
-// Ejecutar inmediatamente al abrir cualquier página que use main.js
-document.addEventListener('DOMContentLoaded', actualizarNumeroNavGlobal);
 });
