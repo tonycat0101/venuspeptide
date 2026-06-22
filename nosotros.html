@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quiénes Somos — Venus Peptide</title>
   <meta name="description" content="Conoce nuestro estándar de pureza y el compromiso científico detrás de Venus Peptide.">
-  <link rel="stylesheet" href="styles.css"> <!-- RUTA CORREGIDA -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- ── NAV (Consistente con todo el sitio con menú Soporte) ─────────────────────────────── -->
 <nav class="nav">
     <div class="nav__inner">
         <a href="index.html" class="nav__logo">
@@ -21,17 +20,12 @@
             <a href="categorias.html">Categorías</a>
             <a href="vertodos.html">Ver todos</a>
             <a href="nosotros.html">Nosotros</a>
-            
-            <!-- Menú Desplegable de Soporte (Hereda tus estilos interactivos) -->
-            <div style="position: relative; display: inline-block;" 
-                 onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
+            <div style="position: relative; display: inline-block;"
+                 onmouseenter="this.querySelector('.nav__submenu').style.display='block'"
                  onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
-                
                 <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
                     Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
                 </a>
-                
-                <!-- Contenedor del Submenú Absoluto -->
                 <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
                     <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
                     <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
@@ -44,7 +38,6 @@
     </div>
 </nav>
 
-<!-- Menú móvil (Despliega las opciones de soporte de forma limpia y directa) -->
 <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
@@ -54,7 +47,6 @@
     <a href="calculadora.html">Calculadora de Reconstitución</a>
 </div>
 
-  <!-- ── HERO DE SECCIÓN ────────────────────────────────────────────────── -->
   <section class="hero" style="padding-top: 140px; padding-bottom: 60px; min-height: auto;">
     <div class="container">
       <div class="hero__inner" style="grid-template-columns: 1fr; text-align: center; max-width: 800px; margin: 0 auto;">
@@ -74,12 +66,10 @@
     </div>
   </section>
 
-  <!-- ── CONTENIDO PRINCIPAL / COMPROMISO (Fondo Blanco) ─────────────────── -->
   <section class="section" style="background: var(--bg-white); border-top: 1px solid var(--border);">
     <div class="container">
       <div class="quality__inner" style="align-items: center; gap: 60px;">
         
-        <!-- Bloque de Texto Informativo -->
         <div class="fade-up" style="display: flex; flex-direction: column; gap: 24px;">
           <div class="section-eyebrow">Calidad sin compromisos</div>
           <h2 class="section-title" style="font-size: 32px;">
@@ -93,12 +83,10 @@
           </p>
         </div>
 
-        <!-- Tarjeta Lateral de Valores -->
         <div class="quality__visual fade-up" style="gap: 24px; padding: 32px;">
           <div style="font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted);">
             Pilares de Venus Peptide
           </div>
-          
           <div class="quality__point">
             <div class="quality__point-icon">🧪</div>
             <div>
@@ -106,7 +94,6 @@
               <div class="quality__point-text">Secuencias peptídicas idénticas con perfiles analíticos limpios y transparentes disponibles para cada investigador.</div>
             </div>
           </div>
-          
           <div class="quality__point" style="border-top: 1px solid var(--border); padding-top: 20px;">
             <div class="quality__point-icon">🔬</div>
             <div>
@@ -120,7 +107,6 @@
     </div>
   </section>
 
-  <!-- ── SECCIÓN OSCURA DE AVISO LEGAL ───────────────────────────────────── -->
   <section class="trust" style="padding: 80px 0; text-align: center;">
     <div class="container">
       <div class="fade-up" style="max-width: 750px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; align-items: center;">
@@ -138,74 +124,52 @@
     </div>
   </section>
 
- <!-- ── FOOTER OPTIMIZADO (Estilo Horizontal como Ascension Peptides) ── -->
   <footer class="footer">
     <div class="container">
-      
-      <!-- Parte superior: Reducida a 3 columnas fluidas -->
+
       <div class="footer__top" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-        
-        <!-- Columna 1: Marca -->
+
         <div class="footer__brand">
           <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
           <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
         </div>
 
-        <!-- Columna 2: Navegación básica -->
+        <!-- CORRECCIÓN: todos.html → vertodos.html en todos los enlaces -->
         <div class="footer__col">
           <div class="footer__col-title">Navegación</div>
           <a href="index.html">Inicio</a>
           <a href="categorias.html">Categorías</a>
-          <a href="todos.html">Ver todos</a>
+          <a href="vertodos.html">Ver todos</a>
           <a href="nosotros.html">Nosotros</a>
           <a href="contacto.html">Contacto</a>
         </div>
 
-        <!-- Columna 3: Categorías científicas -->
+        <!-- CORRECCIÓN: todos.html?cat=... → vertodos.html?cat=... -->
         <div class="footer__col">
           <div class="footer__col-title">Categorías</div>
-          <a href="todos.html?cat=metabolicos">Investigación Metabólica</a>
-          <a href="todos.html?cat=gh">Moduladores GH</a>
-          <a href="todos.html?cat=cognitivas">Neuro-Cognición</a>
-          <a href="todos.html?cat=desempeno">Desempeño Celular</a>
+          <a href="vertodos.html?cat=metabolicos">Investigación Metabólica</a>
+          <a href="vertodos.html?cat=gh">Moduladores GH</a>
+          <a href="vertodos.html?cat=cognitivas">Neuro-Cognición</a>
+          <a href="vertodos.html?cat=desempeno">Desempeño Celular</a>
         </div>
 
       </div>
 
-      <!-- Parte inferior: Estilo idéntico a la referencia de Ascension -->
       <div class="footer__bottom-horizontal" style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
-        
-        <!-- Fila 1: Copyright a la izquierda, Enlaces en línea a la derecha -->
+
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: var(--text-muted, #94a3b8);">
-          
-          <!-- Izquierda: Copyright de marca -->
-          <div>
-            Copyright ©2026 Venus Peptide, All Rights Reserved.
-          </div>
-          
-          <!-- Derecha: Enlaces divididos por barras flotantes -->
+          <div>Copyright ©2026 Venus Peptide, All Rights Reserved.</div>
           <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <style>
-              .inline-legal-link {
-                color: inherit;
-                text-decoration: none;
-                transition: color 0.2s ease;
-              }
-              .inline-legal-link:hover {
-                color: #fff;
-              }
-              .inline-separator {
-                color: rgba(255, 255, 255, 0.2);
-                font-size: 12px;
-                user-select: none;
-              }
+              .inline-legal-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+              .inline-legal-link:hover { color: #fff; }
+              .inline-separator { color: rgba(255, 255, 255, 0.2); font-size: 12px; user-select: none; }
             </style>
-            
             <a href="faq.html" class="inline-legal-link">FAQ</a>
             <span class="inline-separator">|</span>
-            <a href="terminos.html" class="inline-legal-link">Terms & Conditions</a>
+            <a href="terminos.html" class="inline-legal-link">Terms &amp; Conditions</a>
             <span class="inline-separator">|</span>
-            <a href="envios.html" class="inline-legal-link">Shipping & Returns</a>
+            <a href="envios.html" class="inline-legal-link">Shipping &amp; Returns</a>
             <span class="inline-separator">|</span>
             <a href="privacidad.html" class="inline-legal-link">Privacy Policy</a>
             <span class="inline-separator">|</span>
@@ -213,7 +177,6 @@
           </div>
         </div>
 
-        <!-- Fila 2: Descargo de responsabilidad clínico (Centrado y en negrita) -->
         <p style="text-align: center; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-weight: 600; letter-spacing: 0.01em;">
           Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. Debe tener la edad legal requerida para adquirir estos compuestos. Los productos NO son para consumo humano ni veterinario de ningún tipo. Las declaraciones hechas dentro de este sitio web no han sido evaluadas por ninguna administración de alimentos o medicamentos. Estos reactivos no están destinados a diagnosticar, tratar, curar o prevenir ninguna enfermedad.
         </p>
@@ -223,6 +186,6 @@
     </div>
   </footer>
 
-  <script src="main.js"></script> <!-- RUTA CORREGIDA -->
+  <script src="main.js"></script>
 </body>
 </html>
