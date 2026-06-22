@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tu Línea de Orden | Venus Peptide</title>
+  <title>Tu Carrito de Compras | Venus Peptide</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- MENÚ DE NAVEGACIÓN GLOBAL -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo">
@@ -17,177 +16,191 @@
       </a>
       <div class="nav__links">
         <a href="index.html">Inicio</a>
-        <a href="categorias.html">Categorías</a>
-        <a href="vertodos.html">Ver todos</a>
-        <a href="nosotros.html">Nosotros</a>
-        
-        <!-- Dropdown de Soporte -->
-        <div class="nav__dropdown-container">
-          <a href="#" class="nav__dropdown-trigger">
-            Soporte <span class="nav__dropdown-arrow">▼</span>
-          </a>
-          <div class="nav__submenu">
-            <a href="contacto.html">Contacto</a>
-            <a href="calculadora.html">Calculadora de Reconstitución</a>
-          </div>
-        </div>
-
-        <a href="carrito.html" class="nav__cart">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="cart-icon"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-          Carrito <span id="navCartCount">(0)</span>
-        </a>
+        <a href="vertodos.html">Catálogo</a>
+        <a href="index.html#contacto">Contacto</a>
+        <a href="carrito.html" class="active">Carrito <span id="navCartCount">(0)</span></a>
+      </div>
+      <div class="nav__burger">
+        <span></span><span></span><span></span>
       </div>
     </div>
   </nav>
 
-  <!-- SECCIÓN CENTRAL DEL CARRITO -->
   <main class="cart-section">
-    <div class="cart-container">
-      <h1 class="cart-title">Tu Línea de Orden</h1>
+    <div class="container">
+      <h1 class="section-title">Tu Carrito</h1>
       
-      <div class="cart-layout">
-        <!-- COLUMNA IZQUIERDA: LISTA DE PRODUCTOS -->
-        <div class="cart-table-card">
-          <div class="cart-header-row">
-            <span>Compuesto de Ensayo</span>
-            <span>Cantidad</span>
-            <span class="text-right">Total</span>
-          </div>
-          <div id="cartItemsList">
-            <!-- Render dinámico desde JS -->
-          </div>
+      <div id="cartWrapper">
         </div>
-
-        <!-- COLUMNA DERECHA: RESUMEN CORPORATIVO -->
-        <div class="cart-sidebar">
-          <h2 class="sidebar-title">Resumen de Investigación</h2>
-          <div class="sidebar-row">
-            <span>Compuestos Seleccionados</span>
-            <span id="summaryQty">0 unidades</span>
-          </div>
-          <div class="sidebar-row">
-            <span>Envío Internacional</span>
-            <span class="text-free">Gratuito</span>
-          </div>
-          <div class="sidebar-row total-row">
-            <span>Total Orden</span>
-            <span id="summaryTotal">$0.00 USD</span>
-          </div>
-
-          <button onclick="procederAlCheckout()" class="btn-proceed-checkout">
-            Proceder al Checkout
-          </button>
-          <a href="vertodos.html" class="back-link">← Continuar explorando reactivos</a>
-        </div>
-      </div>
     </div>
   </main>
 
-  <!-- FOOTER GLOBAL UNIFICADO -->
   <footer class="footer">
-    <div class="footer__grid">
-      <div>
-        <h3 class="footer__title">Venus Peptide</h3>
-        <p class="footer__text">Compuestos químicos premium destinados estrictamente para el desarrollo de protocolos analíticos y de investigación científica de laboratorio.</p>
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <div class="footer__logo-icon">V</div>
+            Venus Peptide
+          </div>
+          <p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Navegación</div>
+          <a href="index.html">Inicio</a>
+          <a href="vertodos.html">Catálogo</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Soporte</div>
+          <a href="index.html#contacto">Contacto</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Legal</div>
+          <a href="#">Términos de Uso</a>
+        </div>
       </div>
-      <div>
-        <h4 class="footer__subtitle">Enlaces del Sitio</h4>
-        <ul class="footer__links">
-          <li><a href="vertodos.html">Catálogo de Compuestos</a></li>
-          <li><a href="calculadora.html">Calculadora de Reconstitución</a></li>
-          <li><a href="contacto.html">Centro de Soporte</a></li>
-        </ul>
+      
+      <div class="footer__bottom">
+        <div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div>
       </div>
-      <div>
-        <h4 class="footer__subtitle">Aviso Legal Obligatorio</h4>
-        <p class="footer__legal">Todos los productos comercializados en este sitio web están fabricados exclusivamente para ensayos in-vitro. Queda terminantemente prohibido su uso clínico o terapéutico en humanos.</p>
+      
+      <div class="footer__disclaimer">
+        Aviso legal obligatorio: Todos los productos comercializados en este sitio web están fabricados exclusivamente para ensayos in-vitro. Queda terminantemente prohibido su uso clínico o terapéutico en humanos.
       </div>
-    </div>
-    <div class="footer__bottom">
-      <p>&copy; 2026 Venus Peptide. Todos los derechos reservados.</p>
     </div>
   </footer>
 
   <script src="main.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => { renderizarCarrito(); });
+    document.addEventListener('DOMContentLoaded', () => {
+      renderizarCarrito();
+    });
 
     function renderizarCarrito() {
-      const container = document.getElementById('cartItemsList');
+      const container = document.getElementById('cartWrapper');
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
-      if (!window.productosData) { setTimeout(renderizarCarrito, 100); return; }
       if (cart.length === 0) {
-        container.innerHTML = `<div class="cart-empty">Tu carrito está vacío.</div>`;
-        document.getElementById('summaryQty').textContent = '0 unidades';
-        document.getElementById('summaryTotal').textContent = '$0.00 USD';
-        document.getElementById('navCartCount').textContent = '(0)';
+        container.innerHTML = `
+          <div class="empty-cart-box">
+            <p style="font-size: 16px; color: var(--text-muted); font-weight: 500;">Tu carrito está vacío actualmente.</p>
+            <a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a>
+          </div>`;
+        actualizarContadoresGlobales(0);
         return;
       }
 
-      let html = ''; let grandTotal = 0; let totalUnits = 0;
+      let itemsHTML = '';
+      let subtotal = 0;
+      let totalArticulos = 0;
 
       cart.forEach((item, index) => {
-        const prod = window.productosData[item.id];
-        if (prod) {
-          const itemTotal = prod.precio * item.qty;
-          grandTotal += itemTotal; totalUnits += item.qty;
-          const shortName = prod.nombre.substring(0, 4).toUpperCase();
+        const prod = window.productosData ? window.productosData[item.id] : null;
+        if (!prod) return;
 
-          html += `
-            <div class="cart-item-row">
-              <div class="prod-info-block">
-                <div class="prod-img-placeholder">
-                  <span class="vial-brand">V_PEPTIDE</span>
-                  <span>${shortName}</span>
-                </div>
-                <div class="prod-details">
-                  <h3>${prod.nombre}</h3>
-                  <p>${prod.pureza || '99.8% Pureza'} | ${prod.miligramos || '5mg'}</p>
-                  <button onclick="eliminarDelCarro(${index})" class="btn-remove">Eliminar</button>
-                </div>
-              </div>
-              <div>
-                <div class="qty-control">
-                  <button class="qty-btn" onclick="cambiarCantidad(${index}, -1)">-</button>
-                  <input type="number" class="qty-input" value="${item.qty}" readonly>
-                  <button class="qty-btn" onclick="cambiarCantidad(${index}, 1)">+</button>
-                </div>
-              </div>
-              <div class="line-total">$${itemTotal.toFixed(2)} USD</div>
+        const itemTotal = prod.precio * item.qty;
+        subtotal += itemTotal;
+        totalArticulos += item.qty;
+
+        const capColor = prod.vialColor === 'pink' ? '#db2777' : '#2563eb';
+        const textoVial = prod.isBlend ? `${prod.vialTexto1}+${prod.vialTexto2}` : prod.vialTexto;
+
+        itemsHTML += `
+          <div class="cart-item">
+            <div class="item-vial-preview">
+              <div class="item-vial-cap" style="background: ${capColor};"></div>
+              <div class="item-vial-text">${textoVial}</div>
             </div>
-          `;
-        }
+            <div class="item-details">
+              <div class="item-name">${prod.nombre}</div>
+              <div class="item-pureza">${prod.pureza}</div>
+              <div class="item-qty-actions">
+                <div class="qty-box">
+                  <button class="qty-btn" onclick="cambiarCantidad('${item.id}', -1)">−</button>
+                  <input type="text" class="qty-val" value="${item.qty}" readonly>
+                  <button class="qty-btn" onclick="cambiarCantidad('${item.id}', 1)">+</button>
+                </div>
+                <button class="btn-delete" onclick="eliminarArticulo('${item.id}')">Eliminar</button>
+              </div>
+            </div>
+            <div class="item-price-total">$${itemTotal.toFixed(2)} USD</div>
+          </div>`;
       });
 
-      container.innerHTML = html;
-      document.getElementById('summaryQty').textContent = `${totalUnits} unidades`;
-      document.getElementById('summaryTotal').textContent = `$${grandTotal.toFixed(2)} USD`;
-      document.getElementById('navCartCount').textContent = `(${totalUnits})`;
+      actualizarContadoresGlobales(totalArticulos);
+
+      container.innerHTML = `
+        <div class="cart-layout">
+          <div class="cart-items-list">
+            ${itemsHTML}
+          </div>
+          
+          <div class="cart-summary">
+            <div class="summary-title">Resumen del Pedido</div>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span style="color: var(--text-dark); font-weight: 600;">$${subtotal.toFixed(2)} USD</span>
+            </div>
+            <div class="summary-row">
+              <span>Envío</span>
+              <span style="color: #22c55e; font-weight: 700;">Gratis</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>$${subtotal.toFixed(2)} USD</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 10px; border-radius: var(--radius-sm);" onclick="procesarOrden()">
+              Proceder al Pago
+            </button>
+          </div>
+        </div>`;
     }
 
-    function cambiarCantidad(index, cambio) {
+    window.cambiarCantidad = function(id, cambio) {
       let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-      if(cart[index]) {
-        cart[index].qty += cambio;
-        if(cart[index].qty <= 0) cart.splice(index, 1);
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.qty += cambio;
+        if (item.qty <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        }
         localStorage.setItem('venus_cart', JSON.stringify(cart));
         renderizarCarrito();
       }
-    }
+    };
 
-    function eliminarDelCarro(index) {
+    window.eliminarArticulo = function(id) {
       let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-      cart.splice(index, 1);
+      cart = cart.filter(i => i.id !== id);
       localStorage.setItem('venus_cart', JSON.stringify(cart));
       renderizarCarrito();
+    };
+
+    function actualizarContadoresGlobales(total) {
+      const navCount = document.getElementById('navCartCount');
+      if (navCount) navCount.textContent = `(${total})`;
     }
 
-    function procederAlCheckout() {
+    window.procesarOrden = function() {
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-      if (cart.length === 0) return alert("Tu carrito está vacío.");
-      window.location.href = "checkout.html";
-    }
+      let mensaje = '¡Hola Venus Peptide! Me gustaría realizar el siguiente pedido para investigación:\n\n';
+      let total = 0;
+
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (prod) {
+          mensaje += `• ${item.qty}x ${prod.nombre} (${prod.pureza}) — $${(prod.precio * item.qty).toFixed(2)} USD\n`;
+          total += prod.precio * item.qty;
+        }
+      });
+
+      mensaje += `\n*Total a Pagar:* $${total.toFixed(2)} USD\n`;
+      mensaje += '*Envío:* Solicitud de envío Gratuito.';
+
+      const tuTelefono = "1234567890"; 
+      const url = `https://api.whatsapp.com/send?phone=${tuTelefono}&text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
+    };
   </script>
 </body>
 </html>
