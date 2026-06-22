@@ -741,3 +741,12 @@ ul   { list-style: none; }
   .footer__top   { grid-template-columns: 1fr; }
   .hero__stats   { gap: 20px; }
 }
+:root {
+  --primary:       var(--blue);
+  --primary-hover: var(--blue-hover);
+  --primary-rgb:   37, 99, 235;
+  --text-main:     var(--text-dark);
+  --slate:         var(--text-muted);
+  --dark:          var(--text-dark);
+  --light:         var(--bg-light);
+}
