@@ -220,8 +220,7 @@
   <main class="cart-section">
     <div class="container">
       <h1 class="section-title">Tu Carrito</h1>
-      <div id="cartWrapper">
-        </div>
+      <div id="cartWrapper"></div>
     </div>
   </main>
 
@@ -258,6 +257,11 @@
     function renderizarCarrito() {
       const container = document.getElementById('cartWrapper');
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+
+      // Actualizar el contador de la barra de navegación dinámicamente
+      const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
+      const navCount = document.getElementById('navCartCount');
+      if (navCount) navCount.textContent = `(${totalArticulos})`;
 
       if (cart.length === 0) {
         container.innerHTML = `
@@ -334,19 +338,9 @@
       renderizarCarrito();
     };
 
+    /* Redirección directa al formulario de datos de envío y pago seguro */
     window.procesarOrden = function() {
-      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-      let mensaje = '¡Hola! Me gustaría realizar el siguiente pedido:\n\n';
-      let total = 0;
-      cart.forEach(item => {
-        const prod = window.productosData[item.id];
-        if (prod) {
-          mensaje += `• ${item.qty}x ${prod.nombre} — $${(prod.precio * item.qty).toFixed(2)} USD\n`;
-          total += prod.precio * item.qty;
-        }
-      });
-      mensaje += `\n*Total:* $${total.toFixed(2)} USD`;
-      window.open(`https://api.whatsapp.com/send?phone=1234567890&text=${encodeURIComponent(mensaje)}`, '_blank');
+      window.location.href = 'checkout.html';
     };
   </script>
 </body>
