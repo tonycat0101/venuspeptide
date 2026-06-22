@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instrucciones de Pago | Venus Peptide</title>
   
+  <!-- Enlace a tu CSS global principal -->
   <link rel="stylesheet" href="styles.css">
 
+  <!-- Estilos Premium para la pantalla de Instrucciones Inteligente -->
   <style>
     .instructions-section {
       padding: calc(var(--nav-h) + 60px) 0 100px;
@@ -98,7 +100,7 @@
       text-align: left;
       border-top: 1px solid var(--border);
       padding-top: 25px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
     .instruction-step {
@@ -126,11 +128,6 @@
       letter-spacing: 0.5px;
     }
 
-    .highlight-price {
-      color: var(--text-dark);
-      font-weight: 800;
-    }
-
     .warning-note {
       background: #fff5f5;
       border-left: 4px solid #ef4444;
@@ -140,6 +137,70 @@
       font-size: 13.5px;
       color: #991b1b;
       line-height: 1.5;
+    }
+
+    /* Estilos para los bloques inteligentes (QR / Botón) */
+    .smart-payment-block {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 25px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .qr-container {
+      display: block;
+    }
+
+    .qr-image {
+      width: 160px;
+      height: 160px;
+      background: #ffffff;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .qr-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .mobile-app-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #00d632; /* Color adaptativo por JS */
+      color: #ffffff;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+    }
+
+    .mobile-app-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Detectamos pantallas táctiles/móviles mediante CSS para alternar la interfaz */
+    @media (pointer: coarse), (max-width: 768px) {
+      .qr-container {
+        display: none !important; /* Oculta el QR en celulares */
+      }
+      .mobile-app-btn {
+        display: inline-flex !important; /* Muestra el botón de apertura directa */
+      }
     }
 
     .action-footer-btn {
@@ -152,12 +213,14 @@
       font-weight: 700;
       border-radius: var(--radius-sm);
       text-decoration: none;
-      transition: background 0.2s;
+      background: var(--text-dark);
+      color: var(--bg-white);
     }
   </style>
 </head>
 <body>
 
+  <!-- NAVEGACIÓN GLOBAL -->
   <nav class="nav">
     <div class="nav__inner">
         <a href="index.html" class="nav__logo">
@@ -206,6 +269,7 @@
     </a>
   </div>
 
+  <!-- SECCIÓN PRINCIPAL -->
   <main class="instructions-section">
     <div class="container instructions-container">
       <div class="instructions-card">
@@ -214,10 +278,10 @@
         
         <h1>Tu orden ha sido registrada</h1>
         <p class="instructions-subtitle">
-          Para proceder con la preparación y envío asegurado de tus compuestos de investigación, realiza la transferencia manual siguiendo las indicaciones detalladas abajo.
+          Para proceder con la preparación y envío de tus compuestos, realiza la transferencia manual siguiendo los accesos rápidos optimizados para tu dispositivo.
         </p>
 
-        <!-- Resumen financiero modificado con el identificador -->
+        <!-- Resumen Financiero Dinámico -->
         <div class="summary-box">
           <div class="summary-item">
             <label>Monto a transferir</label>
@@ -228,14 +292,29 @@
             <span id="displayMetodo">Cargando...</span>
           </div>
           <div class="summary-item">
-            <label>Código de Referencia</label>
+            <label>Código Obligatorio</label>
             <span id="displayCodigo" style="color: #2563eb;">-</span>
           </div>
         </div>
 
+        <!-- BLOQUE INTELIGENTE ADAPTATIVO (QR o Botón Móvil) -->
+        <div class="smart-payment-block">
+          <!-- Vista Computadora: Generador automático de QR de alta resolución libre de APIs de pago -->
+          <div class="qr-container" id="qrWrapper">
+            <img src="" id="qrImage" class="qr-image" alt="Escanear para pagar">
+            <div class="qr-text">📸 Abre la cámara de tu teléfono para escanear el acceso directo</div>
+          </div>
+
+          <!-- Vista Celular: Enlace de redirección profunda a la App correspondiente -->
+          <a href="#" id="mobileAppBtn" class="mobile-app-btn" target="_blank">
+             Abrir Aplicación en mi Celular
+          </a>
+        </div>
+
+        <!-- Instrucciones Escritas -->
         <div class="steps-container" id="paymentDetailsBox"></div>
 
-        <a href="index.html" class="btn btn-primary action-footer-btn">Volver al Inicio</a>
+        <a href="index.html" class="action-footer-btn">Volver al Inicio</a>
         
       </div>
     </div>
@@ -282,6 +361,7 @@
         });
       }
 
+      // Recuperación de variables de sesión del Checkout
       const total = sessionStorage.getItem('pending_order_total') || '0.00';
       const metodo = sessionStorage.getItem('pending_order_method') || 'Zelle';
       const codigo = sessionStorage.getItem('pending_order_id') || 'VP-0000';
@@ -291,44 +371,70 @@
       document.getElementById('displayCodigo').textContent = codigo;
 
       const detailBox = document.getElementById('paymentDetailsBox');
-      let html = '';
+      const mobileBtn = document.getElementById('mobileAppBtn');
+      const qrImg = document.getElementById('qrImage');
+      
+      let htmlInstructions = '';
 
+      // Configuración dinámica basada en el método elegido
       if (metodo === 'Zelle') {
-        html = `
-          <p class="instruction-step">1. Abre tu aplicación bancaria y accede a la sección de <strong>Zelle</strong>.</p>
-          <p class="instruction-step">2. Envía el importe exacto de <strong class="highlight-price">$${total} USD</strong> a la siguiente cuenta comercial:</p>
+        // Enlaces de Zelle corporativos generales (Redirige a landing de bancos)
+        mobileBtn.href = "https://www.zellepay.com/go";
+        mobileBtn.style.backgroundColor = "#7414CA"; // Color Zelle
+        mobileBtn.innerHTML = "📱 Abrir Zelle / Banca Móvil";
+        
+        // QR Informativo general de Zelle
+        qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.zellepay.com/go";
+
+        htmlInstructions = `
+          <p class="instruction-step">1. Accede a tu banca en línea o app de <strong>Zelle</strong>.</p>
+          <p class="instruction-step">2. Envía la cantidad exacta de <strong class="highlight-price">$${total} USD</strong> a nuestra cuenta comercial oficial:</p>
           <div class="copy-data-box">pagos@venuspeptide.com</div>
           <div class="warning-note">
-            <strong>⚠️ REGLA DE SEGURIDAD CRUCIAL EN ZELLE:</strong><br>
-            En el campo <strong>"Memo", "Mensaje" o "Motivo"</strong> de la transferencia, escribe <strong>ÚNICAMENTE</strong> el código de referencia: <strong>${codigo}</strong>.<br><br>
-            <em>*Queda estrictamente prohibido escribir "Venus Peptide", nombres de viales o cualquier término comercial. Si incluyes texto prohibido, el pago no podrá validarse.*</em>
+            <strong>⚠️ REGLA CRUCIAL DE NOTAS (MEMO):</strong><br>
+            Coloca <strong>ÚNICAMENTE</strong> tu código de referencia en el motivo: <strong>${codigo}</strong>.<br>
+            <em>No menciones palabras como "peptides", viales o el nombre de la tienda bajo ninguna circunstancia.</em>
           </div>
         `;
       } else if (metodo === 'CashApp') {
-        html = `
-          <p class="instruction-step">1. Abre la aplicación de <strong>CashApp</strong> en tu teléfono.</p>
-          <p class="instruction-step">2. Envía los <strong class="highlight-price">$${total} USD</strong> exactos al siguiente $Cashtag oficial:</p>
+        const cashAppLink = "https://cash.app/$VenusPeptide";
+        mobileBtn.href = cashAppLink;
+        mobileBtn.style.backgroundColor = "#00D632"; // Color CashApp
+        mobileBtn.innerHTML = "📱 Transferir Directo en CashApp";
+        
+        // Genera un QR dinámico real que abre tu perfil de CashApp al escanearlo
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(cashAppLink)}`;
+
+        htmlInstructions = `
+          <p class="instruction-step">1. Envía el monto neto de <strong class="highlight-price">$${total} USD</strong> a nuestro identificador verificado:</p>
           <div class="copy-data-box">$VenusPeptide</div>
           <div class="warning-note">
-            <strong>⚠️ REGLA DE SEGURIDAD CRUCIAL EN CASHAPP:</strong><br>
-            En la sección de notas (donde dice <strong>"For"</strong>), introduce <strong>SÓLO</strong> tu código: <strong>${codigo}</strong>.<br><br>
-            <em>*No agregues palabras adicionales ni menciones químicos o productos. Deja únicamente el código para mantener la privacidad de la transacción.*</em>
+            <strong>⚠️ REGLA CRUCIAL DE NOTAS:</strong><br>
+            En el campo de mensaje (donde dice <strong>"For"</strong>), introduce <strong>SÓLO</strong> el código: <strong>${codigo}</strong>.<br>
+            <em>Cualquier descripción adicional o palabras comerciales inhabilitará el procesamiento automático de tu orden.</em>
           </div>
         `;
       } else if (metodo === 'Venmo') {
-        html = `
-          <p class="instruction-step">1. Accede a tu aplicación de <strong>Venmo</strong>.</p>
-          <p class="instruction-step">2. Transfiere el monto total de <strong class="highlight-price">$${total} USD</strong> al usuario asignado:</p>
+        const venmoLink = "https://venmo.com/u/VenusPeptide";
+        mobileBtn.href = venmoLink;
+        mobileBtn.style.backgroundColor = "#008CFF"; // Color Venmo
+        mobileBtn.innerHTML = "📱 Transferir Directo en Venmo";
+        
+        // Genera un QR dinámico real que abre tu cuenta de Venmo al ser escaneado con la cámara
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(venmoLink)}`;
+
+        htmlInstructions = `
+          <p class="instruction-step">1. Transfiere la suma de <strong class="highlight-price">$${total} USD</strong> a la cuenta asignada de soporte:</p>
           <div class="copy-data-box">@VenusPeptide</div>
           <div class="warning-note">
-            <strong>⚠️ REGLA DE SEGURIDAD CRUCIAL EN VENMO:</strong><br>
-            En la nota del concepto de pago, coloca <strong>ÚNICAMENTE</strong> el código: <strong>${codigo}</strong>.<br><br>
-            <em>*Por protección del canal, no utilices emojis relacionados ni nombres de la web. Cualquier transacción con descripciones inadecuadas será rebotada de inmediato.*</em>
+            <strong>⚠️ REGLA CRUCIAL DE NOTAS:</strong><br>
+            En la nota pública de Venmo escribe <strong>EXCLUSIVAMENTE</strong>: <strong>${codigo}</strong>.<br>
+            <em>No coloques emojis de laboratorios, jeringas ni textos que comprometan el canal privado de transferencias.</em>
           </div>
         `;
       }
 
-      detailBox.innerHTML = html;
+      detailBox.innerHTML = htmlInstructions;
     });
   </script>
 </body>
