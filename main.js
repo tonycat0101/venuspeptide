@@ -351,6 +351,10 @@ window.productosData = productosData;
    🖼️  MOCKUP DE VIAL DINÁMICO (HTML/CSS)
    ═══════════════════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════════════════
+   🖼️  MOCKUP DE VIAL DINÁMICO (HTML/CSS)
+   ═══════════════════════════════════════════════════════════════════ */
+
 function generarVialDinamico(prod) {
   // Extraer mg de la pureza (ej. "99.5% Pureza | 5mg" → "5mg")
   const mgMatch = prod.pureza.match(/\|\s*(\d+mg)/);
@@ -362,32 +366,31 @@ function generarVialDinamico(prod) {
 
   // Determinar si es un blend (tiene dos viales)
   if (prod.isBlend) {
-    // Extraer mg para blend (ej. "Mezcla Cinética | 5mg + 5mg")
     const mgBlendMatch = prod.pureza.match(/(\d+mg)\s*\+\s*(\d+mg)/);
     const mg1 = mgBlendMatch ? mgBlendMatch[1] : '';
     const mg2 = mgBlendMatch ? mgBlendMatch[2] : '';
+    const purityBlend = purityMatch ? purityMatch[1] : '';
 
-    // Extraer pureza para blend
-    const purityBlendMatch = prod.pureza.match(/(\d+\.?\d*%)/);
-    const purityBlend = purityBlendMatch ? purityBlendMatch[1] : '';
+    const nombre1 = prod.nombre.split('+')[0] ? prod.nombre.split('+')[0].trim() : '';
+    const nombre2 = prod.nombre.split('+')[1] ? prod.nombre.split('+')[1].trim() : 'Blend';
 
     return `
-      <div style="display: flex; gap: 8px; justify-content: center; align-items: center; background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 6px; padding: 20px 10px; min-height: 180px;">
-        <div class="vial-mockup-dinamico" style="width: 90px; height: 140px; background-image: url('img/vial-vacio.png'); background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px; position: relative; margin: 0;">
-          <div class="vial-label" style="text-align: center; width: 100%; padding: 6px 4px; font-family: 'Inter', sans-serif; line-height: 1.2; background: rgba(255,255,255,0.75); border-radius: 3px; backdrop-filter: blur(2px);">
-            <div class="vial-brand" style="font-size: 7px; font-weight: 800; color: #0f1e35; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px;">Venus</div>
-            <div class="vial-name" style="font-size: 9px; font-weight: 700; color: #0f1e35; margin-bottom: 1px;">${prod.nombre.split('+')[0].trim()}</div>
-            <div class="vial-details" style="font-size: 7px; font-weight: 600; color: #2563eb; margin-bottom: 2px;">${mg1} | ${purityBlend}</div>
-            <div class="vial-legal" style="font-size: 5px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.1;">Research Use</div>
+      <div class="vial-blend-container">
+        <div class="vial-mockup-dinamico" style="background-image: url('img/vial-vacio.png');">
+          <div class="vial-label">
+            <div class="vial-brand">Venus</div>
+            <div class="vial-name">${nombre1}</div>
+            <div class="vial-details">${mg1}</div>
+            <div class="vial-legal">Research Use</div>
           </div>
         </div>
-        <span style="font-size: 14px; font-weight: 700; color: #2563eb;">+</span>
-        <div class="vial-mockup-dinamico" style="width: 90px; height: 140px; background-image: url('img/vial-vacio.png'); background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px; position: relative; margin: 0;">
-          <div class="vial-label" style="text-align: center; width: 100%; padding: 6px 4px; font-family: 'Inter', sans-serif; line-height: 1.2; background: rgba(255,255,255,0.75); border-radius: 3px; backdrop-filter: blur(2px);">
-            <div class="vial-brand" style="font-size: 7px; font-weight: 800; color: #0f1e35; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px;">Venus</div>
-            <div class="vial-name" style="font-size: 9px; font-weight: 700; color: #0f1e35; margin-bottom: 1px;">${prod.nombre.split('+')[1] ? prod.nombre.split('+')[1].trim() : 'Blend'}</div>
-            <div class="vial-details" style="font-size: 7px; font-weight: 600; color: #2563eb; margin-bottom: 2px;">${mg2} | ${purityBlend}</div>
-            <div class="vial-legal" style="font-size: 5px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.1;">Research Use</div>
+        <span class="vial-blend-plus">+</span>
+        <div class="vial-mockup-dinamico" style="background-image: url('img/vial-vacio.png');">
+          <div class="vial-label">
+            <div class="vial-brand">Venus</div>
+            <div class="vial-name">${nombre2}</div>
+            <div class="vial-details">${mg2}</div>
+            <div class="vial-legal">Research Use</div>
           </div>
         </div>
       </div>
@@ -396,12 +399,12 @@ function generarVialDinamico(prod) {
 
   // Vial normal (único)
   return `
-    <div class="vial-mockup-dinamico" style="background-image: url('img/vial-vacio.png'); background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; position: relative; margin: 0 auto; width: 140px; height: 180px;">
-      <div class="vial-label" style="text-align: center; width: 100%; padding: 10px 6px; font-family: 'Inter', sans-serif; line-height: 1.3; background: rgba(255,255,255,0.75); border-radius: 4px; backdrop-filter: blur(2px);">
-        <div class="vial-brand" style="font-size: 9px; font-weight: 800; color: #0f1e35; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px;">Venus Peptide</div>
-        <div class="vial-name" style="font-size: 13px; font-weight: 700; color: #0f1e35; margin-bottom: 2px;">${prod.nombre}</div>
-        <div class="vial-details" style="font-size: 9px; font-weight: 600; color: #2563eb; margin-bottom: 3px;">${mg} | ${purity} Pureza</div>
-        <div class="vial-legal" style="font-size: 6px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.2;">For Research Use Only</div>
+    <div class="vial-mockup-dinamico" style="background-image: url('img/vial-vacio.png');">
+      <div class="vial-label">
+        <div class="vial-brand">Venus Peptide</div>
+        <div class="vial-name">${prod.nombre}</div>
+        <div class="vial-details">${mg} | ${purity} Pureza</div>
+        <div class="vial-legal">For Research Use Only</div>
       </div>
     </div>
   `;
