@@ -390,8 +390,7 @@ function actualizarNumeroNavGlobal() {
   const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
   const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
   
-  // Mantiene compatibilidad estricta con todas tus clases de badges (.nav__cart span, #navCartCount)
-  document.querySelectorAll('.nav__cart span, #navCartCount, .nav__cart-count').forEach(badge => {
+  document.querySelectorAll('.nav__cart span, #navCartCount').forEach(badge => {
     badge.textContent = `(${totalQty})`;
   });
 }
@@ -399,75 +398,10 @@ function actualizarNumeroNavGlobal() {
 // Exponer la función para que vistas hijas puedan llamarla al añadir productos
 window.actualizarNumeroNavGlobal = actualizarNumeroNavGlobal;
 
-
-/* ── NUEVO: Filtro de Edad Global Inyectado dinámicamente en todo el ecosistema ── */
-function verificarFiltroEdadGlobal() {
-  if (localStorage.getItem('venus_age_verified') === 'true') {
-    return;
-  }
-
-  // Estilos CSS rápidos inyectados con la paleta limpia del sitio web (#0f1e35)
-  const modalStyles = `
-    #ageModalGlobal {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(15, 30, 53, 0.96); display: flex; align-items: center;
-        justify-content: center; z-index: 999999; padding: 20px;
-        backdrop-filter: blur(8px); font-family: 'Inter', sans-serif;
-    }
-    .age-box {
-        background: #ffffff; padding: 45px 35px; border-radius: 8px;
-        max-width: 480px; width: 100%; text-align: center;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 1px solid #e2e8f0;
-    }
-    .age-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 800; color: #0f1e35; margin-bottom: 16px; letter-spacing: -0.5px; }
-    .age-text { font-size: 14px; color: #374151; line-height: 1.6; margin-bottom: 28px; }
-    .age-buttons { display: flex; gap: 15px; justify-content: center; }
-    .btn-age { padding: 12px 28px; font-size: 14px; font-weight: 700; border-radius: 4px; cursor: pointer; border: none; transition: all 0.2s; width: 130px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .btn-yes { background: #2563eb; color: white; }
-    .btn-yes:hover { background: #1d4ed8; }
-    .btn-no { background: #f4f7fb; color: #6b7280; border: 1px solid #e2e8f0; }
-    .btn-no:hover { background: #dde6f0; }
-  `;
-
-  const styleSheet = document.createElement("style");
-  styleSheet.innerText = modalStyles;
-  document.head.appendChild(styleSheet);
-
-  const modalHtml = `
-    <div id="ageModalGlobal">
-        <div class="age-box">
-            <div class="age-title">VENUS PEPTIDE</div>
-            <p class="age-text">
-                Este sitio web distribuye compuestos químicos estrictamente destinados a la investigación científica y desarrollo analítico de laboratorio. Debe ser mayor de <strong>21 años</strong> para acceder al catálogo de reactivos.
-            </p>
-            <div class="age-buttons">
-                <button id="btnAgeYes" class="btn-age btn-yes">Soy Mayor</button>
-                <button id="btnAgeNo" class="btn-age btn-no">Salir</button>
-            </div>
-        </div>
-    </div>
-  `;
-
-  document.body.insertAdjacentHTML('afterbegin', modalHtml);
-
-  document.getElementById('btnAgeYes').addEventListener('click', () => {
-    localStorage.setItem('venus_age_verified', 'true');
-    document.getElementById('ageModalGlobal').remove();
-  });
-
-  document.getElementById('btnAgeNo').addEventListener('click', () => {
-    window.location.href = 'https://www.google.com';
-  });
-}
-
-
 /* ============================================================
-   VENUS PEPTIDE — LÓGICA DE LA WEB NATIVA
+   VENUS PEPTIDE — LÓGICA DE LA WEB
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Ejecutar el validador de edad global en cualquier página al cargar el DOM
-  verificarFiltroEdadGlobal();
 
   // Sincronizar el estado del carrito inmediatamente al cargar el DOM
   actualizarNumeroNavGlobal();
