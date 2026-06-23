@@ -8,57 +8,56 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="ageModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); display: flex; align-items: center; justify-content: center; z-index: 999999; padding: 20px;">
-  <div style="background: #ffffff; padding: 40px; max-width: 500px; width: 100%; border-radius: 8px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
-    
-    <div style="font-size: 26px; font-weight: 800; color: #1e293b; margin-bottom: 20px; letter-spacing: -0.5px;">VENUS PEPTIDE</div>
-    
-    <p style="color: #475569; font-size: 14px; line-height: 1.6; margin-bottom: 25px; text-align: justify;">
-      Todos los productos son para investigación de laboratorio únicamente — no aptos para consumo humano o animal. No evaluados por la FDA. No se proporcionan declaraciones médicas, guías de dosificación ni instrucciones de uso. Al entrar, usted asume la plena responsabilidad legal por el cumplimiento de todas las leyes aplicables en su jurisdicción.
-    </p>
+  <script src="age-verification.js"></script>
+  <div id="ageModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); display: flex; align-items: center; justify-content: center; z-index: 999999; padding: 20px;">
+    <div style="background: #ffffff; padding: 40px; max-width: 500px; width: 100%; border-radius: 8px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
 
-    <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin-bottom: 25px; text-align: left; border: 1px solid #e2e8f0;">
-      <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13px; color: #334155;">
-        <input type="checkbox" id="legalCheck" style="margin-top: 3px; transform: scale(1.2);">
-        <span>Certifico que tengo al menos 21 años, soy un investigador calificado o profesional autorizado, y que todos los productos serán utilizados exclusivamente para investigación legal. He leído y acepto los <a href="terminos.html" style="color: #2563eb; font-weight: 600; text-decoration: none;">Términos de Servicio</a>.</span>
-      </label>
+      <div style="font-size: 26px; font-weight: 800; color: #1e293b; margin-bottom: 20px; letter-spacing: -0.5px;">VENUS PEPTIDE</div>
+
+      <p style="color: #475569; font-size: 14px; line-height: 1.6; margin-bottom: 25px; text-align: justify;">
+        Todos los productos son para investigación de laboratorio únicamente — no aptos para consumo humano o animal. No evaluados por la FDA. No se proporcionan declaraciones médicas, guías de dosificación ni instrucciones de uso. Al entrar, usted asume la plena responsabilidad legal por el cumplimiento de todas las leyes aplicables en su jurisdicción.
+      </p>
+
+      <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin-bottom: 25px; text-align: left; border: 1px solid #e2e8f0;">
+        <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13px; color: #334155;">
+          <input type="checkbox" id="legalCheck" style="margin-top: 3px; transform: scale(1.2);">
+          <span>Certifico que tengo al menos 21 años, soy un investigador calificado o profesional autorizado, y que todos los productos serán utilizados exclusivamente para investigación legal. He leído y acepto los <a href="terminos.html" style="color: #2563eb; font-weight: 600; text-decoration: none;">Términos de Servicio</a>.</span>
+        </label>
+      </div>
+
+      <button id="enterBtn" disabled style="width: 100%; background: #94a3b8; color: white; border: none; padding: 16px; border-radius: 4px; font-weight: 700; cursor: not-allowed; transition: all 0.3s; font-size: 15px;">
+        ENTRAR AL PORTAL
+      </button>
     </div>
-
-    <button id="enterBtn" disabled style="width: 100%; background: #94a3b8; color: white; border: none; padding: 16px; border-radius: 4px; font-weight: 700; cursor: not-allowed; transition: all 0.3s; font-size: 15px;">
-      ENTRAR AL PORTAL
-    </button>
   </div>
-</div>
 
-<script>
-  const checkbox = document.getElementById('legalCheck');
-  const btn = document.getElementById('enterBtn');
-  const modal = document.getElementById('ageModal');
+  <script>
+    const checkbox = document.getElementById('legalCheck');
+    const btn = document.getElementById('enterBtn');
+    const modal = document.getElementById('ageModal');
 
-  checkbox.addEventListener('change', () => {
-    if (checkbox.checked) {
-      btn.disabled = false;
-      btn.style.cursor = 'pointer';
-      btn.style.background = '#1e293b'; // Azul marino serio
-    } else {
-      btn.disabled = true;
-      btn.style.cursor = 'not-allowed';
-      btn.style.background = '#94a3b8';
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
+        btn.disabled = false;
+        btn.style.cursor = 'pointer';
+        btn.style.background = '#1e293b';
+      } else {
+        btn.disabled = true;
+        btn.style.cursor = 'not-allowed';
+        btn.style.background = '#94a3b8';
+      }
+    });
+
+    btn.addEventListener('click', () => {
+      localStorage.setItem('ageVerified', 'true');
+      modal.style.display = 'none';
+    });
+
+    if (localStorage.getItem('ageVerified') === 'true') {
+      modal.style.display = 'none';
     }
-  });
-
-  btn.addEventListener('click', () => {
-    localStorage.setItem('ageVerified', 'true');
-    modal.style.display = 'none';
-  });
-
-  // Verificar estado
-  if (localStorage.getItem('ageVerified') === 'true') {
-    modal.style.display = 'none';
-  }
-</script>
-
-  <!-- ── NAV UNIFICADO CON CARRITO ── -->
+  </script>
+  <!-- ── NAV (Consistente con todo el sitio con menú Soporte) ─────────────────────────────── -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo">
@@ -71,12 +70,12 @@
         <a href="vertodos.html">Ver todos</a>
         <a href="nosotros.html">Nosotros</a>
 
-        <div style="position: relative; display: inline-block;" 
-             onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
-             onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+        <div style="position: relative; display: inline-block;" onmouseenter="this.querySelector('.nav__submenu').style.display='block'" onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+
           <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
             Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
           </a>
+
           <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
             <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
             <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
@@ -95,6 +94,7 @@
     </div>
   </nav>
 
+  <!-- Menú móvil (Despliega las opciones de soporte de forma limpia y directa) -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
@@ -405,13 +405,13 @@
     </div>
   </section>
 
- <!-- ── FOOTER OPTIMIZADO (Estilo Horizontal como Ascension Peptides) ── -->
+  <!-- ── FOOTER OPTIMIZADO (Estilo Horizontal como Ascension Peptides) ── -->
   <footer class="footer">
     <div class="container">
-      
+
       <!-- Parte superior: Reducida a 3 columnas fluidas -->
       <div class="footer__top" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-        
+
         <!-- Columna 1: Marca -->
         <div class="footer__brand">
           <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
@@ -441,15 +441,15 @@
 
       <!-- Parte inferior: Estilo idéntico a la referencia de Ascension -->
       <div class="footer__bottom-horizontal" style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
-        
+
         <!-- Fila 1: Copyright a la izquierda, Enlaces en línea a la derecha -->
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: var(--text-muted, #94a3b8);">
-          
+
           <!-- Izquierda: Copyright de marca -->
           <div>
             Copyright ©2026 Venus Peptide, All Rights Reserved.
           </div>
-          
+
           <!-- Derecha: Enlaces divididos por barras flotantes -->
           <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <style>
@@ -467,7 +467,7 @@
                 user-select: none;
               }
             </style>
-            
+
             <a href="faq.html" class="inline-legal-link">FAQ</a>
             <span class="inline-separator">|</span>
             <a href="terminos.html" class="inline-legal-link">Terms & Conditions</a>
@@ -506,10 +506,10 @@
       function actualizarContadorCarrito() {
         const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
         const total = cart.reduce((sum, item) => sum + item.qty, 0);
-        
+
         const navCount = document.getElementById('navCartCount');
         const navCountMobile = document.getElementById('navCartCountMobile');
-        
+
         if (navCount) navCount.textContent = `(${total})`;
         if (navCountMobile) navCountMobile.textContent = total;
       }
