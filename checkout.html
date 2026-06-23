@@ -101,22 +101,6 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
-    .form-input.error {
-      border-color: #ef4444;
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-    }
-
-    .error-message {
-      color: #ef4444;
-      font-size: 12px;
-      margin-top: 4px;
-      display: none;
-    }
-
-    .error-message.visible {
-      display: block;
-    }
-
     .payment-options {
       display: flex;
       flex-direction: column;
@@ -215,9 +199,16 @@
     }
 
     .error-box {
-      text-align: center; padding: 60px 24px; border: 1px solid #fca5a5;
-      border-radius: var(--radius-md); background: #fef2f2; box-shadow: var(--shadow-card);
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      text-align: center;
+      padding: 60px 24px;
+      border: 1px solid #fca5a5;
+      border-radius: var(--radius-md);
+      background: #fef2f2;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
     }
     .error-box h2 { color: #dc2626; font-size: 24px; }
     .error-box p { color: #991b1b; max-width: 400px; }
@@ -277,6 +268,7 @@
     <div class="container">
       <h1 class="section-title">Finalizar Orden</h1>
       
+      <!-- El contenido se renderiza con JavaScript -->
       <div id="checkoutContent"></div>
     </div>
   </main>
@@ -311,8 +303,10 @@
   </footer>
 
   <script src="main.js"></script>
+  
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // ── MENÚ MÓVIL ──
       const burgerBtn = document.getElementById('burgerBtn');
       const mobileMenu = document.getElementById('mobileMenu');
       if (burgerBtn && mobileMenu) {
@@ -321,13 +315,16 @@
           burgerBtn.classList.toggle('active');
         });
       }
+
+      // ── RENDERIZAR CHECKOUT ──
       renderizarCheckout();
     });
 
+    // ── FUNCIÓN PRINCIPAL ──
     function renderizarCheckout() {
       const container = document.getElementById('checkoutContent');
 
-      // ── VALIDACIÓN: Base de datos ──
+      // ── VALIDACIÓN 1: Base de datos ──
       if (!window.productosData) {
         container.innerHTML = `
           <div class="error-box">
@@ -340,7 +337,7 @@
 
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
-      // ── VALIDACIÓN: Carrito vacío ──
+      // ── VALIDACIÓN 2: Carrito vacío ──
       if (cart.length === 0) {
         container.innerHTML = `
           <div class="error-box" style="border-color: #fcd34d; background: #fffbeb;">
@@ -351,8 +348,8 @@
         return;
       }
 
-      // ── VALIDACIÓN: Productos que ya no existen en la DB ──
-      let productosInvalidos = cart.filter(item => !window.productosData[item.id]);
+      // ── VALIDACIÓN 3: Productos que ya no existen en la DB ──
+      const productosInvalidos = cart.filter(item => !window.productosData[item.id]);
       if (productosInvalidos.length > 0) {
         container.innerHTML = `
           <div class="error-box">
@@ -363,9 +360,240 @@
         return;
       }
 
-      // ── RENDERIZAR CHECKOUT ──
+      // ── CALCULAR SUBTOTAL ──
       let subtotal = 0;
       let itemsHTML = '';
 
       cart.forEach(item => {
-        const prod = window.productosData
+        const prod = window.productosData[item.id];
+        const totalItem = prod.precio * item.qty;
+        subtotal += totalItem;
+
+        itemsHTML += `
+          <div class="summary-line">
+            <span>${item.qty}x ${prod.nombre} <small style="color: var(--text-muted); display:block;">${prod.pureza}</small></span>
+            <span style="font-weight: 600; color: var(--text-dark);">$${totalItem.toFixed(2)}</span>
+          </div>`;
+      });
+
+      // ── ACTUALIZAR CONTADOR DEL CARRITO EN NAV ──
+      const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
+      const navCount = document.getElementById('cartCountNav');
+      const navCountMobile = document.getElementById('cartCountNavMobile');
+      if (navCount) navCount.textContent = totalArticulos;
+      if (navCountMobile) navCountMobile.textContent = totalArticulos;
+
+      // ── RENDERIZAR FORMULARIO ──
+      container.innerHTML = `
+        <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
+          <div class="checkout-layout">
+            
+            <!-- COLUMNA IZQUIERDA: Formulario -->
+            <div>
+              <div class="checkout-card">
+                <h2>📋 Información de Envío (Investigación)</h2>
+                
+                <div class="form-group">
+                  <label class="form-label">Nombre Completo del Investigador / Laboratorio</label>
+                  <input type="text" class="form-input" id="checkoutNombre" required placeholder="Ej. Dr. Alejandro Silva">
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-input" id="checkoutEmail" required placeholder="investigacion@ejemplo.com">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Teléfono de Contacto</label>
+                    <input type="tel" class="form-input" id="checkoutTelefono" required placeholder="Ej. +1 (305) 555-0199">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Dirección Completa de Destino</label>
+                  <input type="text" class="form-input" id="checkoutDireccion" required placeholder="Calle, Número, Suite, Edificio o Departamento">
+                </div>
+
+                <div class="form-row-3">
+                  <div class="form-group">
+                    <label class="form-label">Ciudad</label>
+                    <input type="text" class="form-input" id="checkoutCiudad" required placeholder="Ej. Miami">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Estado / Provincia</label>
+                    <input type="text" class="form-input" id="checkoutEstado" required placeholder="Ej. FL">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Código Postal (ZIP Code)</label>
+                    <input type="text" class="form-input" id="checkoutZip" required placeholder="Ej. 33101">
+                  </div>
+                </div>
+              </div>
+
+              <div class="checkout-card">
+                <h2>🔒 Métodos de Pago Seguros</h2>
+                <div class="payment-options">
+                  <label class="pay-option">
+                    <input type="radio" name="metodo_pago" value="Zelle" checked>
+                    <div class="pay-option-text">
+                      <span class="pay-title">Zelle</span>
+                    </div>
+                  </label>
+                  <label class="pay-option">
+                    <input type="radio" name="metodo_pago" value="CashApp">
+                    <div class="pay-option-text">
+                      <span class="pay-title">CashApp</span>
+                    </div>
+                  </label>
+                  <label class="pay-option">
+                    <input type="radio" name="metodo_pago" value="Venmo">
+                    <div class="pay-option-text">
+                      <span class="pay-title">Venmo</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: Resumen -->
+            <div class="checkout-card" style="position: sticky; top: 100px;">
+              <h2>Resumen del Pedido</h2>
+              
+              <div id="checkoutItemsContainer" class="summary-products-list">
+                ${itemsHTML}
+              </div>
+
+              <div class="summary-totals-box">
+                <div class="summary-line">
+                  <span>Subtotal Compuesto</span>
+                  <span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="summary-line">
+                  <span>Envío Asegurado</span>
+                  <span style="color: #22c55e; font-weight: 700;">Gratis</span>
+                </div>
+                <div class="summary-line grand-total">
+                  <span>Total Neto</span>
+                  <span>$${subtotal.toFixed(2)}</span>
+                </div>
+              </div>
+
+              <div class="legal-checkbox-container">
+                <label class="legal-label">
+                  <input type="checkbox" id="checkoutLegal" required>
+                  <span>
+                    Confirmo que <strong>soy mayor de edad</strong> (18 años o más) y acepto los términos de adquisición. Declaro bajo responsabilidad que el uso de estos compuestos es estrictamente para fines de <strong>investigación científica y desarrollo en laboratorio in-vitro</strong>.
+                  </span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 24px; border-radius: var(--radius-sm); font-size: 15px;">
+                Completar mi Pedido
+              </button>
+            </div>
+
+          </div>
+        </form>
+      `;
+    }
+
+    // ── ENVIAR FORMULARIO ──
+    function enviarPedidoFormulario(e) {
+      e.preventDefault();
+
+      // ── VALIDACIONES DEL FORMULARIO ──
+
+      // 1. Checkbox legal
+      const legalChecked = document.getElementById('checkoutLegal').checked;
+      if (!legalChecked) {
+        alert('Debes aceptar los términos de uso científico para continuar.');
+        return;
+      }
+
+      // 2. Nombre
+      const nombre = document.getElementById('checkoutNombre').value.trim();
+      if (!nombre || nombre.length < 2) {
+        alert('Por favor, ingresa tu nombre completo.');
+        document.getElementById('checkoutNombre').focus();
+        return;
+      }
+
+      // 3. Email
+      const email = document.getElementById('checkoutEmail').value.trim();
+      if (!email || !email.includes('@') || !email.includes('.')) {
+        alert('Por favor, ingresa un correo electrónico válido.');
+        document.getElementById('checkoutEmail').focus();
+        return;
+      }
+
+      // 4. Teléfono
+      const telefono = document.getElementById('checkoutTelefono').value.trim();
+      if (!telefono || telefono.length < 7) {
+        alert('Por favor, ingresa un número de teléfono válido (mínimo 7 dígitos).');
+        document.getElementById('checkoutTelefono').focus();
+        return;
+      }
+
+      // 5. Dirección
+      const direccion = document.getElementById('checkoutDireccion').value.trim();
+      if (!direccion || direccion.length < 5) {
+        alert('Por favor, ingresa una dirección completa.');
+        document.getElementById('checkoutDireccion').focus();
+        return;
+      }
+
+      // 6. Ciudad
+      const ciudad = document.getElementById('checkoutCiudad').value.trim();
+      if (!ciudad || ciudad.length < 2) {
+        alert('Por favor, ingresa tu ciudad.');
+        document.getElementById('checkoutCiudad').focus();
+        return;
+      }
+
+      // 7. Estado
+      const estado = document.getElementById('checkoutEstado').value.trim();
+      if (!estado || estado.length < 2) {
+        alert('Por favor, ingresa tu estado o provincia.');
+        document.getElementById('checkoutEstado').focus();
+        return;
+      }
+
+      // 8. ZIP
+      const zip = document.getElementById('checkoutZip').value.trim();
+      if (!zip || zip.length < 3) {
+        alert('Por favor, ingresa un código postal válido.');
+        document.getElementById('checkoutZip').focus();
+        return;
+      }
+
+      // ── PROCESAR PEDIDO ──
+
+      const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      
+      let total = 0;
+      cart.forEach(item => {
+        const prod = window.productosData ? window.productosData[item.id] : null;
+        if (prod) {
+          total += prod.precio * item.qty;
+        }
+      });
+
+      const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
+
+      // Guardar en sessionStorage
+      sessionStorage.setItem('pending_order_total', total.toFixed(2));
+      sessionStorage.setItem('pending_order_method', metodoPago);
+      sessionStorage.setItem('pending_order_id', codigoReferencia);
+
+      // Backup en localStorage (por si recarga)
+      localStorage.setItem('backup_order_total', total.toFixed(2));
+      localStorage.setItem('backup_order_method', metodoPago);
+      localStorage.setItem('backup_order_id', codigoReferencia);
+
+      // Redirigir a instrucciones
+      window.location.href = 'instrucciones.html';
+    }
+  </script>
+</body>
+</html>
