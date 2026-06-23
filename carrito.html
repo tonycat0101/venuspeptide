@@ -73,11 +73,18 @@
       border-radius: var(--radius-md); background: var(--bg-white); box-shadow: var(--shadow-card);
       display: flex; flex-direction: column; align-items: center; gap: 20px;
     }
+    .error-box {
+      text-align: center; padding: 60px 24px; border: 1px solid #fca5a5;
+      border-radius: var(--radius-md); background: #fef2f2; box-shadow: var(--shadow-card);
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .error-box h2 { color: #dc2626; font-size: 24px; }
+    .error-box p { color: #991b1b; max-width: 400px; }
   </style>
 </head>
 <body>
 
-  <!-- NAV estándar del sitio (igual al resto de páginas) -->
+  <!-- NAV estándar del sitio -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo">
@@ -112,7 +119,7 @@
     </div>
   </nav>
 
-  <!-- Menú móvil (igual al resto de páginas) -->
+  <!-- Menú móvil -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
@@ -132,7 +139,7 @@
     </div>
   </main>
 
-  <!-- Footer estándar del sitio (igual al index) -->
+  <!-- Footer estándar -->
   <footer class="footer">
     <div class="container">
 
@@ -211,6 +218,18 @@
 
     function renderizarCarrito() {
       const container = document.getElementById('cartWrapper');
+      
+      // ── VALIDACIÓN DE LA BASE DE DATOS ──
+      if (!window.productosData) {
+        container.innerHTML = `
+          <div class="error-box">
+            <h2>⚠️ Base de Datos No Disponible</h2>
+            <p>No se pudo cargar la información de los productos. Por favor, recarga la página.</p>
+            <a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a>
+          </div>`;
+        return;
+      }
+
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
       const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -230,8 +249,20 @@
       let subtotal = 0;
 
       cart.forEach((item) => {
-        const prod = window.productosData ? window.productosData[item.id] : null;
-        if (!prod) return;
+        const prod = window.productosData[item.id];
+        
+        // ── VALIDACIÓN: Si el producto ya no existe en la DB ──
+        if (!prod) {
+          itemsHTML += `
+            <div class="cart-item" style="background: #fef2f2; border-color: #fca5a5;">
+              <div style="flex:1;">
+                <div style="font-weight: 600; color: #dc2626;">Producto no disponible</div>
+                <div style="font-size:13px; color:#991b1b;">ID: ${item.id} (posiblemente eliminado del catálogo)</div>
+              </div>
+              <button class="btn-delete" onclick="eliminarArticulo('${item.id}')">Eliminar</button>
+            </div>`;
+          return;
+        }
 
         const itemTotal = prod.precio * item.qty;
         subtotal += itemTotal;
@@ -293,6 +324,11 @@
     };
 
     window.procesarOrden = function() {
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      if (cart.length === 0) {
+        alert('Tu carrito está vacío. Agrega productos antes de proceder.');
+        return;
+      }
       window.location.href = 'checkout.html';
     };
   </script>
