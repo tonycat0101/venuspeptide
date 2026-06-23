@@ -31,6 +31,81 @@
     /* Columna Izquierda: Visual del Vial */
     .visual-column { background: var(--light); border: 1px solid var(--border); border-radius: 12px; padding: 60px; display: flex; justify-content: center; align-items: center; min-height: 450px; position: relative; }
 
+    /* ── MAQUETA DEL VIAL CON TU IMAGEN PNG REAL ── */
+    .vial-real-container {
+      width: 260px;
+      height: 400px;
+      background-image: url('img/vial-vacio.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* La etiqueta física simulada que se monta sobre el cuerpo del vial */
+    .vial-label-wrapper {
+      background: #ffffff;
+      width: 175px;
+      padding: 18px 14px;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(15, 30, 53, 0.12);
+      text-align: center;
+      font-family: var(--font-body);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 15px;
+    }
+
+    .label-brand {
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-dark);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .label-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .label-specs {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--slate);
+    }
+
+    .label-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 5px auto;
+      width: 85%;
+    }
+
+    .label-legal {
+      font-size: 8px;
+      font-weight: 700;
+      color: #ef4444;
+      letter-spacing: 0.2px;
+      line-height: 1.25;
+    }
+    .label-legal.sub {
+      color: #0f172a;
+      font-size: 7.5px;
+      margin-top: 1px;
+      font-weight: 600;
+    }
+
     /* Columna Derecha: Información */
     .info-column { display: flex; flex-direction: column; gap: 20px; }
     .info-badge { align-self: flex-start; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; color: white; background: var(--primary); }
@@ -65,6 +140,10 @@
       .product-detail-grid { grid-template-columns: 1fr; gap: 40px; }
       .visual-column { min-height: 320px; padding: 40px; }
       .info-title { font-size: 28px; }
+      .vial-real-container { width: 200px; height: 320px; }
+      .vial-label-wrapper { width: 145px; padding: 14px 10px; }
+      .label-name { font-size: 12px; }
+      .label-specs { font-size: 9px; }
     }
   </style>
 </head>
@@ -200,8 +279,11 @@
       }
 
       function renderizarProducto(prod) {
-        // ── GENERAR EL VIAL CON EL MOCKUP DINÁMICO ──
-        const vialHTML = generarVialDinamico(prod);
+        // ── GENERAR LA ETIQUETA DEL VIAL DINÁMICAMENTE ──
+        const mgMatch = prod.pureza.match(/\|\s*(\d+mg)/);
+        const mg = mgMatch ? mgMatch[1] : '';
+        const purityMatch = prod.pureza.match(/(\d+\.?\d*%)/);
+        const purity = purityMatch ? purityMatch[1] : '';
 
         // Renderizado 100% dinámico de especificaciones
         document.getElementById('mainContent').innerHTML = `
@@ -210,9 +292,18 @@
           </div>
 
           <div class="product-detail-grid">
-            <!-- COLUMNA IZQUIERDA: VIAL CON MOCKUP DINÁMICO -->
+            <!-- COLUMNA IZQUIERDA: VIAL CON ETIQUETA DINÁMICA -->
             <div class="visual-column">
-              ${vialHTML}
+              <div class="vial-real-container">
+                <div class="vial-label-wrapper">
+                  <div class="label-brand">Venus Peptide</div>
+                  <div class="label-name">${prod.nombre.toUpperCase()}</div>
+                  <div class="label-specs">${mg} | ${purity} Pureza</div>
+                  <div class="label-divider"></div>
+                  <div class="label-legal">FOR RESEARCH USE ONLY</div>
+                  <div class="label-legal sub">NOT FOR HUMAN USE</div>
+                </div>
+              </div>
             </div>
 
             <!-- COLUMNA DERECHA: INFORMACIÓN -->
