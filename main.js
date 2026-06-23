@@ -1,5 +1,5 @@
 /* ============================================================
-   VENUS PEPTIDE — BASE DE DATOS DE PRODUCTOS COMPLETA
+   VENUS PEPTIDE — BASE DE DATOS DE PRODUCTOS
    ============================================================ */
 const productosData = {
   "bpc-157": {
@@ -152,6 +152,7 @@ const productosData = {
     rating: "4.7",
     pureza: "99.5% Pureza | 5mg",
     categoria: "gh",
+    imagen: "img/vial-tesamorelin-5mg.png",
     descripcion: "Péptido sintético correspondiente al factor liberador de la hormona del crecimiento (GHRH) empleado en ensayos clínicos preclínicos de mapeo metabólico graso."
   },
   "sermorelin": {
@@ -199,6 +200,7 @@ const productosData = {
     pureza: "99.6% Pureza | 5mg",
     categoria: "cognitivas",
     agotado: true,
+    imagen: "img/vial-dsip-5mg.png",
     descripcion: "Nonapéptido modulador de los ritmos circadianos y la actividad electroencefalográfica subcortical en entornos de simulación neurológica controlada."
   },
   "nad-plus": {
@@ -209,34 +211,8 @@ const productosData = {
     pureza: "99.9% Pureza | 500mg",
     categoria: "desempeno",
     badge: "sale",
+    imagen: "img/vial-nad-plus.png",
     descripcion: "Coenzima celular liofilizada de máxima pureza para el estudio analítico de la función mitocondrial, fosforilación oxidativa y reparación molecular genómica."
-  },
-  "cardarine": {
-    id: "cardarine",
-    nombre: "Cardarine (GW-501516)",
-    precio: 45.00,
-    rating: "4.7",
-    pureza: "99.5% Pureza | 10mg",
-    categoria: "metabolicos",
-    descripcion: "Modulador selectivo de los receptores PPAR-delta utilizado en investigación bioquímica celular para rastrear los índices de beta-oxidación de ácidos grasos."
-  },
-  "ostarine": {
-    id: "ostarine",
-    nombre: "Ostarine (MK-2866)",
-    precio: 42.00,
-    rating: "4.6",
-    pureza: "99.4% Pureza | 10mg",
-    categoria: "desempeno",
-    descripcion: "Modulador selectivo del receptor de andrógenos (SARM) para el análisis preclínico de la retención de nitrógeno e hipertrofia celular en tejidos experimentales."
-  },
-  "ligandrol": {
-    id: "ligandrol",
-    nombre: "Ligandrol (LGD-4033)",
-    precio: 48.00,
-    rating: "4.7",
-    pureza: "99.3% Pureza | 10mg",
-    categoria: "desempeno",
-    descripcion: "Compuesto analítico de alta afinidad selectiva al tejido óseo y muscular esquelético, empleado para mapear rutas moleculares de síntesis de proteínas corporales."
   },
   "ibutamoren": {
     id: "ibutamoren",
@@ -246,24 +222,6 @@ const productosData = {
     pureza: "99.6% Pureza | 10mg",
     categoria: "gh",
     descripcion: "Agonista no peptídico de acción prolongada sobre los receptores de grelina, utilizado para evaluar la secreción tónica endógena continua de la hormona del crecimiento."
-  },
-  "testolone": {
-    id: "testolone",
-    nombre: "Testolone (RAD-140)",
-    precio: 50.00,
-    rating: "4.7",
-    pureza: "99.5% Pureza | 10mg",
-    categoria: "desempeno",
-    descripcion: "SARM no esteroideo altamente selectivo diseñado para la evaluación preclínica de la estabilidad celular y efectos neuroprotectores en modelos de ensayo biológicos."
-  },
-  "stenabolic": {
-    id: "stenabolic",
-    nombre: "Stenabolic (SR-9009)",
-    precio: 46.00,
-    rating: "4.5",
-    pureza: "99.2% Pureza | 10mg",
-    categoria: "metabolicos",
-    descripcion: "Agonista sintético de los receptores nucleares Rev-ErbA que modula el reloj molecular biológico, metabolismo celular y gasto energético in-vitro."
   },
   "oxytocin": {
     id: "oxytocin",
@@ -346,10 +304,6 @@ const productosData = {
 
 // Exponer la base de datos de manera explícita al entorno global
 window.productosData = productosData;
-
-/* ═══════════════════════════════════════════════════════════════════
-   🖼️  MOCKUP DE VIAL DINÁMICO (HTML/CSS)
-   ═══════════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════════════
    🖼️  MOCKUP DE VIAL DINÁMICO (HTML/CSS)
@@ -464,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </a>`;
       }
 
-      // ── Generar el vial dinámico (NUEVO) ──
+      // ── Generar el vial dinámico ──
       const vialHTML = generarVialDinamico(prod);
 
       gridProductos.innerHTML += `
