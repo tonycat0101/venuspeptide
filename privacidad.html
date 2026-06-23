@@ -1,137 +1,202 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidad | Venus Peptide</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidad | Venus Peptide</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- ── NAV (Consistente con todo el sitio con menú Soporte) ─────────────────────────────── -->
-<nav class="nav">
+  <!-- ── NAV (Consistente con todo el sitio con menú Soporte) ─────────────────────────────── -->
+  <nav class="nav">
     <div class="nav__inner">
-        <a href="index.html" class="nav__logo">
-            <div class="nav__logo-icon">V</div>
-            Venus Peptide
-        </a>
-        <div class="nav__links">
-            <a href="index.html">Inicio</a>
-            <a href="categorias.html">Categorías</a>
-            <a href="vertodos.html">Ver todos</a>
-            <a href="nosotros.html">Nosotros</a>
-            
-            <!-- Menú Desplegable de Soporte (Hereda tus estilos interactivos) -->
-            <div style="position: relative; display: inline-block;" 
-                 onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
-                 onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
-                
-                <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
-                    Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
-                </a>
-                
-                <!-- Contenedor del Submenú Absoluto -->
-                <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
-                    <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
-                    <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
-                </div>
-            </div>
-        </div>
-        <div class="nav__burger" id="burgerBtn">
-            <span></span><span></span><span></span>
-        </div>
-    </div>
-</nav>
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">V</div>
+        Venus Peptide
+      </a>
+      <div class="nav__links">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="vertodos.html">Ver todos</a>
+        <a href="nosotros.html">Nosotros</a>
 
-<!-- Menú móvil (Despliega las opciones de soporte de forma limpia y directa) -->
-<div class="mobile-menu" id="mobileMenu">
+        <div style="position: relative; display: inline-block;" onmouseenter="this.querySelector('.nav__submenu').style.display='block'" onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+
+          <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
+            Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
+          </a>
+
+          <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
+            <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
+            <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
+          </div>
+        </div>
+
+        <a href="carrito.html" class="nav__cart-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff !important; padding: 8px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; margin-left: 15px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span>Carrito</span>
+          <span id="navCartCount" style="background: rgba(255,255,255,0.2); padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 700;">(0)</span>
+        </a>
+      </div>
+      <div class="nav__burger" id="burgerBtn">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
     <a href="vertodos.html">Ver todos</a>
     <a href="nosotros.html">Nosotros</a>
     <a href="contacto.html">Contacto</a>
     <a href="calculadora.html">Calculadora de Reconstitución</a>
-</div>
-    <main class="section">
-        <div class="container">
-            
-            <span class="section-eyebrow">Protección de Datos</span>
-            <h1 class="section-title">Política de Privacidad</h1>
-            
-            <p><strong>Última actualización: Junio de 2026</strong></p>
-            
-            <p>En Venus Peptide, accesible desde nuestro sitio web, una de nuestras principales prioridades es la privacidad de nuestros visitantes y el manejo riguroso de sus datos. Esta Política de Privacidad contiene los tipos de información que recopilamos, registramos y cómo la utilizamos para garantizar un entorno comercial e institucional seguro, conforme a los estándares de la industria biotecnológica y de investigación de laboratorio.</p>
-            
-            <p>Si tiene preguntas adicionales o requiere más información sobre nuestra Política de Privacidad, no dude en ponerse en contacto con nuestro equipo de soporte técnico a través de los canales oficiales establecidos en nuestra plataforma.</p>
-            
-            <h2>1. Información que Recopilamos</h2>
-            <p>Venus Peptide recopila información personal de manera transparente y con propósitos explícitos de verificación comercial y logística de distribución de reactivos químicos:</p>
-            <p><strong>Información de Compra y Registro:</strong> Al registrar una cuenta institucional o realizar un pedido, podemos solicitar detalles que incluyen su nombre completo, dirección de facturación, dirección de envío, dirección de correo electrónico, número de teléfono e información corporativa o de afiliación de laboratorio en caso de requerirse una validación de seguridad.</p>
-            <p><strong>Información de Pago:</strong> Todas las transacciones financieras son procesadas a través de pasarelas de pago seguras y cifradas. Venus Peptide no almacena de forma directa los números de sus tarjetas de crédito o credenciales bancarias en sus servidores locales.</p>
-            <p><strong>Archivos de Registro (Log Files):</strong> Seguimos un procedimiento estándar de uso de archivos de registro. Estos archivos registran a los visitantes cuando acceden al sitio web. La información recopilada incluye direcciones de protocolo de internet (IP), tipo de navegador, proveedor de servicios de internet (ISP), marca de fecha y hora, páginas de referencia/salida y el número de clics. Estos datos no están vinculados a ninguna información que sea personalmente identificable y se utilizan únicamente para analizar tendencias y administrar el sitio.</p>
-            
-            <h2>2. Uso de la Información y Verificación de Seguridad</h2>
-            <p>Utilizamos la información que recopilamos de diversas maneras para cumplir con nuestras operaciones legítimas:</p>
-            <p>• Procesar, gestionar y enviar de manera precisa sus pedidos de compuestos químicos y reactivos de laboratorio.<br>
-               • Verificar la elegibilidad de compra (incluyendo la confirmación estricta de la mayoría de edad y propósitos legítimos de investigación científica).<br>
-               • Comunicarnos con usted para actualizaciones de envío, alertas de control de calidad o resoluciones de soporte técnico.<br>
-               • Detectar, prevenir y mitigar actividades fraudulentas, transacciones sospechosas o usos indebidos de la plataforma que violen nuestros Términos de Servicio.<br>
-               • Mejorar la infraestructura técnica y optimizar la experiencia de navegación en nuestro catálogo.</p>
-            
-            <h2>3. Transferencia de Datos y Proveedores de Servicios</h2>
-            <p>Venus Peptide no vende, alquila ni comercializa bases de datos personales a terceros bajo ninguna circunstancia. Sus datos se comparten estrictamente con entidades logísticas indispensables para la operación:</p>
-            <p><strong>Servicios de Logística y Transporte:</strong> Compartimos su dirección y datos de contacto con empresas de mensajería internacional seleccionadas bajo términos FOB/Ex-Works para garantizar el despacho de sus paquetes.</p>
-            <p><strong>Cumplimiento Legal y Regulatorio:</strong> Nos reservamos el derecho de divulgar su información personal si así lo exige la ley o en respuesta a solicitudes válidas de autoridades gubernamentales, con el fin de proteger la integridad operativa de la empresa y asegurar que los compuestos no se desvíen para fines no autorizados.</p>
-            
-            <h2>4. Cookies y Tecnologías de Seguimiento</h2>
-            <p>Al igual que cualquier otro sitio web comercial, Venus Peptide utiliza 'cookies'. Estas cookies se utilizan para almacenar información, incluidas las preferencias de los visitantes y las páginas del sitio web a las que el usuario accedió o visitó. La información se utiliza para optimizar la experiencia de los usuarios al personalizar el contenido de nuestra página web en función del tipo de navegador de los visitantes y/u otra información técnica.</p>
-            <p>Usted puede elegir deshabilitar las cookies a través de las opciones de configuración individuales de su navegador web. Para obtener información más detallada sobre la gestión de cookies con navegadores web específicos, consulte los sitios web respectivos de dichos navegadores.</p>
-            
-            <h2>5. Seguridad de los Datos</h2>
-            <p>Implementamos rigurosas medidas de seguridad técnicas y organizativas para salvaguardar la confidencialidad de su información personal. Todo el intercambio de datos sensibles entre su navegador y nuestro sitio web se ejecuta bajo protocolos de cifrado de extremo a extremo (SSL/TLS). Sin embargo, recuerde que ningún método de transmisión por Internet o método de almacenamiento electrónico es 100% seguro, por lo que instamos a nuestros clientes a proteger adecuadamente sus credenciales de acceso institucional.</p>
-            
-            <h2>6. Derechos de los Usuarios (Acceso, Rectificación y Cancelación)</h2>
-            <p>Usted conserva en todo momento el control absoluto sobre sus datos personales. Tiene derecho a solicitar el acceso a los registros de su información personal almacenada en nuestros sistemas, exigir la corrección de cualquier dato inexacto o desactualizado, y solicitar la eliminación definitiva de su cuenta y registros de perfil, siempre que no existan obligaciones legales, fiscales o aduaneras pendientes que exijan la retención de sus bitácoras de compra.</p>
+    <a href="carrito.html" style="margin-top: 15px; background: #2563eb; color: white !important; text-align: center; padding: 12px; border-radius: 6px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      Ver Carrito (<span id="navCartCountMobile">0</span>)
+    </a>
+  </div>
 
-        </div>
-    </main>
+  <main class="section">
+    <div class="container">
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__top">
-                <div class="footer__brand">
-                    <div class="footer__logo">
-                        <div class="footer__logo-icon">V</div>
-                        Venus Peptide
-                    </div>
-                    <p>Compuestos de alta pureza destinados exclusivamente para la investigación científica in-vitro y desarrollo analítico de laboratorio.</p>
-                </div>
-                <div class="footer__col">
-                    <div class="footer__col-title">Navegación</div>
-                    <a href="index.html">Inicio</a>
-                    <a href="categorias.html">Categorías</a>
-                    <a href="vertodos.html">Ver todos</a>
-                    <a href="nosotros.html">Nosotros</a>
-                    <a href="contacto.html">Contacto</a>
-                </div>
-                <div class="footer__col">
-                    <div class="footer__col-title">Legal</div>
-                    <a href="terminos.html">Términos de Uso</a>
-                    <a href="privacidad.html">Política de Privacidad</a>
-                </div>
-                <div class="footer__col">
-                    <div class="footer__col-title">Contacto</div>
-                    <a href="mailto:support@venuspeptide.com">Soporte Técnico</a>
-                </div>
-            </div>
-            
-            <div class="footer__bottom">
-                <div>© 2026 Venus Peptide. Todos los derechos reservados.</div>
-            </div>
-            
-            <p class="footer__disclaimer">Descargo de responsabilidad: Todos los compuestos químicos disponibles en este sitio web están destinados estrictamente para uso de laboratorio, investigación analítica y estudios in-vitro. No aptos para el consumo humano ni animal bajo ninguna circunstancia.</p>
+      <span class="section-eyebrow">Protección de Datos</span>
+      <h1 class="section-title">Política de Privacidad</h1>
+
+      <p><strong>Última actualización: Junio de 2026</strong></p>
+
+      <p>En Venus Peptide, accesible desde nuestro sitio web, una de nuestras principales prioridades es la privacidad de nuestros visitantes y el manejo riguroso de sus datos. Esta Política de Privacidad contiene los tipos de información que recopilamos, registramos y cómo la utilizamos para garantizar un entorno comercial e institucional seguro, conforme a los estándares de la industria biotecnológica y de investigación de laboratorio.</p>
+
+      <p>Si tiene preguntas adicionales o requiere más información sobre nuestra Política de Privacidad, no dude en ponerse en contacto con nuestro equipo de soporte técnico a través de los canales oficiales establecidos en nuestra plataforma.</p>
+
+      <h2>1. Información que Recopilamos</h2>
+      <p>Venus Peptide recopila información personal de manera transparente y con propósitos explícitos de verificación comercial y logística de distribución de reactivos químicos:</p>
+      <p><strong>Información de Compra y Registro:</strong> Al registrar una cuenta institucional o realizar un pedido, podemos solicitar detalles que incluyen su nombre completo, dirección de facturación, dirección de envío, dirección de correo electrónico, número de teléfono e información corporativa o de afiliación de laboratorio en caso de requerirse una validación de seguridad.</p>
+      <p><strong>Información de Pago:</strong> Todas las transacciones financieras son procesadas a través de pasarelas de pago seguras y cifradas. Venus Peptide no almacena de forma directa los números de sus tarjetas de crédito o credenciales bancarias en sus servidores locales.</p>
+      <p><strong>Archivos de Registro (Log Files):</strong> Seguimos un procedimiento estándar de uso de archivos de registro. Estos archivos registran a los visitantes cuando acceden al sitio web. La información recopilada incluye direcciones de protocolo de internet (IP), tipo de navegador, proveedor de servicios de internet (ISP), marca de fecha y hora, páginas de referencia/salida y el número de clics. Estos datos no están vinculados a ninguna información que sea personalmente identificable y se utilizan únicamente para analizar tendencias y administrar el sitio.</p>
+
+      <h2>2. Uso de la Información y Verificación de Seguridad</h2>
+      <p>Utilizamos la información que recopilamos de diversas maneras para cumplir con nuestras operaciones legítimas:</p>
+      <p>• Procesar, gestionar y enviar de manera precisa sus pedidos de compuestos químicos y reactivos de laboratorio.<br>
+         • Verificar la elegibilidad de compra (incluyendo la confirmación estricta de la mayoría de edad y propósitos legítimos de investigación científica).<br>
+         • Comunicarnos con usted para actualizaciones de envío, alertas de control de calidad o resoluciones de soporte técnico.<br>
+         • Detectar, prevenir y mitigar actividades fraudulentas, transacciones sospechosas o usos indebidos de la plataforma que violen nuestros Términos de Servicio.<br>
+         • Mejorar la infraestructura técnica y optimizar la experiencia de navegación en nuestro catálogo.</p>
+
+      <h2>3. Transferencia de Datos y Proveedores de Servicios</h2>
+      <p>Venus Peptide no vende, alquila ni comercializa bases de datos personales a terceros bajo ninguna circunstancia. Sus datos se comparten estrictamente con entidades logísticas indispensables para la operación:</p>
+      <p><strong>Servicios de Logística y Transporte:</strong> Compartimos su dirección y datos de contacto con empresas de mensajería internacional seleccionadas bajo términos FOB/Ex-Works para garantizar el despacho de sus paquetes.</p>
+      <p><strong>Cumplimiento Legal y Regulatorio:</strong> Nos reservamos el derecho de divulgar su información personal si así lo exige la ley o en respuesta a solicitudes válidas de autoridades gubernamentales, con el fin de proteger la integridad operativa de la empresa y asegurar que los compuestos no se desvíen para fines no autorizados.</p>
+
+      <h2>4. Cookies y Tecnologías de Seguimiento</h2>
+      <p>Al igual que cualquier otro sitio web comercial, Venus Peptide utiliza 'cookies'. Estas cookies se utilizan para almacenar información, incluidas las preferencias de los visitantes y las páginas del sitio web a las que el usuario accedió o visitó. La información se utiliza para optimizar la experiencia de los usuarios al personalizar el contenido de nuestra página web en función del tipo de navegador de los visitantes y/u otra información técnica.</p>
+      <p>Usted puede elegir deshabilitar las cookies a través de las opciones de configuración individuales de su navegador web. Para obtener información más detallada sobre la gestión de cookies con navegadores web específicos, consulte los sitios web respectivos de dichos navegadores.</p>
+
+      <h2>5. Seguridad de los Datos</h2>
+      <p>Implementamos rigurosas medidas de seguridad técnicas y organizativas para salvaguardar la confidencialidad de su información personal. Todo el intercambio de datos sensibles entre su navegador y nuestro sitio web se ejecuta bajo protocolos de cifrado de extremo a extremo (SSL/TLS). Sin embargo, recuerde que ningún método de transmisión por Internet o método de almacenamiento electrónico es 100% seguro, por lo que instamos a nuestros clientes a proteger adecuadamente sus credenciales de acceso institucional.</p>
+
+      <h2>6. Derechos de los Usuarios (Acceso, Rectificación y Cancelación)</h2>
+      <p>Usted conserva en todo momento el control absoluto sobre sus datos personales. Tiene derecho a solicitar el acceso a los registros de su información personal almacenada en nuestros sistemas, exigir la corrección de cualquier dato inexacto o desactualizado, y solicitar la eliminación definitiva de su cuenta y registros de perfil, siempre que no existan obligaciones legales, fiscales o aduaneras pendientes que exijan la retención de sus bitácoras de compra.</p>
+
+    </div>
+  </main>
+
+  <!-- ── FOOTER UNIFICADO ── -->
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer__top" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+
+        <div class="footer__brand">
+          <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
+          <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
         </div>
-    </footer>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Navegación</div>
+          <a href="index.html">Inicio</a>
+          <a href="categorias.html">Categorías</a>
+          <a href="vertodos.html">Ver todos</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="contacto.html">Contacto</a>
+        </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Categorías</div>
+          <a href="vertodos.html?cat=metabolicos">Investigación Metabólica</a>
+          <a href="vertodos.html?cat=gh">Moduladores GH</a>
+          <a href="vertodos.html?cat=cognitivas">Neuro-Cognición</a>
+          <a href="vertodos.html?cat=desempeno">Desempeño Celular</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom-horizontal" style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: var(--text-muted, #94a3b8);">
+          <div>Copyright ©2026 Venus Peptide, All Rights Reserved.</div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <style>
+              .inline-legal-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+              .inline-legal-link:hover { color: #fff; }
+              .inline-separator { color: rgba(255, 255, 255, 0.2); font-size: 12px; user-select: none; }
+            </style>
+            <a href="faq.html" class="inline-legal-link">FAQ</a>
+            <span class="inline-separator">|</span>
+            <a href="terminos.html" class="inline-legal-link">Terms &amp; Conditions</a>
+            <span class="inline-separator">|</span>
+            <a href="envios.html" class="inline-legal-link">Shipping &amp; Returns</a>
+            <span class="inline-separator">|</span>
+            <a href="privacidad.html" class="inline-legal-link">Privacy Policy</a>
+            <span class="inline-separator">|</span>
+            <a href="contacto.html" class="inline-legal-link">Contact Us</a>
+          </div>
+        </div>
+
+        <p style="text-align: center; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-weight: 600; letter-spacing: 0.01em;">
+          Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. Debe tener la edad legal requerida para adquirir estos compuestos. Los productos NO son para consumo humano ni veterinario de ningún tipo. Las declaraciones hechas dentro de este sitio web no han sido evaluadas por ninguna administración de alimentos o medicamentos. Estos reactivos no están destinados a diagnosticar, tratar, curar o prevenir ninguna enfermedad.
+        </p>
+
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const burgerBtn = document.getElementById('burgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (burgerBtn && mobileMenu) {
+        burgerBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('active');
+          burgerBtn.classList.toggle('active');
+        });
+      }
+
+      function actualizarContadorCarrito() {
+        const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+        const total = cart.reduce((sum, item) => sum + item.qty, 0);
+
+        const navCount = document.getElementById('navCartCount');
+        const navCountMobile = document.getElementById('navCartCountMobile');
+
+        if (navCount) navCount.textContent = `(${total})`;
+        if (navCountMobile) navCountMobile.textContent = total;
+      }
+
+      actualizarContadorCarrito();
+
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'venus_cart') {
+          actualizarContadorCarrito();
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
