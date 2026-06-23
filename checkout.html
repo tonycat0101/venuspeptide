@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finalizar Pedido | Venus Peptide</title>
-  <meta name="description" content="Completa tu pedido de compuestos peptídicos de investigación en Venus Peptide.">
   
   <link rel="stylesheet" href="styles.css">
 
@@ -200,7 +199,7 @@
 
     .error-box {
       text-align: center;
-      padding: 60px 24px;
+      padding: 40px 24px;
       border: 1px solid #fca5a5;
       border-radius: var(--radius-md);
       background: #fef2f2;
@@ -210,8 +209,23 @@
       align-items: center;
       gap: 16px;
     }
-    .error-box h2 { color: #dc2626; font-size: 24px; }
+    .error-box h2 { color: #dc2626; font-size: 22px; }
     .error-box p { color: #991b1b; max-width: 400px; }
+
+    .empty-box {
+      text-align: center;
+      padding: 40px 24px;
+      border: 1px solid #fcd34d;
+      border-radius: var(--radius-md);
+      background: #fffbeb;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .empty-box h2 { color: #d97706; font-size: 22px; }
+    .empty-box p { color: #92400e; max-width: 400px; }
   </style>
 </head>
 <body>
@@ -264,12 +278,13 @@
     </a>
   </div>
 
-  <main class="checkout-section" id="checkoutMain">
+  <main class="checkout-section">
     <div class="container">
       <h1 class="section-title">Finalizar Orden</h1>
       
-      <!-- El contenido se renderiza con JavaScript -->
-      <div id="checkoutContent"></div>
+      <div id="checkoutContent">
+        <!-- Todo el contenido se renderiza aquí con JavaScript -->
+      </div>
     </div>
   </main>
 
@@ -320,7 +335,6 @@
       renderizarCheckout();
     });
 
-    // ── FUNCIÓN PRINCIPAL ──
     function renderizarCheckout() {
       const container = document.getElementById('checkoutContent');
 
@@ -340,21 +354,21 @@
       // ── VALIDACIÓN 2: Carrito vacío ──
       if (cart.length === 0) {
         container.innerHTML = `
-          <div class="error-box" style="border-color: #fcd34d; background: #fffbeb;">
-            <h2 style="color: #d97706;">🛒 Carrito Vacío</h2>
-            <p style="color: #92400e;">No tienes productos en tu carrito. Agrega algunos antes de proceder al pago.</p>
+          <div class="empty-box">
+            <h2>🛒 Carrito Vacío</h2>
+            <p>No tienes productos en tu carrito. Agrega algunos antes de proceder al pago.</p>
             <a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a>
           </div>`;
         return;
       }
 
-      // ── VALIDACIÓN 3: Productos que ya no existen en la DB ──
+      // ── VALIDACIÓN 3: Productos inválidos ──
       const productosInvalidos = cart.filter(item => !window.productosData[item.id]);
       if (productosInvalidos.length > 0) {
         container.innerHTML = `
           <div class="error-box">
-            <h2>⚠️ Productos No Disponibles</h2>
-            <p>Uno o más productos en tu carrito ya no están disponibles en nuestro catálogo. Por favor, revisa tu carrito.</p>
+            <h2>⚠️ Producto No Disponible</h2>
+            <p>Uno o más productos en tu carrito ya no están disponibles en nuestro catálogo.</p>
             <a href="carrito.html" class="btn btn-primary">Revisar Carrito</a>
           </div>`;
         return;
@@ -376,19 +390,19 @@
           </div>`;
       });
 
-      // ── ACTUALIZAR CONTADOR DEL CARRITO EN NAV ──
+      // ── ACTUALIZAR CONTADOR DEL NAV ──
       const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
       const navCount = document.getElementById('cartCountNav');
       const navCountMobile = document.getElementById('cartCountNavMobile');
       if (navCount) navCount.textContent = totalArticulos;
       if (navCountMobile) navCountMobile.textContent = totalArticulos;
 
-      // ── RENDERIZAR FORMULARIO ──
+      // ── RENDERIZAR TODO EL FORMULARIO ──
       container.innerHTML = `
         <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
           <div class="checkout-layout">
             
-            <!-- COLUMNA IZQUIERDA: Formulario -->
+            <!-- COLUMNA IZQUIERDA -->
             <div>
               <div class="checkout-card">
                 <h2>📋 Información de Envío (Investigación)</h2>
@@ -466,7 +480,7 @@
               <div class="summary-totals-box">
                 <div class="summary-line">
                   <span>Subtotal Compuesto</span>
-                  <span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span>
+                  <span id="checkoutSubtotal" style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span>
                 </div>
                 <div class="summary-line">
                   <span>Envío Asegurado</span>
@@ -474,7 +488,7 @@
                 </div>
                 <div class="summary-line grand-total">
                   <span>Total Neto</span>
-                  <span>$${subtotal.toFixed(2)}</span>
+                  <span id="checkoutTotal">$${subtotal.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -501,16 +515,14 @@
     function enviarPedidoFormulario(e) {
       e.preventDefault();
 
-      // ── VALIDACIONES DEL FORMULARIO ──
+      // ── VALIDACIONES ──
 
-      // 1. Checkbox legal
       const legalChecked = document.getElementById('checkoutLegal').checked;
       if (!legalChecked) {
-        alert('Debes aceptar los términos de uso científico para continuar.');
+        alert("Debe confirmar que es mayor de edad y acepta los términos de uso científico.");
         return;
       }
 
-      // 2. Nombre
       const nombre = document.getElementById('checkoutNombre').value.trim();
       if (!nombre || nombre.length < 2) {
         alert('Por favor, ingresa tu nombre completo.');
@@ -518,7 +530,6 @@
         return;
       }
 
-      // 3. Email
       const email = document.getElementById('checkoutEmail').value.trim();
       if (!email || !email.includes('@') || !email.includes('.')) {
         alert('Por favor, ingresa un correo electrónico válido.');
@@ -526,47 +537,19 @@
         return;
       }
 
-      // 4. Teléfono
       const telefono = document.getElementById('checkoutTelefono').value.trim();
       if (!telefono || telefono.length < 7) {
-        alert('Por favor, ingresa un número de teléfono válido (mínimo 7 dígitos).');
+        alert('Por favor, ingresa un número de teléfono válido.');
         document.getElementById('checkoutTelefono').focus();
         return;
       }
 
-      // 5. Dirección
       const direccion = document.getElementById('checkoutDireccion').value.trim();
       if (!direccion || direccion.length < 5) {
         alert('Por favor, ingresa una dirección completa.');
         document.getElementById('checkoutDireccion').focus();
         return;
       }
-
-      // 6. Ciudad
-      const ciudad = document.getElementById('checkoutCiudad').value.trim();
-      if (!ciudad || ciudad.length < 2) {
-        alert('Por favor, ingresa tu ciudad.');
-        document.getElementById('checkoutCiudad').focus();
-        return;
-      }
-
-      // 7. Estado
-      const estado = document.getElementById('checkoutEstado').value.trim();
-      if (!estado || estado.length < 2) {
-        alert('Por favor, ingresa tu estado o provincia.');
-        document.getElementById('checkoutEstado').focus();
-        return;
-      }
-
-      // 8. ZIP
-      const zip = document.getElementById('checkoutZip').value.trim();
-      if (!zip || zip.length < 3) {
-        alert('Por favor, ingresa un código postal válido.');
-        document.getElementById('checkoutZip').focus();
-        return;
-      }
-
-      // ── PROCESAR PEDIDO ──
 
       const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
@@ -581,17 +564,14 @@
 
       const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
 
-      // Guardar en sessionStorage
       sessionStorage.setItem('pending_order_total', total.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
       sessionStorage.setItem('pending_order_id', codigoReferencia);
 
-      // Backup en localStorage (por si recarga)
       localStorage.setItem('backup_order_total', total.toFixed(2));
       localStorage.setItem('backup_order_method', metodoPago);
       localStorage.setItem('backup_order_id', codigoReferencia);
 
-      // Redirigir a instrucciones
       window.location.href = 'instrucciones.html';
     }
   </script>
