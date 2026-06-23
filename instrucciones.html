@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instrucciones de Pago | Venus Peptide</title>
+  <meta name="description" content="Instrucciones de pago para tu pedido de compuestos peptídicos de investigación en Venus Peptide.">
   <link rel="stylesheet" href="styles.css">
   <style>
     .instructions-section {
@@ -75,28 +76,64 @@
 </head>
 <body>
 
+  <!-- ── NAV UNIFICADO (con Soporte y menú móvil) ── -->
   <nav class="nav">
     <div class="nav__inner">
-        <a href="index.html" class="nav__logo">
-            <div class="nav__logo-icon">V</div>
-            Venus Peptide
-        </a>
-        <div class="nav__links">
-            <a href="index.html">Inicio</a>
-            <a href="categorias.html">Categorías</a>
-            <a href="vertodos.html">Ver todos</a>
-            <a href="nosotros.html">Nosotros</a>
-            <a href="carrito.html" style="font-weight: 700; color: #2563eb;">🛒 Regresar al Carrito</a>
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">V</div>
+        Venus Peptide
+      </a>
+      <div class="nav__links">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="vertodos.html">Ver todos</a>
+        <a href="nosotros.html">Nosotros</a>
+
+        <!-- Menú Desplegable de Soporte -->
+        <div style="position: relative; display: inline-block;" 
+             onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
+             onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+
+          <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
+            Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
+          </a>
+
+          <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
+            <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
+            <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
+          </div>
         </div>
+
+        <a href="carrito.html" style="font-weight: 700; color: #2563eb; display: inline-flex; align-items: center; gap: 4px;">
+          🛒 Carrito (<span id="cartCountNav">0</span>)
+        </a>
+      </div>
+      <div class="nav__burger" id="burgerBtn">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </nav>
 
+  <!-- Menú móvil -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Inicio</a>
+    <a href="categorias.html">Categorías</a>
+    <a href="vertodos.html">Ver todos</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="calculadora.html">Calculadora de Reconstitución</a>
+    <a href="carrito.html" style="font-weight: 700; color: #2563eb; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 15px;">
+      🛒 Mi Carrito (<span id="cartCountNavMobile">0</span>)
+    </a>
+  </div>
+
+  <!-- ── CONTENIDO PRINCIPAL ── -->
   <main class="instructions-section">
     <div class="container">
       <div class="instructions-card">
         <span class="section-eyebrow">Paso Final</span>
         <h1 class="section-title" style="font-size: 28px; margin-bottom: 10px;">Instrucciones de Transferencia</h1>
-        
+
         <div id="renderOrderId" class="order-badge">Referencia: Cargando...</div>
 
         <p style="font-size: 15px; color: var(--text-body);">
@@ -111,7 +148,7 @@
           <div class="detail-row">
             <span>Cuenta / Destinatario:</span>
             <div>
-              <strong id="renderCuenta">pagos@venuspeptide.com</strong> 
+              <strong id="renderCuenta">pagos@venuspeptide.com</strong>
               <button class="copy-btn" onclick="copiarTexto('renderCuenta')">Copiar</button>
             </div>
           </div>
@@ -123,7 +160,7 @@
 
         <div class="warning-box">
           <strong>⚠️ NOTA DE SEGURIDAD CRÍTICA PARA EL CANAL DE ENVÍO:</strong><br>
-          Al procesar su transferencia, mantenga el campo de "Concepto", "Nota" o "Memo" **completamente vacío** o coloque únicamente el código de referencia alfanumérico arriba indicado. **Bajo ninguna circunstancia** escriba palabras restringidas como <em>"péptidos", "químicos", "laboratorio", "viales" o "Venus"</em>, ya que esto causará la retención inmediata de los fondos por auditoría bancaria.
+          Al procesar su transferencia, mantenga el campo de "Concepto", "Nota" o "Memo" <strong>completamente vacío</strong> o coloque únicamente el código de referencia alfanumérico arriba indicado. <strong>Bajo ninguna circunstancia</strong> escriba palabras restringidas como <em>"péptidos", "químicos", "laboratorio", "viales" o "Venus"</em>, ya que esto causará la retención inmediata de los fondos por auditoría bancaria.
         </div>
 
         <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 25px;">
@@ -137,9 +174,21 @@
     </div>
   </main>
 
+  <script src="main.js"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // IMPLEMENTACIÓN ERROR 4: Lectura con fallback resiliente ante recargas de página
+      // ── MENÚ MÓVIL ──
+      const burgerBtn = document.getElementById('burgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (burgerBtn && mobileMenu) {
+        burgerBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('active');
+          burgerBtn.classList.toggle('active');
+        });
+      }
+
+      // ── LECTURA DE DATOS DEL PEDIDO ──
       let total = sessionStorage.getItem('pending_order_total') || localStorage.getItem('backup_order_total') || '0.00';
       let metodo = sessionStorage.getItem('pending_order_method') || localStorage.getItem('backup_order_method') || 'Zelle';
       let orderId = sessionStorage.getItem('pending_order_id') || localStorage.getItem('backup_order_id') || 'VP-0000';
@@ -148,19 +197,36 @@
       document.getElementById('renderMetodo').textContent = metodo;
       document.getElementById('renderOrderId').textContent = `Referencia de Rastreo: ${orderId}`;
 
-      // Configuración dinámica de cuentas destino de ejemplo
-      if(metodo === 'CashApp') {
+      // Configuración dinámica de cuentas destino
+      if (metodo === 'CashApp') {
         document.getElementById('renderCuenta').textContent = '$VenusPeptidePay';
       } else if (metodo === 'Venmo') {
         document.getElementById('renderCuenta').textContent = '@VenusPeptide';
       } else {
-        document.getElementById('renderCuenta').textContent = 'pagos@venuspeptide.com'; // Zelle
+        document.getElementById('renderCuenta').textContent = 'pagos@venuspeptide.com';
       }
+
+      // ── ACTUALIZAR CONTADOR DEL CARRITO ──
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
+      const navCount = document.getElementById('cartCountNav');
+      const navCountMobile = document.getElementById('cartCountNavMobile');
+      if (navCount) navCount.textContent = totalArticulos;
+      if (navCountMobile) navCountMobile.textContent = totalArticulos;
     });
 
     function copiarTexto(elementId) {
       const texto = document.getElementById(elementId).textContent;
       navigator.clipboard.writeText(texto).then(() => {
+        alert('Copiado al portapapeles con éxito.');
+      }).catch(() => {
+        // Fallback para navegadores sin clipboard API
+        const el = document.getElementById(elementId);
+        const range = document.createRange();
+        range.selectNode(el);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
         alert('Copiado al portapapeles con éxito.');
       });
     }
@@ -169,18 +235,19 @@
       let orderId = sessionStorage.getItem('pending_order_id') || localStorage.getItem('backup_order_id') || 'VP-0000';
       let total = sessionStorage.getItem('pending_order_total') || localStorage.getItem('backup_order_total') || '0.00';
 
-      // SOLUCIÓN ERROR 2: El carrito se borra ÚNICAMENTE en el paso final absoluto
+      // El carrito se borra ÚNICAMENTE en el paso final
       localStorage.removeItem('venus_cart');
 
-      // Limpieza opcional de respaldos locales
+      // Limpieza de respaldos locales
       localStorage.removeItem('backup_order_total');
       localStorage.removeItem('backup_order_method');
       localStorage.removeItem('backup_order_id');
 
-      // Redirección directa para enviar confirmación vía Mail o WhatsApp
+      // Redirección a contacto con mensaje prellenado
       const mensaje = `Hola Venus Peptide, confirmo que he realizado el pago de mi orden con Referencia ${orderId} por un total de $${total} USD. Adjunto mi comprobante de transferencia.`;
       window.location.href = `contacto.html?msg=${encodeURIComponent(mensaje)}`;
     }
   </script>
+
 </body>
 </html>
