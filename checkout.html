@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finalizar Pedido | Venus Peptide</title>
+  <meta name="description" content="Completa tu pedido de compuestos peptídicos de investigación en Venus Peptide.">
   
   <link rel="stylesheet" href="styles.css">
 
@@ -82,6 +83,12 @@
       margin-bottom: 8px;
     }
 
+    .form-label .optional {
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
     .form-input {
       width: 100%;
       height: 48px;
@@ -100,6 +107,114 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
+    .form-input.textarea {
+      height: auto;
+      padding: 12px 16px;
+      resize: vertical;
+      min-height: 80px;
+      font-family: var(--font-body);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-light);
+      font-size: 13px;
+    }
+
+    /* ── PROMO CODE ── */
+    .promo-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .promo-row .form-input {
+      flex: 1;
+    }
+    .btn-promo {
+      padding: 12px 20px;
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .btn-promo:hover {
+      background: var(--border);
+    }
+    .btn-promo.active {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: white;
+    }
+
+    /* ── CHECKBOX LEGAL ── */
+    .legal-checkbox-container {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .legal-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-body);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .legal-label input[type="checkbox"] {
+      accent-color: var(--blue);
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .legal-label a {
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    .legal-label .highlight {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .legal-label .error-text {
+      color: #ef4444;
+      font-size: 12px;
+      display: none;
+      margin-top: 4px;
+    }
+    .legal-label .error-text.visible {
+      display: block;
+    }
+
+    /* ── NEWSLETTER (Opcional) ── */
+    .newsletter-checkbox {
+      margin-top: 12px;
+    }
+    .newsletter-checkbox label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .newsletter-checkbox input[type="checkbox"] {
+      accent-color: var(--blue);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ── PAYMENT OPTIONS ── */
     .payment-options {
       display: flex;
       flex-direction: column;
@@ -138,6 +253,7 @@
       color: var(--text-dark);
     }
 
+    /* ── RESUMEN ── */
     .summary-products-list {
       display: flex;
       flex-direction: column;
@@ -173,28 +289,9 @@
       margin-top: 6px;
     }
 
-    .legal-checkbox-container {
-      margin-top: 24px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-    }
-
-    .legal-label {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 12.5px;
-      color: var(--text-muted);
-      line-height: 1.5;
-      cursor: pointer;
-    }
-
-    .legal-label input[type="checkbox"] {
-      accent-color: var(--blue);
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      margin-top: 2px;
+    .summary-discount {
+      color: #22c55e;
+      font-weight: 600;
     }
 
     .error-box {
@@ -230,6 +327,7 @@
 </head>
 <body>
 
+  <!-- ── NAV ── -->
   <nav class="nav">
     <div class="nav__inner">
         <a href="index.html" class="nav__logo">
@@ -283,7 +381,7 @@
       <h1 class="section-title">Finalizar Orden</h1>
       
       <div id="checkoutContent">
-        <!-- Todo el contenido se renderiza aquí con JavaScript -->
+        <!-- El contenido se renderiza con JavaScript -->
       </div>
     </div>
   </main>
@@ -334,6 +432,10 @@
       // ── RENDERIZAR CHECKOUT ──
       renderizarCheckout();
     });
+
+    // ── VARIABLES GLOBALES PARA EL DESCUENTO ──
+    let descuentoAplicado = 0;
+    let codigoPromoUsado = '';
 
     function renderizarCheckout() {
       const container = document.getElementById('checkoutContent');
@@ -390,6 +492,12 @@
           </div>`;
       });
 
+      // ── CALCULAR IMPUESTOS (ejemplo: 6% FL State Tax) ──
+      const taxRate = 0.06;
+      const tax = subtotal * taxRate;
+      const totalConDescuento = subtotal - descuentoAplicado;
+      const totalFinal = totalConDescuento + tax;
+
       // ── ACTUALIZAR CONTADOR DEL NAV ──
       const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
       const navCount = document.getElementById('cartCountNav');
@@ -414,7 +522,7 @@
 
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label class="form-label">Correo Electrónico</label>
+                    <label class="form-label">Correo Electrónico <span class="optional">(para confirmación)</span></label>
                     <input type="email" class="form-input" id="checkoutEmail" required placeholder="investigacion@ejemplo.com">
                   </div>
                   <div class="form-group">
@@ -442,8 +550,25 @@
                     <input type="text" class="form-input" id="checkoutZip" required placeholder="Ej. 33101">
                   </div>
                 </div>
+
+                <!-- ── NOTAS DEL PEDIDO ── -->
+                <div class="form-group">
+                  <label class="form-label">Notas sobre tu pedido <span class="optional">(opcional)</span></label>
+                  <textarea class="form-input textarea" id="checkoutNotas" placeholder="Instrucciones especiales para el envío, indicaciones de entrega, etc."></textarea>
+                </div>
+
+                <!-- ── NEWSLETTER (Captador de correos) ── -->
+                <div class="form-group newsletter-checkbox">
+                  <label>
+                    <input type="checkbox" id="checkoutNewsletter" checked>
+                    <span style="font-size: 13px; color: var(--text-muted);">
+                      📧 Recibir novedades, lanzamientos y ofertas especiales (opcional)
+                    </span>
+                  </label>
+                </div>
               </div>
 
+              <!-- ── MÉTODOS DE PAGO ── -->
               <div class="checkout-card">
                 <h2>🔒 Métodos de Pago Seguros</h2>
                 <div class="payment-options">
@@ -469,7 +594,7 @@
               </div>
             </div>
 
-            <!-- COLUMNA DERECHA: Resumen -->
+            <!-- ── COLUMNA DERECHA: RESUMEN ── -->
             <div class="checkout-card" style="position: sticky; top: 100px;">
               <h2>Resumen del Pedido</h2>
               
@@ -477,26 +602,48 @@
                 ${itemsHTML}
               </div>
 
+              <!-- ── PROMO CODE ── -->
+              <div style="margin-bottom: 18px;">
+                <div class="promo-row">
+                  <input type="text" class="form-input" id="promoInput" placeholder="Código de descuento" style="height: 40px;">
+                  <button type="button" class="btn-promo" id="btnAplicarPromo" onclick="aplicarPromo()">
+                    Aplicar
+                  </button>
+                </div>
+                <div id="promoFeedback" style="font-size: 12px; margin-top: 6px; min-height: 18px;"></div>
+              </div>
+
               <div class="summary-totals-box">
                 <div class="summary-line">
-                  <span>Subtotal Compuesto</span>
-                  <span id="checkoutSubtotal" style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span>
+                  <span>Subtotal</span>
+                  <span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span>
                 </div>
+                ${descuentoAplicado > 0 ? `
                 <div class="summary-line">
-                  <span>Envío Asegurado</span>
+                  <span>Descuento</span>
+                  <span class="summary-discount">-$${descuentoAplicado.toFixed(2)}</span>
+                </div>` : ''}
+                <div class="summary-line">
+                  <span>Envío</span>
                   <span style="color: #22c55e; font-weight: 700;">Gratis</span>
                 </div>
+                <div class="summary-line">
+                  <span>FL State Tax (${(taxRate * 100).toFixed(0)}%)</span>
+                  <span style="font-weight: 600; color: var(--text-dark);">$${tax.toFixed(2)}</span>
+                </div>
                 <div class="summary-line grand-total">
-                  <span>Total Neto</span>
-                  <span id="checkoutTotal">$${subtotal.toFixed(2)}</span>
+                  <span>Total</span>
+                  <span id="checkoutTotal">$${totalFinal.toFixed(2)}</span>
                 </div>
               </div>
 
+              <!-- ── CHECKBOX LEGAL ── -->
               <div class="legal-checkbox-container">
                 <label class="legal-label">
                   <input type="checkbox" id="checkoutLegal" required>
                   <span>
-                    Confirmo que <strong>soy mayor de edad</strong> (18 años o más) y acepto los términos de adquisición. Declaro bajo responsabilidad que el uso de estos compuestos es estrictamente para fines de <strong>investigación científica y desarrollo en laboratorio in-vitro</strong>.
+                    <span class="highlight">✅ Soy mayor de edad (21 años o más)</span> y entiendo que los productos listados en este sitio son <span class="highlight">exclusivamente para uso en investigación</span>. Comprendo que <span class="highlight">NO son para consumo humano ni veterinario</span> bajo ninguna circunstancia. Acepto los <a href="terminos.html" target="_blank">Términos y Condiciones</a>.
+                    <span class="error-text" id="legalError">Debes aceptar los términos para continuar.</span>
                   </span>
                 </label>
               </div>
@@ -509,6 +656,52 @@
           </div>
         </form>
       `;
+
+      // ── VALIDACIÓN EN TIEMPO REAL DEL CHECKBOX ──
+      const legalCheck = document.getElementById('checkoutLegal');
+      const legalError = document.getElementById('legalError');
+      if (legalCheck) {
+        legalCheck.addEventListener('change', () => {
+          if (!legalCheck.checked) {
+            legalError.classList.add('visible');
+          } else {
+            legalError.classList.remove('visible');
+          }
+        });
+      }
+
+      // ── GUARDAR DATOS DEL CLIENTE PARA REPORTE ──
+      // (se guardan cuando se envía el formulario)
+    }
+
+    // ── FUNCIÓN PARA APLICAR PROMO ──
+    function aplicarPromo() {
+      const input = document.getElementById('promoInput');
+      const feedback = document.getElementById('promoFeedback');
+      const codigo = input.value.trim().toUpperCase();
+
+      // ── CÓDIGOS DE DESCUENTO VÁLIDOS ──
+      const promos = {
+        'BIENVENIDA10': 10,   // 10% de descuento
+        'VENUS15': 15,        // 15% de descuento
+        'INVESTIGA20': 20     // 20% de descuento
+      };
+
+      if (!codigo) {
+        feedback.innerHTML = '<span style="color: #ef4444;">⚠️ Ingresa un código.</span>';
+        return;
+      }
+
+      if (promos[codigo]) {
+        descuentoAplicado = promos[codigo];
+        codigoPromoUsado = codigo;
+        feedback.innerHTML = `<span style="color: #22c55e;">✅ Código aplicado: ${codigo} (${descuentoAplicado}% de descuento)</span>`;
+        document.getElementById('btnAplicarPromo').classList.add('active');
+        document.getElementById('btnAplicarPromo').textContent = '✓ Aplicado';
+        renderizarCheckout(); // Re-renderizar para actualizar totales
+      } else {
+        feedback.innerHTML = '<span style="color: #ef4444;">❌ Código inválido.</span>';
+      }
     }
 
     // ── ENVIAR FORMULARIO ──
@@ -517,12 +710,15 @@
 
       // ── VALIDACIONES ──
 
+      // 1. Checkbox legal
       const legalChecked = document.getElementById('checkoutLegal').checked;
       if (!legalChecked) {
-        alert("Debe confirmar que es mayor de edad y acepta los términos de uso científico.");
+        document.getElementById('legalError').classList.add('visible');
+        document.getElementById('checkoutLegal').focus();
         return;
       }
 
+      // 2. Nombre
       const nombre = document.getElementById('checkoutNombre').value.trim();
       if (!nombre || nombre.length < 2) {
         alert('Por favor, ingresa tu nombre completo.');
@@ -530,6 +726,7 @@
         return;
       }
 
+      // 3. Email
       const email = document.getElementById('checkoutEmail').value.trim();
       if (!email || !email.includes('@') || !email.includes('.')) {
         alert('Por favor, ingresa un correo electrónico válido.');
@@ -537,6 +734,7 @@
         return;
       }
 
+      // 4. Teléfono
       const telefono = document.getElementById('checkoutTelefono').value.trim();
       if (!telefono || telefono.length < 7) {
         alert('Por favor, ingresa un número de teléfono válido.');
@@ -544,6 +742,7 @@
         return;
       }
 
+      // 5. Dirección
       const direccion = document.getElementById('checkoutDireccion').value.trim();
       if (!direccion || direccion.length < 5) {
         alert('Por favor, ingresa una dirección completa.');
@@ -551,8 +750,36 @@
         return;
       }
 
+      // 6. Ciudad
+      const ciudad = document.getElementById('checkoutCiudad').value.trim();
+      if (!ciudad || ciudad.length < 2) {
+        alert('Por favor, ingresa tu ciudad.');
+        document.getElementById('checkoutCiudad').focus();
+        return;
+      }
+
+      // 7. Estado
+      const estado = document.getElementById('checkoutEstado').value.trim();
+      if (!estado || estado.length < 2) {
+        alert('Por favor, ingresa tu estado o provincia.');
+        document.getElementById('checkoutEstado').focus();
+        return;
+      }
+
+      // 8. ZIP
+      const zip = document.getElementById('checkoutZip').value.trim();
+      if (!zip || zip.length < 3) {
+        alert('Por favor, ingresa un código postal válido.');
+        document.getElementById('checkoutZip').focus();
+        return;
+      }
+
+      // ── PROCESAR PEDIDO ──
+
       const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      const notas = document.getElementById('checkoutNotas').value.trim();
+      const newsletter = document.getElementById('checkoutNewsletter').checked;
       
       let total = 0;
       cart.forEach(item => {
@@ -562,18 +789,44 @@
         }
       });
 
+      // Aplicar descuento si existe
+      const totalConDescuento = total - descuentoAplicado;
+      const tax = totalConDescuento * 0.06;
+      const totalFinal = totalConDescuento + tax;
+
       const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
 
-      sessionStorage.setItem('pending_order_total', total.toFixed(2));
+      // ── GUARDAR DATOS DEL CLIENTE PARA REPORTE ──
+      localStorage.setItem('checkout_nombre', nombre);
+      localStorage.setItem('checkout_email', email);
+      localStorage.setItem('checkout_telefono', telefono);
+      localStorage.setItem('checkout_direccion', direccion);
+      localStorage.setItem('checkout_ciudad', ciudad);
+      localStorage.setItem('checkout_estado', estado);
+      localStorage.setItem('checkout_zip', zip);
+      localStorage.setItem('checkout_notas', notas);
+      localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
+      localStorage.setItem('checkout_codigo_promo', codigoPromoUsado);
+      localStorage.setItem('checkout_descuento', descuentoAplicado.toString());
+
+      // ── GUARDAR EN SESSIONSTORAGE ──
+      sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
       sessionStorage.setItem('pending_order_id', codigoReferencia);
 
-      localStorage.setItem('backup_order_total', total.toFixed(2));
+      // ── BACKUP EN LOCALSTORAGE ──
+      localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
       localStorage.setItem('backup_order_method', metodoPago);
       localStorage.setItem('backup_order_id', codigoReferencia);
 
+      // ── REDIRIGIR A INSTRUCCIONES ──
       window.location.href = 'instrucciones.html';
     }
+
+    // Exponer función globalmente para el botón de promo
+    window.aplicarPromo = aplicarPromo;
+    window.enviarPedidoFormulario = enviarPedidoFormulario;
   </script>
+
 </body>
 </html>
