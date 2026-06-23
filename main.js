@@ -439,6 +439,70 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ── 2. Renderizar productos populares en index.html ── */
+  const gridPopulares = document.getElementById('productosPopulares');
+  
+  if (gridPopulares) {
+    // ── DEFINE AQUÍ QUÉ PRODUCTOS QUIERES MOSTRAR ──
+    // Usa los IDs de los productos que quieras destacar
+    const productosDestacados = [
+      'bpc-157',
+      'tb-500',
+      'semaglutide',
+      'tirzepatide',
+      'retatrutide',
+      'melanotan-ii',
+      'ipamorelin',
+      'epitalon'
+    ];
+
+    gridPopulares.innerHTML = '';
+
+    productosDestacados.forEach(id => {
+      const prod = productosData[id];
+      if (!prod) return;
+
+      // Configurar etiquetas de badge
+      let badgeHTML = '';
+      if (prod.badge) {
+        const badgeColor = prod.badge === 'sale' ? '#ef4444' : '#3b82f6';
+        badgeHTML = `<span style="position: absolute; top: 16px; left: 16px; background: ${badgeColor}; color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; z-index: 10;">${prod.badge}</span>`;
+      }
+
+      // Generar el vial dinámico
+      const vialHTML = generarVialDinamico(prod);
+
+      // Configurar acción según stock
+      let actionHTML = '';
+      if (prod.agotado) {
+        actionHTML = `
+          <div style="font-size: 18px; font-weight: 800; color: #94a3b8; margin-bottom: 4px;">Agotado</div>
+          <a href="#" class="btn" style="display: block; text-align: center; background: #94a3b8; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; cursor: not-allowed;">
+            Agotado
+          </a>`;
+      } else {
+        actionHTML = `
+          <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">$${prod.precio.toFixed(2)} USD</div>
+          <a href="producto.html?id=${prod.id}" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+            Ver Detalles
+          </a>`;
+      }
+
+      gridPopulares.innerHTML += `
+        <div class="product-card" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          ${badgeHTML}
+          ${vialHTML}
+          <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 4px 0 0 0;">${prod.nombre}</h3>
+          <div style="display: flex; align-items: center; gap: 4px; font-size: 13px; color: #f59e0b;">
+            ★★★★★ <span style="color: #64748b; font-weight: 600; margin-left: 2px;">(${prod.rating})</span>
+          </div>
+          <div style="font-size: 13px; color: #64748b; font-weight: 500; margin-bottom: auto;">${prod.pureza}</div>
+          ${actionHTML}
+        </div>
+      `;
+    });
+  }
+
   /* ── Nav: link activo según página ─────────────────────── */
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav__links a').forEach(link => {
