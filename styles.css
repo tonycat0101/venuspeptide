@@ -753,16 +753,16 @@ ul   { list-style: none; }
 /* ── MOCKUP DE VIAL DINÁMICO ── */
 /* ── MOCKUP DE VIAL DINÁMICO ── */
 .vial-mockup-dinamico {
-  width: 140px;
-  height: 200px;
-  background-size: contain;
+  width: 160px;
+  height: 220px;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 35px 15px 20px 15px;
+  padding: 45px 12px 25px 12px;
   position: relative;
   margin: 0 auto;
 }
@@ -770,10 +770,11 @@ ul   { list-style: none; }
 .vial-mockup-dinamico .vial-label {
   text-align: center;
   width: 100%;
+  max-width: 120px;
   padding: 8px 4px;
   font-family: 'Inter', sans-serif;
   line-height: 1.2;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   border-radius: 4px;
   backdrop-filter: blur(2px);
 }
@@ -813,7 +814,30 @@ ul   { list-style: none; }
   line-height: 1.1;
 }
 
-/* ── ESTILOS PARA BLENDS (dos viales) ── */
+/* ── PARA LA PÁGINA DE DETALLE (producto.html) ── */
+.visual-column .vial-mockup-dinamico {
+  width: 200px;
+  height: 280px;
+  padding: 55px 16px 30px 16px;
+}
+
+.visual-column .vial-mockup-dinamico .vial-name {
+  font-size: 15px;
+}
+
+.visual-column .vial-mockup-dinamico .vial-details {
+  font-size: 11px;
+}
+
+.visual-column .vial-mockup-dinamico .vial-brand {
+  font-size: 9px;
+}
+
+.visual-column .vial-mockup-dinamico .vial-legal {
+  font-size: 7px;
+}
+
+/* ── BLENDS (dos viales) ── */
 .vial-blend-container {
   display: flex;
   gap: 6px;
@@ -827,9 +851,9 @@ ul   { list-style: none; }
 }
 
 .vial-blend-container .vial-mockup-dinamico {
-  width: 100px;
-  height: 150px;
-  padding: 25px 10px 15px 10px;
+  width: 110px;
+  height: 160px;
+  padding: 30px 8px 18px 8px;
 }
 
 .vial-blend-container .vial-mockup-dinamico .vial-name {
@@ -854,11 +878,12 @@ ul   { list-style: none; }
   color: #2563eb;
 }
 
+/* ── RESPONSIVE ── */
 @media (max-width: 600px) {
   .vial-mockup-dinamico {
-    width: 110px;
-    height: 160px;
-    padding: 25px 10px 15px 10px;
+    width: 120px;
+    height: 170px;
+    padding: 30px 8px 18px 8px;
   }
   .vial-mockup-dinamico .vial-name {
     font-size: 9px;
@@ -872,10 +897,21 @@ ul   { list-style: none; }
   .vial-mockup-dinamico .vial-legal {
     font-size: 5px;
   }
+  .visual-column .vial-mockup-dinamico {
+    width: 150px;
+    height: 210px;
+    padding: 40px 12px 20px 12px;
+  }
+  .visual-column .vial-mockup-dinamico .vial-name {
+    font-size: 12px;
+  }
+  .visual-column .vial-mockup-dinamico .vial-details {
+    font-size: 9px;
+  }
   .vial-blend-container .vial-mockup-dinamico {
-    width: 80px;
-    height: 120px;
-    padding: 18px 8px 10px 8px;
+    width: 85px;
+    height: 125px;
+    padding: 20px 6px 12px 6px;
   }
   .vial-blend-container .vial-mockup-dinamico .vial-name {
     font-size: 7px;
