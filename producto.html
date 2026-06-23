@@ -136,125 +136,146 @@
   
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Obtener ID del parámetro de la URL (?id=nom-producto)
       const urlParams = new URLSearchParams(window.location.search);
       const prodId = urlParams.get('id');
 
-      // Validación leyendo la base de datos ya globalizada de main.js
-      if (!prodId || !window.productosData || !window.productosData[prodId]) {
-        mostrarProductoNoEncontrado();
+      // ── VALIDACIÓN ROBUSTA ──────────────────
+
+      // 1. Verificar que el ID existe
+      if (!prodId) {
+        mostrarError("No se especificó ningún producto.");
         return;
       }
 
-      const prod = window.productosData[prodId];
-
-      // Renderizado 100% dinámico de especificaciones
-      document.getElementById('mainContent').innerHTML = `
-        <div class="breadcrumbs">
-          <a href="index.html">Inicio</a> / <a href="vertodos.html">Catálogo</a> / ${prod.nombre}
-        </div>
-        
-        <div class="product-detail-grid">
-          <div class="visual-column">
-            <div class="vial-mockup ${prod.vialColor || 'blue'}">
-              <span class="vial-tag">${prod.vialTexto || 'V'}</span>
-            </div>
-          </div>
-          
-          <div class="info-column">
-            ${prod.badge ? `<span class="info-badge ${prod.badge}">${prod.badge.toUpperCase()}</span>` : ''}
-            <h1 class="info-title">${prod.nombre}</h1>
-            <div class="info-rating">★ ★ ★ ★ ★ <span>(${prod.rating || '5.0'})</span></div>
-            <div class="info-pureza">${prod.pureza}</div>
-            <div class="info-price">$${prod.precio.toFixed(2)} USD</div>
-            <p class="info-desc">${prod.descripcion}</p>
-            
-            <div class="purchase-box">
-              <div class="qty-selector">
-                <button class="qty-btn" onclick="cambiarCantidad(-1)">-</button>
-                <input type="number" class="qty-input" id="cantidadProd" value="1" min="1" readonly>
-                <button class="qty-btn" onclick="cambiarCantidad(1)">+</button>
-              </div>
-              <button class="btn-add-cart" id="btnAddToCart">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                Añadir a la Investigación
-              </button>
-            </div>
-
-            <div class="disclaimer-box">
-              <div>
-                <div class="disclaimer-title">Atención: Uso exclusivo de laboratorio</div>
-                <div class="disclaimer-text">Este compuesto se suministra únicamente para fines de investigación y desarrollo. No apto para consumo humano ni veterinario bajo ninguna circunstancia.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      // Gestión del botón Añadir al Carrito
-      const btnAddToCart = document.getElementById('btnAddToCart');
-      if (btnAddToCart) {
-        btnAddToCart.addEventListener('click', () => {
-          const cantidadAAgregar = parseInt(document.getElementById('cantidadProd').value) || 1;
-          let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-          const itemExistente = cart.find(i => i.id === prod.id);
-
-          if (itemExistente) {
-            itemExistente.qty += cantidadAAgregar;
-          } else {
-            cart.push({ id: prod.id, qty: cantidadAAgregar });
-          }
-
-          localStorage.setItem('venus_cart', JSON.stringify(cart));
-          
-          // Actualización inmediata del contador del nav unificado
-          if (typeof actualizarNumeroNavGlobal === 'function') {
-            actualizarNumeroNavGlobal();
-          } else {
-            const navCount = document.getElementById('navCartCount');
-            if (navCount) {
-              const total = cart.reduce((sum, item) => sum + item.qty, 0);
-              navCount.textContent = `(${total})`;
-            }
-          }
-
-          // Feedback visual elegante
-          const textoOriginal = btnAddToCart.innerHTML;
-          btnAddToCart.textContent = '¡Añadido con éxito! ✓';
-          btnAddToCart.style.background = '#22c55e';
-          btnAddToCart.disabled = true;
-
-          setTimeout(() => {
-            btnAddToCart.innerHTML = textoOriginal;
-            btnAddToCart.style.background = '';
-            btnAddToCart.disabled = false;
-          }, 2000);
-        });
+      // 2. Verificar que la base de datos existe
+      if (!window.productosData) {
+        mostrarError("La base de datos de productos no está disponible. Por favor, recarga la página.");
+        return;
       }
+
+      // 3. Verificar que el producto existe en la base de datos
+      const prod = window.productosData[prodId];
+      if (!prod) {
+        mostrarError(`El producto "${prodId}" no existe en nuestro catálogo.`);
+        return;
+      }
+
+      // 4. Si todo está bien, renderizar
+      renderizarProducto(prod);
+
+      // ── FUNCIONES AUXILIARES ──────────────────
+
+      function mostrarError(mensaje) {
+        document.getElementById('mainContent').innerHTML = `
+          <div class="not-found-box">
+            <h2 style="font-size: 28px; color: var(--dark);">⚠️ Producto No Disponible</h2>
+            <p style="color: var(--slate); max-width: 400px;">${mensaje}</p>
+            <a href="vertodos.html" class="btn btn-primary" style="margin-top: 16px;">
+              Regresar al Catálogo
+            </a>
+          </div>
+        `;
+      }
+
+      function renderizarProducto(prod) {
+        // Renderizado 100% dinámico de especificaciones
+        document.getElementById('mainContent').innerHTML = `
+          <div class="breadcrumbs">
+            <a href="index.html">Inicio</a> / <a href="vertodos.html">Catálogo</a> / ${prod.nombre}
+          </div>
+          
+          <div class="product-detail-grid">
+            <div class="visual-column">
+              <div class="vial-mockup ${prod.vialColor || 'blue'}">
+                <span class="vial-tag">${prod.vialTexto || 'V'}</span>
+              </div>
+            </div>
+            
+            <div class="info-column">
+              ${prod.badge ? `<span class="info-badge ${prod.badge}">${prod.badge.toUpperCase()}</span>` : ''}
+              <h1 class="info-title">${prod.nombre}</h1>
+              <div class="info-rating">★ ★ ★ ★ ★ <span>(${prod.rating || '5.0'})</span></div>
+              <div class="info-pureza">${prod.pureza}</div>
+              <div class="info-price">$${prod.precio.toFixed(2)} USD</div>
+              <p class="info-desc">${prod.descripcion}</p>
+              
+              <div class="purchase-box">
+                <div class="qty-selector">
+                  <button class="qty-btn" onclick="cambiarCantidad(-1)">-</button>
+                  <input type="number" class="qty-input" id="cantidadProd" value="1" min="1" readonly>
+                  <button class="qty-btn" onclick="cambiarCantidad(1)">+</button>
+                </div>
+                <button class="btn-add-cart" id="btnAddToCart">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                  Añadir a la Investigación
+                </button>
+              </div>
+
+              <div class="disclaimer-box">
+                <div>
+                  <div class="disclaimer-title">Atención: Uso exclusivo de laboratorio</div>
+                  <div class="disclaimer-text">Este compuesto se suministra únicamente para fines de investigación y desarrollo. No apto para consumo humano ni veterinario bajo ninguna circunstancia.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // ── GESTIÓN DEL BOTÓN AÑADIR AL CARRITO ──
+        const btnAddToCart = document.getElementById('btnAddToCart');
+        if (btnAddToCart) {
+          btnAddToCart.addEventListener('click', () => {
+            const cantidadAAgregar = parseInt(document.getElementById('cantidadProd').value) || 1;
+            let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+            const itemExistente = cart.find(i => i.id === prod.id);
+
+            if (itemExistente) {
+              itemExistente.qty += cantidadAAgregar;
+            } else {
+              cart.push({ id: prod.id, qty: cantidadAAgregar });
+            }
+
+            localStorage.setItem('venus_cart', JSON.stringify(cart));
+            
+            // Actualización inmediata del contador del nav
+            if (typeof actualizarNumeroNavGlobal === 'function') {
+              actualizarNumeroNavGlobal();
+            } else {
+              const navCount = document.getElementById('navCartCount');
+              if (navCount) {
+                const total = cart.reduce((sum, item) => sum + item.qty, 0);
+                navCount.textContent = `(${total})`;
+              }
+            }
+
+            // Feedback visual elegante
+            const textoOriginal = btnAddToCart.innerHTML;
+            btnAddToCart.textContent = '¡Añadido con éxito! ✓';
+            btnAddToCart.style.background = '#22c55e';
+            btnAddToCart.disabled = true;
+
+            setTimeout(() => {
+              btnAddToCart.innerHTML = textoOriginal;
+              btnAddToCart.style.background = '';
+              btnAddToCart.disabled = false;
+            }, 2000);
+          });
+        }
+      }
+
+      // ── CONTROL DEL SELECTOR DE CANTIDAD ──
+      window.cambiarCantidad = function(valor) {
+        const input = document.getElementById('cantidadProd');
+        if (input) {
+          let nuevaCant = (parseInt(input.value) || 1) + valor;
+          if (nuevaCant < 1) nuevaCant = 1;
+          input.value = nuevaCant;
+        }
+      };
+
     });
 
-    // Control del Selector de Cantidad Numérica
-    window.cambiarCantidad = function(valor) {
-      const input = document.getElementById('cantidadProd');
-      if (input) {
-        let nuevaCant = (parseInt(input.value) || 1) + valor;
-        if (nuevaCant < 1) nuevaCant = 1;
-        input.value = nuevaCant;
-      }
-    };
-
-    // Renderizar Estado de Error Limpio si no coincide el ID
-    function mostrarProductoNoEncontrado() {
-      document.getElementById('mainContent').innerHTML = `
-        <div class="not-found-box">
-          <h2 style="font-size: 28px; color: var(--dark);">Péptido No Encontrado</h2>
-          <p style="color: var(--slate); max-width: 400px;">El compuesto que intentas buscar no existe en nuestros registros analíticos o la clave ha sido modificada.</p>
-          <a href="vertodos.html" class="btn-back">Regresar al Catálogo</a>
-        </div>
-      `;
-    }
-
-    // Manejo básico de Menú Móvil (Burger)
+    // ── MANEJO DEL MENÚ MÓVIL (Burger) ──
     const burgerBtn = document.getElementById('burgerBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     if (burgerBtn && mobileMenu) {
@@ -264,5 +285,6 @@
         });
     }
   </script>
+
 </body>
 </html>
