@@ -10,7 +10,7 @@ const productosData = {
     pureza: "99.5% Pureza | 5mg",
     categoria: "desempeno",
     badge: "sale",
-    descripcion: "Péptido sintético secuencial de alta estabilidad gástrica diseñado para la investigación de la angiogénesis, angiogénesis acelerada y regeneración de tejidos in-vitro."
+    descripcion: "Péptido sintético de alta estabilidad gástrica. Diseñado para estudios in-vitro de rutas de señalización celular y ensayos de bioquímica molecular. Suministrado como polvo liofilizado estéril. Exclusivamente para investigación y análisis de laboratorio. No apto para consumo humano."
   },
   "tb-500": {
     id: "tb-500",
@@ -20,7 +20,7 @@ const productosData = {
     pureza: "99.3% Pureza | 5mg",
     categoria: "desempeno",
     badge: "sale",
-    descripcion: "Fracción sintética activa de la timosina beta-4. Utilizado ampliamente en ensayos biológicos de laboratorio para estudiar la migración celular y la remodelación tisular."
+    descripcion: "Fracción sintética de timosina beta-4 de alta pureza. Formulada para aplicaciones de investigación celular y estudios de migración en modelos in-vitro. Polvo liofilizado estéril. Uso exclusivo en laboratorio. No apto para consumo humano."
   },
   "semaglutide": {
     id: "semaglutide",
@@ -29,7 +29,7 @@ const productosData = {
     rating: "5.0",
     pureza: "99.7% Pureza | 5mg",
     categoria: "metabolicos",
-    descripcion: "Agonista del receptor GLP-1 de alta pureza optimizado para estudios metabólicos controlados y análisis de los perfiles de secreción insulínica de laboratorio."
+    descripcion: "Agonista de receptor GLP-1 de alta pureza (99.7%). Diseñado para investigación en ensayos de laboratorio y estudios de receptores celulares en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "tirzepatide": {
     id: "tirzepatide",
@@ -39,7 +39,7 @@ const productosData = {
     pureza: "99.8% Pureza | 10mg",
     categoria: "metabolicos",
     badge: "sale",
-    descripcion: "Co-agonista dual de los receptores GIP y GLP-1 formulado específicamente para ensayos analíticos avanzados sobre homeostasis glucémica y receptores metabólicos."
+    descripcion: "Co-agonista de receptores GIP y GLP-1 de alta pureza (99.8%). Formulado para investigación en ensayos de laboratorio y análisis de interacciones moleculares en modelos celulares in-vitro. No apto para consumo humano."
   },
   "retatrutide": {
     id: "retatrutide",
@@ -48,7 +48,7 @@ const productosData = {
     rating: "4.7",
     pureza: "99.4% Pureza | 4mg",
     categoria: "metabolicos",
-    descripcion: "Agonista triple dirigido a los receptores GIP, GLP-1 y Glucagón, destinado a la evaluación comparativa de rutas complejas de degradación lipídica in-vitro."
+    descripcion: "Agonista triple de alta pureza (99.4%). Diseñado para investigación en ensayos de laboratorio y estudios de rutas moleculares en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "melanotan-ii": {
     id: "melanotan-ii",
@@ -59,7 +59,7 @@ const productosData = {
     categoria: "desempeno",
     badge: "new",
     vialColor: "pink",
-    descripcion: "Análogo sintético de la hormona estimulante de melanocitos alfa para la investigación de la melanogénesis sistémica y la foto-protección celular en entornos analíticos."
+    descripcion: "Análogo sintético de alta pureza (99.1%). Compuesto para ensayos de laboratorio y estudios de receptores de melanocortina en entornos controlados in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "ipamorelin": {
     id: "ipamorelin",
@@ -68,7 +68,7 @@ const productosData = {
     rating: "4.8",
     pureza: "99.5% Pureza | 5mg",
     categoria: "gh",
-    descripcion: "Secretagogo altamente selectivo de la hormona del crecimiento (GH) que actúa como un potente agonista del receptor de grelina en modelos experimentales aislados."
+    descripcion: "Péptido sintético de alta pureza (99.5%). Formulado para investigación en ensayos de laboratorio y estudios de receptores de grelina en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "cjc-1295-no-dac": {
     id: "cjc-1295-no-dac",
@@ -78,7 +78,7 @@ const productosData = {
     pureza: "99.2% Pureza | 5mg",
     categoria: "gh",
     badge: "sale",
-    descripcion: "CJC-1295 No DAC (también conocido como Modified GRF 1-29) es un péptido análogo sintético del factor liberador de la hormona del crecimiento (GHRH). Ideal para ensayos analíticos estandarizados de mapeo hormonal."
+    descripcion: "Péptido análogo sintético de alta pureza (99.2%). Diseñado para investigación en ensayos de laboratorio y análisis de receptores GHRH en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "cjc-1295-with-dac": {
     id: "cjc-1295-with-dac",
@@ -88,7 +88,7 @@ const productosData = {
     pureza: "99.3% Pureza | 2mg",
     categoria: "gh",
     badge: "sale",
-    descripcion: "CJC-1295 con Complejo de Afinidad a la Droga (DAC) incrementa significativamente la vida media de la estructura molecular al unirse de forma selectiva a la albúmina en entornos de laboratorio controlados."
+    descripcion: "Péptido análogo sintético de alta pureza (99.3%). Formulado para investigación en ensayos de laboratorio y estudios de afinidad molecular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "pt-141": {
     id: "pt-141",
@@ -97,7 +97,7 @@ const productosData = {
     rating: "4.8",
     pureza: "99.6% Pureza | 10mg",
     categoria: "cognitivas",
-    descripcion: "Péptido agonista de los receptores de melanocortina (principalmente MC3R y MC4R) enfocado en estudios analíticos del sistema nervioso central y respuestas periféricas."
+    descripcion: "Péptido agonista de receptores de melanocortina de alta pureza (99.6%). Formulado para investigación en ensayos de laboratorio y análisis de interacciones moleculares en modelos celulares in-vitro. No apto para consumo humano."
   },
   "epitalon": {
     id: "epitalon",
@@ -106,7 +106,7 @@ const productosData = {
     rating: "4.9",
     pureza: "99.5% Pureza | 10mg",
     categoria: "desempeno",
-    descripcion: "Tetrapéptido sintético regulador de la actividad de la telomerasa, ampliamente estudiado en modelos de senescencia celular analítica y estabilidad cromosómica."
+    descripcion: "Tetrapéptido sintético de alta pureza (99.5%). Formulado para investigación en modelos celulares y análisis de estabilidad cromosómica in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "ghk-cu": {
     id: "ghk-cu",
@@ -115,7 +115,8 @@ const productosData = {
     rating: "5.0",
     pureza: "99.8% Pureza | 50mg",
     categoria: "desempeno",
-    descripcion: "Complejo de cobre y tripéptido de alta afinidad estructural para la evaluación de cascadas de señalización antioxidante y remodelación de la matriz extracelular."
+    imagen: "img/vial-ghk-cu-50mg.png",
+    descripcion: "Complejo de cobre y tripéptido de alta pureza (99.8%). Diseñado para estudios de laboratorio en cascadas de señalización celular y análisis de matriz extracelular in-vitro. No apto para consumo humano."
   },
   "aod-9604": {
     id: "aod-9604",
@@ -124,7 +125,7 @@ const productosData = {
     rating: "4.5",
     pureza: "99.1% Pureza | 2mg",
     categoria: "metabolicos",
-    descripcion: "Fracción peptídica lipolítica derivada de la región C-terminal de la hormona del crecimiento humana (hGH 177-191) para estudios enfocados en el metabolismo lipídico aislados."
+    descripcion: "Fracción peptídica sintética de alta pureza (99.1%). Formulada para investigación en ensayos de laboratorio y análisis de procesos bioquímicos en modelos celulares in-vitro. No apto para consumo humano."
   },
   "hgh-fragment-176-191": {
     id: "hgh-fragment-176-191",
@@ -133,7 +134,7 @@ const productosData = {
     rating: "4.6",
     pureza: "99.4% Pureza | 5mg",
     categoria: "gh",
-    descripcion: "Dominio molecular aislado de la hGH optimizado para ensayos analíticos de movilización de ácidos grasos sin afectar los niveles de glucosa en plasma in-vitro."
+    descripcion: "Fragmento sintético de alta pureza (99.4%). Diseñado para investigación en ensayos de laboratorio y análisis de rutas bioquímicas en modelos celulares in-vitro. No apto para consumo humano."
   },
   "igf-1-lr3": {
     id: "igf-1-lr3",
@@ -143,7 +144,7 @@ const productosData = {
     pureza: "99.7% Pureza | 1mg",
     categoria: "gh",
     badge: "sale",
-    descripcion: "Análogo de vida media ultra-prolongada del factor de crecimiento insulínico tipo 1 (IGF-1) diseñado para mantener estabilidad extendida en cultivos celulares de investigación."
+    descripcion: "Análogo de factor de crecimiento de alta pureza (99.7%). Formulado para investigación en cultivos celulares y ensayos de laboratorio in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "tesamorelin": {
     id: "tesamorelin",
@@ -153,7 +154,7 @@ const productosData = {
     pureza: "99.5% Pureza | 5mg",
     categoria: "gh",
     imagen: "img/vial-tesamorelin-5mg.png",
-    descripcion: "Péptido sintético correspondiente al factor liberador de la hormona del crecimiento (GHRH) empleado en ensayos clínicos preclínicos de mapeo metabólico graso."
+    descripcion: "Péptido sintético de alta pureza (99.5%). Diseñado para investigación en ensayos de laboratorio y análisis de receptores GHRH en modelos celulares in-vitro. No apto para consumo humano."
   },
   "sermorelin": {
     id: "sermorelin",
@@ -163,7 +164,7 @@ const productosData = {
     pureza: "99.3% Pureza | 5mg",
     categoria: "gh",
     badge: "new",
-    descripcion: "Segmento funcional truncado de 29 aminoácidos de la GHRH natural, utilizado para monitorizar de manera controlada la reserva pituitaria in-vitro."
+    descripcion: "Segmento peptídico sintético de alta pureza (99.3%). Formulado para investigación en ensayos de laboratorio y estudios de reserva pituitaria en modelos in-vitro. No apto para consumo humano."
   },
   "hexarelin": {
     id: "hexarelin",
@@ -172,7 +173,7 @@ const productosData = {
     rating: "4.5",
     pureza: "99.2% Pureza | 2mg",
     categoria: "gh",
-    descripcion: "Hexapéptido secretagogo sintético estructuralmente modificado que ofrece una alta estabilidad metabólica frente a la degradación enzimática selectiva en laboratorio."
+    descripcion: "Hexapéptido sintético de alta pureza (99.2%). Diseñado para investigación en ensayos de laboratorio y análisis de estabilidad metabólica en modelos celulares in-vitro. No apto para consumo humano."
   },
   "ghrp-2": {
     id: "ghrp-2",
@@ -181,7 +182,7 @@ const productosData = {
     rating: "4.6",
     pureza: "99.4% Pureza | 5mg",
     categoria: "gh",
-    descripcion: "Péptido liberador de la hormona del crecimiento de segunda generación altamente purificado, ideal para ensayos de cribado sobre receptores acoplados a proteínas G."
+    descripcion: "Péptido sintético de alta pureza (99.4%). Formulado para investigación en ensayos de laboratorio y estudios de receptores acoplados a proteínas G en modelos in-vitro. No apto para consumo humano."
   },
   "ghrp-6": {
     id: "ghrp-6",
@@ -190,7 +191,7 @@ const productosData = {
     rating: "4.6",
     pureza: "99.4% Pureza | 5mg",
     categoria: "gh",
-    descripcion: "Hexapéptido clásico estimulador de la secreción de somatotropina mediante la modulación del receptor de secretagogos de hormona del crecimiento (GHS-R)."
+    descripcion: "Hexapéptido sintético de alta pureza (99.4%). Diseñado para investigación en ensayos de laboratorio y análisis de modulación de receptores GHS-R en modelos celulares in-vitro. No apto para consumo humano."
   },
   "dsip-5mg": {
     id: "dsip-5mg",
@@ -201,7 +202,7 @@ const productosData = {
     categoria: "cognitivas",
     agotado: true,
     imagen: "img/vial-dsip-5mg.png",
-    descripcion: "Nonapéptido modulador de los ritmos circadianos y la actividad electroencefalográfica subcortical en entornos de simulación neurológica controlada."
+    descripcion: "Nonapéptido sintético de alta pureza (99.6%). Diseñado para investigación en ensayos de laboratorio y estudios de ritmos circadianos en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "nad-plus": {
     id: "nad-plus",
@@ -212,7 +213,7 @@ const productosData = {
     categoria: "desempeno",
     badge: "sale",
     imagen: "img/vial-nad-plus.png",
-    descripcion: "Coenzima celular liofilizada de máxima pureza para el estudio analítico de la función mitocondrial, fosforilación oxidativa y reparación molecular genómica."
+    descripcion: "Coenzima liofilizada de alta pureza (≥99.9%). Para investigación en ensayos de laboratorio y análisis de procesos bioquímicos celulares. Uso exclusivo en investigación in-vitro. No apto para consumo humano."
   },
   "ibutamoren": {
     id: "ibutamoren",
@@ -221,7 +222,7 @@ const productosData = {
     rating: "4.8",
     pureza: "99.6% Pureza | 10mg",
     categoria: "gh",
-    descripcion: "Agonista no peptídico de acción prolongada sobre los receptores de grelina, utilizado para evaluar la secreción tónica endógena continua de la hormona del crecimiento."
+    descripcion: "Compuesto no peptídico de alta pureza (99.6%). Formulado para investigación en ensayos de laboratorio y análisis de receptores de grelina en modelos celulares in-vitro. No apto para consumo humano."
   },
   "oxytocin": {
     id: "oxytocin",
@@ -230,7 +231,7 @@ const productosData = {
     rating: "4.9",
     pureza: "99.7% Pureza | 5mg",
     categoria: "cognitivas",
-    descripcion: "Neuropéptido cíclico purificado de alta calidad destinado al análisis de las vías neuroendocrinas complejas y respuestas de señalización sináptica."
+    descripcion: "Neuropéptido sintético de alta pureza (99.7%). Formulado para investigación en ensayos de laboratorio y análisis de señalización sináptica en modelos celulares in-vitro. No apto para consumo humano."
   },
   "tesofensine": {
     id: "tesofensine",
@@ -239,7 +240,7 @@ const productosData = {
     rating: "4.8",
     pureza: "99.6% Pureza | 500mcg",
     categoria: "metabolicos",
-    descripcion: "Inhibidor triple de la recaptación de monoaminas optimizado para el estudio biológico de la modulación de saciedad y vías adrenérgicas a nivel hipotalámico."
+    descripcion: "Inhibidor triple de alta pureza (99.6%). Formulado para investigación en ensayos de laboratorio y análisis de interacciones moleculares en modelos celulares in-vitro. No apto para consumo humano."
   },
   "tirzepatide-glycine": {
     id: "tirzepatide-glycine",
@@ -249,7 +250,7 @@ const productosData = {
     pureza: "Fórmula Combinada | 10mg",
     categoria: "metabolicos",
     badge: "new",
-    descripcion: "Complejo sinérgico avanzado estabilizado con aminoácidos glicina para evaluar analíticamente respuestas moleculares de sensibilidad insulínica."
+    descripcion: "Complejo de alta pureza de agonista de receptores GIP/GLP-1 estabilizado con glicina. Formulado para investigación en ensayos de laboratorio y análisis de interacciones moleculares en modelos celulares in-vitro. No apto para consumo humano."
   },
   "bpc-157-tb-500-blend": {
     id: "bpc-157-tb-500-blend",
@@ -260,7 +261,7 @@ const productosData = {
     categoria: "desempeno",
     badge: "sale",
     isBlend: true,
-    descripcion: "Formulación combinada líquida/liofilizada de péptidos reparadores diseñada para estudiar interacciones sinérgicas en la cascada celular de curación tisular."
+    descripcion: "Mezcla de alta pureza de péptidos sintéticos. Diseñada para ensayos de laboratorio y estudios de señalización celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "semaglutide-bpc-blend": {
     id: "semaglutide-bpc-blend",
@@ -271,7 +272,7 @@ const productosData = {
     categoria: "metabolicos",
     badge: "sale",
     isBlend: true,
-    descripcion: "Solución analítica combinada para evaluar la modulación protectora e integral de la mucosa gástrica frente a la estimulación metabólica por GLP-1."
+    descripcion: "Mezcla de alta pureza de agonista GLP-1 y péptido sintético. Diseñada para investigación en ensayos de laboratorio y estudios de señalización celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "kpv": {
     id: "kpv",
@@ -280,7 +281,7 @@ const productosData = {
     rating: "4.7",
     pureza: "99.4% Pureza | 5mg",
     categoria: "cognitivas",
-    descripcion: "Tripéptido inmunomodulador derivado de la hormona alfa-MSH, estudiado por sus potentes propiedades analíticas reguladoras de la inflamación mucosa celular."
+    descripcion: "Tripéptido inmunomodulador sintético de alta pureza (99.4%). Diseñado para investigación en ensayos de laboratorio y estudios de respuesta celular en modelos in-vitro. No apto para consumo humano."
   },
   "ll-37": {
     id: "ll-37",
@@ -289,7 +290,7 @@ const productosData = {
     rating: "4.8",
     pureza: "99.5% Pureza | 2mg",
     categoria: "desempeno",
-    descripcion: "Péptido antimicrobiano humano perteneciente a la familia de las catelicidinas, empleado para monitorear cascadas inmunes innatas en ensayos moleculares."
+    descripcion: "Péptido antimicrobiano sintético de alta pureza (99.5%). Formulado para investigación en ensayos de laboratorio y estudios de respuesta celular en modelos in-vitro. No apto para consumo humano."
   },
   "selank-10mg": {
     id: "selank-10mg",
@@ -298,7 +299,7 @@ const productosData = {
     rating: "4.9",
     pureza: "99.5% Pureza | 10mg",
     categoria: "cognitivas",
-    descripcion: "Compuesto liofilizado de alta pureza diseñado para la investigación analítica de receptores ansiolíticos y la estabilidad estructural peptídica en ensayos neurológicos complejos."
+    descripcion: "Compuesto liofilizado de alta pureza (99.5%). Formulado para investigación en ensayos de laboratorio y análisis de estabilidad estructural peptídica en modelos celulares in-vitro. No apto para consumo humano."
   }
 };
 
