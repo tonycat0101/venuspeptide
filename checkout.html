@@ -386,32 +386,64 @@
     </div>
   </main>
 
+  <!-- ── FOOTER UNIFICADO ── -->
   <footer class="footer">
     <div class="container">
-        <div class="footer__top">
-            <div class="footer__brand">
-                <div class="footer__logo">
-                    <div class="footer__logo-icon">V</div>
-                    Venus Peptide
-                </div>
-                <p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p>
-            </div>
-            <div class="footer__col">
-                <div class="footer__col-title">Navegación</div>
-                <a href="index.html">Inicio</a>
-                <a href="categorias.html">Categorías</a>
-                <a href="vertodos.html">Ver todos</a>
-                <a href="nosotros.html">Nosotros</a>
-            </div>
-            <div class="footer__col">
-                <div class="footer__col-title">Soporte</div>
-                <a href="contacto.html">Contacto</a>
-                <a href="calculadora.html">Calculadora de Reconstitución</a>
-            </div>
+
+      <div class="footer__top" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+
+        <div class="footer__brand">
+          <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
+          <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
         </div>
-        <div class="footer__bottom">
-            <div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Navegación</div>
+          <a href="index.html">Inicio</a>
+          <a href="categorias.html">Categorías</a>
+          <a href="vertodos.html">Ver todos</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="contacto.html">Contacto</a>
         </div>
+
+        <div class="footer__col">
+          <div class="footer__col-title">Categorías</div>
+          <a href="vertodos.html?cat=metabolicos">Investigación Metabólica</a>
+          <a href="vertodos.html?cat=gh">Moduladores GH</a>
+          <a href="vertodos.html?cat=cognitivas">Neuro-Cognición</a>
+          <a href="vertodos.html?cat=desempeno">Desempeño Celular</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom-horizontal" style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: var(--text-muted, #94a3b8);">
+          <div>Copyright ©2026 Venus Peptide, All Rights Reserved.</div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <style>
+              .inline-legal-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+              .inline-legal-link:hover { color: #fff; }
+              .inline-separator { color: rgba(255, 255, 255, 0.2); font-size: 12px; user-select: none; }
+            </style>
+            <a href="faq.html" class="inline-legal-link">FAQ</a>
+            <span class="inline-separator">|</span>
+            <a href="terminos.html" class="inline-legal-link">Terms &amp; Conditions</a>
+            <span class="inline-separator">|</span>
+            <a href="envios.html" class="inline-legal-link">Shipping &amp; Returns</a>
+            <span class="inline-separator">|</span>
+            <a href="privacidad.html" class="inline-legal-link">Privacy Policy</a>
+            <span class="inline-separator">|</span>
+            <a href="contacto.html" class="inline-legal-link">Contact Us</a>
+          </div>
+        </div>
+
+        <p style="text-align: center; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-weight: 600; letter-spacing: 0.01em;">
+          Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. Debe tener la edad legal requerida para adquirir estos compuestos. Los productos NO son para consumo humano ni veterinario de ningún tipo. Las declaraciones hechas dentro de este sitio web no han sido evaluadas por ninguna administración de alimentos o medicamentos. Estos reactivos no están destinados a diagnosticar, tratar, curar o prevenir ninguna enfermedad.
+        </p>
+
+      </div>
+
     </div>
   </footer>
 
