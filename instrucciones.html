@@ -441,14 +441,14 @@
       }
 
       emailjs.send('service_me5arag', 'template_bfdi0ai', {
-        codigo: orderId,
-        cliente: cliente,
-        email: email,
-        telefono: telefono,
-        total: total,
-        metodo: metodo,
-        productos_texto: productosTexto,
-        fecha: new Date().toLocaleString()
+  codigo: orderId,
+  cliente: cliente,
+  email: email,
+  telefono: telefono,
+  total: total,
+  metodo: metodo,
+  productos_texto: productosTexto,  // ← ya está correcto
+  fecha: new Date().toLocaleString()
       }).then((response) => {
         console.log('✅ Correo enviado', response);
       }).catch((error) => {
