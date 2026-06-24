@@ -386,66 +386,60 @@
     </div>
   </main>
 
-  <!-- ── FOOTER UNIFICADO ── -->
   <footer class="footer">
     <div class="container">
-
-      <div class="footer__top" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-
-        <div class="footer__brand">
-          <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
-          <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
+        <div class="footer__top">
+            <div class="footer__brand">
+                <div class="footer__logo">
+                    <div class="footer__logo-icon">V</div>
+                    Venus Peptide
+                </div>
+                <p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p>
+            </div>
+            <div class="footer__col">
+                <div class="footer__col-title">Navegación</div>
+                <a href="index.html">Inicio</a>
+                <a href="categorias.html">Categorías</a>
+                <a href="vertodos.html">Ver todos</a>
+                <a href="nosotros.html">Nosotros</a>
+            </div>
+            <div class="footer__col">
+                <div class="footer__col-title">Soporte</div>
+                <a href="contacto.html">Contacto</a>
+                <a href="calculadora.html">Calculadora de Reconstitución</a>
+            </div>
         </div>
-
-        <div class="footer__col">
-          <div class="footer__col-title">Navegación</div>
-          <a href="index.html">Inicio</a>
-          <a href="categorias.html">Categorías</a>
-          <a href="vertodos.html">Ver todos</a>
-          <a href="nosotros.html">Nosotros</a>
-          <a href="contacto.html">Contacto</a>
+        <div class="footer__bottom">
+            <div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div>
         </div>
-
-        <div class="footer__col">
-          <div class="footer__col-title">Categorías</div>
-          <a href="vertodos.html?cat=metabolicos">Investigación Metabólica</a>
-          <a href="vertodos.html?cat=gh">Moduladores GH</a>
-          <a href="vertodos.html?cat=cognitivas">Neuro-Cognición</a>
-          <a href="vertodos.html?cat=desempeno">Desempeño Celular</a>
-        </div>
-
-      </div>
-
-      <div class="footer__bottom-horizontal" style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
-
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: var(--text-muted, #94a3b8);">
-          <div>Copyright ©2026 Venus Peptide, All Rights Reserved.</div>
-          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <style>
-              .inline-legal-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
-              .inline-legal-link:hover { color: #fff; }
-              .inline-separator { color: rgba(255, 255, 255, 0.2); font-size: 12px; user-select: none; }
-            </style>
-            <a href="faq.html" class="inline-legal-link">FAQ</a>
-            <span class="inline-separator">|</span>
-            <a href="terminos.html" class="inline-legal-link">Terms &amp; Conditions</a>
-            <span class="inline-separator">|</span>
-            <a href="envios.html" class="inline-legal-link">Shipping &amp; Returns</a>
-            <span class="inline-separator">|</span>
-            <a href="privacidad.html" class="inline-legal-link">Privacy Policy</a>
-            <span class="inline-separator">|</span>
-            <a href="contacto.html" class="inline-legal-link">Contact Us</a>
-          </div>
-        </div>
-
-        <p style="text-align: center; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-weight: 600; letter-spacing: 0.01em;">
-          Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. Debe tener la edad legal requerida para adquirir estos compuestos. Los productos NO son para consumo humano ni veterinario de ningún tipo. Las declaraciones hechas dentro de este sitio web no han sido evaluadas por ninguna administración de alimentos o medicamentos. Estos reactivos no están destinados a diagnosticar, tratar, curar o prevenir ninguna enfermedad.
-        </p>
-
-      </div>
-
     </div>
   </footer>
+
+  <!-- ── FIREBASE SDK ── -->
+  <script type="module">
+    // ── FIREBASE CONFIG ──
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDWfom6bIBxUyRReGrmBtyu65G5NmsOHGM",
+      authDomain: "venus-peptide.firebaseapp.com",
+      projectId: "venus-peptide",
+      storageBucket: "venus-peptide.firebasestorage.app",
+      messagingSenderId: "974716476856",
+      appId: "1:974716476856:web:04cdfd455585a0faa4834d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Exponer db globalmente para usarla en otras funciones
+    window.db = db;
+    window.doc = doc;
+    window.setDoc = setDoc;
+
+    console.log('✅ Firebase inicializado correctamente');
+  </script>
 
   <script src="main.js"></script>
   
@@ -701,9 +695,6 @@
           }
         });
       }
-
-      // ── GUARDAR DATOS DEL CLIENTE PARA REPORTE ──
-      // (se guardan cuando se envía el formulario)
     }
 
     // ── FUNCIÓN PARA APLICAR PROMO ──
@@ -712,11 +703,10 @@
       const feedback = document.getElementById('promoFeedback');
       const codigo = input.value.trim().toUpperCase();
 
-      // ── CÓDIGOS DE DESCUENTO VÁLIDOS ──
       const promos = {
-        'BIENVENIDA10': 10,   // 10% de descuento
-        'VENUS15': 15,        // 15% de descuento
-        'INVESTIGA20': 20     // 20% de descuento
+        'BIENVENIDA10': 10,
+        'VENUS15': 15,
+        'INVESTIGA20': 20
       };
 
       if (!codigo) {
@@ -730,79 +720,63 @@
         feedback.innerHTML = `<span style="color: #22c55e;">✅ Código aplicado: ${codigo} (${descuentoAplicado}% de descuento)</span>`;
         document.getElementById('btnAplicarPromo').classList.add('active');
         document.getElementById('btnAplicarPromo').textContent = '✓ Aplicado';
-        renderizarCheckout(); // Re-renderizar para actualizar totales
+        renderizarCheckout();
       } else {
         feedback.innerHTML = '<span style="color: #ef4444;">❌ Código inválido.</span>';
       }
     }
 
-    // ── ENVIAR FORMULARIO ──
+    // ── ENVIAR FORMULARIO (CON FIREBASE) ──
     function enviarPedidoFormulario(e) {
       e.preventDefault();
 
       // ── VALIDACIONES ──
 
-      // 1. Checkbox legal
       const legalChecked = document.getElementById('checkoutLegal').checked;
       if (!legalChecked) {
         document.getElementById('legalError').classList.add('visible');
-        document.getElementById('checkoutLegal').focus();
         return;
       }
 
-      // 2. Nombre
       const nombre = document.getElementById('checkoutNombre').value.trim();
       if (!nombre || nombre.length < 2) {
         alert('Por favor, ingresa tu nombre completo.');
-        document.getElementById('checkoutNombre').focus();
         return;
       }
 
-      // 3. Email
       const email = document.getElementById('checkoutEmail').value.trim();
       if (!email || !email.includes('@') || !email.includes('.')) {
         alert('Por favor, ingresa un correo electrónico válido.');
-        document.getElementById('checkoutEmail').focus();
         return;
       }
 
-      // 4. Teléfono
       const telefono = document.getElementById('checkoutTelefono').value.trim();
       if (!telefono || telefono.length < 7) {
         alert('Por favor, ingresa un número de teléfono válido.');
-        document.getElementById('checkoutTelefono').focus();
         return;
       }
 
-      // 5. Dirección
       const direccion = document.getElementById('checkoutDireccion').value.trim();
       if (!direccion || direccion.length < 5) {
         alert('Por favor, ingresa una dirección completa.');
-        document.getElementById('checkoutDireccion').focus();
         return;
       }
 
-      // 6. Ciudad
       const ciudad = document.getElementById('checkoutCiudad').value.trim();
       if (!ciudad || ciudad.length < 2) {
         alert('Por favor, ingresa tu ciudad.');
-        document.getElementById('checkoutCiudad').focus();
         return;
       }
 
-      // 7. Estado
       const estado = document.getElementById('checkoutEstado').value.trim();
       if (!estado || estado.length < 2) {
         alert('Por favor, ingresa tu estado o provincia.');
-        document.getElementById('checkoutEstado').focus();
         return;
       }
 
-      // 8. ZIP
       const zip = document.getElementById('checkoutZip').value.trim();
       if (!zip || zip.length < 3) {
         alert('Por favor, ingresa un código postal válido.');
-        document.getElementById('checkoutZip').focus();
         return;
       }
 
@@ -813,49 +787,71 @@
       const notas = document.getElementById('checkoutNotas').value.trim();
       const newsletter = document.getElementById('checkoutNewsletter').checked;
       
-      let total = 0;
+      let subtotal = 0;
       cart.forEach(item => {
         const prod = window.productosData ? window.productosData[item.id] : null;
         if (prod) {
-          total += prod.precio * item.qty;
+          subtotal += prod.precio * item.qty;
         }
       });
 
-      // Aplicar descuento si existe
-      const totalConDescuento = total - descuentoAplicado;
+      const totalConDescuento = subtotal - descuentoAplicado;
       const tax = totalConDescuento * 0.06;
       const totalFinal = totalConDescuento + tax;
-
       const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
 
-      // ── GUARDAR DATOS DEL CLIENTE PARA REPORTE ──
-      localStorage.setItem('checkout_nombre', nombre);
-      localStorage.setItem('checkout_email', email);
-      localStorage.setItem('checkout_telefono', telefono);
-      localStorage.setItem('checkout_direccion', direccion);
-      localStorage.setItem('checkout_ciudad', ciudad);
-      localStorage.setItem('checkout_estado', estado);
-      localStorage.setItem('checkout_zip', zip);
-      localStorage.setItem('checkout_notas', notas);
-      localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
-      localStorage.setItem('checkout_codigo_promo', codigoPromoUsado);
-      localStorage.setItem('checkout_descuento', descuentoAplicado.toString());
-
       // ── GUARDAR EN SESSIONSTORAGE ──
+      sessionStorage.setItem('pending_order_id', codigoReferencia);
       sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
-      sessionStorage.setItem('pending_order_id', codigoReferencia);
 
       // ── BACKUP EN LOCALSTORAGE ──
+      localStorage.setItem('backup_order_id', codigoReferencia);
       localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
       localStorage.setItem('backup_order_method', metodoPago);
-      localStorage.setItem('backup_order_id', codigoReferencia);
 
-      // ── REDIRIGIR A INSTRUCCIONES ──
-      window.location.href = 'instrucciones.html';
+      // ── GUARDAR EN FIREBASE (usando la instancia global) ──
+      const db = window.db;
+      const doc = window.doc;
+      const setDoc = window.setDoc;
+
+      if (db && doc && setDoc) {
+        const orderRef = doc(db, 'pedidos', codigoReferencia);
+        setDoc(orderRef, {
+          codigo: codigoReferencia,
+          cliente: nombre,
+          email: email,
+          telefono: telefono,
+          direccion: direccion,
+          ciudad: ciudad,
+          estado: estado,
+          zip: zip,
+          productos: cart,
+          subtotal: subtotal,
+          descuento: descuentoAplicado,
+          tax: tax,
+          total: totalFinal,
+          metodo: metodoPago,
+          notas: notas,
+          newsletter: newsletter,
+          codigo_promo: codigoPromoUsado,
+          status: 'pendiente',
+          fecha: new Date().toISOString()
+        }).then(() => {
+          console.log('✅ Orden guardada en Firebase correctamente');
+          window.location.href = 'instrucciones.html';
+        }).catch((error) => {
+          console.error('❌ Error al guardar en Firebase:', error);
+          alert('Hubo un error al procesar tu pedido. Por favor, intenta de nuevo.');
+        });
+      } else {
+        // Fallback si Firebase no está disponible
+        console.warn('⚠️ Firebase no disponible, redirigiendo sin guardar');
+        window.location.href = 'instrucciones.html';
+      }
     }
 
-    // Exponer función globalmente para el botón de promo
+    // Exponer funciones globalmente
     window.aplicarPromo = aplicarPromo;
     window.enviarPedidoFormulario = enviarPedidoFormulario;
   </script>
