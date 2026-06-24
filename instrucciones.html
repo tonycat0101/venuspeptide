@@ -73,27 +73,34 @@
       background: var(--blue-hover);
     }
 
-    /* ── MEJORA: Estado de confirmación ── */
-    .confirmation-message {
+    .status-reportado, .status-pagado {
       display: none;
-      background: #f0fdf4;
-      border: 1px solid #86efac;
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      margin-top: 20px;
-      color: #166534;
       text-align: center;
-      font-weight: 600;
-      font-size: 14px;
+      padding: 20px 0;
     }
-    .confirmation-message.visible {
+    .status-reportado.visible, .status-pagado.visible {
       display: block;
+    }
+    .status-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .status-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .status-title.reportado { color: #2563eb; }
+    .status-title.pagado { color: #15803d; }
+    .status-sub {
+      color: var(--text-muted);
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
 
-  <!-- ── NAV UNIFICADO (con Soporte y menú móvil) ── -->
+  <!-- ── NAV UNIFICADO ── -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo">
@@ -106,15 +113,12 @@
         <a href="vertodos.html">Ver todos</a>
         <a href="nosotros.html">Nosotros</a>
 
-        <!-- Menú Desplegable de Soporte -->
         <div style="position: relative; display: inline-block;" 
              onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
              onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
-
           <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
             Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
           </a>
-
           <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
             <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
             <a href="calculadora.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Calculadora de Reconstitución</a>
@@ -151,52 +155,83 @@
         <span class="section-eyebrow">Paso Final</span>
         <h1 class="section-title" style="font-size: 28px; margin-bottom: 10px;">Instrucciones de Transferencia</h1>
 
-        <div id="renderOrderId" class="order-badge">Referencia: Cargando...</div>
+        <!-- ── ESTADO: PENDIENTE (por defecto) ── -->
+        <div id="estadoPendiente">
+          <div id="renderOrderId" class="order-badge">Referencia: Cargando...</div>
 
-        <p style="font-size: 15px; color: var(--text-body);">
-          Para proceder con la liberación de los reactivos de su orden, complete la transferencia electrónica utilizando los siguientes datos seguros de asignación comercial.
-        </p>
+          <p style="font-size: 15px; color: var(--text-body);">
+            Para proceder con la liberación de los reactivos de su orden, complete la transferencia electrónica utilizando los siguientes datos seguros de asignación comercial.
+          </p>
 
-        <div class="payment-details-box">
-          <div class="detail-row">
-            <span>Método Seleccionado:</span>
-            <strong id="renderMetodo">-</strong>
-          </div>
-          <div class="detail-row">
-            <span>Cuenta / Destinatario:</span>
-            <div>
-              <strong id="renderCuenta">pagos@venuspeptide.com</strong>
-              <button class="copy-btn" onclick="copiarTexto('renderCuenta')">Copiar</button>
+          <div class="payment-details-box">
+            <div class="detail-row">
+              <span>Método Seleccionado:</span>
+              <strong id="renderMetodo">-</strong>
+            </div>
+            <div class="detail-row">
+              <span>Cuenta / Destinatario:</span>
+              <div>
+                <strong id="renderCuenta">pagos@venuspeptide.com</strong>
+                <button class="copy-btn" onclick="copiarTexto('renderCuenta')">Copiar</button>
+              </div>
+            </div>
+            <div class="detail-row" style="font-size: 18px; font-weight: 800; border-top: 1px solid var(--border); padding-top: 15px;">
+              <span>Monto Total Neto:</span>
+              <span id="renderTotal" style="color: var(--text-dark);">$0.00 USD</span>
             </div>
           </div>
-          <div class="detail-row" style="font-size: 18px; font-weight: 800; border-top: 1px solid var(--border); padding-top: 15px;">
-            <span>Monto Total Neto:</span>
-            <span id="renderTotal" style="color: var(--text-dark);">$0.00 USD</span>
+
+          <div class="warning-box">
+            <strong>⚠️ NOTA DE SEGURIDAD CRÍTICA PARA EL CANAL DE ENVÍO:</strong><br>
+            Al procesar su transferencia, mantenga el campo de "Concepto", "Nota" o "Memo" <strong>completamente vacío</strong> o coloque únicamente el código de referencia alfanumérico arriba indicado. <strong>Bajo ninguna circunstancia</strong> escriba palabras restringidas como <em>"péptidos", "químicos", "laboratorio", "viales" o "Venus"</em>, ya que esto causará la retención inmediata de los fondos por auditoría bancaria.
+          </div>
+
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 25px;">
+            Una vez ejecutada la transacción, haga clic en el botón de abajo para consolidar la orden y proceder al envío de la captura de pantalla de su comprobante a nuestra área de control analítico.
+          </p>
+
+          <button id="confirmPaymentBtn" onclick="confirmarYFinalizarPedido()" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; font-size: 15px; border-radius: var(--radius-sm);">
+            He realizado el pago y deseo enviar el comprobante
+          </button>
+        </div>
+
+        <!-- ── ESTADO: REPORTADO (cliente reportó pago) ── -->
+        <div id="estadoReportado" class="status-reportado">
+          <div class="status-icon">⏳</div>
+          <h2 class="status-title reportado">✅ ¡Gracias por reportar tu pago!</h2>
+          <p class="status-sub">Hemos recibido tu notificación. Estamos verificando tu pago...</p>
+          <p class="status-sub" style="font-size: 14px; margin-top: 12px;">
+            Esta página se actualizará automáticamente cuando confirmemos tu pago.
+          </p>
+          <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 8px; display: inline-block;">
+            <span style="font-weight: 600;">Referencia:</span>
+            <span style="font-family: monospace; font-weight: 700; color: #2563eb;" id="reportadoOrderId">VP-0000</span>
           </div>
         </div>
 
-        <div class="warning-box">
-          <strong>⚠️ NOTA DE SEGURIDAD CRÍTICA PARA EL CANAL DE ENVÍO:</strong><br>
-          Al procesar su transferencia, mantenga el campo de "Concepto", "Nota" o "Memo" <strong>completamente vacío</strong> o coloque únicamente el código de referencia alfanumérico arriba indicado. <strong>Bajo ninguna circunstancia</strong> escriba palabras restringidas como <em>"péptidos", "químicos", "laboratorio", "viales" o "Venus"</em>, ya que esto causará la retención inmediata de los fondos por auditoría bancaria.
+        <!-- ── ESTADO: PAGADO (tú confirmaste el pago) ── -->
+        <div id="estadoPagado" class="status-pagado">
+          <div class="status-icon">✅</div>
+          <h2 class="status-title pagado">🎉 ¡Pago Verificado con Éxito!</h2>
+          <p class="status-sub">Hemos recibido y verificado tu pago correctamente.</p>
+          <p class="status-sub">Tu orden está siendo preparada para envío.</p>
+          <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 8px; display: inline-block;">
+            <span style="font-weight: 600;">Referencia:</span>
+            <span style="font-family: monospace; font-weight: 700; color: #15803d;" id="pagadoOrderId">VP-0000</span>
+          </div>
+          <div style="margin-top: 24px;">
+            <a href="index.html" class="btn btn-primary">Volver a la Tienda</a>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 16px;">
+            Se ha enviado un correo de confirmación a tu dirección de correo.
+          </p>
         </div>
 
-        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 25px;">
-          Una vez ejecutada la transacción, haga clic en el botón de abajo para consolidar la orden y proceder al envío de la captura de pantalla de su comprobante a nuestra área de control analítico.
-        </p>
-
-        <button id="confirmPaymentBtn" onclick="confirmarYFinalizarPedido()" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; font-size: 15px; border-radius: var(--radius-sm);">
-          He realizado el pago y deseo enviar el comprobante
-        </button>
-
-        <!-- Mensaje de confirmación que aparece al hacer clic -->
-        <div id="confirmationMessage" class="confirmation-message">
-          ✅ ¡Gracias! Tu reporte de pago ha sido enviado. Nos pondremos en contacto contigo a la brevedad.
-        </div>
       </div>
     </div>
   </main>
 
-  <!-- ── FOOTER UNIFICADO (AGREGADO) ── -->
+  <!-- ── FOOTER UNIFICADO ── -->
   <footer class="footer">
     <div class="container">
 
@@ -257,6 +292,32 @@
     </div>
   </footer>
 
+  <!-- ── FIREBASE SDK ── -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+    import { getFirestore, doc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDWfom6bIBxUyRReGrmBtyu65G5NmsOHGM",
+      authDomain: "venus-peptide.firebaseapp.com",
+      projectId: "venus-peptide",
+      storageBucket: "venus-peptide.firebasestorage.app",
+      messagingSenderId: "974716476856",
+      appId: "1:974716476856:web:04cdfd455585a0faa4834d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Exponer para usar en funciones globales
+    window.db = db;
+    window.doc = doc;
+    window.onSnapshot = onSnapshot;
+    window.updateDoc = updateDoc;
+
+    console.log('✅ Firebase inicializado correctamente');
+  </script>
+
   <script src="main.js"></script>
 
   <script>
@@ -271,16 +332,18 @@
         });
       }
 
-      // ── LECTURA DE DATOS DEL PEDIDO ──
-      let total = sessionStorage.getItem('pending_order_total') || localStorage.getItem('backup_order_total') || '0.00';
-      let metodo = sessionStorage.getItem('pending_order_method') || localStorage.getItem('backup_order_method') || 'Zelle';
-      let orderId = sessionStorage.getItem('pending_order_id') || localStorage.getItem('backup_order_id') || 'VP-0000';
+      // ── DATOS DEL PEDIDO ──
+      const orderId = sessionStorage.getItem('pending_order_id') || 'VP-0000';
+      const total = sessionStorage.getItem('pending_order_total') || '0.00';
+      const metodo = sessionStorage.getItem('pending_order_method') || 'Zelle';
 
       document.getElementById('renderTotal').textContent = `$${total} USD`;
       document.getElementById('renderMetodo').textContent = metodo;
       document.getElementById('renderOrderId').textContent = `Referencia de Rastreo: ${orderId}`;
+      document.getElementById('reportadoOrderId').textContent = orderId;
+      document.getElementById('pagadoOrderId').textContent = orderId;
 
-      // Configuración dinámica de cuentas destino
+      // ── CONFIGURAR CUENTA DESTINO ──
       if (metodo === 'CashApp') {
         document.getElementById('renderCuenta').textContent = '$VenusPeptidePay';
       } else if (metodo === 'Venmo') {
@@ -289,58 +352,94 @@
         document.getElementById('renderCuenta').textContent = 'pagos@venuspeptide.com';
       }
 
-      // ── ACTUALIZAR CONTADOR DEL CARRITO ──
+      // ── CONTADOR DEL CARRITO ──
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
       const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
       const navCount = document.getElementById('cartCountNav');
       const navCountMobile = document.getElementById('cartCountNavMobile');
       if (navCount) navCount.textContent = totalArticulos;
       if (navCountMobile) navCountMobile.textContent = totalArticulos;
+
+      // ── ESCUCHAR CAMBIOS EN FIREBASE ──
+      if (orderId !== 'VP-0000' && window.db) {
+        const orderRef = doc(window.db, 'pedidos', orderId);
+
+        window.onSnapshot(orderRef, (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.data();
+
+            // Estado: reportado (cliente reportó pago)
+            if (data.status === 'reportado') {
+              document.getElementById('estadoPendiente').style.display = 'none';
+              document.getElementById('estadoReportado').classList.add('visible');
+              document.getElementById('estadoPagado').classList.remove('visible');
+            }
+
+            // Estado: pagado (tú confirmaste el pago)
+            if (data.status === 'pagado') {
+              document.getElementById('estadoPendiente').style.display = 'none';
+              document.getElementById('estadoReportado').classList.remove('visible');
+              document.getElementById('estadoPagado').classList.add('visible');
+            }
+          }
+        });
+      }
     });
 
+    // ── COPIAR TEXTO ──
     function copiarTexto(elementId) {
       const texto = document.getElementById(elementId).textContent;
       navigator.clipboard.writeText(texto).then(() => {
-        alert('Copiado al portapapeles con éxito.');
+        alert('✅ Copiado al portapapeles con éxito.');
       }).catch(() => {
-        // Fallback para navegadores sin clipboard API
         const el = document.getElementById(elementId);
         const range = document.createRange();
         range.selectNode(el);
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
         document.execCommand('copy');
-        alert('Copiado al portapapeles con éxito.');
+        alert('✅ Copiado al portapapeles con éxito.');
       });
     }
 
+    // ── CONFIRMAR PAGO ──
     function confirmarYFinalizarPedido() {
-      let orderId = sessionStorage.getItem('pending_order_id') || localStorage.getItem('backup_order_id') || 'VP-0000';
-      let total = sessionStorage.getItem('pending_order_total') || localStorage.getItem('backup_order_total') || '0.00';
+      const orderId = sessionStorage.getItem('pending_order_id') || 'VP-0000';
+      const total = sessionStorage.getItem('pending_order_total') || '0.00';
 
-      // Deshabilitar el botón para evitar doble clic
       const btn = document.getElementById('confirmPaymentBtn');
       btn.disabled = true;
       btn.textContent = 'Enviando...';
 
-      // Mostrar mensaje de confirmación
-      const msg = document.getElementById('confirmationMessage');
-      msg.classList.add('visible');
+      // ── ACTUALIZAR FIREBASE ──
+      if (window.db && orderId !== 'VP-0000') {
+        const orderRef = doc(window.db, 'pedidos', orderId);
+        window.updateDoc(orderRef, {
+          status: 'reportado',
+          reportadoEn: new Date().toISOString()
+        }).then(() => {
+          console.log('✅ Estado actualizado a "reportado"');
+        }).catch((error) => {
+          console.error('❌ Error al actualizar:', error);
+        });
+      }
 
-      // El carrito se borra ÚNICAMENTE en el paso final
+      // ── BORRAR CARRITO ──
       localStorage.removeItem('venus_cart');
-
-      // Limpieza de respaldos locales
       localStorage.removeItem('backup_order_total');
       localStorage.removeItem('backup_order_method');
       localStorage.removeItem('backup_order_id');
 
-      // Redirección a contacto con mensaje prellenado después de 1.5 segundos
+      // ── REDIRIGIR ──
       setTimeout(() => {
-        const mensaje = `Hola Venus Peptide, confirmo que he realizado el pago de mi orden con Referencia ${orderId} por un total de $${total} USD. Adjunto mi comprobante de transferencia.`;
+        const mensaje = `Hola Venus Peptide, confirmo que he realizado el pago de mi orden con Referencia ${orderId} por un total de $${total} USD.`;
         window.location.href = `contacto.html?msg=${encodeURIComponent(mensaje)}`;
-      }, 1500);
+      }, 1000);
     }
+
+    // Exponer funciones globalmente
+    window.copiarTexto = copiarTexto;
+    window.confirmarYFinalizarPedido = confirmarYFinalizarPedido;
   </script>
 
 </body>
