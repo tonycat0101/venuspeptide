@@ -155,7 +155,7 @@
         <span class="section-eyebrow">Paso Final</span>
         <h1 class="section-title" style="font-size: 28px; margin-bottom: 10px;">Instrucciones de Transferencia</h1>
 
-        <!-- ── ESTADO: PENDIENTE (por defecto) ── -->
+        <!-- ── ESTADO: PENDIENTE ── -->
         <div id="estadoPendiente">
           <div id="renderOrderId" class="order-badge">Referencia: Cargando...</div>
 
@@ -195,7 +195,7 @@
           </button>
         </div>
 
-        <!-- ── ESTADO: REPORTADO (cliente reportó pago) ── -->
+        <!-- ── ESTADO: REPORTADO ── -->
         <div id="estadoReportado" class="status-reportado">
           <div class="status-icon">⏳</div>
           <h2 class="status-title reportado">✅ ¡Gracias por reportar tu pago!</h2>
@@ -209,7 +209,7 @@
           </div>
         </div>
 
-        <!-- ── ESTADO: PAGADO (tú confirmaste el pago) ── -->
+        <!-- ── ESTADO: PAGADO ── -->
         <div id="estadoPagado" class="status-pagado">
           <div class="status-icon">✅</div>
           <h2 class="status-title pagado">🎉 ¡Pago Verificado con Éxito!</h2>
@@ -291,6 +291,16 @@
 
     </div>
   </footer>
+
+  <!-- ── EMAILJS ── -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+  <script>
+    // ── INICIALIZAR EMAILJS ──
+    (function() {
+      emailjs.init("aEcMYlruuOUT9lH-S");
+    })();
+  </script>
 
   <!-- ── FIREBASE SDK ── -->
   <script type="module">
@@ -406,10 +416,22 @@
     function confirmarYFinalizarPedido() {
       const orderId = sessionStorage.getItem('pending_order_id') || 'VP-0000';
       const total = sessionStorage.getItem('pending_order_total') || '0.00';
+      const metodo = sessionStorage.getItem('pending_order_method') || 'Zelle';
 
       const btn = document.getElementById('confirmPaymentBtn');
       btn.disabled = true;
       btn.textContent = 'Enviando...';
+
+      // ── OBTENER DATOS DEL CLIENTE ──
+      const cliente = localStorage.getItem('checkout_nombre') || 'No especificado';
+      const email = localStorage.getItem('checkout_email') || 'No especificado';
+      const telefono = localStorage.getItem('checkout_telefono') || 'No especificado';
+      let productos = [];
+      try {
+        productos = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      } catch (e) {
+        productos = [];
+      }
 
       // ── ACTUALIZAR FIREBASE ──
       if (window.db && orderId !== 'VP-0000') {
@@ -424,17 +446,37 @@
         });
       }
 
+      // ── ENVIAR CORREO CON EMAILJS ──
+      emailjs.send('service_me5arag', 'template_8v9gyun', {
+        codigo: orderId,
+        cliente: cliente,
+        email: email,
+        telefono: telefono,
+        total: total,
+        metodo: metodo,
+        productos: productos,
+        fecha: new Date().toLocaleString()
+      }).then(() => {
+        console.log('✅ Correo enviado al admin');
+      }).catch((error) => {
+        console.error('❌ Error al enviar correo:', error);
+      });
+
       // ── BORRAR CARRITO ──
       localStorage.removeItem('venus_cart');
       localStorage.removeItem('backup_order_total');
       localStorage.removeItem('backup_order_method');
       localStorage.removeItem('backup_order_id');
 
+      // ── MOSTRAR MENSAJE EN PANTALLA ──
+      document.getElementById('estadoPendiente').style.display = 'none';
+      document.getElementById('estadoReportado').classList.add('visible');
+
       // ── REDIRIGIR ──
       setTimeout(() => {
         const mensaje = `Hola Venus Peptide, confirmo que he realizado el pago de mi orden con Referencia ${orderId} por un total de $${total} USD.`;
         window.location.href = `contacto.html?msg=${encodeURIComponent(mensaje)}`;
-      }, 1000);
+      }, 1500);
     }
 
     // Exponer funciones globalmente
