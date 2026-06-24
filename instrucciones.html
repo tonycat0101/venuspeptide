@@ -339,6 +339,7 @@
         });
       }
 
+      // ── DATOS DEL PEDIDO ──
       const orderId = sessionStorage.getItem('pending_order_id') || 'VP-0000';
       const total = sessionStorage.getItem('pending_order_total') || '0.00';
       const metodo = sessionStorage.getItem('pending_order_method') || 'Zelle';
@@ -364,6 +365,23 @@
       if (navCount) navCount.textContent = totalArticulos;
       if (navCountMobile) navCountMobile.textContent = totalArticulos;
 
+      // ── FUNCIÓN PARA ENVIAR CORREO AL CLIENTE ──
+      function enviarConfirmacionCliente(orderId, cliente, email, total, productosTexto) {
+        emailjs.send('service_me5arag', 'template_qlffo1g', {
+          codigo: orderId,
+          cliente: cliente,
+          email: email,
+          total: total,
+          productos: productosTexto,
+          fecha: new Date().toLocaleString()
+        }).then(() => {
+          console.log('✅ Correo de confirmación enviado al cliente');
+        }).catch((error) => {
+          console.error('❌ Error al enviar correo al cliente:', error);
+        });
+      }
+
+      // ── ESCUCHAR CAMBIOS EN FIREBASE ──
       if (orderId !== 'VP-0000' && window.db) {
         const orderRef = doc(window.db, 'pedidos', orderId);
 
@@ -381,6 +399,24 @@
               document.getElementById('estadoPendiente').style.display = 'none';
               document.getElementById('estadoReportado').classList.remove('visible');
               document.getElementById('estadoPagado').classList.add('visible');
+
+              // ── ENVIAR CORREO DE CONFIRMACIÓN AL CLIENTE ──
+              const clienteNombre = sessionStorage.getItem('checkout_nombre') || 
+                                    localStorage.getItem('checkout_nombre') || 'Cliente';
+              const clienteEmail = sessionStorage.getItem('checkout_email') || 
+                                   localStorage.getItem('checkout_email') || '';
+              const total = sessionStorage.getItem('pending_order_total') || '0.00';
+              const productosTexto = data.productos_texto || 'Productos no disponibles';
+
+              if (clienteEmail) {
+                enviarConfirmacionCliente(
+                  orderId,
+                  clienteNombre,
+                  clienteEmail,
+                  total,
+                  productosTexto
+                );
+              }
             }
           }
         });
@@ -411,9 +447,12 @@
       btn.disabled = true;
       btn.textContent = 'Enviando...';
 
-      const cliente = localStorage.getItem('checkout_nombre') || 'No especificado';
-      const email = localStorage.getItem('checkout_email') || 'No especificado';
-      const telefono = localStorage.getItem('checkout_telefono') || 'No especificado';
+      const cliente = sessionStorage.getItem('checkout_nombre') || 
+                      localStorage.getItem('checkout_nombre') || 'No especificado';
+      const email = sessionStorage.getItem('checkout_email') || 
+                    localStorage.getItem('checkout_email') || 'No especificado';
+      const telefono = sessionStorage.getItem('checkout_telefono') || 
+                       localStorage.getItem('checkout_telefono') || 'No especificado';
 
       let productosTexto = 'No hay productos disponibles.';
       try {
@@ -434,25 +473,26 @@
         const orderRef = doc(window.db, 'pedidos', orderId);
         window.updateDoc(orderRef, {
           status: 'reportado',
-          reportadoEn: new Date().toISOString()
+          reportadoEn: new Date().toISOString(),
+          productos_texto: productosTexto
         }).catch((error) => {
           console.error('❌ Error al actualizar Firebase:', error);
         });
       }
 
       emailjs.send('service_me5arag', 'template_bfdi0ai', {
-  codigo: orderId,
-  cliente: cliente,
-  email: email,
-  telefono: telefono,
-  total: total,
-  metodo: metodo,
-  productos_texto: productosTexto,  // ← ya está correcto
-  fecha: new Date().toLocaleString()
-      }).then((response) => {
-        console.log('✅ Correo enviado', response);
+        codigo: orderId,
+        cliente: cliente,
+        email: email,
+        telefono: telefono,
+        total: total,
+        metodo: metodo,
+        productos: productosTexto,
+        fecha: new Date().toLocaleString()
+      }).then(() => {
+        console.log('✅ Correo enviado al admin');
       }).catch((error) => {
-        console.error('❌ Error:', error);
+        console.error('❌ Error al enviar correo:', error);
       });
 
       localStorage.removeItem('venus_cart');
@@ -464,8 +504,8 @@
       document.getElementById('estadoReportado').classList.add('visible');
 
       setTimeout(() => {
-        const mensaje = `Hola Venus Peptide, confirmo que he realizado el pago de mi orden con Referencia ${orderId} por un total de $${total} USD.`;
-        window.location.href = `contacto.html?msg=${encodeURIComponent(mensaje)}`;
+        sessionStorage.setItem('compra_exitosa', 'true');
+        window.location.href = 'vertodos.html';
       }, 1500);
     }
 
