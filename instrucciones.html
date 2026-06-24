@@ -426,12 +426,30 @@
       const cliente = localStorage.getItem('checkout_nombre') || 'No especificado';
       const email = localStorage.getItem('checkout_email') || 'No especificado';
       const telefono = localStorage.getItem('checkout_telefono') || 'No especificado';
+
+      // ── OBTENER PRODUCTOS (GUARDAR ANTES DE BORRAR) ──
       let productos = [];
       try {
-        productos = JSON.parse(localStorage.getItem('venus_cart')) || [];
+        const cartData = localStorage.getItem('venus_cart');
+        if (cartData) {
+          productos = JSON.parse(cartData);
+          if (!Array.isArray(productos)) {
+            productos = [];
+          }
+        }
       } catch (e) {
+        console.error('Error al parsear carrito:', e);
         productos = [];
       }
+
+      // ── SI NO HAY PRODUCTOS, USAR DATOS DE RESPALDO ──
+      if (!Array.isArray(productos) || productos.length === 0) {
+        productos = [{ nombre: 'Producto no disponible', qty: 0, precio: 0 }];
+      }
+
+      // ── VERIFICAR EN CONSOLA ──
+      console.log('Productos a enviar:', productos);
+      console.log('Cantidad de productos:', productos.length);
 
       // ── ACTUALIZAR FIREBASE ──
       if (window.db && orderId !== 'VP-0000') {
@@ -456,10 +474,11 @@
         metodo: metodo,
         productos: productos,
         fecha: new Date().toLocaleString()
-      }).then(() => {
-        console.log('✅ Correo enviado al admin');
+      }).then((response) => {
+        console.log('✅ Correo enviado al admin', response);
       }).catch((error) => {
         console.error('❌ Error al enviar correo:', error);
+        alert('Hubo un error al enviar el correo, pero el pago ha sido reportado.');
       });
 
       // ── BORRAR CARRITO ──
