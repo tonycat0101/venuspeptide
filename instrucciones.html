@@ -171,6 +171,10 @@
             </div>
           </div>
 
+          <div style="background: #f0f7ff; border: 1px solid #bfdbfe; border-radius: var(--radius-sm); padding: 14px 18px; margin: 20px 0; font-size: 14px; color: #1e40af;">
+            <strong>📝 En el campo Memo / Nota coloca únicamente tu código de referencia:</strong>
+            <div style="font-family: monospace; font-size: 16px; font-weight: 700; margin-top: 6px;" id="memoCode">VP-0000</div>
+          </div>
           <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 25px;">
             Una vez realizado el pago, haz clic en el botón de abajo para notificarnos y enviarnos el comprobante.
           </p>
@@ -316,6 +320,7 @@
       document.getElementById('renderOrderId').textContent = `Referencia de Rastreo: ${orderId}`;
       document.getElementById('reportadoOrderId').textContent = orderId;
       document.getElementById('pagadoOrderId').textContent = orderId;
+      document.getElementById('memoCode').textContent = orderId;
 
       if (metodo === 'CashApp') {
         document.getElementById('renderCuenta').textContent = '$VenusPeptidePay';
