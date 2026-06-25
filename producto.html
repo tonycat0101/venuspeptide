@@ -31,7 +31,7 @@
     /* Columna Izquierda: Visual del Vial */
     .visual-column { background: var(--light); border: 1px solid var(--border); border-radius: 12px; padding: 60px; display: flex; justify-content: center; align-items: center; min-height: 450px; position: relative; }
 
-    /* ── MAQUETA DEL VIAL CON TU IMAGEN PNG REAL ── */
+    /* ── MAQUETA DEL VIAL CON IMAGEN ── */
     .vial-real-container {
       width: 260px;
       height: 400px;
@@ -372,18 +372,22 @@
           </div>
 
           <div class="product-detail-grid">
-            <!-- COLUMNA IZQUIERDA: VIAL CON ETIQUETA DINÁMICA -->
+            <!-- COLUMNA IZQUIERDA: VIAL (IMAGEN REAL O DINÁMICO) -->
             <div class="visual-column">
-              <div class="vial-real-container">
-                <div class="vial-label-wrapper">
-                  <div class="label-brand">Venus Peptide</div>
-                  <div class="label-name">${prod.nombre.toUpperCase()}</div>
-                  <div class="label-specs">${mg} | ${purity} Pureza</div>
-                  <div class="label-divider"></div>
-                  <div class="label-legal">FOR RESEARCH USE ONLY</div>
-                  <div class="label-legal sub">NOT FOR HUMAN USE</div>
+              ${prod.imagen ? `
+                <img src="${prod.imagen}" alt="${prod.nombre}" style="max-width: 250px; max-height: 350px; object-fit: contain; display: block; margin: 0 auto; border-radius: 8px;">
+              ` : `
+                <div class="vial-real-container">
+                  <div class="vial-label-wrapper">
+                    <div class="label-brand">Venus Peptide</div>
+                    <div class="label-name">${prod.nombre.toUpperCase()}</div>
+                    <div class="label-specs">${mg} | ${purity} Pureza</div>
+                    <div class="label-divider"></div>
+                    <div class="label-legal">FOR RESEARCH USE ONLY</div>
+                    <div class="label-legal sub">NOT FOR HUMAN USE</div>
+                  </div>
                 </div>
-              </div>
+              `}
             </div>
 
             <!-- COLUMNA DERECHA: INFORMACIÓN -->
