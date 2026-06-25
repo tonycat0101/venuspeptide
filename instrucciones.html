@@ -368,6 +368,7 @@
       // ── FUNCIÓN PARA ENVIAR CORREO AL CLIENTE ──
       function enviarConfirmacionCliente(orderId, cliente, email, total, productosTexto) {
         emailjs.send('service_me5arag', 'template_qlffo1g', {
+          to_email: email,
           codigo: orderId,
           cliente: cliente,
           email: email,
