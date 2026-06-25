@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Venus Peptide</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: #0f1e35; }
+
+    /* ── LOGIN ── */
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-card {
+      background: #162844;
+      border: 1px solid #1e3a5f;
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .login-card .logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .login-card .logo span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      background: var(--blue);
+      border-radius: 8px;
+      font-size: 16px;
+      margin-right: 8px;
+    }
+    .login-card p {
+      font-size: 13px;
+      color: rgba(255,255,255,.4);
+      margin-bottom: 32px;
+    }
+    .login-input {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid #1e3a5f;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 15px;
+      font-family: var(--font-body);
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color .2s;
+      text-align: center;
+      letter-spacing: .08em;
+    }
+    .login-input:focus { border-color: var(--blue); }
+    .login-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .login-btn:hover { background: var(--blue-hover); }
+    .login-error {
+      color: #f87171;
+      font-size: 13px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* ── ADMIN PANEL ── */
+    .admin-panel { display: none; }
+    .admin-panel.visible { display: block; }
+
+    .admin-nav {
+      background: #162844;
+      border-bottom: 1px solid #1e3a5f;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .admin-nav-logo {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .admin-nav-logo span { color: #60a5fa; }
+    .admin-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .admin-badge {
+      background: rgba(37,99,235,.25);
+      color: #60a5fa;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .btn-logout {
+      background: rgba(239,68,68,.15);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,.3);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-logout:hover { background: rgba(239,68,68,.25); }
+
+    .admin-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .admin-header h1 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .admin-header p {
+      font-size: 13px;
+      color: rgba(255,255,255,.4);
+      margin-top: 4px;
+    }
+
+    /* Stats */
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: #162844;
+      border: 1px solid #1e3a5f;
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .stat-card__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 8px;
+    }
+    .stat-card__val {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .stat-card__val.green { color: #4ade80; }
+    .stat-card__val.yellow { color: #fbbf24; }
+    .stat-card__val.blue { color: #60a5fa; }
+
+    /* Filtros */
+    .admin-filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 7px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #1e3a5f;
+      background: transparent;
+      color: rgba(255,255,255,.5);
+      transition: all .2s;
+    }
+    .filter-btn:hover { color: #fff; border-color: #60a5fa; }
+    .filter-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    /* Tabla */
+    .orders-table {
+      background: #162844;
+      border: 1px solid #1e3a5f;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .orders-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .orders-table th {
+      padding: 14px 20px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      border-bottom: 1px solid #1e3a5f;
+      background: rgba(0,0,0,.15);
+    }
+    .orders-table td {
+      padding: 16px 20px;
+      font-size: 14px;
+      color: rgba(255,255,255,.8);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      vertical-align: middle;
+    }
+    .orders-table tr:last-child td { border-bottom: none; }
+    .orders-table tr:hover td { background: rgba(255,255,255,.02); }
+
+    .order-code {
+      font-family: monospace;
+      font-weight: 700;
+      color: #60a5fa;
+      font-size: 13px;
+    }
+    .order-client strong {
+      display: block;
+      color: #fff;
+      font-weight: 600;
+    }
+    .order-client span {
+      font-size: 12px;
+      color: rgba(255,255,255,.4);
+    }
+    .order-total {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* Status badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .status-badge.pendiente  { background: rgba(251,191,36,.15);  color: #fbbf24; }
+    .status-badge.reportado  { background: rgba(96,165,250,.15);  color: #60a5fa; }
+    .status-badge.pagado     { background: rgba(74,222,128,.15);  color: #4ade80; }
+
+    /* Acciones */
+    .btn-pagar {
+      background: #15803d;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      white-space: nowrap;
+    }
+    .btn-pagar:hover { background: #166534; transform: translateY(-1px); }
+    .btn-pagar:disabled {
+      background: #1e3a5f;
+      color: rgba(255,255,255,.3);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-ver {
+      background: transparent;
+      color: #60a5fa;
+      border: 1px solid #1e3a5f;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      margin-right: 6px;
+    }
+    .btn-ver:hover { border-color: #60a5fa; background: rgba(96,165,250,.1); }
+
+    /* Loading / empty */
+    .table-loading, .table-empty {
+      text-align: center;
+      padding: 60px 24px;
+      color: rgba(255,255,255,.3);
+      font-size: 15px;
+    }
+
+    /* Modal detalle */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-card {
+      background: #162844;
+      border: 1px solid #1e3a5f;
+      border-radius: 16px;
+      padding: 36px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,.4);
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #fff; }
+    .modal-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: 14px;
+    }
+    .modal-row:last-child { border-bottom: none; }
+    .modal-row span:first-child { color: rgba(255,255,255,.4); }
+    .modal-row span:last-child { color: #fff; font-weight: 600; text-align: right; max-width: 300px; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #162844;
+      border: 1px solid #1e3a5f;
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 14px;
+      color: #fff;
+      z-index: 3000;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all .3s ease;
+      max-width: 320px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-color: #4ade80; }
+    .toast.error   { border-color: #f87171; }
+
+    @media (max-width: 768px) {
+      .admin-stats { grid-template-columns: 1fr 1fr; }
+      .orders-table { overflow-x: auto; }
+    }
+    @media (max-width: 480px) {
+      .admin-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── LOGIN SCREEN ── -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="logo"><span>V</span> Venus Peptide</div>
+      <p>Panel de administración — acceso restringido</p>
+      <input
+        type="password"
+        class="login-input"
+        id="passwordInput"
+        placeholder="Contraseña"
+        onkeydown="if(event.key==='Enter') verificarAcceso()"
+      >
+      <button class="login-btn" onclick="verificarAcceso()">Ingresar</button>
+      <div class="login-error" id="loginError">Contraseña incorrecta.</div>
+    </div>
+  </div>
+
+  <!-- ── ADMIN PANEL ── -->
+  <div class="admin-panel" id="adminPanel">
+
+    <div class="admin-nav">
+      <div class="admin-nav-logo">Venus <span>Admin</span></div>
+      <div class="admin-nav-right">
+        <span class="admin-badge">Panel Privado</span>
+        <button class="btn-logout" onclick="cerrarSesion()">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <div class="admin-header">
+        <div>
+          <h1>Pedidos</h1>
+          <p>Gestiona y confirma pagos de los clientes</p>
+        </div>
+        <button class="filter-btn" onclick="cargarPedidos()" style="border-color:var(--blue); color:#60a5fa;">
+          ↻ Actualizar
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="admin-stats">
+        <div class="stat-card">
+          <div class="stat-card__label">Total pedidos</div>
+          <div class="stat-card__val blue" id="statTotal">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Pendientes</div>
+          <div class="stat-card__val yellow" id="statPendientes">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Reportados</div>
+          <div class="stat-card__val blue" id="statReportados">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Pagados</div>
+          <div class="stat-card__val green" id="statPagados">—</div>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="admin-filters">
+        <button class="filter-btn active" data-filter="todos" onclick="filtrarPedidos('todos', this)">Todos</button>
+        <button class="filter-btn" data-filter="pendiente" onclick="filtrarPedidos('pendiente', this)">Pendientes</button>
+        <button class="filter-btn" data-filter="reportado" onclick="filtrarPedidos('reportado', this)">Reportados</button>
+        <button class="filter-btn" data-filter="pagado" onclick="filtrarPedidos('pagado', this)">Pagados</button>
+      </div>
+
+      <!-- Tabla -->
+      <div class="orders-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Referencia</th>
+              <th>Cliente</th>
+              <th>Total</th>
+              <th>Método</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody">
+            <tr><td colspan="7" class="table-loading">Cargando pedidos...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── MODAL DETALLE ── -->
+  <div class="modal-overlay" id="modalOverlay" onclick="cerrarModal(event)">
+    <div class="modal-card" id="modalCard">
+      <div class="modal-title">
+        <span id="modalTitle">Detalle del pedido</span>
+        <button class="modal-close" onclick="cerrarModalBtn()">✕</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ── TOAST ── -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ── EMAILJS ── -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init("aEcMYlruuOUT9lH-S");
+  </script>
+
+  <!-- ── FIREBASE ── -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, updateDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDWfom6bIBxUyRReGrmBtyu65G5NmsOHGM",
+      authDomain: "venus-peptide.firebaseapp.com",
+      projectId: "venus-peptide",
+      storageBucket: "venus-peptide.firebasestorage.app",
+      messagingSenderId: "974716476856",
+      appId: "1:974716476856:web:04cdfd455585a0faa4834d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    window._db         = db;
+    window._collection = collection;
+    window._getDocs    = getDocs;
+    window._doc        = doc;
+    window._updateDoc  = updateDoc;
+    window._query      = query;
+    window._orderBy    = orderBy;
+
+    console.log('✅ Firebase admin listo');
+  </script>
+
+  <script>
+    /* ══════════════════════════════════════════
+       CONTRASEÑA
+    ══════════════════════════════════════════ */
+    const ADMIN_PASSWORD = 'VP2026#xK9m';
+    let todosLosPedidos  = [];
+    let filtroActual     = 'todos';
+
+    function verificarAcceso() {
+      const input = document.getElementById('passwordInput').value;
+      if (input === ADMIN_PASSWORD) {
+        document.getElementById('loginScreen').style.display  = 'none';
+        document.getElementById('adminPanel').classList.add('visible');
+        sessionStorage.setItem('admin_auth', 'true');
+        cargarPedidos();
+      } else {
+        const err = document.getElementById('loginError');
+        err.style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        setTimeout(() => { err.style.display = 'none'; }, 3000);
+      }
+    }
+
+    function cerrarSesion() {
+      sessionStorage.removeItem('admin_auth');
+      location.reload();
+    }
+
+    // Auto-login si ya está autenticado
+    window.addEventListener('DOMContentLoaded', () => {
+      if (sessionStorage.getItem('admin_auth') === 'true') {
+        document.getElementById('loginScreen').style.display  = 'none';
+        document.getElementById('adminPanel').classList.add('visible');
+        cargarPedidos();
+      }
+    });
+
+    /* ══════════════════════════════════════════
+       CARGAR PEDIDOS
+    ══════════════════════════════════════════ */
+    async function cargarPedidos() {
+      const tbody = document.getElementById('ordersBody');
+      tbody.innerHTML = '<tr><td colspan="7" class="table-loading">Cargando...</td></tr>';
+
+      if (!window._db) {
+        setTimeout(cargarPedidos, 800);
+        return;
+      }
+
+      try {
+        const q        = window._query(window._collection(window._db, 'pedidos'), window._orderBy('fecha', 'desc'));
+        const snapshot = await window._getDocs(q);
+
+        todosLosPedidos = [];
+        snapshot.forEach(docSnap => {
+          todosLosPedidos.push({ id: docSnap.id, ...docSnap.data() });
+        });
+
+        actualizarStats();
+        renderizarTabla(todosLosPedidos);
+
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="7" class="table-loading" style="color:#f87171;">Error al cargar pedidos.</td></tr>';
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       STATS
+    ══════════════════════════════════════════ */
+    function actualizarStats() {
+      document.getElementById('statTotal').textContent      = todosLosPedidos.length;
+      document.getElementById('statPendientes').textContent = todosLosPedidos.filter(p => p.status === 'pendiente').length;
+      document.getElementById('statReportados').textContent = todosLosPedidos.filter(p => p.status === 'reportado').length;
+      document.getElementById('statPagados').textContent    = todosLosPedidos.filter(p => p.status === 'pagado').length;
+    }
+
+    /* ══════════════════════════════════════════
+       FILTRO
+    ══════════════════════════════════════════ */
+    function filtrarPedidos(filtro, btn) {
+      filtroActual = filtro;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const lista = filtro === 'todos' ? todosLosPedidos : todosLosPedidos.filter(p => p.status === filtro);
+      renderizarTabla(lista);
+    }
+
+    /* ══════════════════════════════════════════
+       RENDERIZAR TABLA
+    ══════════════════════════════════════════ */
+    function renderizarTabla(pedidos) {
+      const tbody = document.getElementById('ordersBody');
+
+      if (pedidos.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="table-empty">No hay pedidos en esta categoría.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = pedidos.map(p => {
+        const fecha  = p.fecha ? new Date(p.fecha).toLocaleDateString('es', { day:'2-digit', month:'short', year:'numeric' }) : '—';
+        const esPagado = p.status === 'pagado';
+
+        return `
+          <tr>
+            <td><span class="order-code">${p.codigo || p.id}</span></td>
+            <td>
+              <div class="order-client">
+                <strong>${p.cliente || '—'}</strong>
+                <span>${p.email || '—'}</span>
+              </div>
+            </td>
+            <td><span class="order-total">$${parseFloat(p.total || 0).toFixed(2)}</span></td>
+            <td style="color:rgba(255,255,255,.6)">${p.metodo || '—'}</td>
+            <td><span class="status-badge ${p.status || 'pendiente'}">${p.status || 'pendiente'}</span></td>
+            <td style="color:rgba(255,255,255,.4); font-size:13px;">${fecha}</td>
+            <td>
+              <button class="btn-ver" onclick="verDetalle('${p.id}')">Ver</button>
+              <button
+                class="btn-pagar"
+                id="btn-${p.id}"
+                onclick="marcarComoPagado('${p.id}')"
+                ${esPagado ? 'disabled' : ''}
+              >${esPagado ? '✓ Pagado' : '✅ Marcar pagado'}</button>
+            </td>
+          </tr>`;
+      }).join('');
+    }
+
+    /* ══════════════════════════════════════════
+       MARCAR COMO PAGADO + ENVIAR CORREO
+    ══════════════════════════════════════════ */
+    async function marcarComoPagado(docId) {
+      const pedido = todosLosPedidos.find(p => p.id === docId);
+      if (!pedido) return;
+
+      const btn = document.getElementById(`btn-${docId}`);
+      btn.disabled    = true;
+      btn.textContent = 'Enviando...';
+
+      try {
+        // 1 — Actualizar Firebase
+        const ref = window._doc(window._db, 'pedidos', docId);
+        await window._updateDoc(ref, {
+          status:   'pagado',
+          pagadoEn: new Date().toISOString()
+        });
+
+        // 2 — Enviar correo al cliente
+        if (pedido.email) {
+          await emailjs.send('service_me5arag', 'template_qlffo1g', {
+            to_email:  pedido.email,
+            cliente:   pedido.cliente  || 'Cliente',
+            codigo:    pedido.codigo   || docId,
+            total:     parseFloat(pedido.total || 0).toFixed(2),
+            metodo:    pedido.metodo   || 'Zelle',
+            productos: pedido.productos_texto || 'Ver detalle en tu referencia',
+            fecha:     new Date().toLocaleString('es')
+          });
+          mostrarToast('✅ Pago confirmado y correo enviado a ' + pedido.email, 'success');
+        } else {
+          mostrarToast('✅ Marcado como pagado (sin email del cliente)', 'success');
+        }
+
+        // 3 — Actualizar UI
+        pedido.status    = 'pagado';
+        btn.textContent  = '✓ Pagado';
+        actualizarStats();
+        renderizarTabla(filtroActual === 'todos' ? todosLosPedidos : todosLosPedidos.filter(p => p.status === filtroActual));
+
+      } catch (err) {
+        console.error(err);
+        btn.disabled    = false;
+        btn.textContent = '✅ Marcar pagado';
+        mostrarToast('❌ Error: ' + err.message, 'error');
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       VER DETALLE
+    ══════════════════════════════════════════ */
+    function verDetalle(docId) {
+      const p = todosLosPedidos.find(p => p.id === docId);
+      if (!p) return;
+
+      document.getElementById('modalTitle').textContent = `Pedido ${p.codigo || p.id}`;
+      document.getElementById('modalBody').innerHTML = `
+        <div class="modal-row"><span>Referencia</span><span>${p.codigo || p.id}</span></div>
+        <div class="modal-row"><span>Cliente</span><span>${p.cliente || '—'}</span></div>
+        <div class="modal-row"><span>Email</span><span>${p.email || '—'}</span></div>
+        <div class="modal-row"><span>Teléfono</span><span>${p.telefono || '—'}</span></div>
+        <div class="modal-row"><span>Dirección</span><span>${[p.direccion, p.ciudad, p.estado, p.zip].filter(Boolean).join(', ') || '—'}</span></div>
+        <div class="modal-row"><span>Total</span><span>$${parseFloat(p.total || 0).toFixed(2)} USD</span></div>
+        <div class="modal-row"><span>Método</span><span>${p.metodo || '—'}</span></div>
+        <div class="modal-row"><span>Estado</span><span><span class="status-badge ${p.status}">${p.status}</span></span></div>
+        <div class="modal-row"><span>Productos</span><span>${p.productos_texto || '—'}</span></div>
+        <div class="modal-row"><span>Notas</span><span>${p.notas || '—'}</span></div>
+        <div class="modal-row"><span>Fecha</span><span>${p.fecha ? new Date(p.fecha).toLocaleString('es') : '—'}</span></div>
+      `;
+      document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    function cerrarModal(e) {
+      if (e.target === document.getElementById('modalOverlay')) cerrarModalBtn();
+    }
+    function cerrarModalBtn() {
+      document.getElementById('modalOverlay').classList.remove('open');
+    }
+
+    /* ══════════════════════════════════════════
+       TOAST
+    ══════════════════════════════════════════ */
+    function mostrarToast(msg, tipo = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className   = `toast ${tipo} show`;
+      setTimeout(() => { t.classList.remove('show'); }, 4000);
+    }
+
+    /* Exponer globalmente */
+    window.verificarAcceso    = verificarAcceso;
+    window.cerrarSesion       = cerrarSesion;
+    window.cargarPedidos      = cargarPedidos;
+    window.filtrarPedidos     = filtrarPedidos;
+    window.marcarComoPagado   = marcarComoPagado;
+    window.verDetalle         = verDetalle;
+    window.cerrarModal        = cerrarModal;
+    window.cerrarModalBtn     = cerrarModalBtn;
+  </script>
+
+</body>
+</html>
