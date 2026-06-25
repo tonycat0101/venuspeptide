@@ -29,7 +29,17 @@
     .product-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
 
     /* Columna Izquierda: Visual del Vial */
-    .visual-column { background: var(--light); border: 1px solid var(--border); border-radius: 12px; padding: 60px; display: flex; justify-content: center; align-items: center; min-height: 450px; position: relative; }
+    .visual-column {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px;
+      position: relative;
+    }
 
     /* ── MAQUETA DEL VIAL CON IMAGEN ── */
     .vial-real-container {
@@ -157,7 +167,7 @@
 
     @media (max-width: 868px) {
       .product-detail-grid { grid-template-columns: 1fr; gap: 40px; }
-      .visual-column { min-height: 320px; padding: 40px; }
+      .visual-column { min-height: 280px; padding: 20px; }
       .info-title { font-size: 28px; }
       .vial-real-container { width: 200px; height: 320px; }
       .vial-label-wrapper { width: 145px; padding: 14px 10px; }
@@ -375,7 +385,7 @@
             <!-- COLUMNA IZQUIERDA: VIAL (IMAGEN REAL O DINÁMICO) -->
             <div class="visual-column">
               ${prod.imagen ? `
-                <img src="${prod.imagen}" alt="${prod.nombre}" style="max-width: 450px; max-height: 550px; width: 100%; height: auto; object-fit: contain; display: block; margin: 0 auto; border-radius: 8px;">
+                <img src="${prod.imagen}" alt="${prod.nombre}" style="max-width: 100%; max-height: 400px; width: auto; height: auto; object-fit: contain; display: block; margin: 0 auto; border-radius: 8px;">
               ` : `
                 <div class="vial-real-container">
                   <div class="vial-label-wrapper">
