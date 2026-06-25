@@ -11,14 +11,14 @@
 
 :root {
   /* Paleta */
-  --bg-hero:        #dde6f0;   /* azul-gris perla igual que Arizen */
+  --bg-hero:        #dde6f0;
   --bg-white:       #ffffff;
   --bg-light:       #f4f7fb;
-  --bg-dark:        #0f1e35;   /* azul marino oscuro — sección trust */
+  --bg-dark:        #0f1e35;
   --bg-dark2:       #162844;
   --bg-footer:      #0f1e35;
 
-  --blue:           #2563eb;   /* azul acento principal */
+  --blue:           #2563eb;
   --blue-hover:     #1d4ed8;
   --blue-light:     rgba(37,99,235,0.10);
 
@@ -255,7 +255,6 @@ ul   { list-style: none; }
   overflow: hidden;
 }
 
-/* Círculo decorativo fondo */
 .hero::before {
   content: '';
   position: absolute;
@@ -343,7 +342,6 @@ ul   { list-style: none; }
   margin-top: 2px;
 }
 
-/* Imagen hero — vial mockup placeholder */
 .hero__visual {
   position: relative;
   display: flex;
@@ -366,7 +364,6 @@ ul   { list-style: none; }
 .hero__vial-img {
   font-size: 100px;
   line-height: 1;
-  /* Reemplaza esto con <img src="../img/vial.png"> cuando tengas imagen */
 }
 .hero__vial-badge {
   position: absolute;
@@ -394,7 +391,7 @@ ul   { list-style: none; }
   color: var(--text-muted);
 }
 
-/* ── TRUST BADGES (sección oscura) ───────────────────────── */
+/* ── TRUST BADGES ───────────────────────────────────────── */
 .trust {
   background: var(--bg-dark);
   padding: 60px 0;
@@ -750,7 +747,7 @@ ul   { list-style: none; }
   --dark:          var(--text-dark);
   --light:         var(--bg-light);
 }
-/* ── MOCKUP DE VIAL DINÁMICO ── */
+
 /* ── MOCKUP DE VIAL DINÁMICO ── */
 .vial-mockup-dinamico {
   width: 160px;
@@ -916,4 +913,19 @@ ul   { list-style: none; }
   .vial-blend-container .vial-mockup-dinamico .vial-name {
     font-size: 7px;
   }
+}
+
+/* ── IMÁGENES DE PRODUCTOS MÁS GRANDES ── */
+.product-card img {
+  max-height: 200px !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+.visual-column img {
+  max-height: 550px !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
 }
