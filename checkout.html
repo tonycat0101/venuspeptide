@@ -259,6 +259,100 @@
       margin-top: 6px;
     }
 
+    /* ── DESCUENTO / CUPÓN ── */
+    .coupon-section {
+      margin: 12px 0 18px 0;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .coupon-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .coupon-row input {
+      flex: 1;
+      height: 42px;
+      padding: 0 14px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .coupon-row input:focus {
+      border-color: var(--blue);
+    }
+
+    .coupon-row input.coupon-success {
+      border-color: #22c55e;
+      background: #f0fdf4;
+    }
+
+    .coupon-row input.coupon-error {
+      border-color: #ef4444;
+      background: #fef2f2;
+    }
+
+    .btn-coupon {
+      height: 42px;
+      padding: 0 20px;
+      background: var(--text-dark);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn-coupon:hover {
+      background: #1a1a1a;
+    }
+
+    .btn-coupon:active {
+      transform: scale(0.96);
+    }
+
+    .btn-coupon.remove-coupon {
+      background: #ef4444;
+    }
+
+    .btn-coupon.remove-coupon:hover {
+      background: #dc2626;
+    }
+
+    .coupon-message {
+      font-size: 13px;
+      margin-top: 6px;
+      min-height: 20px;
+    }
+
+    .coupon-message.success {
+      color: #16a34a;
+    }
+
+    .coupon-message.error {
+      color: #dc2626;
+    }
+
+    .coupon-message.info {
+      color: #2563eb;
+    }
+
+    .summary-discount {
+      color: #16a34a;
+      font-weight: 700;
+    }
+
     .error-box {
       text-align: center;
       padding: 40px 24px;
@@ -416,8 +510,179 @@
       renderizarCheckout();
     });
 
+    // ── SISTEMA DE DESCUENTOS ──
+    // Catálogo de cupones válidos
+    const CUPONES_VALIDOS = {
+      'BIENVENIDA10': { tipo: 'porcentaje', valor: 10, descripcion: '10% de descuento' },
+      'BIENVENIDA15': { tipo: 'porcentaje', valor: 15, descripcion: '15% de descuento' },
+      'VENUS20': { tipo: 'porcentaje', valor: 20, descripcion: '20% de descuento' },
+      'FLASH25': { tipo: 'porcentaje', valor: 25, descripcion: '25% de descuento' },
+      'INVESTIGA10': { tipo: 'fijo', valor: 10, descripcion: '$10 de descuento' },
+      'INVESTIGA25': { tipo: 'fijo', valor: 25, descripcion: '$25 de descuento' },
+      'LAB50': { tipo: 'fijo', valor: 50, descripcion: '$50 de descuento' },
+    };
+
     let descuentoAplicado = 0;
     let codigoPromoUsado = '';
+    let descuentoInfo = '';
+
+    function aplicarCupon() {
+      const input = document.getElementById('couponInput');
+      const messageEl = document.getElementById('couponMessage');
+      const btn = document.getElementById('couponBtn');
+
+      if (!input) return;
+
+      const codigo = input.value.trim().toUpperCase();
+
+      // Si ya hay un cupón aplicado y el input está vacío, quitamos el cupón
+      if (codigoPromoUsado && !codigo) {
+        quitarCupon();
+        return;
+      }
+
+      if (!codigo) {
+        messageEl.textContent = '📝 Ingresa un código de descuento';
+        messageEl.className = 'coupon-message info';
+        input.classList.remove('coupon-success', 'coupon-error');
+        return;
+      }
+
+      // Verificar si el cupón existe
+      if (CUPONES_VALIDOS[codigo]) {
+        const cuponData = CUPONES_VALIDOS[codigo];
+        const subtotal = calcularSubtotal();
+
+        let descuento = 0;
+        if (cuponData.tipo === 'porcentaje') {
+          descuento = subtotal * (cuponData.valor / 100);
+          // Limitamos el descuento al 50% del subtotal como tope
+          const maxDescuento = subtotal * 0.5;
+          if (descuento > maxDescuento) {
+            descuento = maxDescuento;
+          }
+        } else { // fijo
+          descuento = Math.min(cuponData.valor, subtotal * 0.5);
+        }
+
+        // Redondear a 2 decimales
+        descuento = Math.round(descuento * 100) / 100;
+
+        // Guardar el descuento
+        descuentoAplicado = descuento;
+        codigoPromoUsado = codigo;
+        descuentoInfo = cuponData.descripcion;
+
+        // Actualizar UI
+        input.classList.remove('coupon-error');
+        input.classList.add('coupon-success');
+        messageEl.textContent = `✅ ¡Cupón aplicado! ${cuponData.descripcion} (${descuento > 0 ? '-$' + descuento.toFixed(2) : 'Gratis'})`;
+        messageEl.className = 'coupon-message success';
+        btn.textContent = '✕ Quitar';
+        btn.className = 'btn-coupon remove-coupon';
+
+        // Actualizar resumen
+        actualizarResumen();
+      } else {
+        // Cupón inválido
+        input.classList.remove('coupon-success');
+        input.classList.add('coupon-error');
+        messageEl.textContent = '❌ Código inválido. Intenta con otro.';
+        messageEl.className = 'coupon-message error';
+        // Limpiar descuento si había uno
+        if (codigoPromoUsado) {
+          quitarCupon();
+        }
+      }
+    }
+
+    function quitarCupon() {
+      const input = document.getElementById('couponInput');
+      const messageEl = document.getElementById('couponMessage');
+      const btn = document.getElementById('couponBtn');
+
+      descuentoAplicado = 0;
+      codigoPromoUsado = '';
+      descuentoInfo = '';
+
+      if (input) {
+        input.value = '';
+        input.classList.remove('coupon-success', 'coupon-error');
+      }
+      if (messageEl) {
+        messageEl.textContent = '💡 Ingresa tu código de descuento';
+        messageEl.className = 'coupon-message info';
+      }
+      if (btn) {
+        btn.textContent = 'Aplicar';
+        btn.className = 'btn-coupon';
+      }
+
+      actualizarResumen();
+    }
+
+    function calcularSubtotal() {
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      let subtotal = 0;
+      cart.forEach(item => {
+        const prod = window.productosData ? window.productosData[item.id] : null;
+        if (prod) {
+          subtotal += prod.precio * item.qty;
+        }
+      });
+      return subtotal;
+    }
+
+    function actualizarResumen() {
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      let subtotal = calcularSubtotal();
+
+      const taxRate = 0.06;
+      const totalConDescuento = subtotal - descuentoAplicado;
+      const tax = totalConDescuento * taxRate;
+      const totalFinal = totalConDescuento + tax;
+
+      // Actualizar elementos del resumen
+      const totalEl = document.getElementById('checkoutTotal');
+      const discountRow = document.querySelector('.summary-discount-row');
+      const discountValue = document.querySelector('.summary-discount');
+
+      if (totalEl) {
+        totalEl.textContent = '$' + totalFinal.toFixed(2);
+      }
+
+      // Mostrar u ocultar la línea de descuento
+      if (descuentoAplicado > 0) {
+        if (!discountRow) {
+          // Insertar la línea de descuento
+          const totalsBox = document.querySelector('.summary-totals-box');
+          if (totalsBox) {
+            const newRow = document.createElement('div');
+            newRow.className = 'summary-line summary-discount-row';
+            newRow.innerHTML = `
+              <span>Descuento (${descuentoInfo})</span>
+              <span class="summary-discount">-$${descuentoAplicado.toFixed(2)}</span>
+            `;
+            // Insertar después del subtotal
+            const subtotalRow = totalsBox.querySelector('.summary-line:first-child');
+            if (subtotalRow) {
+              subtotalRow.after(newRow);
+            }
+          }
+        } else {
+          discountValue.textContent = '-$' + descuentoAplicado.toFixed(2);
+          discountRow.style.display = 'flex';
+        }
+      } else {
+        if (discountRow) {
+          discountRow.style.display = 'none';
+        }
+      }
+
+      // Actualizar el total en sessionStorage para instrucciones.html
+      sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
+      localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
+    }
 
     function renderizarCheckout() {
       const container = document.getElementById('checkoutContent');
@@ -471,8 +736,9 @@
       });
 
       const taxRate = 0.06;
-      const tax = subtotal * taxRate;
+      // Aplicar descuento al subtotal
       const totalConDescuento = subtotal - descuentoAplicado;
+      const tax = totalConDescuento * taxRate;
       const totalFinal = totalConDescuento + tax;
 
       const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -480,6 +746,16 @@
       const navCountMobile = document.getElementById('cartCountNavMobile');
       if (navCount) navCount.textContent = totalArticulos;
       if (navCountMobile) navCountMobile.textContent = totalArticulos;
+
+      // Línea de descuento (si hay descuento aplicado)
+      let discountLine = '';
+      if (descuentoAplicado > 0) {
+        discountLine = `
+          <div class="summary-line summary-discount-row">
+            <span>Descuento (${descuentoInfo})</span>
+            <span class="summary-discount">-$${descuentoAplicado.toFixed(2)}</span>
+          </div>`;
+      }
 
       container.innerHTML = `
         <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
@@ -574,16 +850,21 @@
                 ${itemsHTML}
               </div>
 
+              <!-- ── CASILLA DE DESCUENTO ── -->
+              <div class="coupon-section">
+                <div class="coupon-row">
+                  <input type="text" id="couponInput" placeholder="Código de descuento" maxlength="20" onkeydown="if(event.key==='Enter'){event.preventDefault();aplicarCupon();}">
+                  <button type="button" class="btn-coupon" id="couponBtn" onclick="aplicarCupon()">Aplicar</button>
+                </div>
+                <div id="couponMessage" class="coupon-message info">💡 Ingresa tu código de descuento</div>
+              </div>
+
               <div class="summary-totals-box">
                 <div class="summary-line">
                   <span>Subtotal</span>
                   <span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span>
                 </div>
-                ${descuentoAplicado > 0 ? `
-                <div class="summary-line">
-                  <span>Descuento</span>
-                  <span class="summary-discount">-$${descuentoAplicado.toFixed(2)}</span>
-                </div>` : ''}
+                ${discountLine}
                 <div class="summary-line">
                   <span>Envío</span>
                   <span style="color: #22c55e; font-weight: 700;">Gratis</span>
@@ -617,6 +898,7 @@
         </form>
       `;
 
+      // Eventos
       const legalCheck = document.getElementById('checkoutLegal');
       const legalError = document.getElementById('legalError');
       if (legalCheck) {
@@ -628,9 +910,24 @@
           }
         });
       }
+
+      // Si hay un descuento aplicado, actualizar el input
+      if (codigoPromoUsado) {
+        const input = document.getElementById('couponInput');
+        const btn = document.getElementById('couponBtn');
+        const msg = document.getElementById('couponMessage');
+        if (input) {
+          input.value = codigoPromoUsado;
+          input.classList.add('coupon-success');
+          msg.textContent = `✅ ¡Cupón aplicado! ${descuentoInfo} (-$${descuentoAplicado.toFixed(2)})`;
+          msg.className = 'coupon-message success';
+          btn.textContent = '✕ Quitar';
+          btn.className = 'btn-coupon remove-coupon';
+        }
+      }
     }
 
-    // ── LA FUNCIÓN ORIGINAL QUE ME DISTE ──
+    // ── FUNCIÓN ORIGINAL MODIFICADA ──
     function enviarPedidoFormulario(e) {
       e.preventDefault();
 
@@ -765,12 +1062,13 @@
           productos: cart,
           subtotal: subtotal,
           descuento: descuentoAplicado,
+          descuento_info: descuentoInfo,
+          codigo_promo: codigoPromoUsado || '',
           tax: tax,
           total: totalFinal,
           metodo: metodoPago,
           notas: notas,
           newsletter: newsletter,
-          codigo_promo: codigoPromoUsado,
           status: 'pendiente',
           fecha: new Date().toISOString()
         }).then(() => {
