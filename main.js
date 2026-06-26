@@ -254,7 +254,7 @@ const productosData = {
   "aod-9604-5mg": {
     id: "aod-9604-5mg",
     nombre: "AOD-9604 5mg",
-    precio: 65.00,
+    precio: 74.99,
     rating: "4.5",
     pureza: "99.1% Pureza | 5mg",
     categoria: "metabolicos",
@@ -395,11 +395,11 @@ const productosData = {
     descripcion: "Compuesto liofilizado de alta pureza. Formulado para investigación en ensayos de laboratorio y análisis de estabilidad estructural peptídica en modelos celulares in-vitro. No apto para consumo humano."
   },
 
-  // ── NUEVOS PRODUCTOS ──
+  // ── NUEVOS PRODUCTOS CON PRECIOS ACTUALIZADOS ──
   "5-amino-1mq-50mg": {
     id: "5-amino-1mq-50mg",
     nombre: "5-Amino 1MQ 50mg",
-    precio: 0,
+    precio: 94.99,
     rating: "0",
     pureza: "Purity ~99% | 50mg",
     categoria: "desempeno",
@@ -409,7 +409,7 @@ const productosData = {
   "glutathione-1500mg": {
     id: "glutathione-1500mg",
     nombre: "Glutathione 1500mg",
-    precio: 0,
+    precio: 149.99,
     rating: "0",
     pureza: "99.1% Pureza | 1500mg",
     categoria: "desempeno",
@@ -419,7 +419,7 @@ const productosData = {
   "mots-c-10mg": {
     id: "mots-c-10mg",
     nombre: "MOTS-C 10mg",
-    precio: 0,
+    precio: 79.99,
     rating: "0",
     pureza: "98.6% Pureza | 10mg",
     categoria: "metabolicos",
@@ -429,7 +429,7 @@ const productosData = {
   "mots-c-20mg": {
     id: "mots-c-20mg",
     nombre: "MOTS-C 20mg",
-    precio: 0,
+    precio: 129.99,
     rating: "0",
     pureza: "98.6% Pureza | 20mg",
     categoria: "metabolicos",
@@ -439,7 +439,7 @@ const productosData = {
   "ipamorelin-cjc-1295-blend-20mg": {
     id: "ipamorelin-cjc-1295-blend-20mg",
     nombre: "Ipamorelin + CJC-1295 Blend 20mg",
-    precio: 0,
+    precio: 149.99,
     rating: "0",
     pureza: "20mg (10mg + 10mg)",
     categoria: "gh",
