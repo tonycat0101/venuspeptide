@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verificación de Laboratorio y Envío | Venus Peptide</title>
+  <meta name="description" content="Formulario oficial para la solicitud y verificación de credenciales de envío en Venus Peptide.">
   <link rel="stylesheet" href="styles.css">
   <style>
     .checkout-section {
@@ -56,6 +57,10 @@
       color: var(--text-dark);
       background: var(--bg-white);
       outline: none;
+      transition: border-color 0.2s;
+    }
+    .checkout-input:focus {
+      border-color: var(--blue);
     }
     .checkout-textarea {
       width: 100%;
@@ -68,6 +73,10 @@
       background: var(--bg-white);
       outline: none;
       resize: none;
+      transition: border-color 0.2s;
+    }
+    .checkout-textarea:focus {
+      border-color: var(--blue);
     }
     .legal-checkbox-container {
       display: flex;
@@ -87,6 +96,10 @@
       font-size: 13px;
       line-height: 1.5;
       color: var(--text-body);
+      cursor: pointer;
+    }
+    .legal-checkbox-label strong {
+      color: #ef4444;
     }
     .error-text {
       color: #ef4444;
@@ -102,28 +115,52 @@
 </head>
 <body>
 
-  <!-- ── NAV UNIFICADO (Solo icono de orden) ── -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo">
         <div class="nav__logo-icon">V</div>
         Venus Peptide
       </a>
-      <div class="nav__links">
+      <div class="nav__links" style="display: flex; align-items: center;">
         <a href="index.html">Inicio</a>
         <a href="categorias.html">Categorías</a>
         <a href="vertodos.html">Ver todos</a>
         <a href="nosotros.html">Nosotros</a>
         
-        <a href="carrito.html" class="nav__cart-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff !important; padding: 8px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; margin-left: 15px;">
+        <div style="position: relative; display: inline-block;" 
+             onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
+             onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
+          <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
+            Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
+          </a>
+          <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
+            <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
+          </div>
+        </div>
+        
+        <a href="carrito.html" class="nav__cart-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff !important; padding: 8px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; margin-left: 15px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-          <span id="navCartCount">(0)</span>
+          <span id="navCartCount" style="background: rgba(255,255,255,0.2); padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 700;">(0)</span>
         </a>
+      </div>
+      <div class="nav__burger" id="burgerBtn">
+        <span></span><span></span><span></span>
       </div>
     </div>
   </nav>
 
-  <!-- FORMULARIO DE CHECKOUT -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Inicio</a>
+    <a href="categorias.html">Categorías</a>
+    <a href="vertodos.html">Ver todos</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="carrito.html" style="margin-top: 15px; background: #2563eb; color: white !important; text-align: center; padding: 12px; border-radius: 6px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      Ver Orden (<span id="navCartCountMobile">0</span>)
+    </a>
+  </div>
+
   <main class="checkout-section">
     <div class="container">
       <h1 class="section-title">Verificación y Envío</h1>
@@ -131,28 +168,28 @@
       <div class="checkout-grid">
         <div class="checkout-card">
           <form id="checkoutForm">
-            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Información del Investigador</h2>
+            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Información del Investigador / Laboratorio</h2>
             
             <div class="checkout-form-group">
-              <label class="checkout-label" for="checkoutNombre">Nombre Completo</label>
+              <label class="checkout-label" for="checkoutNombre">Nombre Completo del Responsable</label>
               <input type="text" id="checkoutNombre" class="checkout-input" required>
             </div>
 
             <div class="checkout-form-row">
               <div class="checkout-form-group">
-                <label class="checkout-label" for="checkoutEmail">Correo Electrónico</label>
+                <label class="checkout-label" for="checkoutEmail">Correo Electrónico Institucional/Personal</label>
                 <input type="email" id="checkoutEmail" class="checkout-input" required>
               </div>
               <div class="checkout-form-group">
-                <label class="checkout-label" for="checkoutTelefono">Teléfono de Contacto</label>
-                <input type="tel" id="checkoutTelefono" class="checkout-input" required>
+                <label class="checkout-label" for="checkoutTelefono">Teléfono de Contacto Directo</label>
+                <input type="tel" id="checkoutTelefono" class="checkout-input" placeholder="Ej: +1 234 567 8900" required>
               </div>
             </div>
 
-            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-top: 32px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Dirección de Entrega</h2>
+            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-top: 32px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Dirección de Entrega del Material</h2>
 
             <div class="checkout-form-group">
-              <label class="checkout-label" for="checkoutDireccion">Dirección Completa</label>
+              <label class="checkout-label" for="checkoutDireccion">Dirección Completa (Calle, Número, Apto/Lab)</label>
               <input type="text" id="checkoutDireccion" class="checkout-input" required>
             </div>
 
@@ -162,7 +199,7 @@
                 <input type="text" id="checkoutCiudad" class="checkout-input" required>
               </div>
               <div class="checkout-form-group">
-                <label class="checkout-label" for="checkoutEstado">Estado</label>
+                <label class="checkout-label" for="checkoutEstado">Estado / Provincia</label>
                 <input type="text" id="checkoutEstado" class="checkout-input" required>
               </div>
             </div>
@@ -172,35 +209,45 @@
               <input type="text" id="checkoutZip" class="checkout-input" required>
             </div>
 
-            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-top: 32px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Método de Pago</h2>
+            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-top: 32px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Método de Transferencia de Fondos</h2>
+            
             <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
-              <label style="font-size: 14px; color: var(--text-dark); cursor: pointer;"><input type="radio" name="metodo_pago" value="Zelle" checked> Zelle</label>
-              <label style="font-size: 14px; color: var(--text-dark); cursor: pointer;"><input type="radio" name="metodo_pago" value="Venmo"> Venmo</label>
-              <label style="font-size: 14px; color: var(--text-dark); cursor: pointer;"><input type="radio" name="metodo_pago" value="CashApp"> CashApp</label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-dark); cursor: pointer;">
+                <input type="radio" name="metodo_pago" value="Zelle" checked style="cursor: pointer;"> Zelle (Procesamiento Inmediato)
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-dark); cursor: pointer;">
+                <input type="radio" name="metodo_pago" value="Venmo" style="cursor: pointer;"> Venmo
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-dark); cursor: pointer;">
+                <input type="radio" name="metodo_pago" value="CashApp" style="cursor: pointer;"> CashApp
+              </label>
             </div>
 
             <div class="checkout-form-group">
-              <label class="checkout-label" for="checkoutNotas">Notas del Pedido</label>
-              <textarea id="checkoutNotas" class="checkout-textarea"></textarea>
+              <label class="checkout-label" for="checkoutNotas">Notas del Ensayo / Instrucciones de Envío Especiales (Opcional)</label>
+              <textarea id="checkoutNotas" class="checkout-textarea" placeholder="Indique aquí especificaciones de entrega..."></textarea>
             </div>
 
             <div style="margin-top: 20px;">
               <label style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--text-body); cursor: pointer;">
-                <input type="checkbox" id="checkoutNewsletter" checked> Deseo recibir alertas de stock y reportes analíticos.
+                <input type="checkbox" id="checkoutNewsletter" checked style="cursor: pointer;"> Deseo recibir alertas de stock, nuevos lotes analíticos y reportes de pureza de Venus Peptide.
               </label>
             </div>
 
             <div class="legal-checkbox-container">
               <input type="checkbox" id="checkoutLegal" required>
-              <label class="legal-checkbox-label" for="checkoutLegal"><strong>* DECLARACIÓN DE CUMPLIMIENTO CIENTÍFICO:</strong> Certifico que estos compuestos serán utilizados exclusivamente para investigación de laboratorio in-vitro. Prohibido su consumo humano o veterinario.</label>
+              <label class="legal-checkbox-label" for="checkoutLegal">
+                <strong>* DECLARACIÓN OBLIGATORIA DE CUMPLIMIENTO CIENTÍFICO:</strong> Certifico de forma expresa que los reactivos químicos y viales liofilizados solicitados en esta orden serán utilizados <strong>exclusivamente para fines de investigación y desarrollo in-vitro en entorno de laboratorio</strong>. Reconozco y acepto que estos compuestos están estrictamente prohibidos para el consumo humano, administración médica, veterinaria o cosmética de cualquier tipo.
+              </label>
             </div>
-            <div id="legalError" class="error-text">⚠️ Debe aceptar los términos de uso científico para proceder.</div>
+            <div id="legalError" class="error-text">⚠️ Es obligatorio aceptar la declaración de cumplimiento analítico para tramitar los reactivos.</div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 32px; border-radius: var(--radius-sm);">
-              Generar Orden de Investigación
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 32px; border-radius: var(--radius-sm); font-size: 15px;">
+              Autorizar y Generar Orden de Investigación
             </button>
           </form>
         </div>
+
         <div id="checkoutSummaryWrapper"></div>
       </div>
     </div>
@@ -208,23 +255,87 @@
 
   <footer class="footer">
     <div class="container">
-      <p style="text-align: center; font-size: 13px; color: rgba(255, 255, 255, 0.65);">
-        Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. NO son para consumo humano ni veterinario.
-      </p>
+      <div class="footer__top" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+        <div class="footer__brand">
+          <div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div>
+          <p>Proveedor de compuestos peptídicos de investigación. Todos los productos son para uso exclusivo en laboratorio.</p>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Navegación</div>
+          <a href="index.html">Inicio</a>
+          <a href="categorias.html">Categorías</a>
+          <a href="vertodos.html">Ver todos</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="contacto.html">Contacto</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__col-title">Categorías</div>
+          <a href="vertodos.html?cat=metabolicos">Investigación Metabólica</a>
+          <a href="vertodos.html?cat=gh">Moduladores GH</a>
+          <a href="vertodos.html?cat=cognitivas">Neuro-Cognición</a>
+          <a href="vertodos.html?cat=desempeno">Desempeño Celular</a>
+        </div>
+      </div>
+      <div class="footer__bottom-horizontal" style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: var(--text-muted, #94a3b8);">
+          <div>Copyright ©2026 Venus Peptide, All Rights Reserved.</div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <style>
+              .inline-legal-link { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+              .inline-legal-link:hover { color: #fff; }
+              .inline-separator { color: rgba(255, 255, 255, 0.2); font-size: 12px; user-select: none; }
+            </style>
+            <a href="faq.html" class="inline-legal-link">FAQ</a>
+            <span class="inline-separator">|</span>
+            <a href="terminos.html" class="inline-legal-link">Terms &amp; Conditions</a>
+            <span class="inline-separator">|</span>
+            <a href="envios.html" class="inline-legal-link">Shipping &amp; Returns</a>
+            <span class="inline-separator">|</span>
+            <a href="privacidad.html" class="inline-legal-link">Privacy Policy</a>
+            <span class="inline-separator">|</span>
+            <a href="contacto.html" class="inline-legal-link">Contact Us</a>
+          </div>
+        </div>
+        <p style="text-align: center; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin: 4px 0 0 0; font-weight: 600; letter-spacing: 0.01em;">
+          Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. Debe tener la edad legal requerida para adquirir estos compuestos. Los productos NO son para consumo humano ni veterinario de ningún tipo.
+        </p>
+      </div>
     </div>
   </footer>
 
   <script src="main.js"></script>
   <script>
-    // Variables globales de respaldo preventivo
+    // Variables preventivas globales contra crasheos por cupones
     var descuentoAplicado = 0;
     var codigoPromoUsado = "";
 
     document.addEventListener('DOMContentLoaded', () => {
-      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-      const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
-      const navCount = document.getElementById('navCartCount');
-      if (navCount) navCount.textContent = `(${totalArticulos})`;
+      // ── RESTAURACIÓN: MENÚ HAMBURGUESA INTERACTIVO MÓVIL ──
+      const burgerBtn = document.getElementById('burgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (burgerBtn && mobileMenu) {
+        burgerBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('active');
+          burgerBtn.classList.toggle('active');
+        });
+      }
+
+      // ── RESTAURACIÓN: AUTORELLENADO DE DATOS DEL INVESTIGADOR ──
+      if (localStorage.getItem('checkout_nombre')) {
+        document.getElementById('checkoutNombre').value = localStorage.getItem('checkout_nombre');
+        document.getElementById('checkoutEmail').value = localStorage.getItem('checkout_email');
+        document.getElementById('checkoutTelefono').value = localStorage.getItem('checkout_telefono');
+        document.getElementById('checkoutDireccion').value = localStorage.getItem('checkout_direccion');
+        document.getElementById('checkoutCiudad').value = localStorage.getItem('checkout_ciudad');
+        document.getElementById('checkoutEstado').value = localStorage.getItem('checkout_estado');
+        document.getElementById('checkoutZip').value = localStorage.getItem('checkout_zip');
+        if (localStorage.getItem('checkout_notas')) {
+          document.getElementById('checkoutNotas').value = localStorage.getItem('checkout_notas');
+        }
+      }
+
+      // ── RESTAURACIÓN: COMPONENTE VISUAL RESUMEN LATERAL DE PEDIDO ──
+      renderizarResumenLateral();
 
       const checkoutForm = document.getElementById('checkoutForm');
       if (checkoutForm) { 
@@ -232,16 +343,66 @@
       }
     });
 
+    function renderizarResumenLateral() {
+      const wrapper = document.getElementById('checkoutSummaryWrapper');
+      if (!wrapper) return;
+
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
+
+      // Actualizar contadores del Nav
+      const navCount = document.getElementById('navCartCount');
+      const navCountMobile = document.getElementById('navCartCountMobile');
+      if (navCount) navCount.textContent = `(${totalArticulos})`;
+      if (navCountMobile) navCountMobile.textContent = totalArticulos;
+
+      if (cart.length === 0) {
+        wrapper.innerHTML = `<div class="cart-summary"><div class="summary-title">No hay reactivos seleccionados</div></div>`;
+        return;
+      }
+
+      let htmlProductos = '';
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        const prod = window.productosData ? window.productosData[item.id] : null;
+        if (prod) {
+          const itemTotal = prod.precio * item.qty;
+          subtotal += itemTotal;
+          htmlProductos += `
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:13.5px; margin-bottom:12px; border-bottom:1px dashed var(--border); padding-bottom:8px; color:var(--text-body);">
+              <div><strong>${item.qty}x</strong> ${prod.nombre}</div>
+              <div style="font-weight:600; color:var(--text-dark);">$${itemTotal.toFixed(2)}</div>
+            </div>
+          `;
+        }
+      });
+
+      const tax = subtotal * 0.06;
+      const totalFinal = subtotal + tax;
+
+      wrapper.innerHTML = `
+        <div class="cart-summary" style="background:var(--bg-white); border:1px solid var(--border); border-radius:var(--radius-md); padding:32px; box-shadow:var(--shadow-card); display:flex; flex-direction:column; gap:16px;">
+          <div class="summary-title" style="font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--text-dark); border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:8px;">Resumen del Material</div>
+          <div style="max-height:220px; overflow-y:auto; padding-right:4px;">${htmlProductos}</div>
+          <div class="summary-row" style="display:flex; justify-content:space-between; font-size:14px; color:var(--text-muted);"><span>Subtotal Reactivos</span><span style="color:var(--text-dark); font-weight:600;">$${subtotal.toFixed(2)} USD</span></div>
+          <div class="summary-row" style="display:flex; justify-content:space-between; font-size:14px; color:var(--text-muted);"><span>Cargos de Envío (Estable)</span><span style="color:#22c55e; font-weight:700;">Gratis</span></div>
+          <div class="summary-row" style="display:flex; justify-content:space-between; font-size:14px; color:var(--text-muted);"><span>Tax de Regulación (6%)</span><span style="color:var(--text-dark); font-weight:600;">$${tax.toFixed(2)} USD</span></div>
+          <div class="summary-row total" style="display:flex; justify-content:space-between; font-size:22px; font-weight:800; color:var(--text-dark); border-top:1px solid var(--border); padding-top:16px; margin-top:8px;"><span>Total Final</span><span style="color:var(--blue);">$${totalFinal.toFixed(2)} USD</span></div>
+        </div>
+      `;
+    }
+
     function enviarPedidoFormulario(e) {
       e.preventDefault();
 
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
       if (cart.length === 0) { 
-        alert('El carrito está vacío.'); 
+        alert('La lista de compuestos está vacía.'); 
         return; 
       }
 
-      // ── VALIDACIÓN ESTRICTA DE LÍMITES EN CHECKOUT ──
+      // ── VALIDACIÓN ESTRICTA DE LÍMITES (Original de 10 por producto y 30 en total) ──
       const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
       if (totalItems > 30) { 
         alert(`⚠️ Máximo 30 unidades por orden. Actualmente tienes ${totalItems} unidades.`); 
@@ -285,7 +446,7 @@
       const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
       const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
 
-      // Almacenamiento local de respaldo preventivo
+      // Preservar datos de sesión local idénticos al funcionamiento original
       sessionStorage.setItem('pending_order_id', codigoReferencia);
       sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
@@ -307,7 +468,7 @@
       localStorage.setItem('checkout_notas', notas);
       localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
 
-      // ── EJECUCIÓN CONEXIÓN COMPATIBLE CON FIREBASE ──
+      // ── INTERCONEXIÓN COMPATIBLE CON FIREBASE ENTORNO GLOBAL ──
       if (window.db && window.firebaseDoc && window.firebaseSetDoc) {
         window.firebaseSetDoc(window.firebaseDoc(window.db, 'pedidos', codigoReferencia), {
           codigo: codigoReferencia,
@@ -332,17 +493,16 @@
         }).then(() => {
           window.location.href = 'instrucciones.html';
         }).catch((error) => {
-          console.error('Error Firebase Firestore:', error);
+          console.error('Error Firebase:', error);
           window.location.href = 'instrucciones.html';
         });
       } else {
-        console.warn('Firebase en carga modular asíncrona diferida, aplicando redirección por pasarela local de resguardo.');
+        console.warn('Firebase asíncrono en carga, ejecutando pasarela por resguardo local.');
         window.location.href = 'instrucciones.html';
       }
     }
   </script>
 
-  <!-- SDK Firebase Mapeado Globalmente con Aliases Libres de Conflictos Modulares -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.1/firebase-app.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.4.1/firebase-firestore.js";
@@ -360,13 +520,12 @@
       const app = initializeApp(firebaseConfig);
       const db  = getFirestore(app);
 
-      // Aliases directos para romper de forma segura el aislamiento del módulo asíncrono
       window.db = db;
       window.firebaseDoc = doc;
       window.firebaseSetDoc = setDoc;
-      console.log('✅ Base de datos analítica mapeada en ventana global de forma exitosa.');
+      console.log('✅ Base de datos analítica mapeada globalmente.');
     } catch (err) {
-      console.error('Fallo en inicialización de Firebase:', err);
+      console.error('Fallo en módulos Firebase:', err);
     }
   </script>
 </body>
