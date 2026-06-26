@@ -29,19 +29,9 @@
     .product-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
 
     /* Columna Izquierda: Visual del Vial */
-    .visual-column {
-      background: var(--light);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 400px;
-      position: relative;
-    }
+    .visual-column { background: var(--light); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; justify-content: center; align-items: center; min-height: 500px; position: relative; }
 
-    /* ── MAQUETA DEL VIAL CON IMAGEN ── */
+    /* ── MAQUETA DEL VIAL CON TU IMAGEN PNG REAL ── */
     .vial-real-container {
       width: 260px;
       height: 400px;
@@ -167,7 +157,7 @@
 
     @media (max-width: 868px) {
       .product-detail-grid { grid-template-columns: 1fr; gap: 40px; }
-      .visual-column { min-height: 280px; padding: 20px; }
+      .visual-column { min-height: 320px; padding: 40px; }
       .info-title { font-size: 28px; }
       .vial-real-container { width: 200px; height: 320px; }
       .vial-label-wrapper { width: 145px; padding: 14px 10px; }
@@ -330,23 +320,31 @@
       const urlParams = new URLSearchParams(window.location.search);
       const prodId = urlParams.get('id');
 
+      // ── VALIDACIÓN ROBUSTA ──────────────────
+
+      // 1. Verificar que el ID existe
       if (!prodId) {
         mostrarError("No se especificó ningún producto.");
         return;
       }
 
+      // 2. Verificar que la base de datos existe
       if (!window.productosData) {
         mostrarError("La base de datos de productos no está disponible. Por favor, recarga la página.");
         return;
       }
 
+      // 3. Verificar que el producto existe en la base de datos
       const prod = window.productosData[prodId];
       if (!prod) {
         mostrarError(`El producto "${prodId}" no existe en nuestro catálogo.`);
         return;
       }
 
+      // 4. Si todo está bien, renderizar
       renderizarProducto(prod);
+
+      // ── FUNCIONES AUXILIARES ──────────────────
 
       function mostrarError(mensaje) {
         document.getElementById('mainContent').innerHTML = `
@@ -361,34 +359,38 @@
       }
 
       function renderizarProducto(prod) {
+        // ── GENERAR LA ETIQUETA DEL VIAL DINÁMICAMENTE ──
         const mgMatch = prod.pureza.match(/\|\s*(\d+mg)/);
         const mg = mgMatch ? mgMatch[1] : '';
         const purityMatch = prod.pureza.match(/(\d+\.?\d*%)/);
         const purity = purityMatch ? purityMatch[1] : '';
 
+        // Renderizado 100% dinámico de especificaciones
         document.getElementById('mainContent').innerHTML = `
           <div class="breadcrumbs">
             <a href="index.html">Inicio</a> / <a href="vertodos.html">Catálogo</a> / ${prod.nombre}
           </div>
 
           <div class="product-detail-grid">
+            <!-- COLUMNA IZQUIERDA: VIAL CON ETIQUETA DINÁMICA -->
             <div class="visual-column">
               ${prod.imagen ? `
-                <img src="${prod.imagen}" alt="${prod.nombre}" style="max-width: 100%; max-height: 550px; width: 100%; height: auto; object-fit: contain; display: block; margin: 0 auto; border-radius: 8px;">
+                <img src="${prod.imagen}" alt="${prod.nombre}" style="width: 100%; height: 100%; min-height: 460px; object-fit: contain; display: block; border-radius: 8px;">
               ` : `
-                <div class="vial-real-container">
-                  <div class="vial-label-wrapper">
-                    <div class="label-brand">Venus Peptide</div>
-                    <div class="label-name">${prod.nombre.toUpperCase()}</div>
-                    <div class="label-specs">${mg} | ${purity} Pureza</div>
-                    <div class="label-divider"></div>
-                    <div class="label-legal">FOR RESEARCH USE ONLY</div>
-                    <div class="label-legal sub">NOT FOR HUMAN USE</div>
-                  </div>
+              <div class="vial-real-container">
+                <div class="vial-label-wrapper">
+                  <div class="label-brand">Venus Peptide</div>
+                  <div class="label-name">${prod.nombre.toUpperCase()}</div>
+                  <div class="label-specs">${mg} | ${purity} Pureza</div>
+                  <div class="label-divider"></div>
+                  <div class="label-legal">FOR RESEARCH USE ONLY</div>
+                  <div class="label-legal sub">NOT FOR HUMAN USE</div>
                 </div>
+              </div>
               `}
             </div>
 
+            <!-- COLUMNA DERECHA: INFORMACIÓN -->
             <div class="info-column">
               ${prod.badge ? `<span class="info-badge ${prod.badge}">${prod.badge.toUpperCase()}</span>` : ''}
               <h1 class="info-title">${prod.nombre}</h1>
@@ -409,6 +411,7 @@
                 </button>
               </div>
 
+              <!-- ── DESCARGO LEGAL (Estilo Evolve BioPep) ── -->
               <div class="legal-disclaimer-box">
                 <p>
                   <strong>⚠️ RESEARCH USE ONLY — LEGAL DISCLAIMER</strong><br>
@@ -426,6 +429,7 @@
           </div>
         `;
 
+        // ── GESTIÓN DEL BOTÓN AÑADIR AL CARRITO ──
         const btnAddToCart = document.getElementById('btnAddToCart');
         if (btnAddToCart) {
           btnAddToCart.addEventListener('click', () => {
@@ -465,6 +469,7 @@
         }
       }
 
+      // ── CONTROL DEL SELECTOR DE CANTIDAD ──
       window.cambiarCantidad = function(valor) {
         const input = document.getElementById('cantidadProd');
         if (input) {
@@ -476,6 +481,7 @@
 
     });
 
+    // ── MANEJO DEL MENÚ MÓVIL (Burger) ──
     const burgerBtn = document.getElementById('burgerBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     if (burgerBtn && mobileMenu) {
