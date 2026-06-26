@@ -374,7 +374,7 @@
           <div class="product-detail-grid">
             <div class="visual-column">
               ${prod.imagen ? `
-                <img src="${prod.imagen}" alt="${prod.nombre}" style="max-width: 100%; max-height: 550px; width: 100%; height: auto; object-fit: contain; display: block; margin: 0 auto; border-radius: 8px;">
+                <img src="${prod.imagen}" alt="${prod.nombre}" style="max-width: 100%; max-height: 500px; width: 100%; height: auto; object-fit: contain; display: block; margin: 0 auto; border-radius: 8px;">
               ` : `
                 <div class="vial-real-container">
                   <div class="vial-label-wrapper">
@@ -431,8 +431,23 @@
           btnAddToCart.addEventListener('click', () => {
             const cantidadAAgregar = parseInt(document.getElementById('cantidadProd').value) || 1;
             let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-            const itemExistente = cart.find(i => i.id === prod.id);
 
+            // ── VALIDACIÓN 1: Máximo 10 por producto ──
+            const itemExistente = cart.find(i => i.id === prod.id);
+            const cantidadActual = itemExistente ? itemExistente.qty : 0;
+            if (cantidadActual + cantidadAAgregar > 10) {
+              alert(`⚠️ Solo puedes agregar hasta 10 unidades de ${prod.nombre}. Actualmente tienes ${cantidadActual} en el carrito.`);
+              return;
+            }
+
+            // ── VALIDACIÓN 2: Máximo 30 en total ──
+            const totalActual = cart.reduce((sum, item) => sum + item.qty, 0);
+            if (totalActual + cantidadAAgregar > 30) {
+              alert(`⚠️ Máximo 30 unidades por orden. Actualmente tienes ${totalActual} unidades en el carrito.`);
+              return;
+            }
+
+            // ── AÑADIR AL CARRITO ──
             if (itemExistente) {
               itemExistente.qty += cantidadAAgregar;
             } else {
@@ -465,11 +480,16 @@
         }
       }
 
+      // ── CONTROL DEL SELECTOR DE CANTIDAD CON LÍMITE ──
       window.cambiarCantidad = function(valor) {
         const input = document.getElementById('cantidadProd');
         if (input) {
           let nuevaCant = (parseInt(input.value) || 1) + valor;
           if (nuevaCant < 1) nuevaCant = 1;
+          if (nuevaCant > 10) {
+            alert('⚠️ Máximo 10 unidades por producto.');
+            nuevaCant = 10;
+          }
           input.value = nuevaCant;
         }
       };
