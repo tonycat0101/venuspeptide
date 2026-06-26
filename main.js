@@ -1,6 +1,16 @@
 /* ============================================================
    VENUS PEPTIDE — BASE DE DATOS DE PRODUCTOS
    ============================================================ */
+
+// ── FAVICON ──
+(function() {
+  const link = document.createElement('link');
+  link.rel = 'icon';
+  link.href = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-family='Georgia, serif' font-size='70' font-weight='bold' text-anchor='middle' fill='%23ffffff'%3EV%3C/text%3E%3C/svg%3E";
+  link.type = 'image/svg+xml';
+  document.head.appendChild(link);
+})();
+
 const productosData = {
   // ── PÉPTIDOS GH ──
   "ipamorelin-5mg": {
@@ -449,23 +459,16 @@ const productosData = {
   }
 };
 
-// Exponer la base de datos de manera explícita al entorno global
+// Exponer la base de datos
 window.productosData = productosData;
 
-/* ═══════════════════════════════════════════════════════════════════
-   🖼️  MOCKUP DE VIAL DINÁMICO (HTML/CSS) — FALLBACK
-   ═══════════════════════════════════════════════════════════════════ */
-
+// ── MOCKUP DE VIAL DINÁMICO (FALLBACK) ──
 function generarVialDinamico(prod) {
-  // Extraer mg de la pureza (ej. "99.5% Pureza | 5mg" → "5mg")
   const mgMatch = prod.pureza.match(/\|\s*(\d+mg)/);
   const mg = mgMatch ? mgMatch[1] : '';
-
-  // Extraer pureza (ej. "99.5% Pureza | 5mg" → "99.5%")
   const purityMatch = prod.pureza.match(/(\d+\.?\d*%)/);
   const purity = purityMatch ? purityMatch[1] : '';
 
-  // Determinar si es un blend (tiene dos viales)
   if (prod.isBlend) {
     const mgBlendMatch = prod.pureza.match(/(\d+mg)\s*\+\s*(\d+mg)/);
     const mg1 = mgBlendMatch ? mgBlendMatch[1] : '';
@@ -498,7 +501,6 @@ function generarVialDinamico(prod) {
     `;
   }
 
-  // Vial normal (único)
   return `
     <div class="vial-mockup-dinamico" style="background-image: url('img/vial-vacio.png');">
       <div class="vial-label">
@@ -511,45 +513,35 @@ function generarVialDinamico(prod) {
   `;
 }
 
-// Exponer la función para usarla en otras páginas (producto.html)
 window.generarVialDinamico = generarVialDinamico;
 
-/* ── Control Automático del Contador de la Nav ── */
+// ── CONTADOR DEL CARRITO ──
 function actualizarNumeroNavGlobal() {
   const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
   const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-  
   document.querySelectorAll('.nav__cart span, #navCartCount').forEach(badge => {
     badge.textContent = `(${totalQty})`;
   });
 }
 
-// Exponer la función para que vistas hijas puedan llamarla al añadir productos
 window.actualizarNumeroNavGlobal = actualizarNumeroNavGlobal;
 
-/* ═══════════════════════════════════════════════════════════════════
-   VENUS PEPTIDE — LÓGICA DE LA WEB
-   ═══════════════════════════════════════════════════════════════════ */
+// ── LÓGICA DE LA WEB ──
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Sincronizar el estado del carrito inmediatamente al cargar el DOM
   actualizarNumeroNavGlobal();
 
-  /* ── 1. Renderizar tarjetas de productos automáticamente ── */
+  // ── RENDERIZAR CATÁLOGO ──
   const gridProductos = document.getElementById('gridProductos');
-  
   if (gridProductos) {
     gridProductos.innerHTML = '';
 
     Object.values(productosData).forEach(prod => {
-      // Configurar etiquetas de badge (Sale / New)
       let badgeHTML = '';
       if (prod.badge) {
         const badgeColor = prod.badge === 'sale' ? '#ef4444' : '#3b82f6';
         badgeHTML = `<span style="position: absolute; top: 16px; left: 16px; background: ${badgeColor}; color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; z-index: 10;">${prod.badge}</span>`;
       }
 
-      // Configurar visualización según stock
       let actionBoxHTML = '';
       if (prod.agotado) {
         actionBoxHTML = `
@@ -565,7 +557,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </a>`;
       }
 
-      // ── GENERAR EL VIAL (imagen real o dinámico) ──
       let vialHTML = '';
       if (prod.imagen) {
         vialHTML = `
@@ -594,9 +585,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ── 2. Renderizar productos populares en index.html ── */
+  // ── PRODUCTOS POPULARES ──
   const gridPopulares = document.getElementById('productosPopulares');
-  
   if (gridPopulares) {
     const productosDestacados = [
       'semaglutide-5mg',
@@ -662,15 +652,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ── Nav: link activo según página ─────────────────────── */
+  // ── NAV: link activo ──
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav__links a').forEach(link => {
     if (link.getAttribute('href') === page) link.classList.add('active');
   });
 
-  /* ── Mobile menu ────────────────────────────────────────── */
+  // ── MOBILE MENU ──
   const burger = document.querySelector('.nav__burger');
-  const menu   = document.querySelector('.mobile-menu');
+  const menu = document.querySelector('.mobile-menu');
   if (burger && menu) {
     burger.addEventListener('click', () => {
       menu.classList.toggle('open');
@@ -682,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
   }
 
-  /* ── Scroll fade-up ─────────────────────────────────────── */
+  // ── SCROLL FADE-UP ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
@@ -694,17 +684,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  /* ── Nav sombra al hacer scroll ─────────────────────────── */
+  // ── NAV SOMBRA ──
   const nav = document.querySelector('.nav');
   if (nav) {
     window.addEventListener('scroll', () => {
-      nav.style.boxShadow = window.scrollY > 12
-        ? '0 2px 16px rgba(15,30,53,.08)'
-        : 'none';
+      nav.style.boxShadow = window.scrollY > 12 ? '0 2px 16px rgba(15,30,53,.08)' : 'none';
     }, { passive: true });
   }
 
-  /* ── Formulario contacto ────────────────────────────────── */
+  // ── FORMULARIO CONTACTO ──
   const form = document.querySelector('.contact-form');
   if (form) {
     form.addEventListener('submit', e => {
@@ -720,8 +708,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ── Filtro de categorías (Control inteligente de URLs) ── */
-  const tabs  = document.querySelectorAll('.cat-tab');
+  // ── FILTRO DE CATEGORÍAS ──
+  const tabs = document.querySelectorAll('.cat-tab');
   const cards = document.querySelectorAll('.product-wrap');
   if (tabs.length && cards.length) {
     tabs.forEach(tab => {
@@ -736,23 +724,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Auto-activar filtro desde URL ?cat= */
   const catUrl = new URLSearchParams(window.location.search).get('cat');
   if (catUrl) {
     const cardsParaFiltrar = document.querySelectorAll('.product-wrap');
-    const tabsParaFiltrar  = document.querySelectorAll('.cat-tab');
-    
-    if(tabsParaFiltrar.length) {
+    const tabsParaFiltrar = document.querySelectorAll('.cat-tab');
+    if (tabsParaFiltrar.length) {
       tabsParaFiltrar.forEach(t => {
         t.classList.remove('active');
         if (t.dataset.cat === catUrl) t.classList.add('active');
       });
     }
-    if(cardsParaFiltrar.length) {
+    if (cardsParaFiltrar.length) {
       cardsParaFiltrar.forEach(c => {
         c.style.display = c.dataset.cat === catUrl ? '' : 'none';
       });
     }
   }
-
 });
