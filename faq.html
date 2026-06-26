@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css">
   
   <style>
-    /* ── ESTILOS EXCLUSIVOS DE LA SECCIÓN FAQ (Estilo Venus) ── */
+    /* ── ESTILOS EXCLUSIVOS DE LA SECCIÓN FAQ ── */
     .faq-section { padding: 140px 0 100px 0; background: #fbfbfb; min-height: 80vh; }
     .faq-container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
     
@@ -18,7 +18,6 @@
 
     .faq-category-title { font-size: 14px; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: 0.05em; margin: 45px 0 20px 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; }
 
-    /* Acordeones Estilo Premium */
     .faq-item { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 14px; overflow: hidden; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
     .faq-item:hover { border-color: #cbd5e1; }
     
@@ -32,7 +31,6 @@
     .faq-content-inner p { margin-bottom: 12px; }
     .faq-content-inner p:last-child { margin-bottom: 0; }
     
-    /* Estados Activos */
     .faq-item.active { border-color: #2563eb; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.03); }
     .faq-item.active .faq-icon { transform: rotate(45deg); color: #2563eb; }
 
@@ -58,7 +56,6 @@
             <a href="vertodos.html">Ver todos</a>
             <a href="nosotros.html">Nosotros</a>
             
-            <!-- Menú Desplegable de Soporte -->
             <div style="position: relative; display: inline-block;" 
                  onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
                  onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
@@ -73,7 +70,6 @@
                 </div>
             </div>
 
-            <!-- BOTÓN CARRITO -->
             <a href="carrito.html" class="nav__cart-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff !important; padding: 8px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; margin-left: 15px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                 <span>Carrito</span>
@@ -86,7 +82,7 @@
     </div>
   </nav>
 
-  <!-- ── MENÚ MÓVIL ACTUALIZADO ── -->
+  <!-- Menú móvil -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Inicio</a>
     <a href="categorias.html">Categorías</a>
@@ -100,21 +96,15 @@
     </a>
   </div>
 
-  <!-- ── SECCIÓN DE PREGUNTAS FRECUENTES ───────────────────────────────── -->
+  <!-- ── SECCIÓN DE PREGUNTAS FRECUENTES ── -->
   <section class="faq-section">
     <div class="faq-container">
       
       <div class="faq-header">
         <h1>Preguntas Frecuentes</h1>
-        <p>Encuentre respuestas detalladas sobre nuestros estándares de pureza, directrices de almacenamiento técnico y logística.</p>
+        <p>Encuentra respuestas directas sobre nuestros productos, pagos y envíos.</p>
       </div>
-      <!-- ── ADVERTENCIA LEGAL (Estilo Verified Peptides) ── -->
-      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 30px; border-left: 4px solid #2563eb;">
-        <p style="font-size: 12px; line-height: 1.6; color: #475569; margin: 0;">
-          <strong style="color: #0f172a;">⚠️ LEGAL NOTICE</strong><br>
-          Due to the legal landscape of peptides and research products, providing information that may imply anything beyond laboratory research use is a legal liability. All information provided on this website is for <strong>educational and informational purposes only</strong>, and does not constitute medical, clinical, pharmaceutical, or professional advice of any kind. These materials are not intended for human or veterinary use.
-        </p>
-      </div>
+
       <!-- CATEGORÍA 1: SOBRE LOS PRODUCTOS -->
       <div class="faq-category-title">Información de Productos y Calidad</div>
 
@@ -122,8 +112,7 @@
         <button class="faq-trigger">¿Los productos son para uso humano? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            <p><strong>No.</strong> Todos los productos suministrados por Venus Peptide están destinados única y estrictamente a la investigación de laboratorio, estudios analíticos y de desarrollo químico (I+D).</p>
-            <p>No están diseñados, formulados ni destinados para el consumo humano, diagnóstico clínico, uso veterinario, ni para ser administrados como medicamentos, alimentos o cosméticos. Al adquirir estos compuestos, el investigador confirma estar calificado para manejarlos bajo estrictas condiciones de laboratorio.</p>
+            <p><strong>No.</strong> Todos los productos son exclusivamente para investigación de laboratorio y desarrollo analítico (I+D). No están diseñados para consumo humano, diagnóstico clínico o uso veterinario.</p>
           </div>
         </div>
       </div>
@@ -132,7 +121,7 @@
         <button class="faq-trigger">¿Cuál es la pureza de sus péptidos? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            Todos nuestros lotes de péptidos son sometidos a rigurosas verificaciones analíticas independientes. Garantizamos una pureza mínima del 98%, situándose la gran mayoría de nuestro catálogo por encima del 99% de pureza molecular, verificada mediante pruebas de cromatografía de líquidos de alta eficacia (HPLC) y espectrometría de masas (MS).
+            Garantizamos una pureza mínima del 98%, con la mayoría de nuestro catálogo por encima del 99%. Cada lote es verificado mediante HPLC y espectrometría de masas.
           </div>
         </div>
       </div>
@@ -141,7 +130,7 @@
         <button class="faq-trigger">¿Qué es un péptido liofilizado? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            La liofilización es un proceso de deshidratación por congelación al vacío utilizado para estabilizar compuestos sensibles. Al eliminar el agua, el péptido se convierte en un polvo altamente estable, lo que permite su almacenamiento seguro y transporte a temperatura ambiente sin que sufra degradación molecular inmediata.
+            Es un proceso de deshidratación por congelación al vacío que estabiliza el compuesto. El péptido se convierte en un polvo estable que puede almacenarse y transportarse sin degradación inmediata.
           </div>
         </div>
       </div>
@@ -150,17 +139,17 @@
         <button class="faq-trigger">¿Cómo se deben almacenar los péptidos? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            <p><strong>En polvo (Liofilizados):</strong> Deben mantenerse en un lugar fresco, seco y oscuro. Para almacenamiento a corto y mediano plazo (menos de un año), se recomienda refrigeración entre 2°C y 8°C. Para almacenamiento a largo plazo, se deben congelar a -20°C.</p>
-            <p><strong>En solución (Reconstituidos):</strong> Una vez que el polvo se disuelve en agua estéril o bacteriostática para su análisis, el vial debe mantenerse obligatoriamente en refrigeración constante (2°C a 8°C). No se deben congelar los péptidos una vez reconstituidos, ya que los cristales de hielo pueden romper las cadenas de aminoácidos.</p>
+            <p><strong>En polvo:</strong> Guárdalos en un lugar fresco, seco y oscuro. Para almacenamiento a corto plazo (menos de un año), refrigeración entre 2°C y 8°C es suficiente. Para largo plazo, congélalos a -20°C.</p>
+            <p><strong>En solución:</strong> Una vez reconstituidos, mantenlos siempre en refrigeración (2°C a 8°C). <strong>No los congeles</strong>, ya que los cristales de hielo pueden dañar la estructura del péptido.</p>
           </div>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-trigger">¿Qué líquido se utiliza para reconstituir los compuestos? <span class="faq-icon">+</span></button>
+        <button class="faq-trigger">¿Qué líquido se usa para reconstituir? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            Para fines de investigación y pruebas analíticas, los péptidos liofilizados suelen ser reconstituidos utilizando agua bacteriostática (la cual contiene un porcentaje de alcohol bencílico que previene el crecimiento bacteriano) o agua estéril para inyección, dependiendo estrictamente del protocolo de laboratorio que esté ejecutando. *Nota: Venus Peptide provee únicamente los viales de reactivos; no distribuimos líquidos de disolución ni suministros médicos.*
+            Se recomienda usar agua bacteriostática o agua estéril para inyección, según el protocolo de tu laboratorio. <strong>Nota:</strong> Venus Peptide solo suministra los viales; no distribuimos líquidos de disolución.
           </div>
         </div>
       </div>
@@ -172,7 +161,7 @@
         <button class="faq-trigger">¿Cómo puedo pagar mi pedido? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            Aceptamos múltiples opciones seguras y encriptadas que se muestran dinámicamente en nuestra pantalla de Checkout al finalizar el carrito. Trabajamos con pasarelas de procesamiento cifrado que cumplen con los estándares internacionales de seguridad SSL para proteger toda su información transaccional.
+            Aceptamos pagos a través de Zelle, CashApp y Venmo. Los datos de pago se muestran al finalizar el pedido.
           </div>
         </div>
       </div>
@@ -181,7 +170,7 @@
         <button class="faq-trigger">¿Recibiré una confirmación de mi orden? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            Sí. Inmediatamente después de colocar su orden, nuestro sistema le enviará un correo electrónico automatizado con el resumen de su compra. Si no lo visualiza en su bandeja de entrada principal en los siguientes 5 minutos, por favor revise sus carpetas de correo no deseado (Spam) o Promociones.
+            Sí. Recibirás un correo electrónico automático con el resumen de tu compra. Si no lo ves en tu bandeja principal, revisa la carpeta de spam o promociones.
           </div>
         </div>
       </div>
@@ -190,10 +179,10 @@
       <div class="faq-category-title">Envíos y Políticas de Entrega</div>
 
       <div class="faq-item">
-        <button class="faq-trigger">¿Cuánto tarda en procesarse y enviarse mi paquete? <span class="faq-icon">+</span></button>
+        <button class="faq-trigger">¿Cuánto tarda en procesarse mi pedido? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            Los pedidos se procesan y empaquetan en un plazo de 24 a 48 horas hábiles tras recibir la validación exitosa del pago. Los despachos logísticos se realizan de lunes a viernes. Tan pronto como la empresa de paquetería recolecte el envío, recibirá un correo con el número de seguimiento (tracking) correspondiente.
+            Los pedidos se procesan y empaquetan en un plazo de 24 a 48 horas hábiles después de recibir el pago. Una vez enviado, recibirás un número de seguimiento por correo.
           </div>
         </div>
       </div>
@@ -202,25 +191,25 @@
         <button class="faq-trigger">¿Los envíos son discretos? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            Completamente. Entendemos la importancia de salvaguardar el material científico. Todos los pedidos son despachados en cajas o sobres de mensajería estándar, totalmente neutros y sellados, sin leyendas llamativas ni menciones externas explícitas sobre el contenido del paquete.
+            Sí. Todos los paquetes se envían en cajas o sobres estándar, sin leyendas llamativas ni menciones externas sobre el contenido.
           </div>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-trigger">¿Qué pasa si mi pedido se retrasa o hay un problema con la entrega? <span class="faq-icon">+</span></button>
+        <button class="faq-trigger">¿Qué pasa si mi pedido se retrasa? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            Una vez que el paquete es entregado a la empresa de mensajería externa, los tiempos de tránsito definitivos están sujetos a la operación de dicha paquetería. Si nota un retraso inusual o anomalía en su código de rastreo, puede escribir directamente a nuestro canal de atención en la página de Contacto para que nuestro equipo le asista en la gestión del reporte técnico con la logística.
+            Una vez entregado a la mensajería, los tiempos de tránsito dependen de ellos. Si notas un retraso inusual, contáctanos y te ayudamos a gestionarlo.
           </div>
         </div>
       </div>
 
       <div class="faq-item">
-        <button class="faq-trigger">¿Cuál es su política de reembolsos y devoluciones? <span class="faq-icon">+</span></button>
+        <button class="faq-trigger">¿Cuál es su política de devoluciones? <span class="faq-icon">+</span></button>
         <div class="faq-content">
           <div class="faq-content-inner">
-            Debido a la naturaleza química y científica de los compuestos, y bajo estrictas normativas para garantizar la integridad y no contaminación de los reactivos de laboratorio, no podemos aceptar devoluciones de producto ni cambios una vez que los paquetes han salido de nuestro centro de distribución. Si existiese alguna incidencia de origen atribuible al embalaje de la orden, deberá reportarse con soporte mediante evidencias fotográficas claras dentro de las primeras 48 horas de haber recibido el paquete.
+            <strong>Todas las ventas son finales.</strong> No aceptamos devoluciones ni cambios una vez despachado el pedido, para garantizar la integridad de los compuestos. Si hay error de empaque, repórtalo dentro de las 48 horas de recepción con evidencia fotográfica.
           </div>
         </div>
       </div>
@@ -228,7 +217,7 @@
     </div>
   </section>
 
-  <!-- ── FOOTER OPTIMIZADO (Consistente Horizontal) ── -->
+  <!-- ── FOOTER ── -->
   <footer class="footer">
     <div class="container">
       
@@ -280,7 +269,6 @@
 
   <script src="main.js"></script>
 
-  <!-- ── LOGICA SCRIPT DEL ACORDEÓN INTERACTIVO ── -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const burgerBtn = document.getElementById('burgerBtn');
