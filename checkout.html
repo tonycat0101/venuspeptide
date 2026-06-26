@@ -1,155 +1,367 @@
-function enviarPedidoFormulario(e) {
-  e.preventDefault();
-
-  // ── VALIDACIÓN DE CARRITO (LÍMITES) ──
-  const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-
-  // Validar máximo 30 unidades totales
-  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-  if (totalItems > 30) {
-    alert(`⚠️ Máximo 30 unidades por orden. Actualmente tienes ${totalItems} unidades.`);
-    return;
-  }
-
-  // Validar máximo 10 por producto
-  for (const item of cart) {
-    if (item.qty > 10) {
-      const prod = window.productosData[item.id];
-      alert(`⚠️ Máximo 10 unidades de ${prod.nombre}. Tienes ${item.qty} en el carrito.`);
-      return;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificación de Laboratorio y Envío | Venus Peptide</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .checkout-section {
+      padding: calc(var(--nav-h) + 60px) 0 100px;
+      background: var(--bg-light);
+      min-height: 85vh;
     }
-  }
-
-  // ── VALIDACIONES DEL FORMULARIO ──
-  const legalChecked = document.getElementById('checkoutLegal').checked;
-  if (!legalChecked) {
-    document.getElementById('legalError').classList.add('visible');
-    return;
-  }
-
-  const nombre = document.getElementById('checkoutNombre').value.trim();
-  if (!nombre || nombre.length < 2) {
-    alert('Por favor, ingresa tu nombre completo.');
-    return;
-  }
-
-  const email = document.getElementById('checkoutEmail').value.trim();
-  if (!email || !email.includes('@') || !email.includes('.')) {
-    alert('Por favor, ingresa un correo electrónico válido.');
-    return;
-  }
-
-  const telefono = document.getElementById('checkoutTelefono').value.trim();
-  if (!telefono || telefono.length < 7) {
-    alert('Por favor, ingresa un número de teléfono válido.');
-    return;
-  }
-
-  const direccion = document.getElementById('checkoutDireccion').value.trim();
-  if (!direccion || direccion.length < 5) {
-    alert('Por favor, ingresa una dirección completa.');
-    return;
-  }
-
-  const ciudad = document.getElementById('checkoutCiudad').value.trim();
-  if (!ciudad || ciudad.length < 2) {
-    alert('Por favor, ingresa tu ciudad.');
-    return;
-  }
-
-  const estado = document.getElementById('checkoutEstado').value.trim();
-  if (!estado || estado.length < 2) {
-    alert('Por favor, ingresa tu estado o provincia.');
-    return;
-  }
-
-  const zip = document.getElementById('checkoutZip').value.trim();
-  if (!zip || zip.length < 3) {
-    alert('Por favor, ingresa un código postal válido.');
-    return;
-  }
-
-  // ── PROCESAR PEDIDO ──
-  const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
-  const notas = document.getElementById('checkoutNotas').value.trim();
-  const newsletter = document.getElementById('checkoutNewsletter').checked;
-  
-  let subtotal = 0;
-  cart.forEach(item => {
-    const prod = window.productosData ? window.productosData[item.id] : null;
-    if (prod) {
-      subtotal += prod.precio * item.qty;
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 40px;
+      align-items: start;
+      margin-top: 40px;
     }
-  });
+    @media (max-width: 992px) {
+      .checkout-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    .checkout-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 40px;
+      box-shadow: var(--shadow-card);
+    }
+    .checkout-form-group {
+      margin-bottom: 24px;
+    }
+    .checkout-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 576px) {
+      .checkout-form-row { grid-template-columns: 1fr; gap: 0; }
+    }
+    .checkout-label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .checkout-input {
+      width: 100%;
+      height: 46px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0 16px;
+      font-size: 14px;
+      color: var(--text-dark);
+      background: var(--bg-white);
+      outline: none;
+    }
+    .checkout-textarea {
+      width: 100%;
+      height: 100px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--text-dark);
+      background: var(--bg-white);
+      outline: none;
+      resize: none;
+    }
+    .legal-checkbox-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 32px;
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .legal-checkbox-container input {
+      margin-top: 3px;
+      cursor: pointer;
+    }
+    .legal-checkbox-label {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-body);
+    }
+    .error-text {
+      color: #ef4444;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-top: 6px;
+      display: none;
+    }
+    .error-text.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
 
-  const totalConDescuento = subtotal - descuentoAplicado;
-  const tax = totalConDescuento * 0.06;
-  const totalFinal = totalConDescuento + tax;
-  const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">V</div>
+        Venus Peptide
+      </a>
+      <div class="nav__links">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="vertodos.html">Ver todos</a>
+        <a href="nosotros.html">Nosotros</a>
+        
+        <a href="carrito.html" class="nav__cart-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff !important; padding: 8px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; margin-left: 15px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span id="navCartCount">(0)</span>
+        </a>
+      </div>
+    </div>
+  </nav>
 
-  // ── GUARDAR EN SESSIONSTORAGE ──
-  sessionStorage.setItem('pending_order_id', codigoReferencia);
-  sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
-  sessionStorage.setItem('pending_order_method', metodoPago);
+  <main class="checkout-section">
+    <div class="container">
+      <h1 class="section-title">Verificación y Envío</h1>
+      
+      <div class="checkout-grid">
+        <div class="checkout-card">
+          <form id="checkoutForm">
+            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Información del Investigador</h2>
+            
+            <div class="checkout-form-group">
+              <label class="checkout-label" for="checkoutNombre">Nombre Completo</label>
+              <input type="text" id="checkoutNombre" class="checkout-input" required>
+            </div>
 
-  // ── BACKUP EN LOCALSTORAGE ──
-  localStorage.setItem('backup_order_id', codigoReferencia);
-  localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
-  localStorage.setItem('backup_order_method', metodoPago);
+            <div class="checkout-form-row">
+              <div class="checkout-form-group">
+                <label class="checkout-label" for="checkoutEmail">Correo Electrónico</label>
+                <input type="email" id="checkoutEmail" class="checkout-input" required>
+              </div>
+              <div class="checkout-form-group">
+                <label class="checkout-label" for="checkoutTelefono">Teléfono de Contacto</label>
+                <input type="tel" id="checkoutTelefono" class="checkout-input" required>
+              </div>
+            </div>
 
-  // ── GUARDAR DATOS DEL CLIENTE ──
-  localStorage.setItem('checkout_nombre', nombre);
-  localStorage.setItem('checkout_email', email);
-  localStorage.setItem('checkout_telefono', telefono);
-  localStorage.setItem('checkout_direccion', direccion);
-  localStorage.setItem('checkout_ciudad', ciudad);
-  localStorage.setItem('checkout_estado', estado);
-  localStorage.setItem('checkout_zip', zip);
-  localStorage.setItem('checkout_notas', notas);
-  localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
+            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-top: 32px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Dirección de Envío</h2>
 
-  // ── GUARDAR EN SESSIONSTORAGE (para instrucciones) ──
-  sessionStorage.setItem('checkout_nombre', nombre);
-  sessionStorage.setItem('checkout_email', email);
-  sessionStorage.setItem('checkout_telefono', telefono);
+            <div class="checkout-form-group">
+              <label class="checkout-label" for="checkoutDireccion">Dirección Completa</label>
+              <input type="text" id="checkoutDireccion" class="checkout-input" required>
+            </div>
 
-  // ── GUARDAR EN FIREBASE ──
-  const db = window.db;
-  const doc = window.doc;
-  const setDoc = window.setDoc;
+            <div class="checkout-form-row">
+              <div class="checkout-form-group">
+                <label class="checkout-label" for="checkoutCiudad">Ciudad</label>
+                <input type="text" id="checkoutCiudad" class="checkout-input" required>
+              </div>
+              <div class="checkout-form-group">
+                <label class="checkout-label" for="checkoutEstado">Estado</label>
+                <input type="text" id="checkoutEstado" class="checkout-input" required>
+              </div>
+            </div>
 
-  if (db && doc && setDoc) {
-    const orderRef = doc(db, 'pedidos', codigoReferencia);
-    setDoc(orderRef, {
-      codigo: codigoReferencia,
-      cliente: nombre,
-      email: email,
-      telefono: telefono,
-      direccion: direccion,
-      ciudad: ciudad,
-      estado: estado,
-      zip: zip,
-      productos: cart,
-      subtotal: subtotal,
-      descuento: descuentoAplicado,
-      tax: tax,
-      total: totalFinal,
-      metodo: metodoPago,
-      notas: notas,
-      newsletter: newsletter,
-      codigo_promo: codigoPromoUsado,
-      status: 'pendiente',
-      fecha: new Date().toISOString()
-    }).then(() => {
-      console.log('✅ Orden guardada en Firebase correctamente');
-      window.location.href = 'instrucciones.html';
-    }).catch((error) => {
-      console.error('❌ Error al guardar en Firebase:', error);
-      alert('Hubo un error al procesar tu pedido. Por favor, intenta de nuevo.');
+            <div class="checkout-form-group" style="max-width: 50%;">
+              <label class="checkout-label" for="checkoutZip">Código Postal (ZIP)</label>
+              <input type="text" id="checkoutZip" class="checkout-input" required>
+            </div>
+
+            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-top: 32px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Método de Pago</h2>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+              <label style="font-size: 14px; color: var(--text-dark); cursor: pointer;"><input type="radio" name="metodo_pago" value="Zelle" checked> Zelle</label>
+              <label style="font-size: 14px; color: var(--text-dark); cursor: pointer;"><input type="radio" name="metodo_pago" value="Venmo"> Venmo</label>
+              <label style="font-size: 14px; color: var(--text-dark); cursor: pointer;"><input type="radio" name="metodo_pago" value="CashApp"> CashApp</label>
+            </div>
+
+            <div class="checkout-form-group">
+              <label class="checkout-label" for="checkoutNotas">Notas Especiales</label>
+              <textarea id="checkoutNotas" class="checkout-textarea"></textarea>
+            </div>
+
+            <div style="margin-top: 20px;">
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--text-body); cursor: pointer;">
+                <input type="checkbox" id="checkoutNewsletter" checked> Deseo recibir alertas de stock y reportes analíticos.
+              </label>
+            </div>
+
+            <div class="legal-checkbox-container">
+              <input type="checkbox" id="checkoutLegal" required>
+              <label class="legal-checkbox-label" for="checkoutLegal"><strong>* DECLARACIÓN DE CUMPLIMIENTO CIENTÍFICO:</strong> Certifico que estos compuestos serán utilizados exclusivamente para investigación de laboratorio in-vitro. Prohibido su consumo humano.</label>
+            </div>
+            <div id="legalError" class="error-text">⚠️ Debe aceptar los términos de uso científico para proceder.</div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 32px; border-radius: var(--radius-sm);">
+              Generar Orden de Investigación
+            </button>
+          </form>
+        </div>
+        <div id="checkoutSummaryWrapper"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p style="text-align: center; font-size: 13px; color: rgba(255, 255, 255, 0.65);">
+        Todos los productos en este sitio son exclusivamente para uso de Investigación y Desarrollo en laboratorio. NO son para consumo humano ni veterinario.
+      </p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // ── SOLUCIÓN AL CRASH: DECLARACIÓN SEGURA DE VARIABLES DE CONTROL ──
+    var descuentoAplicado = 0;
+    var codigoPromoUsado = "";
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
+      const navCount = document.getElementById('navCartCount');
+      if (navCount) navCount.textContent = `(${totalArticulos})`;
+
+      const checkoutForm = document.getElementById('checkoutForm');
+      if (checkoutForm) { 
+        checkoutForm.addEventListener('submit', enviarPedidoFormulario); 
+      }
     });
-  } else {
-    // Fallback si Firebase no está disponible
-    console.warn('⚠️ Firebase no disponible, redirigiendo sin guardar');
-    window.location.href = 'instrucciones.html';
-  }
-}
+
+    function enviarPedidoFormulario(e) {
+      e.preventDefault();
+
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+      if (cart.length === 0) { 
+        alert('El carrito está vacío.'); 
+        return; 
+      }
+
+      // ── VALIDACIÓN ESTRICTA DE LÍMITES ──
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      if (totalItems > 30) { 
+        alert(`⚠️ Máximo 30 unidades por orden. Actualmente tienes ${totalItems} unidades.`); 
+        return; 
+      }
+
+      for (const item of cart) {
+        if (item.qty > 10) {
+          const prod = window.productosData ? window.productosData[item.id] : null;
+          alert(`⚠️ Máximo 10 unidades de ${prod ? prod.nombre : item.id}. Tienes ${item.qty} en el carrito.`);
+          return;
+        }
+      }
+
+      const legalChecked = document.getElementById('checkoutLegal').checked;
+      if (!legalChecked) { 
+        document.getElementById('legalError').classList.add('visible'); 
+        return; 
+      } else {
+        document.getElementById('legalError').classList.remove('visible');
+      }
+
+      const nombre = document.getElementById('checkoutNombre').value.trim();
+      const email = document.getElementById('checkoutEmail').value.trim();
+      const telefono = document.getElementById('checkoutTelefono').value.trim();
+      const direccion = document.getElementById('checkoutDireccion').value.trim();
+      const ciudad = document.getElementById('checkoutCiudad').value.trim();
+      const estado = document.getElementById('checkoutEstado').value.trim();
+      const zip = document.getElementById('checkoutZip').value.trim();
+      const notas = document.getElementById('checkoutNotas') ? document.getElementById('checkoutNotas').value.trim() : '';
+      const newsletter = document.getElementById('checkoutNewsletter').checked;
+
+      let subtotal = 0;
+      cart.forEach(item => {
+        const prod = window.productosData ? window.productosData[item.id] : null;
+        if (prod) subtotal += prod.precio * item.qty;
+      });
+
+      const tax = subtotal * 0.06;
+      const totalFinal = subtotal + tax;
+      const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
+      const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
+
+      // Guardado local preventivo idéntico al original
+      sessionStorage.setItem('pending_order_id', codigoReferencia);
+      sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
+      sessionStorage.setItem('pending_order_method', metodoPago);
+      sessionStorage.setItem('checkout_nombre', nombre);
+      sessionStorage.setItem('checkout_email', email);
+      sessionStorage.setItem('checkout_telefono', telefono);
+
+      localStorage.setItem('backup_order_id', codigoReferencia);
+      localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
+      localStorage.setItem('backup_order_method', metodoPago);
+
+      localStorage.setItem('checkout_nombre', nombre);
+      localStorage.setItem('checkout_email', email);
+      localStorage.setItem('checkout_telefono', telefono);
+      localStorage.setItem('checkout_direccion', direccion);
+      localStorage.setItem('checkout_ciudad', ciudad);
+      localStorage.setItem('checkout_estado', estado);
+      localStorage.setItem('checkout_zip', zip);
+      localStorage.setItem('checkout_notas', notas);
+      localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
+
+      // ── ACCESO ENLACE DIRECTO A FIREBASE EXPUESTO EN WINDOW ──
+      if (window.db && window.doc && window.setDoc) {
+        window.setDoc(window.doc(window.db, 'pedidos', codigoReferencia), {
+          codigo: codigoReferencia,
+          cliente: nombre,
+          email: email,
+          telefono: telefono,
+          direccion: direccion,
+          ciudad: ciudad,
+          estado: estado,
+          zip: zip,
+          productos: cart,
+          subtotal: subtotal,
+          descuento: 0,
+          tax: tax,
+          total: totalFinal,
+          metodo: metodoPago,
+          notas: notas,
+          newsletter: newsletter,
+          codigo_promo: "",
+          status: 'pendiente',
+          fecha: new Date().toISOString()
+        }).then(() => {
+          window.location.href = 'instrucciones.html';
+        }).catch((error) => {
+          console.error('Error Firebase:', error);
+          window.location.href = 'instrucciones.html';
+        });
+      } else {
+        // Redirección directa si Firebase tarda en responder en la carga asíncrona
+        console.warn('Firebase demorado, aplicando pasarela local.');
+        window.location.href = 'instrucciones.html';
+      }
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDWfom6bIBxUyRReGrmBtyu65G5NmsOHGM",
+      authDomain: "venus-peptide.firebaseapp.com",
+      projectId: "venus-peptide",
+      storageBucket: "venus-peptide.firebasestorage.app",
+      messagingSenderId: "974716476856",
+      appId: "1:974716476856:web:04cdfd455585a0faa4834d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    // Guardar las instancias en window para que la función tradicional del formulario las use sin craseos
+    window.db = db;
+    window.doc = doc;
+    window.setDoc = setDoc;
+    console.log('✅ Conexión con base de datos enlazada en ventana.');
+  </script>
+</body>
+</html>
