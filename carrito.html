@@ -305,12 +305,25 @@
         </div>`;
     }
 
+    // ── CAMBIAR CANTIDAD CON LÍMITE ──
     window.cambiarCantidad = function(id, cambio) {
       let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
       const item = cart.find(i => i.id === id);
       if (item) {
-        item.qty += cambio;
-        if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+        const nuevaCantidad = item.qty + cambio;
+
+        // ── VALIDACIÓN: Máximo 10 por producto ──
+        if (nuevaCantidad > 10) {
+          alert(`⚠️ Máximo 10 unidades de este producto.`);
+          return;
+        }
+
+        if (nuevaCantidad <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        } else {
+          item.qty = nuevaCantidad;
+        }
+
         localStorage.setItem('venus_cart', JSON.stringify(cart));
         renderizarCarrito();
       }
