@@ -511,7 +511,6 @@
     });
 
     // ── SISTEMA DE DESCUENTOS ──
-    // Catálogo de cupones válidos
     const CUPONES_VALIDOS = {
       'BIENVENIDA10': { tipo: 'porcentaje', valor: 10, descripcion: '10% de descuento' },
       'BIENVENIDA15': { tipo: 'porcentaje', valor: 15, descripcion: '15% de descuento' },
@@ -535,7 +534,6 @@
 
       const codigo = input.value.trim().toUpperCase();
 
-      // Si ya hay un cupón aplicado y el input está vacío, quitamos el cupón
       if (codigoPromoUsado && !codigo) {
         quitarCupon();
         return;
@@ -548,7 +546,6 @@
         return;
       }
 
-      // Verificar si el cupón existe
       if (CUPONES_VALIDOS[codigo]) {
         const cuponData = CUPONES_VALIDOS[codigo];
         const subtotal = calcularSubtotal();
@@ -556,24 +553,20 @@
         let descuento = 0;
         if (cuponData.tipo === 'porcentaje') {
           descuento = subtotal * (cuponData.valor / 100);
-          // Limitamos el descuento al 50% del subtotal como tope
           const maxDescuento = subtotal * 0.5;
           if (descuento > maxDescuento) {
             descuento = maxDescuento;
           }
-        } else { // fijo
+        } else {
           descuento = Math.min(cuponData.valor, subtotal * 0.5);
         }
 
-        // Redondear a 2 decimales
         descuento = Math.round(descuento * 100) / 100;
 
-        // Guardar el descuento
         descuentoAplicado = descuento;
         codigoPromoUsado = codigo;
         descuentoInfo = cuponData.descripcion;
 
-        // Actualizar UI
         input.classList.remove('coupon-error');
         input.classList.add('coupon-success');
         messageEl.textContent = `✅ ¡Cupón aplicado! ${cuponData.descripcion} (${descuento > 0 ? '-$' + descuento.toFixed(2) : 'Gratis'})`;
@@ -581,15 +574,12 @@
         btn.textContent = '✕ Quitar';
         btn.className = 'btn-coupon remove-coupon';
 
-        // Actualizar resumen
         actualizarResumen();
       } else {
-        // Cupón inválido
         input.classList.remove('coupon-success');
         input.classList.add('coupon-error');
         messageEl.textContent = '❌ Código inválido. Intenta con otro.';
         messageEl.className = 'coupon-message error';
-        // Limpiar descuento si había uno
         if (codigoPromoUsado) {
           quitarCupon();
         }
@@ -634,15 +624,12 @@
     }
 
     function actualizarResumen() {
-      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-      let subtotal = calcularSubtotal();
-
+      const subtotal = calcularSubtotal();
       const taxRate = 0.06;
       const totalConDescuento = subtotal - descuentoAplicado;
       const tax = totalConDescuento * taxRate;
       const totalFinal = totalConDescuento + tax;
 
-      // Actualizar elementos del resumen
       const totalEl = document.getElementById('checkoutTotal');
       const discountRow = document.querySelector('.summary-discount-row');
       const discountValue = document.querySelector('.summary-discount');
@@ -651,10 +638,8 @@
         totalEl.textContent = '$' + totalFinal.toFixed(2);
       }
 
-      // Mostrar u ocultar la línea de descuento
       if (descuentoAplicado > 0) {
         if (!discountRow) {
-          // Insertar la línea de descuento
           const totalsBox = document.querySelector('.summary-totals-box');
           if (totalsBox) {
             const newRow = document.createElement('div');
@@ -663,7 +648,6 @@
               <span>Descuento (${descuentoInfo})</span>
               <span class="summary-discount">-$${descuentoAplicado.toFixed(2)}</span>
             `;
-            // Insertar después del subtotal
             const subtotalRow = totalsBox.querySelector('.summary-line:first-child');
             if (subtotalRow) {
               subtotalRow.after(newRow);
@@ -679,7 +663,6 @@
         }
       }
 
-      // Actualizar el total en sessionStorage para instrucciones.html
       sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
       localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
     }
@@ -728,15 +711,15 @@
         const totalItem = prod.precio * item.qty;
         subtotal += totalItem;
 
+        // 🔥 AQUÍ ESTÁ EL CAMBIO: eliminé el <small> con la pureza
         itemsHTML += `
           <div class="summary-line">
-            <span>${item.qty}x ${prod.nombre} <small style="color: var(--text-muted); display:block;">${prod.pureza}</small></span>
+            <span>${item.qty}x ${prod.nombre}</span>
             <span style="font-weight: 600; color: var(--text-dark);">$${totalItem.toFixed(2)}</span>
           </div>`;
       });
 
       const taxRate = 0.06;
-      // Aplicar descuento al subtotal
       const totalConDescuento = subtotal - descuentoAplicado;
       const tax = totalConDescuento * taxRate;
       const totalFinal = totalConDescuento + tax;
@@ -747,7 +730,6 @@
       if (navCount) navCount.textContent = totalArticulos;
       if (navCountMobile) navCountMobile.textContent = totalArticulos;
 
-      // Línea de descuento (si hay descuento aplicado)
       let discountLine = '';
       if (descuentoAplicado > 0) {
         discountLine = `
@@ -761,7 +743,6 @@
         <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
           <div class="checkout-layout">
 
-            <!-- COLUMNA IZQUIERDA -->
             <div>
               <div class="checkout-card">
                 <h2>📋 Información de Envío (Investigación)</h2>
@@ -842,7 +823,6 @@
               </div>
             </div>
 
-            <!-- COLUMNA DERECHA: RESUMEN -->
             <div class="checkout-card" style="position: sticky; top: 100px;">
               <h2>Resumen del Pedido</h2>
 
@@ -850,7 +830,6 @@
                 ${itemsHTML}
               </div>
 
-              <!-- ── CASILLA DE DESCUENTO ── -->
               <div class="coupon-section">
                 <div class="coupon-row">
                   <input type="text" id="couponInput" placeholder="Código de descuento" maxlength="20" onkeydown="if(event.key==='Enter'){event.preventDefault();aplicarCupon();}">
@@ -898,7 +877,6 @@
         </form>
       `;
 
-      // Eventos
       const legalCheck = document.getElementById('checkoutLegal');
       const legalError = document.getElementById('legalError');
       if (legalCheck) {
@@ -911,7 +889,6 @@
         });
       }
 
-      // Si hay un descuento aplicado, actualizar el input
       if (codigoPromoUsado) {
         const input = document.getElementById('couponInput');
         const btn = document.getElementById('couponBtn');
@@ -927,21 +904,17 @@
       }
     }
 
-    // ── FUNCIÓN ORIGINAL MODIFICADA ──
     function enviarPedidoFormulario(e) {
       e.preventDefault();
 
-      // ── VALIDACIÓN DE CARRITO (LÍMITES) ──
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
-      // Validar máximo 30 unidades totales
       const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
       if (totalItems > 30) {
         alert(`⚠️ Máximo 30 unidades por orden. Actualmente tienes ${totalItems} unidades.`);
         return;
       }
 
-      // Validar máximo 10 por producto
       for (const item of cart) {
         if (item.qty > 10) {
           const prod = window.productosData[item.id];
@@ -950,7 +923,6 @@
         }
       }
 
-      // ── VALIDACIONES DEL FORMULARIO ──
       const legalChecked = document.getElementById('checkoutLegal').checked;
       if (!legalChecked) {
         document.getElementById('legalError').classList.add('visible');
@@ -999,7 +971,6 @@
         return;
       }
 
-      // ── PROCESAR PEDIDO ──
       const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
       const notas = document.getElementById('checkoutNotas').value.trim();
       const newsletter = document.getElementById('checkoutNewsletter').checked;
@@ -1017,17 +988,14 @@
       const totalFinal = totalConDescuento + tax;
       const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
 
-      // ── GUARDAR EN SESSIONSTORAGE ──
       sessionStorage.setItem('pending_order_id', codigoReferencia);
       sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
 
-      // ── BACKUP EN LOCALSTORAGE ──
       localStorage.setItem('backup_order_id', codigoReferencia);
       localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
       localStorage.setItem('backup_order_method', metodoPago);
 
-      // ── GUARDAR DATOS DEL CLIENTE ──
       localStorage.setItem('checkout_nombre', nombre);
       localStorage.setItem('checkout_email', email);
       localStorage.setItem('checkout_telefono', telefono);
@@ -1038,12 +1006,10 @@
       localStorage.setItem('checkout_notas', notas);
       localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
 
-      // ── GUARDAR EN SESSIONSTORAGE (para instrucciones) ──
       sessionStorage.setItem('checkout_nombre', nombre);
       sessionStorage.setItem('checkout_email', email);
       sessionStorage.setItem('checkout_telefono', telefono);
 
-      // ── GUARDAR EN FIREBASE ──
       const db = window.db;
       const doc = window.doc;
       const setDoc = window.setDoc;
