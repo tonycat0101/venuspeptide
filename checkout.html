@@ -102,6 +102,7 @@
 </head>
 <body>
 
+  <!-- ── NAV UNIFICADO (Solo icono de orden) ── -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo">
@@ -122,6 +123,7 @@
     </div>
   </nav>
 
+  <!-- FORMULARIO DE CHECKOUT -->
   <main class="checkout-section">
     <div class="container">
       <h1 class="section-title">Verificación y Envío</h1>
@@ -147,7 +149,7 @@
               </div>
             </div>
 
-            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-top: 32px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Dirección de Envío</h2>
+            <h2 style="font-family: var(--font-display); font-size: 18px; color: var(--text-dark); margin-top: 32px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Dirección de Entrega</h2>
 
             <div class="checkout-form-group">
               <label class="checkout-label" for="checkoutDireccion">Dirección Completa</label>
@@ -178,7 +180,7 @@
             </div>
 
             <div class="checkout-form-group">
-              <label class="checkout-label" for="checkoutNotas">Notas Especiales</label>
+              <label class="checkout-label" for="checkoutNotas">Notas del Pedido</label>
               <textarea id="checkoutNotas" class="checkout-textarea"></textarea>
             </div>
 
@@ -190,7 +192,7 @@
 
             <div class="legal-checkbox-container">
               <input type="checkbox" id="checkoutLegal" required>
-              <label class="legal-checkbox-label" for="checkoutLegal"><strong>* DECLARACIÓN DE CUMPLIMIENTO CIENTÍFICO:</strong> Certifico que estos compuestos serán utilizados exclusivamente para investigación de laboratorio in-vitro. Prohibido su consumo humano.</label>
+              <label class="legal-checkbox-label" for="checkoutLegal"><strong>* DECLARACIÓN DE CUMPLIMIENTO CIENTÍFICO:</strong> Certifico que estos compuestos serán utilizados exclusivamente para investigación de laboratorio in-vitro. Prohibido su consumo humano o veterinario.</label>
             </div>
             <div id="legalError" class="error-text">⚠️ Debe aceptar los términos de uso científico para proceder.</div>
 
@@ -214,7 +216,7 @@
 
   <script src="main.js"></script>
   <script>
-    // ── SOLUCIÓN AL CRASH: DECLARACIÓN SEGURA DE VARIABLES DE CONTROL ──
+    // Variables globales de respaldo preventivo
     var descuentoAplicado = 0;
     var codigoPromoUsado = "";
 
@@ -239,7 +241,7 @@
         return; 
       }
 
-      // ── VALIDACIÓN ESTRICTA DE LÍMITES ──
+      // ── VALIDACIÓN ESTRICTA DE LÍMITES EN CHECKOUT ──
       const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
       if (totalItems > 30) { 
         alert(`⚠️ Máximo 30 unidades por orden. Actualmente tienes ${totalItems} unidades.`); 
@@ -283,7 +285,7 @@
       const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
       const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
 
-      // Guardado local preventivo idéntico al original
+      // Almacenamiento local de respaldo preventivo
       sessionStorage.setItem('pending_order_id', codigoReferencia);
       sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
@@ -305,9 +307,9 @@
       localStorage.setItem('checkout_notas', notas);
       localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
 
-      // ── ACCESO ENLACE DIRECTO A FIREBASE EXPUESTO EN WINDOW ──
-      if (window.db && window.doc && window.setDoc) {
-        window.setDoc(window.doc(window.db, 'pedidos', codigoReferencia), {
+      // ── EJECUCIÓN CONEXIÓN COMPATIBLE CON FIREBASE ──
+      if (window.db && window.firebaseDoc && window.firebaseSetDoc) {
+        window.firebaseSetDoc(window.firebaseDoc(window.db, 'pedidos', codigoReferencia), {
           codigo: codigoReferencia,
           cliente: nombre,
           email: email,
@@ -330,20 +332,20 @@
         }).then(() => {
           window.location.href = 'instrucciones.html';
         }).catch((error) => {
-          console.error('Error Firebase:', error);
+          console.error('Error Firebase Firestore:', error);
           window.location.href = 'instrucciones.html';
         });
       } else {
-        // Redirección directa si Firebase tarda en responder en la carga asíncrona
-        console.warn('Firebase demorado, aplicando pasarela local.');
+        console.warn('Firebase en carga modular asíncrona diferida, aplicando redirección por pasarela local de resguardo.');
         window.location.href = 'instrucciones.html';
       }
     }
   </script>
 
+  <!-- SDK Firebase Mapeado Globalmente con Aliases Libres de Conflictos Modulares -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.1/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.4.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDWfom6bIBxUyRReGrmBtyu65G5NmsOHGM",
@@ -354,14 +356,18 @@
       appId: "1:974716476856:web:04cdfd455585a0faa4834d"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
+    try {
+      const app = initializeApp(firebaseConfig);
+      const db  = getFirestore(app);
 
-    // Guardar las instancias en window para que la función tradicional del formulario las use sin craseos
-    window.db = db;
-    window.doc = doc;
-    window.setDoc = setDoc;
-    console.log('✅ Conexión con base de datos enlazada en ventana.');
+      // Aliases directos para romper de forma segura el aislamiento del módulo asíncrono
+      window.db = db;
+      window.firebaseDoc = doc;
+      window.firebaseSetDoc = setDoc;
+      console.log('✅ Base de datos analítica mapeada en ventana global de forma exitosa.');
+    } catch (err) {
+      console.error('Fallo en inicialización de Firebase:', err);
+    }
   </script>
 </body>
 </html>
