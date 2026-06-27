@@ -100,47 +100,8 @@
 </head>
 <body>
 
-  <nav class="nav">
-    <div class="nav__inner">
-      <a href="index.html" class="nav__logo">
-        <div class="nav__logo-icon">V</div>
-        Venus Peptide
-      </a>
-      <div class="nav__links">
-        <a href="index.html">Inicio</a>
-        <a href="categorias.html">Categorías</a>
-        <a href="vertodos.html">Ver todos</a>
-        <a href="nosotros.html">Nosotros</a>
-        <div style="position: relative; display: inline-block;" 
-             onmouseenter="this.querySelector('.nav__submenu').style.display='block'" 
-             onmouseleave="this.querySelector('.nav__submenu').style.display='none'">
-          <a href="#" style="display: flex; align-items: center; gap: 6px; padding-bottom: 4px; cursor: default;">
-            Soporte <span style="font-size: 9px; opacity: 0.6;">▼</span>
-          </a>
-          <div class="nav__submenu" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-card); min-width: 260px; padding: 8px 0; z-index: 1100;">
-            <a href="contacto.html" style="display: block; padding: 10px 20px; font-size: 13.5px; text-align: left;">Contacto</a>
-          </div>
-        </div>
-        <a href="carrito.html" style="font-weight: 700; color: #2563eb; display: inline-flex; align-items: center; gap: 4px;">
-          🛒 Carrito (<span id="cartCountNav">0</span>)
-        </a>
-      </div>
-      <div class="nav__burger" id="burgerBtn">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-  </nav>
-
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Inicio</a>
-    <a href="categorias.html">Categorías</a>
-    <a href="vertodos.html">Ver todos</a>
-    <a href="nosotros.html">Nosotros</a>
-    <a href="contacto.html">Contacto</a>
-    <a href="carrito.html" style="font-weight: 700; color: #2563eb; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 15px;">
-      🛒 Mi Carrito (<span id="cartCountNavMobile">0</span>)
-    </a>
-  </div>
+  <div id="nav-placeholder"></div>
+  <script src="nav.js"></script>
 
   <main class="instructions-section">
     <div class="container">
