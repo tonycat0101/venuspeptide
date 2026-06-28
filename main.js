@@ -519,8 +519,10 @@ window.generarVialDinamico = generarVialDinamico;
 function actualizarNumeroNavGlobal() {
   const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
   const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-  document.querySelectorAll('.nav__cart span, #navCartCount').forEach(badge => {
-    badge.textContent = `(${totalQty})`;
+  
+  // ✅ ERR-MAIN-01 CORREGIDO
+  document.querySelectorAll('#navCartCount, #navCartCountMobile').forEach(badge => {
+    if (badge) badge.textContent = `(${totalQty})`;
   });
 }
 
