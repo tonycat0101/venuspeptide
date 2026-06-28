@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Venus Peptide — El estándar que la investigación merece</title>
- <meta name="description" content="Compuestos peptídicos de investigación de alta pureza. Catálogo  con estándares de calidad verificados.">
+  <meta name="description" content="Compuestos peptídicos de investigación de alta pureza. Catálogo con estándares de calidad verificados.">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   
@@ -56,8 +57,11 @@
       modal.style.display = 'none';
     }
   </script>
+
   <div id="nav-placeholder"></div>
-  <script src="nav.js"></script>  <!-- ── HERO ──────────────────────────────────────────────── -->
+  <script src="nav.js"></script>
+
+  <!-- ── HERO ──────────────────────────────────────────────── -->
   <section class="hero">
     <div class="container">
       <div class="hero__inner">
@@ -73,8 +77,9 @@
             El estándar que<br>la investigación<br>merece.
           </h1>
 
+          <!-- ✅ CO8 CORREGIDO -->
           <p class="hero__sub">
-            Gestionamos el acceso a compuestos peptídicos de investigación seleccionados, con Certificado de Análisis incluido en cada pedido.
+            Gestionamos el acceso a compuestos peptídicos de investigación seleccionados, con estándares de calidad verificados.
           </p>
 
           <div class="hero__actions">
@@ -92,8 +97,8 @@
               <div class="hero__stat-lbl">En cada pedido</div>
             </div>
             <div>
-             <div class="hero__stat-val">7–12</div>
-<div class="hero__stat-lbl">Días hábiles de entrega</div>
+              <div class="hero__stat-val">7–12</div>
+              <div class="hero__stat-lbl">Días hábiles de entrega</div>
             </div>
           </div>
         </div>
@@ -103,7 +108,6 @@
           <div class="hero__vial-wrap">
             <div class="hero__vial-badge">99% Pureza</div>
             <div class="hero__vial-img">💊</div>
-            <!-- Reemplaza con: <img src="img/vial.png" alt="Venus Peptide vial"> -->
             <div class="hero__vial-label">
               <strong>Venus Peptide</strong>
               <span>Para uso en investigación</span>
@@ -136,8 +140,9 @@
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
           </div>
           <div>
-            <div class="trust__item-title">Verificación de laboratorio</div>
-            <div class="trust__item-text">Cada compuesto incluye Certificado de Análisis verificado por laboratorio externo.</div>
+            <!-- ✅ CO9 CORREGIDO -->
+            <div class="trust__item-title">Verificación de calidad</div>
+            <div class="trust__item-text">Cada compuesto es sometido a rigurosos controles de calidad.</div>
           </div>
         </div>
 
@@ -155,7 +160,6 @@
     </div>
   </section>
 
-  <!-- ── PRODUCTOS POPULARES ────────────────────────────────── -->
   <!-- ── PRODUCTOS POPULARES ────────────────────────────────── -->
   <section class="section">
     <div class="container">
@@ -188,6 +192,7 @@
             <span class="quality__stat-label">Pureza mínima</span>
             <span class="quality__stat-val">≥99%</span>
           </div>
+        </div>
 
         <div class="fade-up">
           <div class="section-eyebrow">Calidad verificable</div>
@@ -196,7 +201,7 @@
             Cada compuesto sale de instalaciones con control de calidad documentado. El Certificado de Análisis va contigo desde el primer lote.
           </p>
 
-         <div class="quality__points">
+          <div class="quality__points">
             <div class="quality__point">
               <div class="quality__point-icon">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
@@ -255,7 +260,8 @@
           mobileMenu.classList.toggle('active');
           burgerBtn.classList.toggle('active');
         });
-      }});
+      }
+    });
   </script>
 
 </body>
