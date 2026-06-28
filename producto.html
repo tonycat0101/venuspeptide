@@ -138,7 +138,7 @@
     .btn-add-cart { flex: 1; height: 50px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-add-cart:hover { background: var(--primary-hover); }
 
-    /* ── DESCARGO LEGAL (Estilo Evolve BioPep) ── */
+    /* ── DESCARGO LEGAL (ÚNICO) ── */
     .legal-disclaimer-box {
       margin-top: 20px;
       padding: 16px;
@@ -156,11 +156,6 @@
     .legal-disclaimer-box strong {
       color: #0f172a;
     }
-
-    /* Aviso Científico */
-    .disclaimer-box { background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; padding: 16px; margin-top: 15px; display: flex; gap: 12px; }
-    .disclaimer-title { font-size: 13px; font-weight: 700; color: #b78103; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.03em; }
-    .disclaimer-text { font-size: 13px; color: #745203; line-height: 1.5; }
 
     .not-found-box { text-align: center; padding: 100px 24px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
     .btn-back { display: inline-block; background: var(--primary); color: white; padding: 14px 28px; border-radius: 6px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; }
@@ -303,11 +298,10 @@
                   Añadir a la Investigación
                 </button>
               </div>
-<div class="disclaimer-box">
-                <div>
-                  <div class="disclaimer-title">Atención: Uso exclusivo de laboratorio</div>
-                  <div class="disclaimer-text">Este compuesto se suministra únicamente para fines de investigación y desarrollo. No apto para consumo humano ni veterinario bajo ninguna circunstancia.</div>
-                </div>
+
+              <!-- ── DISCLAIMER ÚNICO (ERR-001 CORREGIDO) ── -->
+              <div class="legal-disclaimer-box">
+                <p><strong>⚠️ Aviso Legal:</strong> Este producto es exclusivamente para uso en investigación y desarrollo en laboratorio. No está aprobado para consumo humano ni veterinario bajo ninguna circunstancia. La información proporcionada no constituye asesoramiento médico ni guía de dosificación.</p>
               </div>
             </div>
           </div>
@@ -334,16 +328,16 @@
               return;
             }
 
-            // ── AÑADIR AL CARRITO ──
+            // ── AÑADIR AL CARRITO (ERR-002 CORREGIDO) ──
             if (itemExistente) {
               itemExistente.qty += cantidadAAgregar;
             } else {
               cart.push({ 
-  id: prod.id, 
-  qty: cantidadAAgregar,
-  nombre: prod.nombre,
-  precio: prod.precio
-});
+                id: prod.id, 
+                qty: cantidadAAgregar,
+                nombre: prod.nombre,
+                precio: prod.precio
+              });
             }
 
             localStorage.setItem('venus_cart', JSON.stringify(cart));
