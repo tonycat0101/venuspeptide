@@ -138,9 +138,16 @@
 
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
-      const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
-      const navCount = document.getElementById('navCartCount');
-      if (navCount) navCount.textContent = `(${totalArticulos})`;
+      // ── ACTUALIZAR CONTADOR GLOBAL (ERR-CARRITO-01 CORREGIDO) ──
+      if (typeof actualizarNumeroNavGlobal === 'function') {
+        actualizarNumeroNavGlobal();
+      } else {
+        const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
+        const navCount = document.getElementById('navCartCount');
+        const navCountMobile = document.getElementById('navCartCountMobile');
+        if (navCount) navCount.textContent = `(${totalArticulos})`;
+        if (navCountMobile) navCountMobile.textContent = totalArticulos;
+      }
 
       if (cart.length === 0) {
         container.innerHTML = `
