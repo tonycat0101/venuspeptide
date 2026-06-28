@@ -67,7 +67,7 @@ const FOOTER_HTML = `
     </div>
     <div style="padding-top: 24px; display: flex; flex-direction: column; gap: 20px;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13.5px; color: rgba(255,255,255,0.5);">
-        <div>Copyright ©2026 Venus Peptide, All Rights Reserved.</div>
+      <script>document.write(new Date().getFullYear());</script>
         <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
           <a href="faq.html" style="color: inherit; text-decoration: none; transition: color 0.2s ease;">FAQ</a>
           <span style="color: rgba(255,255,255,0.2);">|</span>
