@@ -345,19 +345,24 @@
                        localStorage.getItem('checkout_telefono') || 'No especificado';
 
       let productosTexto = 'No hay productos disponibles.';
-      try {
-        const cartData = localStorage.getItem('venus_cart');
-        if (cartData) {
-          const productos = JSON.parse(cartData);
-          if (Array.isArray(productos) && productos.length > 0) {
-            productosTexto = productos
-              .map(p => `${p.nombre || 'Producto'} x${p.qty || 1} = $${(p.precio || 0).toFixed(2)}`)
-              .join('; ');
-          }
-        }
-      } catch (e) {
-        productosTexto = 'Error al leer los productos.';
-      }
+try {
+  const cartData = localStorage.getItem('venus_cart');
+  if (cartData) {
+    const productos = JSON.parse(cartData);
+    if (Array.isArray(productos) && productos.length > 0) {
+      productosTexto = productos
+        .map(p => {
+          // Usar datos guardados o fallback a productosData
+          const nombre = p.nombre || window.productosData[p.id]?.nombre || 'Producto';
+          const precio = p.precio || window.productosData[p.id]?.precio || 0;
+          return `${nombre} x${p.qty} = $${(precio * p.qty).toFixed(2)}`;
+        })
+        .join('; ');
+    }
+  }
+} catch (e) {
+  productosTexto = 'Error al leer los productos.';
+}
 
       if (window.db && orderId !== 'VP-0000') {
         const orderRef = doc(window.db, 'pedidos', orderId);
