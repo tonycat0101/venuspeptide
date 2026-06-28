@@ -6,6 +6,13 @@
   <title>Venus Peptide — El estándar que la investigación merece</title>
   <meta name="description" content="Compuestos peptídicos de investigación de alta pureza. Catálogo con estándares de calidad verificados.">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- ── T14: LIMPIAR URL (Redirige /index.html a /) ── -->
+  <script>
+    if (window.location.pathname === '/index.html') {
+      window.location.replace('/');
+    }
+  </script>
 </head>
 <body>
   
@@ -77,7 +84,6 @@
             El estándar que<br>la investigación<br>merece.
           </h1>
 
-          <!-- ✅ CO8 CORREGIDO -->
           <p class="hero__sub">
             Gestionamos el acceso a compuestos peptídicos de investigación seleccionados, con estándares de calidad verificados.
           </p>
@@ -140,7 +146,6 @@
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
           </div>
           <div>
-            <!-- ✅ CO9 CORREGIDO -->
             <div class="trust__item-title">Verificación de calidad</div>
             <div class="trust__item-text">Cada compuesto es sometido a rigurosos controles de calidad.</div>
           </div>
@@ -227,6 +232,32 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMUNIDAD SKOOL ────────────────────────────────────── -->
+  <section class="section" style="background: var(--bg-light); border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="fade-up" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 700px; margin: 0 auto;">
+        <span class="section-eyebrow">Comunidad de Investigación</span>
+        <h2 class="section-title" style="font-size: 32px; margin-bottom: 16px;">
+          Forma parte de la <br>comunidad científica
+        </h2>
+        <p style="color: var(--text-body); font-size: 15px; line-height: 1.7; margin-bottom: 12px;">
+          Un espacio para investigadores y profesionales que buscan profundizar en el análisis de la literatura científica sobre compuestos peptídicos.
+        </p>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 20px 0 30px 0;">
+          <span style="background: var(--blue-light); color: var(--blue); padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;">📊 Análisis de estudios</span>
+          <span style="background: var(--blue-light); color: var(--blue); padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;">🧪 Datos de investigación</span>
+          <span style="background: var(--blue-light); color: var(--blue); padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;">📚 Educación continua</span>
+        </div>
+        <a href="https://skool.com/club-peptidos-salud-y-belleza" target="_blank" class="btn btn-primary" style="font-size: 15px; padding: 16px 40px;">
+          Unirme a la comunidad
+        </a>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 16px; max-width: 500px; line-height: 1.5;">
+          ⚠️ La comunidad es un espacio de discusión científica y educativa. Nada de lo compartido constituye consejo médico ni está destinado para consumo humano.
+        </p>
       </div>
     </div>
   </section>
