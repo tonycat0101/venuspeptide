@@ -338,7 +338,12 @@
             if (itemExistente) {
               itemExistente.qty += cantidadAAgregar;
             } else {
-              cart.push({ id: prod.id, qty: cantidadAAgregar });
+              cart.push({ 
+  id: prod.id, 
+  qty: cantidadAAgregar,
+  nombre: prod.nombre,
+  precio: prod.precio
+});
             }
 
             localStorage.setItem('venus_cart', JSON.stringify(cart));
