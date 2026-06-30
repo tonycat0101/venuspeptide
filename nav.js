@@ -1,6 +1,6 @@
 /* ============================================================
    VENUS PEPTIDE — nav.js
-   Nav y footer centralizados.
+   Nav y footer centralizados. Modifica aquí, se actualiza en todo el sitio.
    ============================================================ */
 
 const NAV_HTML = `
@@ -27,7 +27,6 @@ const NAV_HTML = `
   </div>
 </nav>
 
-<!-- ✅ MENÚ MÓVIL ELIMINADO (el que está hardcodeado en cada página es el único) -->
 <div class="mobile-menu" id="mobileMenu" style="display:none;">
 </div>
 `;
