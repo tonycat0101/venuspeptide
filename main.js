@@ -1,688 +1,427 @@
-/* ============================================================
-   VENUS PEPTIDE — BASE DE DATOS DE PRODUCTOS
-   ============================================================ */
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Pedido | Venus Peptide</title>
+  <meta name="description" content="Completa tu pedido de compuestos peptídicos de investigación en Venus Peptide.">
+  <link rel="stylesheet" href="styles.css">
 
-// ── FAVICON ──
-(function() {
-  const link = document.createElement('link');
-  link.rel = 'icon';
-  link.href = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232563eb'/%3E%3Ctext x='50' y='70' font-family='Georgia, serif' font-size='70' font-weight='bold' text-anchor='middle' fill='%23ffffff'%3EV%3C/text%3E%3C/svg%3E";
-  link.type = 'image/svg+xml';
-  document.head.appendChild(link);
-})();
+  <style>
+    .checkout-section { padding: calc(var(--nav-h) + 60px) 0 100px; background: var(--bg-light); min-height: 85vh; }
+    .checkout-layout { display: grid; grid-template-columns: 1fr 420px; gap: 40px; align-items: start; margin-top: 35px; }
+    @media (max-width: 992px) { .checkout-layout { grid-template-columns: 1fr; gap: 32px; } }
+    .checkout-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 35px; box-shadow: var(--shadow-card); margin-bottom: 30px; }
+    .checkout-card h2 { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--text-dark); margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .form-group { margin-bottom: 22px; }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .form-row-2, .form-row-3 { grid-template-columns: 1fr; gap: 15px; } }
+    .form-label { display: block; font-size: 13.5px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
+    .form-label .optional { font-weight: 400; color: var(--text-muted); font-size: 12px; }
+    .form-input { width: 100%; height: 48px; padding: 0 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; color: var(--text-dark); background: var(--bg-white); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+    .form-input.textarea { height: auto; padding: 12px 16px; resize: vertical; min-height: 80px; font-family: var(--font-body); }
+    .form-input::placeholder { color: var(--text-light); font-size: 13px; }
+    .legal-checkbox-container { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .legal-label { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; color: var(--text-body); line-height: 1.5; cursor: pointer; }
+    .legal-label input[type="checkbox"] { accent-color: var(--blue); width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+    .legal-label a { color: var(--blue); font-weight: 600; text-decoration: underline; }
+    .legal-label .highlight { font-weight: 600; color: var(--text-dark); }
+    .legal-label .error-text { color: #ef4444; font-size: 12px; display: none; margin-top: 4px; }
+    .legal-label .error-text.visible { display: block; }
+    .newsletter-checkbox { margin-top: 12px; }
+    .newsletter-checkbox label { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-muted); cursor: pointer; }
+    .newsletter-checkbox input[type="checkbox"] { accent-color: var(--blue); width: 16px; height: 16px; }
+    .payment-options { display: flex; flex-direction: column; gap: 14px; }
+    .pay-option { display: flex; align-items: center; gap: 14px; padding: 18px; border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+    .pay-option:hover { background: var(--bg-light); }
+    .pay-option input[type="radio"] { accent-color: var(--blue); width: 18px; height: 18px; }
+    .pay-option-text { display: flex; flex-direction: column; }
+    .pay-title { font-size: 14.5px; font-weight: 600; color: var(--text-dark); }
+    .summary-products-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; max-height: 220px; overflow-y: auto; padding-right: 5px; }
+    .summary-line { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-body); line-height: 1.4; }
+    .summary-totals-box { border-top: 1px solid var(--border); padding-top: 18px; display: flex; flex-direction: column; gap: 12px; }
+    .summary-line.grand-total { font-size: 22px; font-weight: 800; color: var(--text-dark); border-top: 1px dashed var(--border); padding-top: 14px; margin-top: 6px; }
+    .error-box { text-align: center; padding: 40px 24px; border: 1px solid #fca5a5; border-radius: var(--radius-md); background: #fef2f2; box-shadow: var(--shadow-card); display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .error-box h2 { color: #dc2626; font-size: 22px; }
+    .error-box p { color: #991b1b; max-width: 400px; }
+    .empty-box { text-align: center; padding: 40px 24px; border: 1px solid #fcd34d; border-radius: var(--radius-md); background: #fffbeb; box-shadow: var(--shadow-card); display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .empty-box h2 { color: #d97706; font-size: 22px; }
+    .empty-box p { color: #92400e; max-width: 400px; }
+    .discount-badge { background: #dcfce7; color: #15803d; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+  </style>
+</head>
+<body>
 
-const productosData = {
-  // ── GH (5 productos) ──
-  "ipamorelin-5mg": {
-    id: "ipamorelin-5mg",
-    nombre: "Ipamorelin 5mg",
-    precio: 42.00,
-    rating: "4.8",
-    pureza: "99.5% Pureza | 5mg",
-    categoria: "gh",
-    imagen: "img/vial-ipamorelin-5mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores de grelina en modelos celulares in-vitro. Presentación en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "cjc-1295-no-dac-5mg": {
-    id: "cjc-1295-no-dac-5mg",
-    nombre: "CJC-1295 No DAC 5mg",
-    precio: 44.00,
-    rating: "4.7",
-    pureza: "99.2% Pureza | 5mg",
-    categoria: "gh",
-    badge: "sale",
-    imagen: "img/vial-cjc-1295-no-dac-5mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de receptores GHRH en modelos celulares in-vitro. Presentación en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "igf-1-lr3-1mg": {
-    id: "igf-1-lr3-1mg",
-    nombre: "IGF-1 LR3 1mg",
-    precio: 85.00,
-    rating: "4.8",
-    pureza: "99.7% Pureza | 1mg",
-    categoria: "gh",
-    badge: "sale",
-    imagen: "img/vial-igf-1-lr3-1mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de receptores IGF-1 en modelos celulares in-vitro. Presentación en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "tesamorelin-10mg": {
-    id: "tesamorelin-10mg",
-    nombre: "Tesamorelin 10mg",
-    precio: 95.00,
-    rating: "4.7",
-    pureza: "99.5% Pureza | 10mg",
-    categoria: "gh",
-    imagen: "img/vial-tesamorelin-10mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de receptores GHRH en modelos celulares in-vitro. Presentación en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "tesamorelin-20mg": {
-    id: "tesamorelin-20mg",
-    nombre: "Tesamorelin 20mg",
-    precio: 140.00,
-    rating: "4.7",
-    pureza: "99.5% Pureza | 20mg",
-    categoria: "gh",
-    imagen: "img/vial-tesamorelin-20mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de receptores GHRH en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
-  },
+  <div id="nav-placeholder"></div>
+  <script src="nav.js"></script>
 
-  // ── METABÓLICOS (12 productos) ──
-  "semaglutide-20mg": {
-    id: "semaglutide-20mg",
-    nombre: "GLP-1 RC 20mg",
-    precio: 120.00,
-    rating: "5.0",
-    pureza: "99.7% Pureza | 20mg",
-    categoria: "metabolicos",
-    imagen: "img/vial-semaglutide-20mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores GLP-1 en modelos celulares in-vitro. Presentación de 20mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "semaglutide-30mg": {
-    id: "semaglutide-30mg",
-    nombre: "GLP-1 RC 30mg",
-    precio: 155.00,
-    rating: "5.0",
-    pureza: "99.7% Pureza | 30mg",
-    categoria: "metabolicos",
-    imagen: "img/vial-semaglutide-30mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 30mg para investigación en ensayos de laboratorio y análisis de receptores GLP-1 en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "tirzepatide-10mg": {
-    id: "tirzepatide-10mg",
-    nombre: "GIP/GLP-1 RC 10mg",
-    precio: 95.00,
-    rating: "4.9",
-    pureza: "99.8% Pureza | 10mg",
-    categoria: "metabolicos",
-    badge: "sale",
-    imagen: "img/vial-tirzepatide-10mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores GIP y GLP-1 en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "tirzepatide-20mg": {
-    id: "tirzepatide-20mg",
-    nombre: "GIP/GLP-1 RC 20mg",
-    precio: 145.00,
-    rating: "4.9",
-    pureza: "99.8% Pureza | 20mg",
-    categoria: "metabolicos",
-    badge: "sale",
-    imagen: "img/vial-tirzepatide-20mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de receptores GIP y GLP-1 en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "tirzepatide-30mg": {
-    id: "tirzepatide-30mg",
-    nombre: "GIP/GLP-1 RC 30mg",
-    precio: 185.00,
-    rating: "4.9",
-    pureza: "99.8% Pureza | 30mg",
-    categoria: "metabolicos",
-    badge: "sale",
-    imagen: "img/vial-tirzepatide-30mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 30mg para investigación en ensayos de laboratorio y estudios de receptores GIP y GLP-1 en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "retatrutide-10mg": {
-    id: "retatrutide-10mg",
-    nombre: "Triple RC 10mg",
-    precio: 140.00,
-    rating: "4.7",
-    pureza: "99.4% Pureza | 10mg",
-    categoria: "metabolicos",
-    imagen: "img/vial-retatrutide-10mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "retatrutide-20mg": {
-    id: "retatrutide-20mg",
-    nombre: "Triple RC 20mg",
-    precio: 190.00,
-    rating: "4.7",
-    pureza: "99.4% Pureza | 20mg",
-    categoria: "metabolicos",
-    imagen: "img/vial-retatrutide-20mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "retatrutide-30mg": {
-    id: "retatrutide-30mg",
-    nombre: "Triple RC 30mg",
-    precio: 240.00,
-    rating: "4.7",
-    pureza: "99.4% Pureza | 30mg",
-    categoria: "metabolicos",
-    imagen: "img/vial-retatrutide-30mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 30mg para investigación en ensayos de laboratorio y estudios de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "retatrutide-60mg": {
-    id: "retatrutide-60mg",
-    nombre: "Triple RC 60mg",
-    precio: 380.00,
-    rating: "4.7",
-    pureza: "99.4% Pureza | 60mg",
-    categoria: "metabolicos",
-    imagen: "img/vial-retatrutide-60mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 60mg para investigación en ensayos de laboratorio y análisis de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "aod-9604-5mg": {
-    id: "aod-9604-5mg",
-    nombre: "AOD-9604 5mg",
-    precio: 74.99,
-    rating: "4.5",
-    pureza: "99.1% Pureza | 5mg",
-    categoria: "metabolicos",
-    imagen: "img/vial-aod-9604-5mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de procesos bioquímicos en modelos celulares in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "mots-c-10mg": {
-    id: "mots-c-10mg",
-    nombre: "MOTS-C 10mg",
-    precio: 79.99,
-    rating: "0",
-    pureza: "98.6% Pureza | 10mg",
-    categoria: "metabolicos",
-    imagen: "img/vial-mots-c-10mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de metabolismo celular en modelos in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "mots-c-20mg": {
-    id: "mots-c-20mg",
-    nombre: "MOTS-C 20mg",
-    precio: 129.99,
-    rating: "0",
-    pureza: "98.6% Pureza | 20mg",
-    categoria: "metabolicos",
-    imagen: "img/vial-mots-c-20mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de metabolismo celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
-  },
-
-  // ── DESEMPEÑO (9 productos) ──
-  "bpc-157-5mg": {
-    id: "bpc-157-5mg",
-    nombre: "BPC-157 5mg",
-    precio: 45.00,
-    rating: "4.9",
-    pureza: "99.5% Pureza | 5mg",
-    categoria: "desempeno",
-    badge: "sale",
-    imagen: "img/vial-bpc-157-5mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de señalización celular en modelos in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "tb-500-5mg": {
-    id: "tb-500-5mg",
-    nombre: "TB-500 5mg",
-    precio: 49.00,
-    rating: "4.8",
-    pureza: "99.3% Pureza | 5mg",
-    categoria: "desempeno",
-    badge: "sale",
-    imagen: "img/vial-tb-500-5mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de migración celular en modelos in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "melanotan-ii-10mg": {
-    id: "melanotan-ii-10mg",
-    nombre: "Melanotan II 10mg",
-    precio: 38.00,
-    rating: "4.6",
-    pureza: "99.1% Pureza | 10mg",
-    categoria: "desempeno",
-    badge: "new",
-    vialColor: "pink",
-    imagen: "img/vial-melanotan-ii-10mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores de melanocortina en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "ghk-cu-50mg": {
-    id: "ghk-cu-50mg",
-    nombre: "GHK-Cu 50mg",
-    precio: 68.00,
-    rating: "5.0",
-    pureza: "99.8% Pureza | 50mg",
-    categoria: "desempeno",
-    imagen: "img/vial-ghk-cu-50mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de señalización celular en modelos in-vitro. Presentación de 50mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "bpc-157-tb-500-blend-5-5mg": {
-    id: "bpc-157-tb-500-blend-5-5mg",
-    nombre: "BPC-157 + TB-500 Blend 5mg/5mg",
-    precio: 85.00,
-    rating: "4.9",
-    pureza: "Mezcla Cinética | 5mg + 5mg",
-    categoria: "desempeno",
-    badge: "sale",
-    isBlend: true,
-    imagen: "img/vial-bpc-157-tb-500-blend-5-5mg.png",
-    descripcion: "Mezcla de compuestos sintéticos de alta pureza. Diseñada para investigación en ensayos de laboratorio y estudios de señalización celular en modelos in-vitro. Presentación de 5mg + 5mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "nad-plus-500mg": {
-    id: "nad-plus-500mg",
-    nombre: "NAD+ 500mg",
-    precio: 60.00,
-    rating: "4.9",
-    pureza: "99.9% Pureza | 500mg",
-    categoria: "desempeno",
-    badge: "sale",
-    imagen: "img/vial-nad-plus-500mg.png",
-    descripcion: "Coenzima de alta pureza. Diseñada para investigación en ensayos de laboratorio y análisis de procesos bioquímicos celulares in-vitro. Presentación de 500mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "ll-37-2mg": {
-    id: "ll-37-2mg",
-    nombre: "LL-37 2mg",
-    precio: 58.00,
-    rating: "4.8",
-    pureza: "99.5% Pureza | 2mg",
-    categoria: "desempeno",
-    imagen: "img/vial-ll-37-2mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de respuesta celular en modelos in-vitro. Presentación de 2mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "5-amino-1mq-50mg": {
-    id: "5-amino-1mq-50mg",
-    nombre: "5-Amino 1MQ 50mg",
-    precio: 94.99,
-    rating: "0",
-    pureza: "Purity ~99% | 50mg",
-    categoria: "desempeno",
-    imagen: "img/vial-5-amino-1mq-50mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de procesos bioquímicos en modelos celulares in-vitro. Presentación de 50mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "glutathione-1500mg": {
-    id: "glutathione-1500mg",
-    nombre: "Glutathione 1500mg",
-    precio: 149.99,
-    rating: "0",
-    pureza: "99.1% Pureza | 1500mg",
-    categoria: "desempeno",
-    imagen: "img/vial-glutathione-1500mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de procesos bioquímicos en modelos celulares in-vitro. Presentación de 1500mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-
-  // ── COGNITIVOS (4 productos) ──
-  "pt-141-10mg": {
-    id: "pt-141-10mg",
-    nombre: "PT-141 (Bremelanotide) 10mg",
-    precio: 48.00,
-    rating: "4.8",
-    pureza: "99.6% Pureza | 10mg",
-    categoria: "cognitivas",
-    imagen: "img/vial-pt-141-10mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores de melanocortina en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "dsip-5mg": {
-    id: "dsip-5mg",
-    nombre: "DSIP (Sleep Peptide) 5mg",
-    precio: 35.00,
-    rating: "4.7",
-    pureza: "99.6% Pureza | 5mg",
-    categoria: "cognitivas",
-    imagen: "img/vial-dsip-5mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de ritmos circadianos en modelos celulares in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "oxytocin-5mg": {
-    id: "oxytocin-5mg",
-    nombre: "Oxytocin 5mg",
-    precio: 35.00,
-    rating: "4.9",
-    pureza: "99.7% Pureza | 5mg",
-    categoria: "cognitivas",
-    imagen: "img/vial-oxytocin-5mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de señalización sináptica en modelos celulares in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
-  },
-  "selank-10mg": {
-    id: "selank-10mg",
-    nombre: "Selank 10mg",
-    precio: 45.00,
-    rating: "4.9",
-    pureza: "99.5% Pureza | 10mg",
-    categoria: "cognitivas",
-    imagen: "img/vial-selank-10mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de estabilidad estructural en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
-  }
-};
-
-// Exponer la base de datos
-window.productosData = productosData;
-
-// ── FUNCIONES DE DESCUENTO ──
-function calcularDescuento(cantidad) {
-  if (cantidad >= 10) return 0.15;
-  if (cantidad >= 4) return 0.10;
-  if (cantidad >= 2) return 0.05;
-  return 0;
-}
-
-function calcularPrecioConDescuento(precio, cantidad) {
-  const descuento = calcularDescuento(cantidad);
-  return precio * (1 - descuento);
-}
-
-function calcularPrecioKit(precio) {
-  return precio * 3 * 0.90;
-}
-
-window.calcularDescuento = calcularDescuento;
-window.calcularPrecioConDescuento = calcularPrecioConDescuento;
-window.calcularPrecioKit = calcularPrecioKit;
-
-// ── MOCKUP DE VIAL DINÁMICO (FALLBACK) ──
-function generarVialDinamico(prod) {
-  const mgMatch = prod.pureza.match(/\|\s*(\d+mg)/);
-  const mg = mgMatch ? mgMatch[1] : '';
-  const purityMatch = prod.pureza.match(/(\d+\.?\d*%)/);
-  const purity = purityMatch ? purityMatch[1] : '';
-
-  if (prod.isBlend) {
-    const mgBlendMatch = prod.pureza.match(/(\d+mg)\s*\+\s*(\d+mg)/);
-    const mg1 = mgBlendMatch ? mgBlendMatch[1] : '';
-    const mg2 = mgBlendMatch ? mgBlendMatch[2] : '';
-    const purityBlend = purityMatch ? purityMatch[1] : '';
-
-    const nombre1 = prod.nombre.split('+')[0] ? prod.nombre.split('+')[0].trim() : '';
-    const nombre2 = prod.nombre.split('+')[1] ? prod.nombre.split('+')[1].trim() : 'Blend';
-
-    return `
-      <div class="vial-blend-container">
-        <div class="vial-mockup-dinamico" style="background-image: url('img/vial-vacio.png');">
-          <div class="vial-label">
-            <div class="vial-brand">Venus</div>
-            <div class="vial-name">${nombre1}</div>
-            <div class="vial-details">${mg1}</div>
-            <div class="vial-legal">Research Use</div>
-          </div>
-        </div>
-        <span class="vial-blend-plus">+</span>
-        <div class="vial-mockup-dinamico" style="background-image: url('img/vial-vacio.png');">
-          <div class="vial-label">
-            <div class="vial-brand">Venus</div>
-            <div class="vial-name">${nombre2}</div>
-            <div class="vial-details">${mg2}</div>
-            <div class="vial-legal">Research Use</div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="vial-mockup-dinamico" style="background-image: url('img/vial-vacio.png');">
-      <div class="vial-label">
-        <div class="vial-brand">Venus Peptide</div>
-        <div class="vial-name">${prod.nombre}</div>
-        <div class="vial-details">${mg} | ${purity} Pureza</div>
-        <div class="vial-legal">For Research Use Only</div>
-      </div>
+  <main class="checkout-section">
+    <div class="container">
+      <h1 class="section-title">Finalizar Orden</h1>
+      <div id="checkoutContent"><!-- Se renderiza con JS --></div>
     </div>
-  `;
-}
+  </main>
 
-window.generarVialDinamico = generarVialDinamico;
+  <footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div><p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p></div><div class="footer__col"><div class="footer__col-title">Navegación</div><a href="index.html">Inicio</a><a href="categorias.html">Categorías</a><a href="vertodos.html">Productos</a><a href="nosotros.html">Nosotros</a></div><div class="footer__col"><div class="footer__col-title">Soporte</div><a href="contacto.html">Contacto</a></div></div><div class="footer__bottom"><div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div></div></div></footer>
 
-// ── CONTADOR DEL CARRITO ──
-function actualizarNumeroNavGlobal() {
-  const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-  
-  document.querySelectorAll('#navCartCount, #navCartCountMobile').forEach(badge => {
-    if (badge) badge.textContent = `(${totalQty})`;
-  });
-}
+  <script src="main.js"></script>
 
-window.actualizarNumeroNavGlobal = actualizarNumeroNavGlobal;
+  <!-- FIREBASE SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDocs, query, where, collection } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-// ── AGREGAR AL CARRITO DESDE EL CATÁLOGO ──
-window.agregarAlCarrito = function(productId) {
-  const prod = productosData[productId];
-  if (!prod) {
-    alert('⚠️ Producto no disponible.');
-    return;
-  }
+    const firebaseConfig = {
+      apiKey: "AIzaSyDWfom6bIBxUyRReGrmBtyu65G5NmsOHGM",
+      authDomain: "venus-peptide.firebaseapp.com",
+      projectId: "venus-peptide",
+      storageBucket: "venus-peptide.firebasestorage.app",
+      messagingSenderId: "974716476856",
+      appId: "1:974716476856:web:04cdfd455585a0faa4834d"
+    };
 
-  let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  // Verificar límite de 10 por producto
-  const itemExistente = cart.find(i => i.id === productId);
-  const cantidadActual = itemExistente ? itemExistente.qty : 0;
-  if (cantidadActual + 1 > 10) {
-    alert(`⚠️ Máximo 10 unidades de ${prod.nombre}.`);
-    return;
-  }
+    window.db = db;
+    window.doc = doc;
+    window.setDoc = setDoc;
+    window.getDocs = getDocs;
+    window.query = query;
+    window.where = where;
+    window.collection = collection;
 
-  // Verificar límite de 30 total
-  const totalActual = cart.reduce((sum, item) => sum + item.qty, 0);
-  if (totalActual + 1 > 30) {
-    alert(`⚠️ Máximo 30 unidades por pedido.`);
-    return;
-  }
+    console.log('✅ Firebase inicializado correctamente');
+  </script>
 
-  // Agregar al carrito
-  if (itemExistente) {
-    itemExistente.qty += 1;
-  } else {
-    cart.push({
-      id: productId,
-      qty: 1,
-      nombre: prod.nombre,
-      precio: prod.precio,
-      precio_original: prod.precio,
-      descuento_aplicado: 0,
-      tipo: 'suelto'
-    });
-  }
-
-  localStorage.setItem('venus_cart', JSON.stringify(cart));
-
-  if (typeof actualizarNumeroNavGlobal === 'function') {
-    actualizarNumeroNavGlobal();
-  }
-
-  alert(`✅ ${prod.nombre} añadido al carrito.`);
-};
-
-// ── LÓGICA DE LA WEB ──
-document.addEventListener('DOMContentLoaded', () => {
-  actualizarNumeroNavGlobal();
-
-  // ── RENDERIZAR CATÁLOGO ──
-  const gridProductos = document.getElementById('gridProductos');
-  if (gridProductos) {
-    gridProductos.innerHTML = '';
-
-    Object.values(productosData).forEach(prod => {
-      let badgeHTML = '';
-      if (prod.badge) {
-        const badgeColor = prod.badge === 'sale' ? '#ef4444' : '#3b82f6';
-        badgeHTML = `<span style="position: absolute; top: 16px; left: 16px; background: ${badgeColor}; color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; z-index: 10;">${prod.badge}</span>`;
-      }
-
-      let actionBoxHTML = '';
-      if (prod.agotado) {
-        actionBoxHTML = `
-          <div style="font-size: 18px; font-weight: 800; color: #94a3b8; margin-bottom: 4px;">Agotado</div>
-          <a href="#" class="btn" style="display: block; text-align: center; background: #94a3b8; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; cursor: not-allowed;">
-            Agotado
-          </a>`;
-      } else {
-        actionBoxHTML = `
-          <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">$${prod.precio.toFixed(2)} USD</div>
-          <button onclick="event.stopPropagation(); agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
-            Agregar al carrito
-          </button>`;
-      }
-
-      let vialHTML = '';
-      if (prod.imagen) {
-        vialHTML = `
-          <div style="background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 6px; padding: 10px; display: flex; justify-content: center; align-items: center; min-height: 260px;">
-            <img src="${prod.imagen}" alt="${prod.nombre}" style="max-height: 240px; max-width: 100%; object-fit: contain;">
-          </div>
-        `;
-      } else {
-        vialHTML = generarVialDinamico(prod);
-      }
-
-      gridProductos.innerHTML += `
-        <a href="producto.html?id=${prod.id}" class="product-wrap-link" style="text-decoration: none; color: inherit; display: block;" data-cat="${prod.categoria}">
-          <div class="product-card" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--shadow-hover)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-card)'">
-            ${badgeHTML}
-            ${vialHTML}
-            <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 4px 0 0 0;">${prod.nombre}</h3>
-            <div style="display: flex; align-items: center; gap: 4px; font-size: 13px; color: #f59e0b;">
-              ★★★★★ <span style="color: #64748b; font-weight: 600; margin-left: 2px;">(${prod.rating})</span>
-            </div>
-            <div style="font-size: 13px; color: #64748b; font-weight: 500; margin-bottom: auto;">${prod.pureza}</div>
-            ${actionBoxHTML}
-          </div>
-        </a>
-      `;
-    });
-  }
-
-  // ── PRODUCTOS POPULARES ──
-  const gridPopulares = document.getElementById('productosPopulares');
-  if (gridPopulares) {
-    const productosDestacados = [
-      'semaglutide-20mg',
-      'tirzepatide-10mg',
-      'retatrutide-10mg',
-      'bpc-157-5mg',
-      'tb-500-5mg',
-      'ipamorelin-5mg',
-      'ghk-cu-50mg',
-      'nad-plus-500mg'
-    ];
-
-    gridPopulares.innerHTML = '';
-
-    productosDestacados.forEach(id => {
-      const prod = productosData[id];
-      if (!prod) return;
-
-      let badgeHTML = '';
-      if (prod.badge) {
-        const badgeColor = prod.badge === 'sale' ? '#ef4444' : '#3b82f6';
-        badgeHTML = `<span style="position: absolute; top: 16px; left: 16px; background: ${badgeColor}; color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; z-index: 10;">${prod.badge}</span>`;
-      }
-
-      let vialHTML = '';
-      if (prod.imagen) {
-        vialHTML = `
-          <div style="background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 6px; padding: 10px; display: flex; justify-content: center; align-items: center; min-height: 200px;">
-            <img src="${prod.imagen}" alt="${prod.nombre}" style="max-height: 180px; max-width: 100%; object-fit: contain;">
-          </div>
-        `;
-      } else {
-        vialHTML = generarVialDinamico(prod);
-      }
-
-      let actionHTML = '';
-      if (prod.agotado) {
-        actionHTML = `
-          <div style="font-size: 18px; font-weight: 800; color: #94a3b8; margin-bottom: 4px;">Agotado</div>
-          <a href="#" class="btn" style="display: block; text-align: center; background: #94a3b8; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; cursor: not-allowed;">
-            Agotado
-          </a>`;
-      } else {
-        actionHTML = `
-          <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">$${prod.precio.toFixed(2)} USD</div>
-          <button onclick="event.stopPropagation(); agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
-            Agregar al carrito
-          </button>`;
-      }
-
-      gridPopulares.innerHTML += `
-        <div class="product-card" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-          ${badgeHTML}
-          ${vialHTML}
-          <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 4px 0 0 0;">${prod.nombre}</h3>
-          <div style="display: flex; align-items: center; gap: 4px; font-size: 13px; color: #f59e0b;">
-            ★★★★★ <span style="color: #64748b; font-weight: 600; margin-left: 2px;">(${prod.rating})</span>
-          </div>
-          <div style="font-size: 13px; color: #64748b; font-weight: 500; margin-bottom: auto;">${prod.pureza}</div>
-          ${actionHTML}
-        </div>
-      `;
-    });
-  }
-
-  // ── NAV: link activo ──
-  const page = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav__links a').forEach(link => {
-    if (link.getAttribute('href') === page) link.classList.add('active');
-  });
-
-  // ── MOBILE MENU ──
-  const burger = document.querySelector('.nav__burger');
-  const menu = document.querySelector('.mobile-menu');
-  if (burger && menu) {
-    burger.addEventListener('click', () => {
-      menu.classList.toggle('open');
-      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-    });
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      menu.classList.remove('open');
-      document.body.style.overflow = '';
-    }));
-  }
-
-  // ── SCROLL FADE-UP ──
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 90);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-  // ── NAV SOMBRA ──
-  const nav = document.querySelector('.nav');
-  if (nav) {
-    window.addEventListener('scroll', () => {
-      nav.style.boxShadow = window.scrollY > 12 ? '0 2px 16px rgba(15,30,53,.08)' : 'none';
-    }, { passive: true });
-  }
-
-  // ── FORMULARIO CONTACTO ──
-  const form = document.querySelector('.contact-form');
-  if (form) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      btn.textContent = '¡Mensaje enviado! ✓';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = 'Enviar mensaje';
-        btn.disabled = false;
-        form.reset();
-      }, 3500);
-    });
-  }
-
-  // ── FILTRO DE CATEGORÍAS ──
-  const tabs = document.querySelectorAll('.cat-tab');
-  const cards = document.querySelectorAll('.product-wrap');
-  if (tabs.length && cards.length) {
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const cat = tab.dataset.cat;
-        cards.forEach(c => {
-          c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const burgerBtn = document.getElementById('burgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (burgerBtn && mobileMenu) {
+        burgerBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('active');
+          burgerBtn.classList.toggle('active');
         });
-      });
+      }
+      renderizarCheckout();
     });
-  }
 
-  const catUrl = new URLSearchParams(window.location.search).get('cat');
-  if (catUrl) {
-    const cardsParaFiltrar = document.querySelectorAll('.product-wrap');
-    const tabsParaFiltrar = document.querySelectorAll('.cat-tab');
-    if (tabsParaFiltrar.length) {
-      tabsParaFiltrar.forEach(t => {
-        t.classList.remove('active');
-        if (t.dataset.cat === catUrl) t.classList.add('active');
-      });
+    function calcularDescuento(cantidad) {
+      if (cantidad >= 10) return 0.15;
+      if (cantidad >= 4) return 0.10;
+      if (cantidad >= 2) return 0.05;
+      return 0;
     }
-    if (cardsParaFiltrar.length) {
-      cardsParaFiltrar.forEach(c => {
-        c.style.display = c.dataset.cat === catUrl ? '' : 'none';
-      });
+
+    function esKit(item) {
+      return item.tipo === 'kit';
     }
-  }
-});
+
+    function calcularPrecioItem(item) {
+      if (esKit(item)) return item.precio;
+      const descuento = calcularDescuento(item.qty);
+      return item.precio_original * (1 - descuento);
+    }
+
+    function renderizarCheckout() {
+      const container = document.getElementById('checkoutContent');
+
+      if (!window.productosData) {
+        container.innerHTML = `<div class="error-box"><h2>⚠️ Base de Datos No Disponible</h2><p>No se pudo cargar la información de los productos. Por favor, recarga la página.</p><a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a></div>`;
+        return;
+      }
+
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+
+      if (cart.length === 0) {
+        container.innerHTML = `<div class="empty-box"><h2>🛒 Carrito Vacío</h2><p>No tienes productos en tu carrito. Agrega algunos antes de proceder al pago.</p><a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a></div>`;
+        return;
+      }
+
+      let subtotal = 0;
+      let itemsHTML = '';
+
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (!prod) return;
+
+        const precioUnitario = calcularPrecioItem(item);
+        const totalItem = precioUnitario * item.qty;
+        subtotal += totalItem;
+
+        const descuentoAplicado = item.tipo === 'kit' ? 0.10 : calcularDescuento(item.qty);
+        const badge = item.tipo === 'kit' ? '<span class="discount-badge">Kit 10%</span>' :
+                      (descuentoAplicado > 0 ? `<span class="discount-badge">${Math.round(descuentoAplicado * 100)}% off</span>` : '');
+
+        itemsHTML += `
+          <div class="summary-line">
+            <span>${item.qty}x ${prod.nombre} ${badge}</span>
+            <span style="font-weight: 600; color: var(--text-dark);">$${totalItem.toFixed(2)}</span>
+          </div>`;
+      });
+
+      const envio = subtotal >= 100 ? 0 : 12;
+      const tax = subtotal * 0.06;
+      const total = subtotal + envio + tax;
+
+      container.innerHTML = `
+        <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
+          <div class="checkout-layout">
+            <div>
+              <div class="checkout-card">
+                <h2>📋 Información de Envío (Investigación)</h2>
+                <div class="form-group">
+                  <label class="form-label">Nombre Completo del Investigador / Laboratorio</label>
+                  <input type="text" class="form-input" id="checkoutNombre" required placeholder="Ej. Dr. Alejandro Silva">
+                </div>
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Correo Electrónico <span class="optional">(para confirmación y descuento)</span></label>
+                    <input type="email" class="form-input" id="checkoutEmail" required placeholder="investigacion@ejemplo.com">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Teléfono de Contacto</label>
+                    <input type="tel" class="form-input" id="checkoutTelefono" required placeholder="Ej. +1 (305) 555-0199">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Dirección Completa de Destino</label>
+                  <input type="text" class="form-input" id="checkoutDireccion" required placeholder="Calle, Número, Suite, Edificio o Departamento">
+                </div>
+                <div class="form-row-3">
+                  <div class="form-group"><label class="form-label">Ciudad</label><input type="text" class="form-input" id="checkoutCiudad" required placeholder="Ej. Miami"></div>
+                  <div class="form-group"><label class="form-label">Estado / Provincia</label><input type="text" class="form-input" id="checkoutEstado" required placeholder="Ej. FL"></div>
+                  <div class="form-group"><label class="form-label">Código Postal (ZIP Code)</label><input type="text" class="form-input" id="checkoutZip" required placeholder="Ej. 33101"></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Notas sobre tu pedido <span class="optional">(opcional)</span></label>
+                  <textarea class="form-input textarea" id="checkoutNotas" placeholder="Instrucciones especiales para el envío, indicaciones de entrega, etc."></textarea>
+                </div>
+                <div class="form-group newsletter-checkbox">
+                  <label><input type="checkbox" id="checkoutNewsletter" checked><span style="font-size: 13px; color: var(--text-muted);">📧 Recibir novedades, lanzamientos y ofertas especiales (opcional)</span></label>
+                </div>
+              </div>
+
+              <div class="checkout-card">
+                <h2>🔒 Métodos de Pago Seguros</h2>
+                <div class="payment-options">
+                  <label class="pay-option"><input type="radio" name="metodo_pago" value="Zelle" checked><div class="pay-option-text"><span class="pay-title">Zelle</span></div></label>
+                  <label class="pay-option"><input type="radio" name="metodo_pago" value="CashApp"><div class="pay-option-text"><span class="pay-title">CashApp</span></div></label>
+                  <label class="pay-option"><input type="radio" name="metodo_pago" value="Venmo"><div class="pay-option-text"><span class="pay-title">Venmo</span></div></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="checkout-card" style="position: sticky; top: 100px;">
+              <h2>Resumen del Pedido</h2>
+              <div id="checkoutItemsContainer" class="summary-products-list">${itemsHTML}</div>
+
+              <div class="summary-totals-box">
+                <div class="summary-line"><span>Subtotal</span><span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span></div>
+                <div class="summary-line"><span>Envío (tarifa fija)</span><span style="font-weight: 600; color: ${envio === 0 ? '#22c55e' : 'var(--text-dark)'};">${envio === 0 ? 'Gratis ✅' : '$' + envio.toFixed(2)}</span></div>
+                <div class="summary-line" id="taxRow" style="${tax > 0 ? '' : 'display:none;'}">
+                  <span>FL State Tax (6%)</span>
+                  <span style="font-weight: 600; color: var(--text-dark);">$${tax.toFixed(2)}</span>
+                </div>
+                <div class="summary-line" id="firstPurchaseRow" style="display:none;">
+                  <span>Descuento primera compra (10%)</span>
+                  <span style="font-weight: 600; color: #16a34a;" id="firstPurchaseDiscount">-$0.00</span>
+                </div>
+                <div class="summary-line grand-total"><span>Total</span><span id="checkoutTotal">$${total.toFixed(2)}</span></div>
+              </div>
+
+              <div class="legal-checkbox-container">
+                <label class="legal-label">
+                  <input type="checkbox" id="checkoutLegal" required>
+                  <span><span class="highlight">✅ Soy mayor de edad (21 años o más)</span> y entiendo que los productos listados en este sitio son <span class="highlight">exclusivamente para uso en investigación</span>. Comprendo que <span class="highlight">NO son para consumo humano ni veterinario</span> bajo ninguna circunstancia. Acepto los <a href="terminos.html" target="_blank">Términos y Condiciones</a>.<span class="error-text" id="legalError">Debes aceptar los términos para continuar.</span></span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 24px; border-radius: var(--radius-sm); font-size: 15px;">
+                Completar mi Pedido
+              </button>
+            </div>
+          </div>
+        </form>
+      `;
+
+      const legalCheck = document.getElementById('checkoutLegal');
+      const legalError = document.getElementById('legalError');
+      if (legalCheck) {
+        legalCheck.addEventListener('change', () => {
+          if (!legalCheck.checked) legalError.classList.add('visible');
+          else legalError.classList.remove('visible');
+        });
+      }
+    }
+
+    async function enviarPedidoFormulario(e) {
+      e.preventDefault();
+
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      if (totalItems > 30) { alert(`⚠️ Máximo 30 unidades por orden. Tienes ${totalItems}.`); return; }
+      for (const item of cart) {
+        if (item.qty > 10) {
+          const prod = window.productosData[item.id];
+          alert(`⚠️ Máximo 10 unidades de ${prod.nombre}. Tienes ${item.qty}.`);
+          return;
+        }
+      }
+
+      const legalChecked = document.getElementById('checkoutLegal').checked;
+      if (!legalChecked) { document.getElementById('legalError').classList.add('visible'); return; }
+
+      const nombre = document.getElementById('checkoutNombre').value.trim();
+      if (!nombre || nombre.length < 2) { alert('Ingresa tu nombre completo.'); return; }
+
+      const email = document.getElementById('checkoutEmail').value.trim();
+      if (!email || !email.includes('@') || !email.includes('.')) { alert('Ingresa un correo válido.'); return; }
+
+      const telefono = document.getElementById('checkoutTelefono').value.trim();
+      if (!telefono || telefono.length < 7) { alert('Ingresa un teléfono válido.'); return; }
+
+      const direccion = document.getElementById('checkoutDireccion').value.trim();
+      if (!direccion || direccion.length < 5) { alert('Ingresa una dirección completa.'); return; }
+
+      const ciudad = document.getElementById('checkoutCiudad').value.trim();
+      if (!ciudad || ciudad.length < 2) { alert('Ingresa tu ciudad.'); return; }
+
+      const estado = document.getElementById('checkoutEstado').value.trim();
+      if (!estado || estado.length < 2) { alert('Ingresa tu estado o provincia.'); return; }
+
+      const zip = document.getElementById('checkoutZip').value.trim();
+      if (!zip || zip.length < 3) { alert('Ingresa un código postal válido.'); return; }
+
+      let subtotal = 0;
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (!prod) return;
+        const precioUnitario = calcularPrecioItem(item);
+        subtotal += precioUnitario * item.qty;
+      });
+
+      let descuentoPrimeraCompra = 0;
+      let esPrimeraCompra = false;
+      try {
+        const db = window.db;
+        const collection = window.collection;
+        const query = window.query;
+        const where = window.where;
+        const getDocs = window.getDocs;
+
+        if (db && collection && query && where && getDocs) {
+          const pedidosRef = collection(db, 'pedidos');
+          const q = query(pedidosRef, where('email', '==', email));
+          const snapshot = await getDocs(q);
+          if (snapshot.empty) {
+            esPrimeraCompra = true;
+            descuentoPrimeraCompra = 0.10;
+            console.log('✅ Primera compra detectada. Descuento del 10% aplicado.');
+          } else {
+            console.log('❌ Cliente recurrente. Sin descuento de primera compra.');
+          }
+        }
+      } catch (error) {
+        console.error('❌ Error al verificar primera compra:', error);
+      }
+
+      const descuentoPrimera = descuentoPrimeraCompra * subtotal;
+      const subtotalConDescuento = subtotal - descuentoPrimera;
+      const envio = subtotal >= 100 ? 0 : 12;
+      const tax = subtotalConDescuento * 0.06;
+      const totalFinal = subtotalConDescuento + envio + tax;
+
+      if (esPrimeraCompra && descuentoPrimera > 0) {
+        const row = document.getElementById('firstPurchaseRow');
+        const discountEl = document.getElementById('firstPurchaseDiscount');
+        if (row && discountEl) {
+          row.style.display = 'flex';
+          discountEl.textContent = '-$' + descuentoPrimera.toFixed(2);
+        }
+        const totalEl = document.getElementById('checkoutTotal');
+        if (totalEl) {
+          totalEl.textContent = '$' + totalFinal.toFixed(2);
+        }
+        alert(`🎉 ¡Es tu primera compra! Se aplicó un 10% de descuento. Total: $${totalFinal.toFixed(2)}`);
+      }
+
+      const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
+      const notas = document.getElementById('checkoutNotas').value.trim();
+      const newsletter = document.getElementById('checkoutNewsletter').checked;
+      const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
+
+      sessionStorage.setItem('pending_order_id', codigoReferencia);
+      sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
+      sessionStorage.setItem('pending_order_method', metodoPago);
+
+      localStorage.setItem('checkout_nombre', nombre);
+      localStorage.setItem('checkout_email', email);
+      localStorage.setItem('checkout_telefono', telefono);
+      localStorage.setItem('checkout_direccion', direccion);
+      localStorage.setItem('checkout_ciudad', ciudad);
+      localStorage.setItem('checkout_estado', estado);
+      localStorage.setItem('checkout_zip', zip);
+      localStorage.setItem('checkout_notas', notas);
+      localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
+      localStorage.setItem('backup_order_id', codigoReferencia);
+      localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
+      localStorage.setItem('backup_order_method', metodoPago);
+
+      sessionStorage.setItem('checkout_nombre', nombre);
+      sessionStorage.setItem('checkout_email', email);
+      sessionStorage.setItem('checkout_telefono', telefono);
+
+      const db = window.db;
+      const doc = window.doc;
+      const setDoc = window.setDoc;
+
+      if (db && doc && setDoc) {
+        try {
+          const orderRef = doc(db, 'pedidos', codigoReferencia);
+          await setDoc(orderRef, {
+            codigo: codigoReferencia,
+            cliente: nombre,
+            email: email,
+            telefono: telefono,
+            direccion: direccion,
+            ciudad: ciudad,
+            estado: estado,
+            zip: zip,
+            productos: cart,
+            subtotal: subtotal,
+            descuento_primera_compra: descuentoPrimeraCompra,
+            descuento_aplicado: descuentoPrimera,
+            envio: envio,
+            tax: tax,
+            total: totalFinal,
+            metodo: metodoPago,
+            notas: notas,
+            newsletter: newsletter,
+            status: 'pendiente',
+            fecha: new Date().toISOString()
+          });
+          console.log('✅ Orden guardada en Firebase correctamente');
+          window.location.href = 'instrucciones.html';
+        } catch (error) {
+          console.error('❌ Error al guardar en Firebase:', error);
+          alert('Hubo un error al procesar tu pedido. Por favor, intenta de nuevo.');
+        }
+      } else {
+        console.warn('⚠️ Firebase no disponible, redirigiendo sin guardar');
+        window.location.href = 'instrucciones.html';
+      }
+    }
+
+    window.enviarPedidoFormulario = enviarPedidoFormulario;
+    window.renderizarCheckout = renderizarCheckout;
+    window.calcularPrecioItem = calcularPrecioItem;
+    window.calcularDescuento = calcularDescuento;
+  </script>
+
+</body>
+</html>
