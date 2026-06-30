@@ -5,380 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finalizar Pedido | Venus Peptide</title>
   <meta name="description" content="Completa tu pedido de compuestos peptídicos de investigación en Venus Peptide.">
-
   <link rel="stylesheet" href="styles.css">
 
   <style>
-    .checkout-section {
-      padding: calc(var(--nav-h) + 60px) 0 100px;
-      background: var(--bg-light);
-      min-height: 85vh;
-    }
-
-    .checkout-layout {
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 40px;
-      align-items: start;
-      margin-top: 35px;
-    }
-
-    @media (max-width: 992px) {
-      .checkout-layout {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-    }
-
-    .checkout-card {
-      background: var(--bg-white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 35px;
-      box-shadow: var(--shadow-card);
-      margin-bottom: 30px;
-    }
-
-    .checkout-card h2 {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: 25px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .form-group {
-      margin-bottom: 22px;
-    }
-
-    .form-row-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .form-row-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-    }
-
-    @media (max-width: 600px) {
-      .form-row-2, .form-row-3 {
-        grid-template-columns: 1fr;
-        gap: 15px;
-      }
-    }
-
-    .form-label {
-      display: block;
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 8px;
-    }
-
-    .form-label .optional {
-      font-weight: 400;
-      color: var(--text-muted);
-      font-size: 12px;
-    }
-
-    .form-input {
-      width: 100%;
-      height: 48px;
-      padding: 0 16px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 14px;
-      color: var(--text-dark);
-      background: var(--bg-white);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .form-input:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-
-    .form-input.textarea {
-      height: auto;
-      padding: 12px 16px;
-      resize: vertical;
-      min-height: 80px;
-      font-family: var(--font-body);
-    }
-
-    .form-input::placeholder {
-      color: var(--text-light);
-      font-size: 13px;
-    }
-
-    /* ── CHECKBOX LEGAL ── */
-    .legal-checkbox-container {
-      margin-top: 20px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-    }
-
-    .legal-label {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 13px;
-      color: var(--text-body);
-      line-height: 1.5;
-      cursor: pointer;
-    }
-
-    .legal-label input[type="checkbox"] {
-      accent-color: var(--blue);
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .legal-label a {
-      color: var(--blue);
-      font-weight: 600;
-      text-decoration: underline;
-    }
-
-    .legal-label .highlight {
-      font-weight: 600;
-      color: var(--text-dark);
-    }
-
-    .legal-label .error-text {
-      color: #ef4444;
-      font-size: 12px;
-      display: none;
-      margin-top: 4px;
-    }
-    .legal-label .error-text.visible {
-      display: block;
-    }
-
-    /* ── NEWSLETTER (Opcional) ── */
-    .newsletter-checkbox {
-      margin-top: 12px;
-    }
-    .newsletter-checkbox label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-    .newsletter-checkbox input[type="checkbox"] {
-      accent-color: var(--blue);
-      width: 16px;
-      height: 16px;
-    }
-
-    /* ── PAYMENT OPTIONS ── */
-    .payment-options {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .pay-option {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 18px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .pay-option:hover {
-      background: var(--bg-light);
-    }
-
-    .pay-option input[type="radio"] {
-      accent-color: var(--blue);
-      width: 18px;
-      height: 18px;
-    }
-
-    .pay-option-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .pay-title {
-      font-size: 14.5px;
-      font-weight: 600;
-      color: var(--text-dark);
-    }
-
-    /* ── RESUMEN ── */
-    .summary-products-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-bottom: 22px;
-      max-height: 220px;
-      overflow-y: auto;
-      padding-right: 5px;
-    }
-
-    .summary-line {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      color: var(--text-body);
-      line-height: 1.4;
-    }
-
-    .summary-totals-box {
-      border-top: 1px solid var(--border);
-      padding-top: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .summary-line.grand-total {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text-dark);
-      border-top: 1px dashed var(--border);
-      padding-top: 14px;
-      margin-top: 6px;
-    }
-
-    /* ── DESCUENTO / CUPÓN ── */
-    .coupon-section {
-      margin: 12px 0 18px 0;
-      padding: 16px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .coupon-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .coupon-row input {
-      flex: 1;
-      height: 42px;
-      padding: 0 14px;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .coupon-row input:focus {
-      border-color: var(--blue);
-    }
-
-    .coupon-row input.coupon-success {
-      border-color: #22c55e;
-      background: #f0fdf4;
-    }
-
-    .coupon-row input.coupon-error {
-      border-color: #ef4444;
-      background: #fef2f2;
-    }
-
-    .btn-coupon {
-      height: 42px;
-      padding: 0 20px;
-      background: var(--text-dark);
-      color: white;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      white-space: nowrap;
-    }
-
-    .btn-coupon:hover {
-      background: #1a1a1a;
-    }
-
-    .btn-coupon:active {
-      transform: scale(0.96);
-    }
-
-    .btn-coupon.remove-coupon {
-      background: #ef4444;
-    }
-
-    .btn-coupon.remove-coupon:hover {
-      background: #dc2626;
-    }
-
-    .coupon-message {
-      font-size: 13px;
-      margin-top: 6px;
-      min-height: 20px;
-    }
-
-    .coupon-message.success {
-      color: #16a34a;
-    }
-
-    .coupon-message.error {
-      color: #dc2626;
-    }
-
-    .coupon-message.info {
-      color: #2563eb;
-    }
-
-    .summary-discount {
-      color: #16a34a;
-      font-weight: 700;
-    }
-
-    .error-box {
-      text-align: center;
-      padding: 40px 24px;
-      border: 1px solid #fca5a5;
-      border-radius: var(--radius-md);
-      background: #fef2f2;
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
+    .checkout-section { padding: calc(var(--nav-h) + 60px) 0 100px; background: var(--bg-light); min-height: 85vh; }
+    .checkout-layout { display: grid; grid-template-columns: 1fr 420px; gap: 40px; align-items: start; margin-top: 35px; }
+    @media (max-width: 992px) { .checkout-layout { grid-template-columns: 1fr; gap: 32px; } }
+    .checkout-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 35px; box-shadow: var(--shadow-card); margin-bottom: 30px; }
+    .checkout-card h2 { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--text-dark); margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .form-group { margin-bottom: 22px; }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .form-row-2, .form-row-3 { grid-template-columns: 1fr; gap: 15px; } }
+    .form-label { display: block; font-size: 13.5px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
+    .form-label .optional { font-weight: 400; color: var(--text-muted); font-size: 12px; }
+    .form-input { width: 100%; height: 48px; padding: 0 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; color: var(--text-dark); background: var(--bg-white); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+    .form-input.textarea { height: auto; padding: 12px 16px; resize: vertical; min-height: 80px; font-family: var(--font-body); }
+    .form-input::placeholder { color: var(--text-light); font-size: 13px; }
+    .legal-checkbox-container { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .legal-label { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; color: var(--text-body); line-height: 1.5; cursor: pointer; }
+    .legal-label input[type="checkbox"] { accent-color: var(--blue); width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+    .legal-label a { color: var(--blue); font-weight: 600; text-decoration: underline; }
+    .legal-label .highlight { font-weight: 600; color: var(--text-dark); }
+    .legal-label .error-text { color: #ef4444; font-size: 12px; display: none; margin-top: 4px; }
+    .legal-label .error-text.visible { display: block; }
+    .newsletter-checkbox { margin-top: 12px; }
+    .newsletter-checkbox label { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-muted); cursor: pointer; }
+    .newsletter-checkbox input[type="checkbox"] { accent-color: var(--blue); width: 16px; height: 16px; }
+    .payment-options { display: flex; flex-direction: column; gap: 14px; }
+    .pay-option { display: flex; align-items: center; gap: 14px; padding: 18px; border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+    .pay-option:hover { background: var(--bg-light); }
+    .pay-option input[type="radio"] { accent-color: var(--blue); width: 18px; height: 18px; }
+    .pay-option-text { display: flex; flex-direction: column; }
+    .pay-title { font-size: 14.5px; font-weight: 600; color: var(--text-dark); }
+    .summary-products-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; max-height: 220px; overflow-y: auto; padding-right: 5px; }
+    .summary-line { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-body); line-height: 1.4; }
+    .summary-totals-box { border-top: 1px solid var(--border); padding-top: 18px; display: flex; flex-direction: column; gap: 12px; }
+    .summary-line.grand-total { font-size: 22px; font-weight: 800; color: var(--text-dark); border-top: 1px dashed var(--border); padding-top: 14px; margin-top: 6px; }
+    .error-box { text-align: center; padding: 40px 24px; border: 1px solid #fca5a5; border-radius: var(--radius-md); background: #fef2f2; box-shadow: var(--shadow-card); display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .error-box h2 { color: #dc2626; font-size: 22px; }
     .error-box p { color: #991b1b; max-width: 400px; }
-
-    .empty-box {
-      text-align: center;
-      padding: 40px 24px;
-      border: 1px solid #fcd34d;
-      border-radius: var(--radius-md);
-      background: #fffbeb;
-      box-shadow: var(--shadow-card);
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
-    }
+    .empty-box { text-align: center; padding: 40px 24px; border: 1px solid #fcd34d; border-radius: var(--radius-md); background: #fffbeb; box-shadow: var(--shadow-card); display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .empty-box h2 { color: #d97706; font-size: 22px; }
     .empty-box p { color: #92400e; max-width: 400px; }
+    .discount-badge { background: #dcfce7; color: #15803d; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+    .upsell-box { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 10px; padding: 16px; margin-top: 16px; display: none; }
+    .upsell-box.visible { display: block; }
   </style>
 </head>
 <body>
@@ -389,47 +62,18 @@
   <main class="checkout-section">
     <div class="container">
       <h1 class="section-title">Finalizar Orden</h1>
-
-      <div id="checkoutContent">
-        <!-- El contenido se renderiza con JavaScript -->
-      </div>
+      <div id="checkoutContent"><!-- Se renderiza con JS --></div>
     </div>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__top">
-        <div class="footer__brand">
-          <div class="footer__logo">
-            <div class="footer__logo-icon">V</div>
-            Venus Peptide
-          </div>
-          <p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p>
-        </div>
-        <div class="footer__col">
-          <div class="footer__col-title">Navegación</div>
-          <a href="index.html">Inicio</a>
-          <a href="categorias.html">Categorías</a>
-          <a href="vertodos.html">Ver todos</a>
-          <a href="nosotros.html">Nosotros</a>
-        </div>
-        <div class="footer__col">
-          <div class="footer__col-title">Soporte</div>
-          <a href="contacto.html">Contacto</a>
-        </div>
-      </div>
-      <div class="footer__bottom">
-        <div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div>
-      </div>
-    </div>
-  </footer>
+  <footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div><p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p></div><div class="footer__col"><div class="footer__col-title">Navegación</div><a href="index.html">Inicio</a><a href="categorias.html">Categorías</a><a href="vertodos.html">Ver todos</a><a href="nosotros.html">Nosotros</a></div><div class="footer__col"><div class="footer__col-title">Soporte</div><a href="contacto.html">Contacto</a></div></div><div class="footer__bottom"><div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div></div></div></footer>
 
   <script src="main.js"></script>
 
-  <!-- ── FIREBASE SDK ── -->
+  <!-- FIREBASE SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDocs, query, where, collection } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDWfom6bIBxUyRReGrmBtyu65G5NmsOHGM",
@@ -446,6 +90,10 @@
     window.db = db;
     window.doc = doc;
     window.setDoc = setDoc;
+    window.getDocs = getDocs;
+    window.query = query;
+    window.where = where;
+    window.collection = collection;
 
     console.log('✅ Firebase inicializado correctamente');
   </script>
@@ -460,255 +108,89 @@
           burgerBtn.classList.toggle('active');
         });
       }
-
       renderizarCheckout();
     });
 
-    // ── SISTEMA DE DESCUENTOS ──
-    const CUPONES_VALIDOS = {
-      'BIENVENIDA10': { tipo: 'porcentaje', valor: 10, descripcion: '10% de descuento' },
-      'BIENVENIDA15': { tipo: 'porcentaje', valor: 15, descripcion: '15% de descuento' },
-      'VENUS20': { tipo: 'porcentaje', valor: 20, descripcion: '20% de descuento' },
-      'FLASH25': { tipo: 'porcentaje', valor: 25, descripcion: '25% de descuento' },
-      'INVESTIGA10': { tipo: 'fijo', valor: 10, descripcion: '$10 de descuento' },
-      'INVESTIGA25': { tipo: 'fijo', valor: 25, descripcion: '$25 de descuento' },
-      'LAB50': { tipo: 'fijo', valor: 50, descripcion: '$50 de descuento' },
-    };
-
-    let descuentoAplicado = 0;
-    let codigoPromoUsado = '';
-    let descuentoInfo = '';
-
-    function aplicarCupon() {
-      const input = document.getElementById('couponInput');
-      const messageEl = document.getElementById('couponMessage');
-      const btn = document.getElementById('couponBtn');
-
-      if (!input) return;
-
-      const codigo = input.value.trim().toUpperCase();
-
-      if (codigoPromoUsado && !codigo) {
-        quitarCupon();
-        return;
-      }
-
-      if (!codigo) {
-        messageEl.textContent = '📝 Ingresa un código de descuento';
-        messageEl.className = 'coupon-message info';
-        input.classList.remove('coupon-success', 'coupon-error');
-        return;
-      }
-
-      if (CUPONES_VALIDOS[codigo]) {
-        const cuponData = CUPONES_VALIDOS[codigo];
-        const subtotal = calcularSubtotal();
-
-        let descuento = 0;
-        if (cuponData.tipo === 'porcentaje') {
-          descuento = subtotal * (cuponData.valor / 100);
-          const maxDescuento = subtotal * 0.5;
-          if (descuento > maxDescuento) {
-            descuento = maxDescuento;
-          }
-        } else {
-          descuento = Math.min(cuponData.valor, subtotal * 0.5);
-        }
-
-        descuento = Math.round(descuento * 100) / 100;
-
-        descuentoAplicado = descuento;
-        codigoPromoUsado = codigo;
-        descuentoInfo = cuponData.descripcion;
-
-        input.classList.remove('coupon-error');
-        input.classList.add('coupon-success');
-        messageEl.textContent = `✅ ¡Cupón aplicado! ${cuponData.descripcion} (${descuento > 0 ? '-$' + descuento.toFixed(2) : 'Gratis'})`;
-        messageEl.className = 'coupon-message success';
-        btn.textContent = '✕ Quitar';
-        btn.className = 'btn-coupon remove-coupon';
-
-        actualizarResumen();
-      } else {
-        input.classList.remove('coupon-success');
-        input.classList.add('coupon-error');
-        messageEl.textContent = '❌ Código inválido. Intenta con otro.';
-        messageEl.className = 'coupon-message error';
-        if (codigoPromoUsado) {
-          quitarCupon();
-        }
-      }
+    // ── FUNCIONES DE DESCUENTO ──
+    function calcularDescuento(cantidad) {
+      if (cantidad >= 10) return 0.15;
+      if (cantidad >= 4) return 0.10;
+      if (cantidad >= 2) return 0.05;
+      return 0;
     }
 
-    function quitarCupon() {
-      const input = document.getElementById('couponInput');
-      const messageEl = document.getElementById('couponMessage');
-      const btn = document.getElementById('couponBtn');
-
-      descuentoAplicado = 0;
-      codigoPromoUsado = '';
-      descuentoInfo = '';
-
-      if (input) {
-        input.value = '';
-        input.classList.remove('coupon-success', 'coupon-error');
-      }
-      if (messageEl) {
-        messageEl.textContent = '💡 Ingresa tu código de descuento';
-        messageEl.className = 'coupon-message info';
-      }
-      if (btn) {
-        btn.textContent = 'Aplicar';
-        btn.className = 'btn-coupon';
-      }
-
-      actualizarResumen();
+    function esKit(item) {
+      return item.tipo === 'kit';
     }
 
-    function calcularSubtotal() {
-      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
-      let subtotal = 0;
-      cart.forEach(item => {
-        const prod = window.productosData ? window.productosData[item.id] : null;
-        if (prod) {
-          subtotal += prod.precio * item.qty;
-        }
-      });
-      return subtotal;
+    function calcularPrecioItem(item) {
+      // Si es kit, ya tiene precio con descuento
+      if (esKit(item)) return item.precio;
+      // Si es suelto, aplicar descuento por volumen sobre el precio_original
+      const descuento = calcularDescuento(item.qty);
+      return item.precio_original * (1 - descuento);
     }
 
-    function actualizarResumen() {
-      const subtotal = calcularSubtotal();
-      const taxRate = 0.06;
-      const totalConDescuento = subtotal - descuentoAplicado;
-      const tax = totalConDescuento * taxRate;
-      const totalFinal = totalConDescuento + tax;
-
-      const totalEl = document.getElementById('checkoutTotal');
-      const discountRow = document.querySelector('.summary-discount-row');
-      const discountValue = document.querySelector('.summary-discount');
-
-      if (totalEl) {
-        totalEl.textContent = '$' + totalFinal.toFixed(2);
-      }
-
-      if (descuentoAplicado > 0) {
-        if (!discountRow) {
-          const totalsBox = document.querySelector('.summary-totals-box');
-          if (totalsBox) {
-            const newRow = document.createElement('div');
-            newRow.className = 'summary-line summary-discount-row';
-            newRow.innerHTML = `
-              <span>Descuento (${descuentoInfo})</span>
-              <span class="summary-discount">-$${descuentoAplicado.toFixed(2)}</span>
-            `;
-            const subtotalRow = totalsBox.querySelector('.summary-line:first-child');
-            if (subtotalRow) {
-              subtotalRow.after(newRow);
-            }
-          }
-        } else {
-          discountValue.textContent = '-$' + descuentoAplicado.toFixed(2);
-          discountRow.style.display = 'flex';
-        }
-      } else {
-        if (discountRow) {
-          discountRow.style.display = 'none';
-        }
-      }
-
-      sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
-      localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
-    }
-
+    // ── RENDERIZAR CHECKOUT ──
     function renderizarCheckout() {
       const container = document.getElementById('checkoutContent');
 
       if (!window.productosData) {
-        container.innerHTML = `
-          <div class="error-box">
-            <h2>⚠️ Base de Datos No Disponible</h2>
-            <p>No se pudo cargar la información de los productos. Por favor, recarga la página.</p>
-            <a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a>
-          </div>`;
+        container.innerHTML = `<div class="error-box"><h2>⚠️ Base de Datos No Disponible</h2><p>No se pudo cargar la información de los productos. Por favor, recarga la página.</p><a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a></div>`;
         return;
       }
 
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
       if (cart.length === 0) {
-        container.innerHTML = `
-          <div class="empty-box">
-            <h2>🛒 Carrito Vacío</h2>
-            <p>No tienes productos en tu carrito. Agrega algunos antes de proceder al pago.</p>
-            <a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a>
-          </div>`;
+        container.innerHTML = `<div class="empty-box"><h2>🛒 Carrito Vacío</h2><p>No tienes productos en tu carrito. Agrega algunos antes de proceder al pago.</p><a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a></div>`;
         return;
       }
 
-      const productosInvalidos = cart.filter(item => !window.productosData[item.id]);
-      if (productosInvalidos.length > 0) {
-        container.innerHTML = `
-          <div class="error-box">
-            <h2>⚠️ Producto No Disponible</h2>
-            <p>Uno o más productos en tu carrito ya no están disponibles en nuestro catálogo.</p>
-            <a href="carrito.html" class="btn btn-primary">Revisar Carrito</a>
-          </div>`;
-        return;
-      }
-
+      // ── CALCULAR SUBTOTAL CON DESCUENTOS ──
       let subtotal = 0;
       let itemsHTML = '';
+      let descuentoTotal = 0;
 
       cart.forEach(item => {
         const prod = window.productosData[item.id];
-        const totalItem = prod.precio * item.qty;
+        if (!prod) return;
+
+        const precioUnitario = calcularPrecioItem(item);
+        const totalItem = precioUnitario * item.qty;
         subtotal += totalItem;
 
-        // 🔥 AQUÍ ESTÁ EL CAMBIO: eliminé el <small> con la pureza
+        const descuentoAplicado = item.tipo === 'kit' ? 0.10 : calcularDescuento(item.qty);
+        const badge = item.tipo === 'kit' ? '<span class="discount-badge">Kit 10%</span>' :
+                      (descuentoAplicado > 0 ? `<span class="discount-badge">${Math.round(descuentoAplicado * 100)}% off</span>` : '');
+
         itemsHTML += `
           <div class="summary-line">
-            <span>${item.qty}x ${prod.nombre}</span>
+            <span>${item.qty}x ${prod.nombre} ${badge}</span>
             <span style="font-weight: 600; color: var(--text-dark);">$${totalItem.toFixed(2)}</span>
           </div>`;
       });
 
-      const taxRate = 0.06;
-      const totalConDescuento = subtotal - descuentoAplicado;
-      const tax = totalConDescuento * taxRate;
-      const totalFinal = totalConDescuento + tax;
+      // ── ENVÍO ──
+      const envio = subtotal >= 100 ? 0 : 12;
+      const total = subtotal + envio;
 
-      const totalArticulos = cart.reduce((sum, item) => sum + item.qty, 0);
-      const navCount = document.getElementById('cartCountNav');
-      const navCountMobile = document.getElementById('cartCountNavMobile');
-      if (navCount) navCount.textContent = totalArticulos;
-      if (navCountMobile) navCountMobile.textContent = totalArticulos;
-
-      let discountLine = '';
-      if (descuentoAplicado > 0) {
-        discountLine = `
-          <div class="summary-line summary-discount-row">
-            <span>Descuento (${descuentoInfo})</span>
-            <span class="summary-discount">-$${descuentoAplicado.toFixed(2)}</span>
-          </div>`;
-      }
+      // ── DESCUENTO PRIMERA COMPRA (se aplica en el formulario) ──
+      // Se mostrará un campo para email y se verificará en el envío
 
       container.innerHTML = `
         <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
           <div class="checkout-layout">
-
             <div>
               <div class="checkout-card">
                 <h2>📋 Información de Envío (Investigación)</h2>
-
                 <div class="form-group">
                   <label class="form-label">Nombre Completo del Investigador / Laboratorio</label>
                   <input type="text" class="form-input" id="checkoutNombre" required placeholder="Ej. Dr. Alejandro Silva">
                 </div>
-
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label class="form-label">Correo Electrónico <span class="optional">(para confirmación)</span></label>
+                    <label class="form-label">Correo Electrónico <span class="optional">(para confirmación y descuento)</span></label>
                     <input type="email" class="form-input" id="checkoutEmail" required placeholder="investigacion@ejemplo.com">
                   </div>
                   <div class="form-group">
@@ -716,109 +198,48 @@
                     <input type="tel" class="form-input" id="checkoutTelefono" required placeholder="Ej. +1 (305) 555-0199">
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label class="form-label">Dirección Completa de Destino</label>
                   <input type="text" class="form-input" id="checkoutDireccion" required placeholder="Calle, Número, Suite, Edificio o Departamento">
                 </div>
-
                 <div class="form-row-3">
-                  <div class="form-group">
-                    <label class="form-label">Ciudad</label>
-                    <input type="text" class="form-input" id="checkoutCiudad" required placeholder="Ej. Miami">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Estado / Provincia</label>
-                    <input type="text" class="form-input" id="checkoutEstado" required placeholder="Ej. FL">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Código Postal (ZIP Code)</label>
-                    <input type="text" class="form-input" id="checkoutZip" required placeholder="Ej. 33101">
-                  </div>
+                  <div class="form-group"><label class="form-label">Ciudad</label><input type="text" class="form-input" id="checkoutCiudad" required placeholder="Ej. Miami"></div>
+                  <div class="form-group"><label class="form-label">Estado / Provincia</label><input type="text" class="form-input" id="checkoutEstado" required placeholder="Ej. FL"></div>
+                  <div class="form-group"><label class="form-label">Código Postal (ZIP Code)</label><input type="text" class="form-input" id="checkoutZip" required placeholder="Ej. 33101"></div>
                 </div>
-
                 <div class="form-group">
                   <label class="form-label">Notas sobre tu pedido <span class="optional">(opcional)</span></label>
                   <textarea class="form-input textarea" id="checkoutNotas" placeholder="Instrucciones especiales para el envío, indicaciones de entrega, etc."></textarea>
                 </div>
-
                 <div class="form-group newsletter-checkbox">
-                  <label>
-                    <input type="checkbox" id="checkoutNewsletter" checked>
-                    <span style="font-size: 13px; color: var(--text-muted);">
-                      📧 Recibir novedades, lanzamientos y ofertas especiales (opcional)
-                    </span>
-                  </label>
+                  <label><input type="checkbox" id="checkoutNewsletter" checked><span style="font-size: 13px; color: var(--text-muted);">📧 Recibir novedades, lanzamientos y ofertas especiales (opcional)</span></label>
                 </div>
               </div>
 
               <div class="checkout-card">
                 <h2>🔒 Métodos de Pago Seguros</h2>
                 <div class="payment-options">
-                  <label class="pay-option">
-                    <input type="radio" name="metodo_pago" value="Zelle" checked>
-                    <div class="pay-option-text">
-                      <span class="pay-title">Zelle</span>
-                    </div>
-                  </label>
-                  <label class="pay-option">
-                    <input type="radio" name="metodo_pago" value="CashApp">
-                    <div class="pay-option-text">
-                      <span class="pay-title">CashApp</span>
-                    </div>
-                  </label>
-                  <label class="pay-option">
-                    <input type="radio" name="metodo_pago" value="Venmo">
-                    <div class="pay-option-text">
-                      <span class="pay-title">Venmo</span>
-                    </div>
-                  </label>
+                  <label class="pay-option"><input type="radio" name="metodo_pago" value="Zelle" checked><div class="pay-option-text"><span class="pay-title">Zelle</span></div></label>
+                  <label class="pay-option"><input type="radio" name="metodo_pago" value="CashApp"><div class="pay-option-text"><span class="pay-title">CashApp</span></div></label>
+                  <label class="pay-option"><input type="radio" name="metodo_pago" value="Venmo"><div class="pay-option-text"><span class="pay-title">Venmo</span></div></label>
                 </div>
               </div>
             </div>
 
             <div class="checkout-card" style="position: sticky; top: 100px;">
               <h2>Resumen del Pedido</h2>
-
-              <div id="checkoutItemsContainer" class="summary-products-list">
-                ${itemsHTML}
-              </div>
-
-              <div class="coupon-section">
-                <div class="coupon-row">
-                  <input type="text" id="couponInput" placeholder="Código de descuento" maxlength="20" onkeydown="if(event.key==='Enter'){event.preventDefault();aplicarCupon();}">
-                  <button type="button" class="btn-coupon" id="couponBtn" onclick="aplicarCupon()">Aplicar</button>
-                </div>
-                <div id="couponMessage" class="coupon-message info">💡 Ingresa tu código de descuento</div>
-              </div>
+              <div id="checkoutItemsContainer" class="summary-products-list">${itemsHTML}</div>
 
               <div class="summary-totals-box">
-                <div class="summary-line">
-                  <span>Subtotal</span>
-                  <span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span>
-                </div>
-                ${discountLine}
-                <div class="summary-line">
-                  <span>Envío</span>
-                  <span style="color: #22c55e; font-weight: 700;">Gratis</span>
-                </div>
-                <div class="summary-line">
-                  <span>FL State Tax (${(taxRate * 100).toFixed(0)}%)</span>
-                  <span style="font-weight: 600; color: var(--text-dark);">$${tax.toFixed(2)}</span>
-                </div>
-                <div class="summary-line grand-total">
-                  <span>Total</span>
-                  <span id="checkoutTotal">$${totalFinal.toFixed(2)}</span>
-                </div>
+                <div class="summary-line"><span>Subtotal</span><span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span></div>
+                <div class="summary-line"><span>Envío</span><span style="font-weight: 600; color: ${envio === 0 ? '#22c55e' : 'var(--text-dark)'};">${envio === 0 ? 'Gratis ✅' : '$' + envio.toFixed(2)}</span></div>
+                <div class="summary-line grand-total"><span>Total</span><span id="checkoutTotal">$${total.toFixed(2)}</span></div>
               </div>
 
               <div class="legal-checkbox-container">
                 <label class="legal-label">
                   <input type="checkbox" id="checkoutLegal" required>
-                  <span>
-                    <span class="highlight">✅ Soy mayor de edad (21 años o más)</span> y entiendo que los productos listados en este sitio son <span class="highlight">exclusivamente para uso en investigación</span>. Comprendo que <span class="highlight">NO son para consumo humano ni veterinario</span> bajo ninguna circunstancia. Acepto los <a href="terminos.html" target="_blank">Términos y Condiciones</a>.
-                    <span class="error-text" id="legalError">Debes aceptar los términos para continuar.</span>
-                  </span>
+                  <span><span class="highlight">✅ Soy mayor de edad (21 años o más)</span> y entiendo que los productos listados en este sitio son <span class="highlight">exclusivamente para uso en investigación</span>. Comprendo que <span class="highlight">NO son para consumo humano ni veterinario</span> bajo ninguna circunstancia. Acepto los <a href="terminos.html" target="_blank">Términos y Condiciones</a>.<span class="error-text" id="legalError">Debes aceptar los términos para continuar.</span></span>
                 </label>
               </div>
 
@@ -826,134 +247,111 @@
                 Completar mi Pedido
               </button>
             </div>
-
           </div>
         </form>
       `;
 
+      // ── EVENTOS ──
       const legalCheck = document.getElementById('checkoutLegal');
       const legalError = document.getElementById('legalError');
       if (legalCheck) {
         legalCheck.addEventListener('change', () => {
-          if (!legalCheck.checked) {
-            legalError.classList.add('visible');
-          } else {
-            legalError.classList.remove('visible');
-          }
+          if (!legalCheck.checked) legalError.classList.add('visible');
+          else legalError.classList.remove('visible');
         });
-      }
-
-      if (codigoPromoUsado) {
-        const input = document.getElementById('couponInput');
-        const btn = document.getElementById('couponBtn');
-        const msg = document.getElementById('couponMessage');
-        if (input) {
-          input.value = codigoPromoUsado;
-          input.classList.add('coupon-success');
-          msg.textContent = `✅ ¡Cupón aplicado! ${descuentoInfo} (-$${descuentoAplicado.toFixed(2)})`;
-          msg.className = 'coupon-message success';
-          btn.textContent = '✕ Quitar';
-          btn.className = 'btn-coupon remove-coupon';
-        }
       }
     }
 
-    function enviarPedidoFormulario(e) {
+    // ── ENVIAR PEDIDO ──
+    async function enviarPedidoFormulario(e) {
       e.preventDefault();
 
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
+      // ── VALIDACIONES BÁSICAS ──
       const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-      if (totalItems > 30) {
-        alert(`⚠️ Máximo 30 unidades por orden. Actualmente tienes ${totalItems} unidades.`);
-        return;
-      }
-
+      if (totalItems > 30) { alert(`⚠️ Máximo 30 unidades por orden. Tienes ${totalItems}.`); return; }
       for (const item of cart) {
         if (item.qty > 10) {
           const prod = window.productosData[item.id];
-          alert(`⚠️ Máximo 10 unidades de ${prod.nombre}. Tienes ${item.qty} en el carrito.`);
+          alert(`⚠️ Máximo 10 unidades de ${prod.nombre}. Tienes ${item.qty}.`);
           return;
         }
       }
 
       const legalChecked = document.getElementById('checkoutLegal').checked;
-      if (!legalChecked) {
-        document.getElementById('legalError').classList.add('visible');
-        return;
-      }
+      if (!legalChecked) { document.getElementById('legalError').classList.add('visible'); return; }
 
       const nombre = document.getElementById('checkoutNombre').value.trim();
-      if (!nombre || nombre.length < 2) {
-        alert('Por favor, ingresa tu nombre completo.');
-        return;
-      }
+      if (!nombre || nombre.length < 2) { alert('Ingresa tu nombre completo.'); return; }
 
       const email = document.getElementById('checkoutEmail').value.trim();
-      if (!email || !email.includes('@') || !email.includes('.')) {
-        alert('Por favor, ingresa un correo electrónico válido.');
-        return;
-      }
+      if (!email || !email.includes('@') || !email.includes('.')) { alert('Ingresa un correo válido.'); return; }
 
       const telefono = document.getElementById('checkoutTelefono').value.trim();
-      if (!telefono || telefono.length < 7) {
-        alert('Por favor, ingresa un número de teléfono válido.');
-        return;
-      }
+      if (!telefono || telefono.length < 7) { alert('Ingresa un teléfono válido.'); return; }
 
       const direccion = document.getElementById('checkoutDireccion').value.trim();
-      if (!direccion || direccion.length < 5) {
-        alert('Por favor, ingresa una dirección completa.');
-        return;
-      }
+      if (!direccion || direccion.length < 5) { alert('Ingresa una dirección completa.'); return; }
 
       const ciudad = document.getElementById('checkoutCiudad').value.trim();
-      if (!ciudad || ciudad.length < 2) {
-        alert('Por favor, ingresa tu ciudad.');
-        return;
-      }
+      if (!ciudad || ciudad.length < 2) { alert('Ingresa tu ciudad.'); return; }
 
       const estado = document.getElementById('checkoutEstado').value.trim();
-      if (!estado || estado.length < 2) {
-        alert('Por favor, ingresa tu estado o provincia.');
-        return;
-      }
+      if (!estado || estado.length < 2) { alert('Ingresa tu estado o provincia.'); return; }
 
       const zip = document.getElementById('checkoutZip').value.trim();
-      if (!zip || zip.length < 3) {
-        alert('Por favor, ingresa un código postal válido.');
-        return;
+      if (!zip || zip.length < 3) { alert('Ingresa un código postal válido.'); return; }
+
+      // ── DESCUENTO PRIMERA COMPRA (Firebase) ──
+      let descuentoPrimeraCompra = 0;
+      try {
+        const db = window.db;
+        const collection = window.collection;
+        const query = window.query;
+        const where = window.where;
+        const getDocs = window.getDocs;
+
+        if (db && collection && query && where && getDocs) {
+          const pedidosRef = collection(db, 'pedidos');
+          const q = query(pedidosRef, where('email', '==', email));
+          const snapshot = await getDocs(q);
+          if (snapshot.empty) {
+            descuentoPrimeraCompra = 0.10; // 10% de descuento primera compra
+            console.log('✅ Primera compra detectada. Descuento del 10% aplicado.');
+          } else {
+            console.log('❌ Cliente recurrente. Sin descuento de primera compra.');
+          }
+        }
+      } catch (error) {
+        console.error('❌ Error al verificar primera compra:', error);
       }
+
+      // ── CALCULAR TOTAL CON DESCUENTOS ──
+      let subtotal = 0;
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (!prod) return;
+        const precioUnitario = calcularPrecioItem(item);
+        subtotal += precioUnitario * item.qty;
+      });
+
+      // Aplicar descuento de primera compra (10%)
+      const descuentoPrimera = descuentoPrimeraCompra * subtotal;
+      const subtotalConDescuento = subtotal - descuentoPrimera;
+      const envio = subtotalConDescuento >= 100 ? 0 : 12;
+      const tax = subtotalConDescuento * 0.06;
+      const totalFinal = subtotalConDescuento + envio + tax;
 
       const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
       const notas = document.getElementById('checkoutNotas').value.trim();
       const newsletter = document.getElementById('checkoutNewsletter').checked;
-
-      let subtotal = 0;
-      cart.forEach(item => {
-        const prod = window.productosData ? window.productosData[item.id] : null;
-        if (prod) {
-          subtotal += prod.precio * item.qty;
-        }
-      });
-
-      const totalConDescuento = subtotal - descuentoAplicado;
-      const tax = totalConDescuento * 0.06;
-      const totalFinal = totalConDescuento + tax;
       const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
 
+      // ── GUARDAR EN SESSION Y LOCAL STORAGE ──
       sessionStorage.setItem('pending_order_id', codigoReferencia);
       sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
-
-      // ── GUARDAR DATOS DEL CLIENTE ──
-      localStorage.setItem('checkout_nombre', nombre);
-      localStorage.setItem('checkout_email', email);
-      localStorage.setItem('checkout_telefono', telefono);
-
-      localStorage.setItem('backup_order_id', codigoReferencia);
-      localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
-      localStorage.setItem('backup_order_method', metodoPago);
 
       localStorage.setItem('checkout_nombre', nombre);
       localStorage.setItem('checkout_email', email);
@@ -964,50 +362,61 @@
       localStorage.setItem('checkout_zip', zip);
       localStorage.setItem('checkout_notas', notas);
       localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
+      localStorage.setItem('backup_order_id', codigoReferencia);
+      localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
+      localStorage.setItem('backup_order_method', metodoPago);
 
       sessionStorage.setItem('checkout_nombre', nombre);
       sessionStorage.setItem('checkout_email', email);
       sessionStorage.setItem('checkout_telefono', telefono);
 
+      // ── GUARDAR EN FIREBASE ──
       const db = window.db;
       const doc = window.doc;
       const setDoc = window.setDoc;
 
       if (db && doc && setDoc) {
-        const orderRef = doc(db, 'pedidos', codigoReferencia);
-        setDoc(orderRef, {
-          codigo: codigoReferencia,
-          cliente: nombre,
-          email: email,
-          telefono: telefono,
-          direccion: direccion,
-          ciudad: ciudad,
-          estado: estado,
-          zip: zip,
-          productos: cart,
-          subtotal: subtotal,
-          descuento: descuentoAplicado,
-          descuento_info: descuentoInfo,
-          codigo_promo: codigoPromoUsado || '',
-          tax: tax,
-          total: totalFinal,
-          metodo: metodoPago,
-          notas: notas,
-          newsletter: newsletter,
-          status: 'pendiente',
-          fecha: new Date().toISOString()
-        }).then(() => {
+        try {
+          const orderRef = doc(db, 'pedidos', codigoReferencia);
+          await setDoc(orderRef, {
+            codigo: codigoReferencia,
+            cliente: nombre,
+            email: email,
+            telefono: telefono,
+            direccion: direccion,
+            ciudad: ciudad,
+            estado: estado,
+            zip: zip,
+            productos: cart,
+            subtotal: subtotal,
+            descuento_primera_compra: descuentoPrimeraCompra,
+            descuento_aplicado: descuentoPrimera,
+            envio: envio,
+            tax: tax,
+            total: totalFinal,
+            metodo: metodoPago,
+            notas: notas,
+            newsletter: newsletter,
+            status: 'pendiente',
+            fecha: new Date().toISOString()
+          });
           console.log('✅ Orden guardada en Firebase correctamente');
           window.location.href = 'instrucciones.html';
-        }).catch((error) => {
+        } catch (error) {
           console.error('❌ Error al guardar en Firebase:', error);
           alert('Hubo un error al procesar tu pedido. Por favor, intenta de nuevo.');
-        });
+        }
       } else {
         console.warn('⚠️ Firebase no disponible, redirigiendo sin guardar');
         window.location.href = 'instrucciones.html';
       }
     }
+
+    // ── FUNCIONES GLOBALES ──
+    window.enviarPedidoFormulario = enviarPedidoFormulario;
+    window.renderizarCheckout = renderizarCheckout;
+    window.calcularPrecioItem = calcularPrecioItem;
+    window.calcularDescuento = calcularDescuento;
   </script>
 
 </body>
