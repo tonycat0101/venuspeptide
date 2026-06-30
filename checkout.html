@@ -50,12 +50,11 @@
     .empty-box h2 { color: #d97706; font-size: 22px; }
     .empty-box p { color: #92400e; max-width: 400px; }
     .discount-badge { background: #dcfce7; color: #15803d; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; margin-left: 6px; }
-    .upsell-box { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 10px; padding: 16px; margin-top: 16px; display: none; }
-    .upsell-box.visible { display: block; }
   </style>
 </head>
 <body>
 
+  <!-- ✅ ELIMINADO MENÚ DUPLICADO (Tarea 9) -->
   <div id="nav-placeholder"></div>
   <script src="nav.js"></script>
 
@@ -70,7 +69,7 @@
 
   <script src="main.js"></script>
 
-  <!-- FIREBASE SDK -->
+  <!-- ── FIREBASE SDK ── -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
     import { getFirestore, doc, setDoc, getDocs, query, where, collection } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
@@ -124,9 +123,7 @@
     }
 
     function calcularPrecioItem(item) {
-      // Si es kit, ya tiene precio con descuento
       if (esKit(item)) return item.precio;
-      // Si es suelto, aplicar descuento por volumen sobre el precio_original
       const descuento = calcularDescuento(item.qty);
       return item.precio_original * (1 - descuento);
     }
@@ -150,7 +147,6 @@
       // ── CALCULAR SUBTOTAL CON DESCUENTOS ──
       let subtotal = 0;
       let itemsHTML = '';
-      let descuentoTotal = 0;
 
       cart.forEach(item => {
         const prod = window.productosData[item.id];
@@ -171,12 +167,15 @@
           </div>`;
       });
 
-      // ── ENVÍO ──
+      // ── ENVÍO (Tarea 5: unificado con subtotal) ──
       const envio = subtotal >= 100 ? 0 : 12;
-      const total = subtotal + envio;
 
-      // ── DESCUENTO PRIMERA COMPRA (se aplica en el formulario) ──
-      // Se mostrará un campo para email y se verificará en el envío
+      // ── TAX (Tarea 4: visible en el resumen) ──
+      const tax = subtotal * 0.06;
+      const total = subtotal + envio + tax;
+
+      // ── DESCUENTO PRIMERA COMPRA (se muestra después de verificar email) ──
+      // Se maneja en enviarPedidoFormulario con DOM update
 
       container.innerHTML = `
         <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
@@ -233,6 +232,16 @@
               <div class="summary-totals-box">
                 <div class="summary-line"><span>Subtotal</span><span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span></div>
                 <div class="summary-line"><span>Envío</span><span style="font-weight: 600; color: ${envio === 0 ? '#22c55e' : 'var(--text-dark)'};">${envio === 0 ? 'Gratis ✅' : '$' + envio.toFixed(2)}</span></div>
+                <!-- ✅ Tarea 4: Tax visible -->
+                <div class="summary-line" id="taxRow" style="${tax > 0 ? '' : 'display:none;'}">
+                  <span>FL State Tax (6%)</span>
+                  <span style="font-weight: 600; color: var(--text-dark);">$${tax.toFixed(2)}</span>
+                </div>
+                <!-- ✅ Tarea 6: Descuento primera compra visible (se muestra después de verificar email) -->
+                <div class="summary-line" id="firstPurchaseRow" style="display:none;">
+                  <span>Descuento primera compra (10%)</span>
+                  <span style="font-weight: 600; color: #16a34a;" id="firstPurchaseDiscount">-$0.00</span>
+                </div>
                 <div class="summary-line grand-total"><span>Total</span><span id="checkoutTotal">$${total.toFixed(2)}</span></div>
               </div>
 
@@ -303,8 +312,18 @@
       const zip = document.getElementById('checkoutZip').value.trim();
       if (!zip || zip.length < 3) { alert('Ingresa un código postal válido.'); return; }
 
+      // ── CALCULAR SUBTOTAL (sin descuento primera compra) ──
+      let subtotal = 0;
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (!prod) return;
+        const precioUnitario = calcularPrecioItem(item);
+        subtotal += precioUnitario * item.qty;
+      });
+
       // ── DESCUENTO PRIMERA COMPRA (Firebase) ──
       let descuentoPrimeraCompra = 0;
+      let esPrimeraCompra = false;
       try {
         const db = window.db;
         const collection = window.collection;
@@ -317,7 +336,8 @@
           const q = query(pedidosRef, where('email', '==', email));
           const snapshot = await getDocs(q);
           if (snapshot.empty) {
-            descuentoPrimeraCompra = 0.10; // 10% de descuento primera compra
+            esPrimeraCompra = true;
+            descuentoPrimeraCompra = 0.10;
             console.log('✅ Primera compra detectada. Descuento del 10% aplicado.');
           } else {
             console.log('❌ Cliente recurrente. Sin descuento de primera compra.');
@@ -327,21 +347,33 @@
         console.error('❌ Error al verificar primera compra:', error);
       }
 
-      // ── CALCULAR TOTAL CON DESCUENTOS ──
-      let subtotal = 0;
-      cart.forEach(item => {
-        const prod = window.productosData[item.id];
-        if (!prod) return;
-        const precioUnitario = calcularPrecioItem(item);
-        subtotal += precioUnitario * item.qty;
-      });
-
-      // Aplicar descuento de primera compra (10%)
+      // ── APLICAR DESCUENTO PRIMERA COMPRA ──
       const descuentoPrimera = descuentoPrimeraCompra * subtotal;
       const subtotalConDescuento = subtotal - descuentoPrimera;
-      const envio = subtotalConDescuento >= 100 ? 0 : 12;
+
+      // ── ENVÍO (Tarea 5: unificado con subtotal, no subtotalConDescuento) ──
+      const envio = subtotal >= 100 ? 0 : 12;
+
+      // ── TAX (Tarea 4: visible antes de confirmar) ──
       const tax = subtotalConDescuento * 0.06;
       const totalFinal = subtotalConDescuento + envio + tax;
+
+      // ── ACTUALIZAR DOM (Tarea 6: mostrar descuento primera compra) ──
+      if (esPrimeraCompra && descuentoPrimera > 0) {
+        const row = document.getElementById('firstPurchaseRow');
+        const discountEl = document.getElementById('firstPurchaseDiscount');
+        if (row && discountEl) {
+          row.style.display = 'flex';
+          discountEl.textContent = '-$' + descuentoPrimera.toFixed(2);
+        }
+        // Actualizar total
+        const totalEl = document.getElementById('checkoutTotal');
+        if (totalEl) {
+          totalEl.textContent = '$' + totalFinal.toFixed(2);
+        }
+        // Mostrar mensaje
+        alert(`🎉 ¡Es tu primera compra! Se aplicó un 10% de descuento. Total: $${totalFinal.toFixed(2)}`);
+      }
 
       const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
       const notas = document.getElementById('checkoutNotas').value.trim();
