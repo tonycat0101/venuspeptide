@@ -36,7 +36,7 @@
   <!-- ── CATÁLOGO ── -->
   <section class="catalog-section">
     <div class="catalog-header">
-      <h1>Shop Peptides / Catálogo Analítico</h1>
+      <h1>Comprar Productos</h1> <!-- ✅ CAMBIADO: Shop Peptides / Catálogo Analítico → Comprar Productos -->
     </div>
     <div class="catalog-grid" id="gridProductos"></div>
   </section>
@@ -102,7 +102,7 @@
           },
           {
             nombre: 'Metabolismo Avanzado',
-            productos: ['Semaglutide 20mg', 'MOTS-C 10mg'],
+            productos: ['GLP-1 RC 20mg', 'MOTS-C 10mg'],
             ids: ['semaglutide-20mg', 'mots-c-10mg'],
             precio: 169.99,
             precio_original: 199.99,
@@ -148,7 +148,7 @@
           return;
         }
 
-        // ── VALIDAR LÍMITES (CORREGIDO) ──
+        // ── VALIDAR LÍMITES ──
         let totalNuevos = 0;
         let error = false;
 
@@ -211,7 +211,6 @@
         window.location.href = 'carrito.html';
       };
 
-      // ── FUNCIÓN GLOBAL PARA BUNDLE DESDE CUALQUIER LUGAR ──
       window.agregarBundleDesdeIds = function(ids) {
         let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
         const productosBundle = ids.map(id => window.productosData[id]).filter(p => p);
