@@ -54,7 +54,6 @@
 </head>
 <body>
 
-  <!-- ✅ ELIMINADO MENÚ DUPLICADO (Tarea 9) -->
   <div id="nav-placeholder"></div>
   <script src="nav.js"></script>
 
@@ -65,11 +64,11 @@
     </div>
   </main>
 
-  <footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div><p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p></div><div class="footer__col"><div class="footer__col-title">Navegación</div><a href="index.html">Inicio</a><a href="categorias.html">Categorías</a><a href="vertodos.html">Ver todos</a><a href="nosotros.html">Nosotros</a></div><div class="footer__col"><div class="footer__col-title">Soporte</div><a href="contacto.html">Contacto</a></div></div><div class="footer__bottom"><div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div></div></div></footer>
+  <footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><div class="footer__logo"><div class="footer__logo-icon">V</div>Venus Peptide</div><p>Compuestos químicos de alta pureza destinados estrictamente a la investigación y desarrollo analítico en laboratorios.</p></div><div class="footer__col"><div class="footer__col-title">Navegación</div><a href="index.html">Inicio</a><a href="categorias.html">Categorías</a><a href="vertodos.html">Productos</a><a href="nosotros.html">Nosotros</a></div><div class="footer__col"><div class="footer__col-title">Soporte</div><a href="contacto.html">Contacto</a></div></div><div class="footer__bottom"><div>&copy; 2026 Venus Peptide. Todos los derechos reservados.</div></div></div></footer>
 
   <script src="main.js"></script>
 
-  <!-- ── FIREBASE SDK ── -->
+  <!-- FIREBASE SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
     import { getFirestore, doc, setDoc, getDocs, query, where, collection } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
@@ -110,7 +109,6 @@
       renderizarCheckout();
     });
 
-    // ── FUNCIONES DE DESCUENTO ──
     function calcularDescuento(cantidad) {
       if (cantidad >= 10) return 0.15;
       if (cantidad >= 4) return 0.10;
@@ -128,7 +126,6 @@
       return item.precio_original * (1 - descuento);
     }
 
-    // ── RENDERIZAR CHECKOUT ──
     function renderizarCheckout() {
       const container = document.getElementById('checkoutContent');
 
@@ -144,7 +141,6 @@
         return;
       }
 
-      // ── CALCULAR SUBTOTAL CON DESCUENTOS ──
       let subtotal = 0;
       let itemsHTML = '';
 
@@ -167,15 +163,9 @@
           </div>`;
       });
 
-      // ── ENVÍO (Tarea 5: unificado con subtotal) ──
       const envio = subtotal >= 100 ? 0 : 12;
-
-      // ── TAX (Tarea 4: visible en el resumen) ──
       const tax = subtotal * 0.06;
       const total = subtotal + envio + tax;
-
-      // ── DESCUENTO PRIMERA COMPRA (se muestra después de verificar email) ──
-      // Se maneja en enviarPedidoFormulario con DOM update
 
       container.innerHTML = `
         <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
@@ -232,12 +222,10 @@
               <div class="summary-totals-box">
                 <div class="summary-line"><span>Subtotal</span><span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span></div>
                 <div class="summary-line"><span>Envío (tarifa fija)</span><span style="font-weight: 600; color: ${envio === 0 ? '#22c55e' : 'var(--text-dark)'};">${envio === 0 ? 'Gratis ✅' : '$' + envio.toFixed(2)}</span></div>
-                <!-- ✅ Tarea 4: Tax visible -->
                 <div class="summary-line" id="taxRow" style="${tax > 0 ? '' : 'display:none;'}">
                   <span>FL State Tax (6%)</span>
                   <span style="font-weight: 600; color: var(--text-dark);">$${tax.toFixed(2)}</span>
                 </div>
-                <!-- ✅ Tarea 6: Descuento primera compra visible (se muestra después de verificar email) -->
                 <div class="summary-line" id="firstPurchaseRow" style="display:none;">
                   <span>Descuento primera compra (10%)</span>
                   <span style="font-weight: 600; color: #16a34a;" id="firstPurchaseDiscount">-$0.00</span>
@@ -260,7 +248,6 @@
         </form>
       `;
 
-      // ── EVENTOS ──
       const legalCheck = document.getElementById('checkoutLegal');
       const legalError = document.getElementById('legalError');
       if (legalCheck) {
@@ -271,13 +258,11 @@
       }
     }
 
-    // ── ENVIAR PEDIDO ──
     async function enviarPedidoFormulario(e) {
       e.preventDefault();
 
       const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
-      // ── VALIDACIONES BÁSICAS ──
       const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
       if (totalItems > 30) { alert(`⚠️ Máximo 30 unidades por orden. Tienes ${totalItems}.`); return; }
       for (const item of cart) {
@@ -312,7 +297,6 @@
       const zip = document.getElementById('checkoutZip').value.trim();
       if (!zip || zip.length < 3) { alert('Ingresa un código postal válido.'); return; }
 
-      // ── CALCULAR SUBTOTAL (sin descuento primera compra) ──
       let subtotal = 0;
       cart.forEach(item => {
         const prod = window.productosData[item.id];
@@ -321,7 +305,6 @@
         subtotal += precioUnitario * item.qty;
       });
 
-      // ── DESCUENTO PRIMERA COMPRA (Firebase) ──
       let descuentoPrimeraCompra = 0;
       let esPrimeraCompra = false;
       try {
@@ -347,18 +330,12 @@
         console.error('❌ Error al verificar primera compra:', error);
       }
 
-      // ── APLICAR DESCUENTO PRIMERA COMPRA ──
       const descuentoPrimera = descuentoPrimeraCompra * subtotal;
       const subtotalConDescuento = subtotal - descuentoPrimera;
-
-      // ── ENVÍO (Tarea 5: unificado con subtotal, no subtotalConDescuento) ──
       const envio = subtotal >= 100 ? 0 : 12;
-
-      // ── TAX (Tarea 4: visible antes de confirmar) ──
       const tax = subtotalConDescuento * 0.06;
       const totalFinal = subtotalConDescuento + envio + tax;
 
-      // ── ACTUALIZAR DOM (Tarea 6: mostrar descuento primera compra) ──
       if (esPrimeraCompra && descuentoPrimera > 0) {
         const row = document.getElementById('firstPurchaseRow');
         const discountEl = document.getElementById('firstPurchaseDiscount');
@@ -366,12 +343,10 @@
           row.style.display = 'flex';
           discountEl.textContent = '-$' + descuentoPrimera.toFixed(2);
         }
-        // Actualizar total
         const totalEl = document.getElementById('checkoutTotal');
         if (totalEl) {
           totalEl.textContent = '$' + totalFinal.toFixed(2);
         }
-        // Mostrar mensaje
         alert(`🎉 ¡Es tu primera compra! Se aplicó un 10% de descuento. Total: $${totalFinal.toFixed(2)}`);
       }
 
@@ -380,7 +355,6 @@
       const newsletter = document.getElementById('checkoutNewsletter').checked;
       const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
 
-      // ── GUARDAR EN SESSION Y LOCAL STORAGE ──
       sessionStorage.setItem('pending_order_id', codigoReferencia);
       sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
       sessionStorage.setItem('pending_order_method', metodoPago);
@@ -402,7 +376,6 @@
       sessionStorage.setItem('checkout_email', email);
       sessionStorage.setItem('checkout_telefono', telefono);
 
-      // ── GUARDAR EN FIREBASE ──
       const db = window.db;
       const doc = window.doc;
       const setDoc = window.setDoc;
@@ -444,7 +417,6 @@
       }
     }
 
-    // ── FUNCIONES GLOBALES ──
     window.enviarPedidoFormulario = enviarPedidoFormulario;
     window.renderizarCheckout = renderizarCheckout;
     window.calcularPrecioItem = calcularPrecioItem;
