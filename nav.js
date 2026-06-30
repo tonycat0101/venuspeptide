@@ -13,7 +13,7 @@ const NAV_HTML = `
     <div class="nav__links" style="display: flex; align-items: center;">
       <a href="index.html">Inicio</a>
       <a href="categorias.html">Categorías</a>
-      <a href="vertodos.html">Productos</a>  <!-- ✅ CAMBIADO: Ver todos → Productos -->
+      <a href="vertodos.html">Ver todos</a>
       <a href="nosotros.html">Nosotros</a>
       <a href="contacto.html">Contacto</a>
       <a href="carrito.html" class="nav__cart-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff !important; padding: 8px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; margin-left: 15px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
@@ -27,7 +27,6 @@ const NAV_HTML = `
   </div>
 </nav>
 
-<!-- ✅ MENÚ MÓVIL ELIMINADO (ya no se inyecta uno duplicado) -->
 <div class="mobile-menu" id="mobileMenu" style="display:none;">
 </div>
 `;
@@ -44,7 +43,7 @@ const FOOTER_HTML = `
         <div class="footer__col-title">Navegación</div>
         <a href="index.html">Inicio</a>
         <a href="categorias.html">Categorías</a>
-        <a href="vertodos.html">Productos</a>  <!-- ✅ CAMBIADO: Ver todos → Productos -->
+        <a href="vertodos.html">Ver todos</a>
         <a href="nosotros.html">Nosotros</a>
         <a href="contacto.html">Contacto</a>
       </div>
