@@ -1,6 +1,6 @@
 /* ============================================================
    VENUS PEPTIDE — nav.js
-   Nav y footer centralizados. Modifica aquí, se actualiza en todo el sitio.
+   Nav y footer centralizados.
    ============================================================ */
 
 const NAV_HTML = `
@@ -18,7 +18,6 @@ const NAV_HTML = `
       <a href="contacto.html">Contacto</a>
       <a href="carrito.html" class="nav__cart-btn" style="display: inline-flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff !important; padding: 8px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; margin-left: 15px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-        
         <span id="navCartCount" style="background: rgba(255,255,255,0.2); padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 700;">(0)</span>
       </a>
     </div>
@@ -28,16 +27,8 @@ const NAV_HTML = `
   </div>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Inicio</a>
-  <a href="categorias.html">Categorías</a>
-  <a href="vertodos.html">Ver todos</a>
-  <a href="nosotros.html">Nosotros</a>
-  <a href="contacto.html">Contacto</a>
-  <a href="carrito.html" style="margin-top: 15px; background: #2563eb; color: white !important; text-align: center; padding: 12px; border-radius: 6px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-    Ver Carrito (<span id="navCartCountMobile">0</span>)
-  </a>
+<!-- ✅ MENÚ MÓVIL ELIMINADO (el que está hardcodeado en cada página es el único) -->
+<div class="mobile-menu" id="mobileMenu" style="display:none;">
 </div>
 `;
 
