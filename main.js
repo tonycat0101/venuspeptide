@@ -21,7 +21,7 @@ const productosData = {
     pureza: "99.5% Pureza | 5mg",
     categoria: "gh",
     imagen: "img/vial-ipamorelin-5mg.png",
-    descripcion: "Péptido sintético con actividad secretagoga. Diseñado para investigación en ensayos de laboratorio y estudios de receptores de grelina en modelos celulares in-vitro. Presentación en polvo liofilizado estéril de alta pureza. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores de grelina en modelos celulares in-vitro. Presentación en polvo liofilizado estéril. No apto para consumo humano."
   },
   "cjc-1295-no-dac-5mg": {
     id: "cjc-1295-no-dac-5mg",
@@ -32,7 +32,7 @@ const productosData = {
     categoria: "gh",
     badge: "sale",
     imagen: "img/vial-cjc-1295-no-dac-5mg.png",
-    descripcion: "Análogo sintético de alta pureza con actividad sobre receptores GHRH. Formulado para investigación en ensayos de laboratorio y análisis de señalización celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de receptores GHRH en modelos celulares in-vitro. Presentación en polvo liofilizado estéril. No apto para consumo humano."
   },
   "igf-1-lr3-1mg": {
     id: "igf-1-lr3-1mg",
@@ -43,7 +43,7 @@ const productosData = {
     categoria: "gh",
     badge: "sale",
     imagen: "img/vial-igf-1-lr3-1mg.png",
-    descripcion: "Análogo de factor de crecimiento de alta pureza con actividad sobre receptores IGF-1. Diseñado para investigación en cultivos celulares y ensayos de laboratorio in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de receptores IGF-1 en modelos celulares in-vitro. Presentación en polvo liofilizado estéril. No apto para consumo humano."
   },
   "tesamorelin-10mg": {
     id: "tesamorelin-10mg",
@@ -53,7 +53,7 @@ const productosData = {
     pureza: "99.5% Pureza | 10mg",
     categoria: "gh",
     imagen: "img/vial-tesamorelin-10mg.png",
-    descripcion: "Péptido sintético de alta pureza con actividad sobre receptores GHRH. Formulado para investigación en ensayos de laboratorio y análisis de rutas de señalización celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de receptores GHRH en modelos celulares in-vitro. Presentación en polvo liofilizado estéril. No apto para consumo humano."
   },
   "tesamorelin-20mg": {
     id: "tesamorelin-20mg",
@@ -63,102 +63,102 @@ const productosData = {
     pureza: "99.5% Pureza | 20mg",
     categoria: "gh",
     imagen: "img/vial-tesamorelin-20mg.png",
-    descripcion: "Péptido sintético de alta pureza con actividad sobre receptores GHRH. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de rutas de señalización celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de receptores GHRH en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
 
   // ── METABÓLICOS (12 productos) ──
   "semaglutide-20mg": {
     id: "semaglutide-20mg",
-    nombre: "Semaglutide 20mg",
+    nombre: "GLP-1 RC 20mg",
     precio: 120.00,
     rating: "5.0",
     pureza: "99.7% Pureza | 20mg",
     categoria: "metabolicos",
     imagen: "img/vial-semaglutide-20mg.png",
-    descripcion: "Análogo sintético de alta pureza con actividad sobre receptores GLP-1. Diseñado para investigación en ensayos de laboratorio y estudios de receptores celulares en modelos in-vitro. Presentación de 20mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores GLP-1 en modelos celulares in-vitro. Presentación de 20mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "semaglutide-30mg": {
     id: "semaglutide-30mg",
-    nombre: "Semaglutide 30mg",
+    nombre: "GLP-1 RC 30mg",
     precio: 155.00,
     rating: "5.0",
     pureza: "99.7% Pureza | 30mg",
     categoria: "metabolicos",
     imagen: "img/vial-semaglutide-30mg.png",
-    descripcion: "Análogo sintético de alta pureza con actividad sobre receptores GLP-1. Presentación de 30mg para investigación en ensayos de laboratorio y análisis de rutas de señalización celular in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 30mg para investigación en ensayos de laboratorio y análisis de receptores GLP-1 en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "tirzepatide-10mg": {
     id: "tirzepatide-10mg",
-    nombre: "Tirzepatide 10mg",
+    nombre: "GIP/GLP-1 RC 10mg",
     precio: 95.00,
     rating: "4.9",
     pureza: "99.8% Pureza | 10mg",
     categoria: "metabolicos",
     badge: "sale",
     imagen: "img/vial-tirzepatide-10mg.png",
-    descripcion: "Co-agonista sintético de alta pureza con actividad sobre receptores GIP y GLP-1. Formulado para investigación en ensayos de laboratorio y análisis de interacciones moleculares en modelos celulares in-vitro. Presentación de 10mg. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores GIP y GLP-1 en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "tirzepatide-20mg": {
     id: "tirzepatide-20mg",
-    nombre: "Tirzepatide 20mg",
+    nombre: "GIP/GLP-1 RC 20mg",
     precio: 145.00,
     rating: "4.9",
     pureza: "99.8% Pureza | 20mg",
     categoria: "metabolicos",
     badge: "sale",
     imagen: "img/vial-tirzepatide-20mg.png",
-    descripcion: "Co-agonista sintético de alta pureza con actividad sobre receptores GIP y GLP-1. Presentación de 20mg para investigación en ensayos de laboratorio y estudios de señalización celular in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de receptores GIP y GLP-1 en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "tirzepatide-30mg": {
     id: "tirzepatide-30mg",
-    nombre: "Tirzepatide 30mg",
+    nombre: "GIP/GLP-1 RC 30mg",
     precio: 185.00,
     rating: "4.9",
     pureza: "99.8% Pureza | 30mg",
     categoria: "metabolicos",
     badge: "sale",
     imagen: "img/vial-tirzepatide-30mg.png",
-    descripcion: "Co-agonista sintético de alta pureza con actividad sobre receptores GIP y GLP-1. Presentación de 30mg para investigación en ensayos de laboratorio y análisis de rutas moleculares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 30mg para investigación en ensayos de laboratorio y estudios de receptores GIP y GLP-1 en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "retatrutide-10mg": {
     id: "retatrutide-10mg",
-    nombre: "Retatrutide 10mg",
+    nombre: "Triple RC 10mg",
     precio: 140.00,
     rating: "4.7",
     pureza: "99.4% Pureza | 10mg",
     categoria: "metabolicos",
     imagen: "img/vial-retatrutide-10mg.png",
-    descripcion: "Agonista triple sintético de alta pureza con actividad sobre receptores GLP-1, GIP y glucagón. Diseñado para investigación en ensayos de laboratorio y estudios de rutas moleculares en modelos celulares in-vitro. Presentación de 10mg. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "retatrutide-20mg": {
     id: "retatrutide-20mg",
-    nombre: "Retatrutide 20mg",
+    nombre: "Triple RC 20mg",
     precio: 190.00,
     rating: "4.7",
     pureza: "99.4% Pureza | 20mg",
     categoria: "metabolicos",
     imagen: "img/vial-retatrutide-20mg.png",
-    descripcion: "Agonista triple sintético de alta pureza. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de señalización celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "retatrutide-30mg": {
     id: "retatrutide-30mg",
-    nombre: "Retatrutide 30mg",
+    nombre: "Triple RC 30mg",
     precio: 240.00,
     rating: "4.7",
     pureza: "99.4% Pureza | 30mg",
     categoria: "metabolicos",
     imagen: "img/vial-retatrutide-30mg.png",
-    descripcion: "Agonista triple sintético de alta pureza. Presentación de 30mg para investigación en ensayos de laboratorio y estudios de rutas moleculares en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 30mg para investigación en ensayos de laboratorio y estudios de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "retatrutide-60mg": {
     id: "retatrutide-60mg",
-    nombre: "Retatrutide 60mg",
+    nombre: "Triple RC 60mg",
     precio: 380.00,
     rating: "4.7",
     pureza: "99.4% Pureza | 60mg",
     categoria: "metabolicos",
     imagen: "img/vial-retatrutide-60mg.png",
-    descripcion: "Agonista triple sintético de alta pureza. Presentación de 60mg para investigación en ensayos de laboratorio y análisis de señalización celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 60mg para investigación en ensayos de laboratorio y análisis de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "aod-9604-5mg": {
     id: "aod-9604-5mg",
@@ -168,7 +168,7 @@ const productosData = {
     pureza: "99.1% Pureza | 5mg",
     categoria: "metabolicos",
     imagen: "img/vial-aod-9604-5mg.png",
-    descripcion: "Fracción peptídica sintética de alta pureza. Formulada para investigación en ensayos de laboratorio y análisis de procesos bioquímicos en modelos celulares in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de procesos bioquímicos en modelos celulares in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "mots-c-10mg": {
     id: "mots-c-10mg",
@@ -178,7 +178,7 @@ const productosData = {
     pureza: "98.6% Pureza | 10mg",
     categoria: "metabolicos",
     imagen: "img/vial-mots-c-10mg.png",
-    descripcion: "Péptido sintético de alta pureza con actividad mitocondrial. Diseñado para investigación en ensayos de laboratorio y estudios de metabolismo celular en modelos in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de metabolismo celular en modelos in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "mots-c-20mg": {
     id: "mots-c-20mg",
@@ -188,7 +188,7 @@ const productosData = {
     pureza: "98.6% Pureza | 20mg",
     categoria: "metabolicos",
     imagen: "img/vial-mots-c-20mg.png",
-    descripcion: "Péptido sintético de alta pureza con actividad mitocondrial. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de metabolismo celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 20mg para investigación en ensayos de laboratorio y análisis de metabolismo celular en modelos in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
 
   // ── DESEMPEÑO (9 productos) ──
@@ -201,7 +201,7 @@ const productosData = {
     categoria: "desempeno",
     badge: "sale",
     imagen: "img/vial-bpc-157-5mg.png",
-    descripcion: "Péptido sintético de alta estabilidad gástrica. Diseñado para estudios in-vitro de rutas de señalización celular y ensayos de bioquímica molecular. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de señalización celular en modelos in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "tb-500-5mg": {
     id: "tb-500-5mg",
@@ -212,7 +212,7 @@ const productosData = {
     categoria: "desempeno",
     badge: "sale",
     imagen: "img/vial-tb-500-5mg.png",
-    descripcion: "Fracción sintética de timosina beta-4 de alta pureza. Formulada para aplicaciones de investigación celular y estudios de migración en modelos in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de migración celular en modelos in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "melanotan-ii-10mg": {
     id: "melanotan-ii-10mg",
@@ -224,7 +224,7 @@ const productosData = {
     badge: "new",
     vialColor: "pink",
     imagen: "img/vial-melanotan-ii-10mg.png",
-    descripcion: "Análogo sintético de alta pureza con actividad sobre receptores de melanocortina. Diseñado para ensayos de laboratorio y estudios de receptores en entornos controlados in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores de melanocortina en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "ghk-cu-50mg": {
     id: "ghk-cu-50mg",
@@ -234,7 +234,7 @@ const productosData = {
     pureza: "99.8% Pureza | 50mg",
     categoria: "desempeno",
     imagen: "img/vial-ghk-cu-50mg.png",
-    descripcion: "Complejo de cobre y tripéptido de alta pureza. Diseñado para estudios de laboratorio en cascadas de señalización celular y análisis de matriz extracelular in-vitro. Presentación de 50mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de señalización celular en modelos in-vitro. Presentación de 50mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "bpc-157-tb-500-blend-5-5mg": {
     id: "bpc-157-tb-500-blend-5-5mg",
@@ -246,7 +246,7 @@ const productosData = {
     badge: "sale",
     isBlend: true,
     imagen: "img/vial-bpc-157-tb-500-blend-5-5mg.png",
-    descripcion: "Mezcla de alta pureza de péptidos sintéticos (BPC-157 y TB-500). Diseñada para ensayos de laboratorio y estudios de señalización celular en modelos in-vitro. Presentación de 5mg + 5mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Mezcla de compuestos sintéticos de alta pureza. Diseñada para investigación en ensayos de laboratorio y estudios de señalización celular en modelos in-vitro. Presentación de 5mg + 5mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "nad-plus-500mg": {
     id: "nad-plus-500mg",
@@ -257,7 +257,7 @@ const productosData = {
     categoria: "desempeno",
     badge: "sale",
     imagen: "img/vial-nad-plus-500mg.png",
-    descripcion: "Coenzima liofilizada de alta pureza. Diseñada para investigación en ensayos de laboratorio y análisis de procesos bioquímicos celulares in-vitro. Presentación de 500mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Coenzima de alta pureza. Diseñada para investigación en ensayos de laboratorio y análisis de procesos bioquímicos celulares in-vitro. Presentación de 500mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "ll-37-2mg": {
     id: "ll-37-2mg",
@@ -267,7 +267,7 @@ const productosData = {
     pureza: "99.5% Pureza | 2mg",
     categoria: "desempeno",
     imagen: "img/vial-ll-37-2mg.png",
-    descripcion: "Péptido antimicrobiano sintético de alta pureza. Formulado para investigación en ensayos de laboratorio y estudios de respuesta celular en modelos in-vitro. Presentación de 2mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de respuesta celular en modelos in-vitro. Presentación de 2mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "5-amino-1mq-50mg": {
     id: "5-amino-1mq-50mg",
@@ -277,7 +277,7 @@ const productosData = {
     pureza: "Purity ~99% | 50mg",
     categoria: "desempeno",
     imagen: "img/vial-5-amino-1mq-50mg.png",
-    descripcion: "Compuesto de investigación de alta pureza. Diseñado para estudios de laboratorio y análisis de rutas bioquímicas en modelos celulares in-vitro. Presentación de 50mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de procesos bioquímicos en modelos celulares in-vitro. Presentación de 50mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "glutathione-1500mg": {
     id: "glutathione-1500mg",
@@ -287,7 +287,7 @@ const productosData = {
     pureza: "99.1% Pureza | 1500mg",
     categoria: "desempeno",
     imagen: "img/vial-glutathione-1500mg.png",
-    descripcion: "Compuesto de investigación de alta pureza. Diseñado para estudios de laboratorio y análisis de procesos antioxidantes en modelos celulares in-vitro. Presentación de 1500mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de procesos bioquímicos en modelos celulares in-vitro. Presentación de 1500mg en polvo liofilizado estéril. No apto para consumo humano."
   },
 
   // ── COGNITIVOS (4 productos) ──
@@ -299,7 +299,7 @@ const productosData = {
     pureza: "99.6% Pureza | 10mg",
     categoria: "cognitivas",
     imagen: "img/vial-pt-141-10mg.png",
-    descripcion: "Péptido agonista de receptores de melanocortina de alta pureza. Formulado para investigación en ensayos de laboratorio y análisis de interacciones moleculares en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de receptores de melanocortina en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "dsip-5mg": {
     id: "dsip-5mg",
@@ -309,7 +309,7 @@ const productosData = {
     pureza: "99.6% Pureza | 5mg",
     categoria: "cognitivas",
     imagen: "img/vial-dsip-5mg.png",
-    descripcion: "Nonapéptido sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de ritmos circadianos en modelos celulares in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de ritmos circadianos en modelos celulares in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "oxytocin-5mg": {
     id: "oxytocin-5mg",
@@ -319,7 +319,7 @@ const productosData = {
     pureza: "99.7% Pureza | 5mg",
     categoria: "cognitivas",
     imagen: "img/vial-oxytocin-5mg.png",
-    descripcion: "Neuropéptido sintético de alta pureza. Formulado para investigación en ensayos de laboratorio y análisis de señalización sináptica en modelos celulares in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y estudios de señalización sináptica en modelos celulares in-vitro. Presentación de 5mg en polvo liofilizado estéril. No apto para consumo humano."
   },
   "selank-10mg": {
     id: "selank-10mg",
@@ -329,7 +329,7 @@ const productosData = {
     pureza: "99.5% Pureza | 10mg",
     categoria: "cognitivas",
     imagen: "img/vial-selank-10mg.png",
-    descripcion: "Compuesto liofilizado de alta pureza. Formulado para investigación en ensayos de laboratorio y análisis de estabilidad estructural peptídica en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Diseñado para investigación en ensayos de laboratorio y análisis de estabilidad estructural en modelos celulares in-vitro. Presentación de 10mg en polvo liofilizado estéril. No apto para consumo humano."
   }
 };
 
@@ -350,7 +350,7 @@ function calcularPrecioConDescuento(precio, cantidad) {
 }
 
 function calcularPrecioKit(precio) {
-  return precio * 3 * 0.90; // 3 viales con 10% de descuento
+  return precio * 3 * 0.90;
 }
 
 window.calcularDescuento = calcularDescuento;
@@ -422,6 +422,55 @@ function actualizarNumeroNavGlobal() {
 
 window.actualizarNumeroNavGlobal = actualizarNumeroNavGlobal;
 
+// ── AGREGAR AL CARRITO DESDE EL CATÁLOGO ──
+window.agregarAlCarrito = function(productId) {
+  const prod = productosData[productId];
+  if (!prod) {
+    alert('⚠️ Producto no disponible.');
+    return;
+  }
+
+  let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+
+  // Verificar límite de 10 por producto
+  const itemExistente = cart.find(i => i.id === productId);
+  const cantidadActual = itemExistente ? itemExistente.qty : 0;
+  if (cantidadActual + 1 > 10) {
+    alert(`⚠️ Máximo 10 unidades de ${prod.nombre}.`);
+    return;
+  }
+
+  // Verificar límite de 30 total
+  const totalActual = cart.reduce((sum, item) => sum + item.qty, 0);
+  if (totalActual + 1 > 30) {
+    alert(`⚠️ Máximo 30 unidades por pedido.`);
+    return;
+  }
+
+  // Agregar al carrito
+  if (itemExistente) {
+    itemExistente.qty += 1;
+  } else {
+    cart.push({
+      id: productId,
+      qty: 1,
+      nombre: prod.nombre,
+      precio: prod.precio,
+      precio_original: prod.precio,
+      descuento_aplicado: 0,
+      tipo: 'suelto'
+    });
+  }
+
+  localStorage.setItem('venus_cart', JSON.stringify(cart));
+
+  if (typeof actualizarNumeroNavGlobal === 'function') {
+    actualizarNumeroNavGlobal();
+  }
+
+  alert(`✅ ${prod.nombre} añadido al carrito.`);
+};
+
 // ── LÓGICA DE LA WEB ──
 document.addEventListener('DOMContentLoaded', () => {
   actualizarNumeroNavGlobal();
@@ -448,9 +497,9 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         actionBoxHTML = `
           <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">$${prod.precio.toFixed(2)} USD</div>
-          <a href="producto.html?id=${prod.id}" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
-            Ver Detalles
-          </a>`;
+          <button onclick="event.stopPropagation(); agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+            Agregar al carrito
+          </button>`;
       }
 
       let vialHTML = '';
@@ -465,8 +514,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       gridProductos.innerHTML += `
-        <div class="product-wrap" data-cat="${prod.categoria}">
-          <div class="product-card" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <a href="producto.html?id=${prod.id}" class="product-wrap-link" style="text-decoration: none; color: inherit; display: block;" data-cat="${prod.categoria}">
+          <div class="product-card" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--shadow-hover)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-card)'">
             ${badgeHTML}
             ${vialHTML}
             <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 4px 0 0 0;">${prod.nombre}</h3>
@@ -476,7 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="font-size: 13px; color: #64748b; font-weight: 500; margin-bottom: auto;">${prod.pureza}</div>
             ${actionBoxHTML}
           </div>
-        </div>
+        </a>
       `;
     });
   }
@@ -528,9 +577,9 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         actionHTML = `
           <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">$${prod.precio.toFixed(2)} USD</div>
-          <a href="producto.html?id=${prod.id}" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
-            Ver Detalles
-          </a>`;
+          <button onclick="event.stopPropagation(); agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+            Agregar al carrito
+          </button>`;
       }
 
       gridPopulares.innerHTML += `
