@@ -4,15 +4,92 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contacto — Venus Peptide</title>
-  <meta name="description" content="Contacte con el soporte técnico y comercial de Venus Peptide. Resolución de dudas sobre COA, pedidos y lotes.">
+  <meta name="description" content="Contacta con el equipo de soporte técnico de Venus Peptide. Consultas sobre pedidos, certificados de análisis y catálogo de investigación.">
   <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    .contact-form-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 20px;
+    }
+    .contact-form-box .form-group {
+      margin-bottom: 20px;
+    }
+    .contact-form-box label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+    .contact-form-box input,
+    .contact-form-box textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: var(--font-body);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .contact-form-box input:focus,
+    .contact-form-box textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+    .contact-form-box textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .btn-submit {
+      background: var(--blue);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+    .btn-submit:hover {
+      background: var(--blue-hover);
+    }
+    .btn-submit:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+    .form-message {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      display: none;
+    }
+    .form-message.success {
+      display: block;
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+    .form-message.error {
+      display: block;
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+    }
+  </style>
 </head>
-<body style="background: #fafafa;">
+<body>
 
   <div id="nav-placeholder"></div>
   <script src="nav.js"></script>
 
-  <!-- ── HERO DE ENTRADA ────────────────────────────────────────────────── -->
+  <!-- ── HERO ── -->
   <section style="padding-top: 140px; padding-bottom: 40px;">
     <div class="container" style="max-width: 1100px;">
       <div class="fade-up">
@@ -20,37 +97,22 @@
           Ponte en contacto
         </h1>
         <p style="color: var(--text-muted); font-size: 16px; max-width: 700px; line-height: 1.5;">
-          ¿Preguntas sobre un pedido, un certificado de análisis (COA) o nuestro catálogo de productos? Estamos aquí para ayudarle.
+          ¿Preguntas sobre un pedido, un certificado de análisis (COA) o nuestro catálogo de productos? Estamos aquí para ayudarte.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ── SECCIÓN 1: TARJETAS DE INFORMACIÓN GENERAL (3 Columnas) ────────── -->
-  <section style="padding-bottom: 60px;">
+  <!-- ── TARJETAS DE INFORMACIÓN ── -->
+  <section style="padding-bottom: 40px;">
     <div class="container" style="max-width: 1100px;">
       <div class="fade-up" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
         
-        <!-- Tarjeta 1: Email -->
-        <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 32px; display: flex; flex-direction: column; gap: 16px;">
-          <div style="font-size: 20px; color: var(--primary);">✉</div>
-          <div>
-            <!-- ✅ CORREGIDO: h2 en lugar de h3 -->
-            <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Correo Electrónico</h2>
-            <a href="mailto:info@venuspeptide.com" style="color: var(--primary); font-weight: 600; text-decoration: none; font-size: 15px; display: inline-block; margin-bottom: 8px;">
-              info@venuspeptide.com
-            </a>
-            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.6; margin: 0;">
-              Consultas generales, soporte técnico de pedidos y solicitudes de COA.
-            </p>
-          </div>
-        </div>
-
-        <!-- Tarjeta 2: Tiempo de Respuesta -->
+        <!-- Tarjeta 1: Tiempo de Respuesta -->
         <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 32px; display: flex; flex-direction: column; gap: 16px;">
           <div style="font-size: 20px; color: var(--primary);">🕒</div>
           <div>
-            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Tiempo de respuesta</h3>
+            <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Tiempo de respuesta</h2>
             <div style="color: var(--text-main); font-weight: 600; font-size: 15px; margin-bottom: 8px;">
               Menos de 24 horas
             </div>
@@ -60,11 +122,11 @@
           </div>
         </div>
 
-        <!-- Tarjeta 3: Ubicación -->
+        <!-- Tarjeta 2: Ubicación -->
         <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 32px; display: flex; flex-direction: column; gap: 16px;">
           <div style="font-size: 20px; color: var(--primary);">📍</div>
           <div>
-            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Ubicación</h3>
+            <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Ubicación</h2>
             <div style="color: var(--text-main); font-weight: 600; font-size: 15px; margin-bottom: 8px;">
               Estados Unidos
             </div>
@@ -74,52 +136,75 @@
           </div>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SECCIÓN 2: CANALES DE AYUDA DIRECTOS (2 Columnas Simétricas) ────── -->
-  <section style="padding-bottom: 80px;">
-    <div class="container" style="max-width: 1100px;">
-      <div class="fade-up">
-        <h2 style="font-size: 22px; font-weight: 700; color: var(--text-main); margin-bottom: 32px;">
-          ¿En qué podemos ayudarle?
-        </h2>
-      </div>
-
-      <div class="fade-up" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;">
-
-        <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;">
+        <!-- Tarjeta 3: Soporte de pedidos -->
+        <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 32px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="font-size: 20px; color: var(--primary);">📦</div>
           <div>
-            <div style="font-size: 22px; margin-bottom: 14px;">📦</div>
-            <h3 style="font-size: 17px; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Soporte de pedidos</h3>
-            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin: 0;">
+            <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Soporte de pedidos</h2>
+            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.6; margin: 0;">
               Seguimiento de carga, actualizaciones de envío, notificaciones de tránsito, gestión de artículos dañados o solicitudes de devolución de lotes.
             </p>
           </div>
-          <a href="mailto:info@venuspeptide.com" style="color: var(--primary); font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-            Enviar correo <span style="font-size: 16px;">→</span>
-          </a>
-        </div>
-
-        <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;">
-          <div>
-            <div style="font-size: 22px; margin-bottom: 14px;">🔬</div>
-            <h3 style="font-size: 17px; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Preguntas sobre productos y COA</h3>
-            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin: 0;">
-              Información detallada de pureza, certificados de análisis por lote, guías de almacenamiento y disponibilidad de stock.
-            </p>
-          </div>
-          <a href="mailto:info@venuspeptide.com" style="color: var(--primary); font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-            Enviar correo <span style="font-size: 16px;">→</span>
-          </a>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ── SECCIÓN 3: BANNER INFERIOR DE REDIRECCIÓN A PRODUCTOS ────────────── -->
+  <!-- ── FORMULARIO DE CONTACTO ── -->
+  <section style="padding-bottom: 60px;">
+    <div class="container" style="max-width: 1100px;">
+      <div class="fade-up">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+          
+          <!-- Columna Izquierda: Texto -->
+          <div>
+            <h2 style="font-size: 22px; font-weight: 700; color: var(--text-main); margin-bottom: 12px;">
+              Envíanos un mensaje
+            </h2>
+            <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+              Completa el formulario y te responderemos en menos de 24 horas.
+            </p>
+            <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--blue);">
+              <div style="font-size: 13px; color: var(--text-muted);">
+                <strong style="color: var(--text-dark);">Correo directo:</strong><br>
+                <a href="mailto:info@venuspeptide.com" style="color: var(--blue); font-weight: 600; text-decoration: none;">info@venuspeptide.com</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Formulario -->
+          <div class="contact-form-box">
+            <form id="contactForm" onsubmit="enviarContacto(event)">
+              <div class="form-group">
+                <label for="contactNombre">Nombre completo</label>
+                <input type="text" id="contactNombre" placeholder="Tu nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="contactEmail">Correo electrónico</label>
+                <input type="email" id="contactEmail" placeholder="tucorreo@ejemplo.com" required>
+              </div>
+              <div class="form-group">
+                <label for="contactAsunto">Asunto</label>
+                <input type="text" id="contactAsunto" placeholder="¿Sobre qué quieres consultar?" required>
+              </div>
+              <div class="form-group">
+                <label for="contactMensaje">Mensaje</label>
+                <textarea id="contactMensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
+              </div>
+              <button type="submit" class="btn-submit" id="contactSubmitBtn">
+                Enviar mensaje
+              </button>
+              <div id="contactFormMessage" class="form-message"></div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BANNER DE PRODUCTOS ── -->
   <section style="padding-bottom: 100px;">
     <div class="container" style="max-width: 1100px;">
       <div class="fade-up" style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
@@ -138,6 +223,63 @@
 
   <div id="footer-placeholder"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("aEcMYlruuOUT9lH-S");
+    })();
+
+    function enviarContacto(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('contactSubmitBtn');
+      const messageEl = document.getElementById('contactFormMessage');
+
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      messageEl.className = 'form-message';
+      messageEl.style.display = 'none';
+
+      const nombre = document.getElementById('contactNombre').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const asunto = document.getElementById('contactAsunto').value.trim();
+      const mensaje = document.getElementById('contactMensaje').value.trim();
+
+      if (!nombre || !email || !asunto || !mensaje) {
+        messageEl.textContent = '⚠️ Por favor, completa todos los campos.';
+        messageEl.className = 'form-message error';
+        messageEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Enviar mensaje';
+        return;
+      }
+
+      emailjs.send('service_me5arag', 'template_bfdi0ai', {
+        cliente: nombre,
+        email: email,
+        asunto: asunto,
+        mensaje: mensaje,
+        fecha: new Date().toLocaleString()
+      }).then(() => {
+        messageEl.textContent = '✅ ¡Mensaje enviado con éxito! Te responderemos en menos de 24 horas.';
+        messageEl.className = 'form-message success';
+        messageEl.style.display = 'block';
+        document.getElementById('contactForm').reset();
+        btn.disabled = false;
+        btn.textContent = 'Enviar mensaje';
+      }).catch((error) => {
+        console.error('Error al enviar:', error);
+        messageEl.textContent = '❌ Hubo un error al enviar el mensaje. Por favor, intenta de nuevo.';
+        messageEl.className = 'form-message error';
+        messageEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Enviar mensaje';
+      });
+    }
+
+    window.enviarContacto = enviarContacto;
+  </script>
+
   <script src="main.js"></script>
 
   <script>
@@ -149,7 +291,8 @@
           mobileMenu.classList.toggle('active');
           burgerBtn.classList.toggle('active');
         });
-      }});
+      }
+    });
   </script>
 
 </body>
