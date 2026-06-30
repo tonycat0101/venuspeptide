@@ -3,120 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Especificaciones detalladas de compuestos peptídicos de investigación. Pureza, presentación y descripción analítica para uso en laboratorio.">
-
+  <meta name="description" content="Especificaciones detalladas de compuestos peptídicos de investigación. Pureza, presentación y descripción analítica para uso en laboratorio.">
   <link rel="stylesheet" href="styles.css">
 
   <style>
-
-   .product-detail-section {
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --dark: #0f172a;
-  --slate: #64748b;
-  --light: #f8fafc;
-  --border: #e2e8f0;
-  --shadow: 0 4px 20px rgba(15, 30, 53, 0.05);
-}
-    /* Contenedor Principal */
+    .product-detail-section {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --dark: #0f172a;
+      --slate: #64748b;
+      --light: #f8fafc;
+      --border: #e2e8f0;
+      --shadow: 0 4px 20px rgba(15, 30, 53, 0.05);
+    }
     .product-container { max-width: 1200px; margin: 140px auto 60px auto; padding: 0 24px; }
-
-    /* Breadcrumbs */
     .breadcrumbs { font-size: 14px; color: var(--slate); margin-bottom: 32px; font-weight: 500; }
     .breadcrumbs a { color: var(--primary); text-decoration: none; font-weight: 600; }
-
-    /* Layout Detalle */
     .product-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-
-    /* Columna Izquierda: Visual del Vial */
-    .visual-column {
-      background: var(--light);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 400px;
-      position: relative;
-    }
-
-    /* ── MAQUETA DEL VIAL CON IMAGEN ── */
-    .vial-real-container {
-      width: 260px;
-      height: 400px;
-      background-image: url('img/vial-vacio.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* La etiqueta física simulada que se monta sobre el cuerpo del vial */
-    .vial-label-wrapper {
-      background: #ffffff;
-      width: 175px;
-      padding: 18px 14px;
-      border-radius: 4px;
-      box-shadow: 0 4px 12px rgba(15, 30, 53, 0.12);
-      text-align: center;
-      font-family: var(--font-body);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-top: 15px;
-    }
-
-    .label-brand {
-      font-family: var(--font-display);
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--text-dark);
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-
-    .label-name {
-      font-size: 14px;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.3px;
-      line-height: 1.2;
-    }
-
-    .label-specs {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--slate);
-    }
-
-    .label-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 5px auto;
-      width: 85%;
-    }
-
-    .label-legal {
-      font-size: 8px;
-      font-weight: 700;
-      color: #ef4444;
-      letter-spacing: 0.2px;
-      line-height: 1.25;
-    }
-    .label-legal.sub {
-      color: #0f172a;
-      font-size: 7.5px;
-      margin-top: 1px;
-      font-weight: 600;
-    }
-
-    /* Columna Derecha: Información */
+    .visual-column { background: var(--light); border: 1px solid var(--border); border-radius: 12px; padding: 30px; display: flex; justify-content: center; align-items: center; min-height: 400px; position: relative; }
+    .vial-real-container { width: 260px; height: 400px; background-image: url('img/vial-vacio.png'); background-size: contain; background-repeat: no-repeat; background-position: center; position: relative; display: flex; align-items: center; justify-content: center; }
+    .vial-label-wrapper { background: #ffffff; width: 175px; padding: 18px 14px; border-radius: 4px; box-shadow: 0 4px 12px rgba(15, 30, 53, 0.12); text-align: center; font-family: var(--font-body); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; margin-top: 15px; }
+    .label-brand { font-family: var(--font-display); font-size: 10px; font-weight: 800; color: var(--text-dark); letter-spacing: 0.5px; margin-bottom: 6px; text-transform: uppercase; }
+    .label-name { font-size: 14px; font-weight: 800; color: #0f172a; letter-spacing: -0.3px; line-height: 1.2; }
+    .label-specs { font-size: 10px; font-weight: 600; color: var(--slate); }
+    .label-divider { height: 1px; background: var(--border); margin: 5px auto; width: 85%; }
+    .label-legal { font-size: 8px; font-weight: 700; color: #ef4444; letter-spacing: 0.2px; line-height: 1.25; }
+    .label-legal.sub { color: #0f172a; font-size: 7.5px; margin-top: 1px; font-weight: 600; }
     .info-column { display: flex; flex-direction: column; gap: 20px; }
     .info-badge { align-self: flex-start; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; color: white; background: var(--primary); }
     .info-badge.sale { background: #ef4444; }
@@ -127,39 +39,21 @@
     .info-pureza { font-size: 16px; color: var(--slate); font-weight: 600; background: #f1f5f9; padding: 6px 12px; border-radius: 6px; align-self: flex-start; }
     .info-price { font-size: 28px; font-weight: 800; color: var(--dark); margin-top: 10px; }
     .info-desc { font-size: 16px; color: #475569; line-height: 1.6; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; }
-
-    /* Caja de Compra */
     .purchase-box { display: flex; gap: 16px; align-items: center; margin-top: 10px; }
     .qty-selector { display: flex; align-items: center; border: 2px solid var(--border); border-radius: 8px; height: 50px; background: #fff; overflow: hidden; }
     .qty-btn { background: none; border: none; width: 45px; height: 100%; font-size: 18px; font-weight: 600; cursor: pointer; color: var(--dark); transition: background 0.2s; }
     .qty-btn:hover { background: var(--light); }
     .qty-input { border: none; width: 50px; height: 100%; text-align: center; font-size: 16px; font-weight: 700; color: var(--dark); outline: none; }
-
     .btn-add-cart { flex: 1; height: 50px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-add-cart:hover { background: var(--primary-hover); }
-
-    /* ── DESCARGO LEGAL (ÚNICO) ── */
-    .legal-disclaimer-box {
-      margin-top: 20px;
-      padding: 16px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      border-left: 4px solid #2563eb;
-    }
-    .legal-disclaimer-box p {
-      font-size: 11px;
-      line-height: 1.6;
-      color: #475569;
-      margin: 0;
-    }
-    .legal-disclaimer-box strong {
-      color: #0f172a;
-    }
-
+    .btn-add-kit { flex: 1; height: 50px; background: #15803d; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-add-kit:hover { background: #166534; }
+    .kit-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 16px; margin-top: 16px; }
+    .legal-disclaimer-box { margin-top: 20px; padding: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; border-left: 4px solid #2563eb; }
+    .legal-disclaimer-box p { font-size: 11px; line-height: 1.6; color: #475569; margin: 0; }
+    .legal-disclaimer-box strong { color: #0f172a; }
     .not-found-box { text-align: center; padding: 100px 24px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-    .btn-back { display: inline-block; background: var(--primary); color: white; padding: 14px 28px; border-radius: 6px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; }
-
+    .discount-badge { background: #dcfce7; color: #15803d; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; margin-left: 8px; }
     @media (max-width: 868px) {
       .product-detail-grid { grid-template-columns: 1fr; gap: 40px; }
       .visual-column { min-height: 280px; padding: 20px; }
@@ -172,7 +66,6 @@
   </style>
 </head>
 <body>
-  
 
   <div id="nav-placeholder"></div>
   <script src="nav.js"></script>
@@ -201,20 +94,15 @@
       function actualizarContadorCarrito() {
         const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
         const total = cart.reduce((sum, item) => sum + item.qty, 0);
-
         const navCount = document.getElementById('navCartCount');
         const navCountMobile = document.getElementById('navCartCountMobile');
-
         if (navCount) navCount.textContent = `(${total})`;
         if (navCountMobile) navCountMobile.textContent = total;
       }
-
       actualizarContadorCarrito();
 
       window.addEventListener('storage', (e) => {
-        if (e.key === 'venus_cart') {
-          actualizarContadorCarrito();
-        }
+        if (e.key === 'venus_cart') actualizarContadorCarrito();
       });
 
       const urlParams = new URLSearchParams(window.location.search);
@@ -224,7 +112,6 @@
         mostrarError("No se especificó ningún producto.");
         return;
       }
-
       if (!window.productosData) {
         mostrarError("La base de datos de productos no está disponible. Por favor, recarga la página.");
         return;
@@ -243,9 +130,7 @@
           <div class="not-found-box">
             <h2 style="font-size: 28px; color: var(--dark);">⚠️ Producto No Disponible</h2>
             <p style="color: var(--slate); max-width: 400px;">${mensaje}</p>
-            <a href="vertodos.html" class="btn btn-primary" style="margin-top: 16px;">
-              Regresar al Catálogo
-            </a>
+            <a href="vertodos.html" class="btn btn-primary" style="margin-top: 16px;">Regresar al Catálogo</a>
           </div>
         `;
       }
@@ -255,6 +140,10 @@
         const mg = mgMatch ? mgMatch[1] : '';
         const purityMatch = prod.pureza.match(/(\d+\.?\d*%)/);
         const purity = purityMatch ? purityMatch[1] : '';
+
+        // Calcular precios con descuento
+        const precioUnitario = prod.precio;
+        const precioKit = (precioUnitario * 3 * 0.90).toFixed(2); // 10% off
 
         document.getElementById('mainContent').innerHTML = `
           <div class="breadcrumbs">
@@ -284,22 +173,45 @@
               <h1 class="info-title">${prod.nombre}</h1>
               <div class="info-rating">★ ★ ★ ★ ★ <span>(${prod.rating || '5.0'})</span></div>
               <div class="info-pureza">${prod.pureza}</div>
-              <div class="info-price">$${prod.precio.toFixed(2)} USD</div>
+              <div class="info-price" id="precioMostrado">$${prod.precio.toFixed(2)} USD</div>
+
               <p class="info-desc">${prod.descripcion}</p>
 
+              <!-- ── OPCIÓN 1: VIAL SUELTO CON DESCUENTO POR VOLUMEN ── -->
               <div class="purchase-box">
                 <div class="qty-selector">
-                  <button class="qty-btn" onclick="cambiarCantidad(-1)">-</button>
+                  <button class="qty-btn" onclick="cambiarCantidad(-1)">−</button>
                   <input type="number" class="qty-input" id="cantidadProd" value="1" min="1" readonly>
                   <button class="qty-btn" onclick="cambiarCantidad(1)">+</button>
                 </div>
                 <button class="btn-add-cart" id="btnAddToCart">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                  Añadir a la Investigación
+                  Añadir al carrito
                 </button>
               </div>
 
-              <!-- ── DISCLAIMER ÚNICO (ERR-001 CORREGIDO) ── -->
+              <!-- ── OPCIÓN 2: KIT 3 MESES ── -->
+              <div class="kit-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span style="font-weight: 700; color: #15803d; font-size: 17px;">📦 Kit 3 meses</span>
+                      <span class="discount-badge">10% OFF</span>
+                    </div>
+                    <div style="font-size: 13px; color: #166534; margin-top: 2px;">
+                      3 viales · Ahorra <strong>$${(prod.precio * 3 - parseFloat(precioKit)).toFixed(2)}</strong>
+                    </div>
+                    <div style="font-size: 14px; font-weight: 700; color: #0f172a; margin-top: 4px;">
+                      $${precioKit} USD <span style="font-weight: 400; color: #64748b; font-size: 13px; text-decoration: line-through;">$${(prod.precio * 3).toFixed(2)}</span>
+                    </div>
+                  </div>
+                  <button class="btn-add-kit" onclick="agregarKit()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Añadir kit
+                  </button>
+                </div>
+              </div>
+
               <div class="legal-disclaimer-box">
                 <p><strong>⚠️ Aviso Legal:</strong> Este producto es exclusivamente para uso en investigación y desarrollo en laboratorio. No está aprobado para consumo humano ni veterinario bajo ninguna circunstancia. La información proporcionada no constituye asesoramiento médico ni guía de dosificación.</p>
               </div>
@@ -307,36 +219,55 @@
           </div>
         `;
 
+        // ── BOTÓN AÑADIR (con descuento por volumen) ──
         const btnAddToCart = document.getElementById('btnAddToCart');
+        const cantidadInput = document.getElementById('cantidadProd');
+
+        function actualizarPrecioMostrado() {
+          const cantidad = parseInt(cantidadInput.value) || 1;
+          const descuento = calcularDescuento(cantidad);
+          const precioFinal = prod.precio * (1 - descuento);
+          const precioMostrado = document.getElementById('precioMostrado');
+          if (precioMostrado) {
+            if (descuento > 0) {
+              precioMostrado.innerHTML = `$${precioFinal.toFixed(2)} USD <span style="font-size: 14px; color: #64748b; text-decoration: line-through; font-weight: 400;">$${prod.precio.toFixed(2)}</span> <span style="font-size: 12px; color: #15803d; font-weight: 600;">(${Math.round(descuento * 100)}% off)</span>`;
+            } else {
+              precioMostrado.textContent = `$${prod.precio.toFixed(2)} USD`;
+            }
+          }
+        }
+
         if (btnAddToCart) {
           btnAddToCart.addEventListener('click', () => {
-            const cantidadAAgregar = parseInt(document.getElementById('cantidadProd').value) || 1;
+            const cantidadAAgregar = parseInt(cantidadInput.value) || 1;
             let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
 
-            // ── VALIDACIÓN 1: Máximo 10 por producto ──
             const itemExistente = cart.find(i => i.id === prod.id);
             const cantidadActual = itemExistente ? itemExistente.qty : 0;
             if (cantidadActual + cantidadAAgregar > 10) {
-              alert(`⚠️ Solo puedes agregar hasta 10 unidades de ${prod.nombre}. Actualmente tienes ${cantidadActual} en el carrito.`);
+              alert(`⚠️ Máximo 10 unidades de ${prod.nombre}.`);
               return;
             }
-
-            // ── VALIDACIÓN 2: Máximo 30 en total ──
             const totalActual = cart.reduce((sum, item) => sum + item.qty, 0);
             if (totalActual + cantidadAAgregar > 30) {
-              alert(`⚠️ Máximo 30 unidades por orden. Actualmente tienes ${totalActual} unidades en el carrito.`);
+              alert(`⚠️ Máximo 30 unidades por pedido.`);
               return;
             }
 
-            // ── AÑADIR AL CARRITO (ERR-002 CORREGIDO) ──
+            const descuento = calcularDescuento(cantidadAAgregar);
+            const precioFinal = prod.precio * (1 - descuento);
+
             if (itemExistente) {
               itemExistente.qty += cantidadAAgregar;
             } else {
-              cart.push({ 
-                id: prod.id, 
+              cart.push({
+                id: prod.id,
                 qty: cantidadAAgregar,
                 nombre: prod.nombre,
-                precio: prod.precio
+                precio: precioFinal,
+                precio_original: prod.precio,
+                descuento_aplicado: descuento,
+                tipo: 'suelto'
               });
             }
 
@@ -344,19 +275,12 @@
 
             if (typeof actualizarNumeroNavGlobal === 'function') {
               actualizarNumeroNavGlobal();
-            } else {
-              const navCount = document.getElementById('navCartCount');
-              if (navCount) {
-                const total = cart.reduce((sum, item) => sum + item.qty, 0);
-                navCount.textContent = `(${total})`;
-              }
             }
 
             const textoOriginal = btnAddToCart.innerHTML;
-            btnAddToCart.textContent = '¡Añadido con éxito! ✓';
+            btnAddToCart.innerHTML = '¡Añadido! ✓';
             btnAddToCart.style.background = '#22c55e';
             btnAddToCart.disabled = true;
-
             setTimeout(() => {
               btnAddToCart.innerHTML = textoOriginal;
               btnAddToCart.style.background = '';
@@ -364,22 +288,66 @@
             }, 2000);
           });
         }
-      }
 
-      // ── CONTROL DEL SELECTOR DE CANTIDAD CON LÍMITE ──
-      window.cambiarCantidad = function(valor) {
-        const input = document.getElementById('cantidadProd');
-        if (input) {
-          let nuevaCant = (parseInt(input.value) || 1) + valor;
-          if (nuevaCant < 1) nuevaCant = 1;
-          if (nuevaCant > 10) {
-            alert('⚠️ Máximo 10 unidades por producto.');
-            nuevaCant = 10;
+        // ── FUNCIÓN PARA KIT ──
+        window.agregarKit = function() {
+          let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+          const cantidadAAgregar = 3;
+
+          const itemExistente = cart.find(i => i.id === prod.id);
+          const cantidadActual = itemExistente ? itemExistente.qty : 0;
+          if (cantidadActual + cantidadAAgregar > 10) {
+            alert(`⚠️ Máximo 10 unidades de ${prod.nombre}.`);
+            return;
           }
-          input.value = nuevaCant;
-        }
-      };
+          const totalActual = cart.reduce((sum, item) => sum + item.qty, 0);
+          if (totalActual + cantidadAAgregar > 30) {
+            alert(`⚠️ Máximo 30 unidades por pedido.`);
+            return;
+          }
 
+          const precioKit = prod.precio * 3 * 0.90;
+
+          if (itemExistente) {
+            itemExistente.qty += cantidadAAgregar;
+          } else {
+            cart.push({
+              id: prod.id,
+              qty: 3,
+              nombre: prod.nombre,
+              precio: precioKit / 3, // precio unitario con descuento
+              precio_original: prod.precio,
+              descuento_aplicado: 0.10,
+              tipo: 'kit'
+            });
+          }
+
+          localStorage.setItem('venus_cart', JSON.stringify(cart));
+
+          if (typeof actualizarNumeroNavGlobal === 'function') {
+            actualizarNumeroNavGlobal();
+          }
+
+          alert(`✅ Kit 3 meses de ${prod.nombre} añadido al carrito por $${precioKit.toFixed(2)}`);
+        };
+
+        // ── ACTUALIZAR PRECIO AL CAMBIAR CANTIDAD ──
+        window.cambiarCantidad = function(valor) {
+          const input = document.getElementById('cantidadProd');
+          if (input) {
+            let nuevaCant = (parseInt(input.value) || 1) + valor;
+            if (nuevaCant < 1) nuevaCant = 1;
+            if (nuevaCant > 10) {
+              alert('⚠️ Máximo 10 unidades por producto.');
+              nuevaCant = 10;
+            }
+            input.value = nuevaCant;
+            actualizarPrecioMostrado();
+          }
+        };
+
+        actualizarPrecioMostrado();
+      }
     });
 
     const burgerBtn = document.getElementById('burgerBtn');
