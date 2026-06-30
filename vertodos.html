@@ -8,38 +8,51 @@
   <link rel="stylesheet" href="styles.css">
 
   <style>
-    /* ── ESTILOS EXCLUSIVOS DE LA CUADRÍCULA ── */
     .catalog-section { padding: 140px 0 100px 0; background: #fbfbfb; }
     .catalog-header { max-width: 1200px; margin: 0 auto 40px auto; padding: 0 20px; }
     .catalog-header h1 { font-size: 28px; font-weight: 700; color: #1e293b; letter-spacing: -0.02em; text-transform: uppercase; }
-
-    /* Grid de 3 columnas */
-    .catalog-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* Responsivo */
+    .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
     @media (max-width: 992px) { .catalog-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 640px) { .catalog-grid { grid-template-columns: 1fr; } }
+
+    /* ── SECCIÓN BUNDLES ── */
+    .bundles-section { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 60px 0; }
+    .bundles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    @media (max-width: 992px) { .bundles-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .bundles-grid { grid-template-columns: 1fr; } }
+    .bundle-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform 0.2s; }
+    .bundle-card:hover { transform: translateY(-4px); }
+    .bundle-name { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #0f172a; }
+    .bundle-products { font-size: 13px; color: #64748b; margin: 6px 0 12px 0; }
+    .bundle-price { font-size: 20px; font-weight: 800; color: #0f172a; }
+    .bundle-price small { font-size: 14px; font-weight: 400; color: #64748b; text-decoration: line-through; margin-left: 8px; }
   </style>
 </head>
 <body>
-  
 
   <div id="nav-placeholder"></div>
   <script src="nav.js"></script>
 
+  <!-- ── CATÁLOGO ── -->
   <section class="catalog-section">
     <div class="catalog-header">
       <h1>Shop Peptides / Catálogo Analítico</h1>
     </div>
-
     <div class="catalog-grid" id="gridProductos"></div>
+  </section>
+
+  <!-- ── BUNDLES ── -->
+  <section class="bundles-section" id="bundlesSection">
+    <div class="container">
+      <div style="text-align: center; max-width: 650px; margin: 0 auto 40px auto;">
+        <span class="section-eyebrow">Combos de Investigación</span>
+        <h2 class="section-title" style="font-size: 28px;">Bundles</h2>
+        <p style="color: var(--text-muted); font-size: 15px;">Ahorra comprando productos complementarios juntos.</p>
+      </div>
+      <div class="bundles-grid" id="bundlesGrid">
+        <!-- Renderizado con JS -->
+      </div>
+    </div>
   </section>
 
   <div id="footer-placeholder"></div>
@@ -55,10 +68,11 @@
           mobileMenu.classList.toggle('active');
           burgerBtn.classList.toggle('active');
         });
-      }// Analizar si la URL contiene una categoría (?cat=...) para adaptar el título h1
+      }
+
+      // ── FILTRO POR CATEGORÍA ──
       const urlParams = new URLSearchParams(window.location.search);
       const categoryParam = urlParams.get('cat');
-
       if (categoryParam) {
         const h1 = document.querySelector('.catalog-header h1');
         if (h1) {
@@ -73,8 +87,156 @@
           }
         }
       }
+
+      // ── RENDERIZAR BUNDLES ──
+      const bundlesGrid = document.getElementById('bundlesGrid');
+      if (bundlesGrid) {
+        const bundles = [
+          {
+            nombre: 'Regeneración Completa',
+            productos: ['BPC-157 5mg', 'TB-500 5mg', 'GHK-Cu 50mg'],
+            ids: ['bpc-157-5mg', 'tb-500-5mg', 'ghk-cu-50mg'],
+            precio: 137.70,
+            precio_original: 162.00,
+            descuento: '15%'
+          },
+          {
+            nombre: 'Metabolismo Avanzado',
+            productos: ['Semaglutide 20mg', 'MOTS-C 10mg'],
+            ids: ['semaglutide-20mg', 'mots-c-10mg'],
+            precio: 169.99,
+            precio_original: 199.99,
+            descuento: '15%'
+          },
+          {
+            nombre: 'GH Elite',
+            productos: ['Ipamorelin 5mg', 'CJC-1295 No DAC 5mg'],
+            ids: ['ipamorelin-5mg', 'cjc-1295-no-dac-5mg'],
+            precio: 77.40,
+            precio_original: 86.00,
+            descuento: '10%'
+          }
+        ];
+
+        bundlesGrid.innerHTML = '';
+        bundles.forEach(bundle => {
+          const ahorro = (bundle.precio_original - bundle.precio).toFixed(2);
+          bundlesGrid.innerHTML += `
+            <div class="bundle-card">
+              <div style="font-size: 24px; margin-bottom: 6px;">📦</div>
+              <div class="bundle-name">${bundle.nombre}</div>
+              <div class="bundle-products">${bundle.productos.join(' + ')}</div>
+              <div style="margin: 12px 0;">
+                <span class="bundle-price">$${bundle.precio.toFixed(2)} <small>$${bundle.precio_original.toFixed(2)}</small></span>
+                <span style="background: #dcfce7; color: #15803d; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; margin-left: 8px;">Ahorra $${ahorro}</span>
+              </div>
+              <button onclick="agregarBundle(['${bundle.ids.join("', '")}'])" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                Añadir bundle
+              </button>
+            </div>
+          `;
+        });
+      }
+
+      // ── FUNCIÓN PARA AGREGAR BUNDLE ──
+      window.agregarBundle = function(ids) {
+        let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+        const productosBundle = ids.map(id => window.productosData[id]).filter(p => p);
+
+        if (productosBundle.length !== ids.length) {
+          alert('⚠️ Algunos productos del bundle no están disponibles.');
+          return;
+        }
+
+        // Verificar límites
+        let totalNuevos = 0;
+        productosBundle.forEach(prod => {
+          const existente = cart.find(i => i.id === prod.id);
+          const actual = existente ? existente.qty : 0;
+          if (actual + 1 > 10) {
+            alert(`⚠️ Máximo 10 unidades de ${prod.nombre}.`);
+            return;
+          }
+          totalNuevos += 1;
+        });
+
+        const totalActual = cart.reduce((sum, item) => sum + item.qty, 0);
+        if (totalActual + totalNuevos > 30) {
+          alert(`⚠️ Máximo 30 unidades por pedido.`);
+          return;
+        }
+
+        // Precio del bundle (suma de productos con 15% descuento)
+        // Usamos los precios definidos en el bundle
+        const bundlePrecios = {
+          'Regeneración Completa': 137.70,
+          'Metabolismo Avanzado': 169.99,
+          'GH Elite': 77.40
+        };
+
+        // Obtener nombre del bundle
+        const bundleNombre = document.querySelector('.bundle-name')?.textContent || 'Bundle';
+
+        // Agregar productos
+        productosBundle.forEach(prod => {
+          const existente = cart.find(i => i.id === prod.id);
+          if (existente) {
+            existente.qty += 1;
+          } else {
+            cart.push({
+              id: prod.id,
+              qty: 1,
+              nombre: prod.nombre,
+              precio: prod.precio,
+              precio_original: prod.precio,
+              descuento_aplicado: 0,
+              tipo: 'bundle',
+              bundle: bundleNombre
+            });
+          }
+        });
+
+        localStorage.setItem('venus_cart', JSON.stringify(cart));
+        if (typeof actualizarNumeroNavGlobal === 'function') {
+          actualizarNumeroNavGlobal();
+        }
+        alert(`✅ Bundle "${bundleNombre}" añadido al carrito.`);
+        window.location.href = 'carrito.html';
+      };
+
+      // ── FUNCIÓN GLOBAL PARA BUNDLE DESDE CUALQUIER LUGAR ──
+      window.agregarBundleDesdeIds = function(ids) {
+        let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+        const productosBundle = ids.map(id => window.productosData[id]).filter(p => p);
+        if (productosBundle.length !== ids.length) {
+          alert('⚠️ Algunos productos del bundle no están disponibles.');
+          return;
+        }
+        productosBundle.forEach(prod => {
+          const existente = cart.find(i => i.id === prod.id);
+          if (existente) {
+            existente.qty += 1;
+          } else {
+            cart.push({
+              id: prod.id,
+              qty: 1,
+              nombre: prod.nombre,
+              precio: prod.precio,
+              precio_original: prod.precio,
+              descuento_aplicado: 0,
+              tipo: 'bundle',
+              bundle: 'Bundle'
+            });
+          }
+        });
+        localStorage.setItem('venus_cart', JSON.stringify(cart));
+        if (typeof actualizarNumeroNavGlobal === 'function') {
+          actualizarNumeroNavGlobal();
+        }
+        alert(`✅ Bundle añadido al carrito.`);
+        window.location.href = 'carrito.html';
+      };
     });
   </script>
-
 </body>
 </html>
