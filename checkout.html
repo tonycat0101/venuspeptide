@@ -231,7 +231,7 @@
 
               <div class="summary-totals-box">
                 <div class="summary-line"><span>Subtotal</span><span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span></div>
-                <div class="summary-line"><span>Envío</span><span style="font-weight: 600; color: ${envio === 0 ? '#22c55e' : 'var(--text-dark)'};">${envio === 0 ? 'Gratis ✅' : '$' + envio.toFixed(2)}</span></div>
+                <div class="summary-line"><span>Envío (tarifa fija)</span><span style="font-weight: 600; color: ${envio === 0 ? '#22c55e' : 'var(--text-dark)'};">${envio === 0 ? 'Gratis ✅' : '$' + envio.toFixed(2)}</span></div>
                 <!-- ✅ Tarea 4: Tax visible -->
                 <div class="summary-line" id="taxRow" style="${tax > 0 ? '' : 'display:none;'}">
                   <span>FL State Tax (6%)</span>
