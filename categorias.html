@@ -6,6 +6,13 @@
   <title>Líneas de Investigación — Venus Peptide</title>
   <meta name="description" content="Líneas de investigación en compuestos peptídicos clasificadas por mecanismo molecular. Catálogo analítico para laboratorios de investigación.">
   <link rel="stylesheet" href="styles.css">
+  
+  <!-- ✅ CORREGIDO: style movido al head -->
+  <style>
+    @media (max-width: 500px) {
+      .products-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
 </head>
 <body>
   
@@ -32,9 +39,9 @@
           </div>
         </div>
 
-        <!-- ── cover.png CUBRIENDO TODO ── -->
+        <!-- ── VISUAL (Imagen) ── -->
         <div class="hero__visual fade-up" style="justify-content: center;">
-          <div style="width: 100%; max-width: 440px; aspect-ratio: 1.2 / 1; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); background: #f8fafc;">
+          <div style="width: 100%; max-width: 440px; aspect-ratio: 1.2 / 1; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); background: #f8fafc; display: flex; align-items: center; justify-content: center;">
             <img src="img/cover.png" alt="Estructura molecular de péptidos" style="width: 100%; height: 100%; object-fit: cover;">
           </div>
         </div>
@@ -56,11 +63,6 @@
       </div>
 
       <div class="products-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 32px;">
-        <style>
-          @media (max-width: 500px) {
-            .products-grid { grid-template-columns: 1fr !important; }
-          }
-        </style>
 
         <div class="product-card fade-up" style="text-align: left; align-items: flex-start; padding: 40px; border-radius: 16px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
           <div>
@@ -131,7 +133,8 @@
           mobileMenu.classList.toggle('active');
           burgerBtn.classList.toggle('active');
         });
-      }});
+      }
+    });
   </script>
 
 </body>
