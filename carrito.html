@@ -43,7 +43,15 @@
   <div id="nav-placeholder"></div>
   <script src="nav.js"></script>
 
-  <div class="mobile-menu" id="mobileMenu" style="display:none;">
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Inicio</a>
+    <a href="categorias.html">Categorías</a>
+    <a href="vertodos.html">Ver todos</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="carrito.html" style="margin-top: 15px; background: #2563eb; color: white !important; text-align: center; padding: 12px; border-radius: 6px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      Ver Carrito
+    </a>
   </div>
 
   <main class="cart-section">
@@ -154,7 +162,7 @@
           <div class="cart-summary">
             <div class="summary-title">Resumen del Pedido</div>
             <div class="summary-row"><span>Subtotal</span><span style="color: var(--text-dark); font-weight: 600;">$${subtotal.toFixed(2)} USD</span></div>
-            <div class="summary-row"><span>Envío (tarifa fija)</span><span style="color: ${envio === 0 ? '#22c55e' : 'var(--text-dark)'}; font-weight: 600;">${envio === 0 ? 'Gratis ✅' : '$' + envio.toFixed(2)}</span></div>
+            <div class="summary-row"><span>Envío</span><span style="color: ${envio === 0 ? '#22c55e' : 'var(--text-dark)'}; font-weight: 600;">${envio === 0 ? 'Gratis ✅' : '$' + envio.toFixed(2)}</span></div>
             <div class="summary-row total"><span>Total</span><span>$${total.toFixed(2)} USD</span></div>
             <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 10px; border-radius: var(--radius-sm);" onclick="procesarOrden()">
               Proceder al Pago
