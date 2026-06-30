@@ -138,7 +138,7 @@
         });
       }
 
-      // ── FUNCIÓN PARA AGREGAR BUNDLE ──
+      // ── FUNCIÓN PARA AGREGAR BUNDLE (CORREGIDA) ──
       window.agregarBundle = function(ids) {
         let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
         const productosBundle = ids.map(id => window.productosData[id]).filter(p => p);
@@ -148,38 +148,43 @@
           return;
         }
 
-        // Verificar límites
+        // ── VALIDAR LÍMITES (CORREGIDO) ──
         let totalNuevos = 0;
-        productosBundle.forEach(prod => {
-          const existente = cart.find(i => i.id === prod.id);
+        let error = false;
+
+        for (let i = 0; i < productosBundle.length; i++) {
+          const prod = productosBundle[i];
+          const existente = cart.find(item => item.id === prod.id);
           const actual = existente ? existente.qty : 0;
+
           if (actual + 1 > 10) {
-            alert(`⚠️ Máximo 10 unidades de ${prod.nombre}.`);
-            return;
+            alert(`⚠️ Máximo 10 unidades de ${prod.nombre}. Actualmente tienes ${actual} en el carrito.`);
+            error = true;
+            break;
           }
           totalNuevos += 1;
-        });
+        }
 
+        if (error) return;
+
+        // ── VALIDAR TOTAL DE 30 UNIDADES ──
         const totalActual = cart.reduce((sum, item) => sum + item.qty, 0);
         if (totalActual + totalNuevos > 30) {
-          alert(`⚠️ Máximo 30 unidades por pedido.`);
+          alert(`⚠️ Máximo 30 unidades por pedido. Actualmente tienes ${totalActual} unidades en el carrito.`);
           return;
         }
 
-        // Precio del bundle (suma de productos con 15% descuento)
-        // Usamos los precios definidos en el bundle
-        const bundlePrecios = {
-          'Regeneración Completa': 137.70,
-          'Metabolismo Avanzado': 169.99,
-          'GH Elite': 77.40
-        };
+        // ── OBTENER NOMBRE DEL BUNDLE ──
+        let bundleNombre = 'Bundle';
+        const bundleCard = document.querySelector('.bundle-card');
+        if (bundleCard) {
+          const nameEl = bundleCard.querySelector('.bundle-name');
+          if (nameEl) bundleNombre = nameEl.textContent;
+        }
 
-        // Obtener nombre del bundle
-        const bundleNombre = document.querySelector('.bundle-name')?.textContent || 'Bundle';
-
-        // Agregar productos
+        // ── AGREGAR PRODUCTOS ──
         productosBundle.forEach(prod => {
-          const existente = cart.find(i => i.id === prod.id);
+          const existente = cart.find(item => item.id === prod.id);
           if (existente) {
             existente.qty += 1;
           } else {
@@ -197,9 +202,11 @@
         });
 
         localStorage.setItem('venus_cart', JSON.stringify(cart));
+
         if (typeof actualizarNumeroNavGlobal === 'function') {
           actualizarNumeroNavGlobal();
         }
+
         alert(`✅ Bundle "${bundleNombre}" añadido al carrito.`);
         window.location.href = 'carrito.html';
       };
@@ -213,7 +220,7 @@
           return;
         }
         productosBundle.forEach(prod => {
-          const existente = cart.find(i => i.id === prod.id);
+          const existente = cart.find(item => item.id === prod.id);
           if (existente) {
             existente.qty += 1;
           } else {
@@ -233,7 +240,7 @@
         if (typeof actualizarNumeroNavGlobal === 'function') {
           actualizarNumeroNavGlobal();
         }
-        alert(`✅ Bundle añadido al carrito.`);
+        alert('✅ Bundle añadido al carrito.');
         window.location.href = 'carrito.html';
       };
     });
