@@ -69,7 +69,7 @@ const productosData = {
   // ── METABÓLICOS (12 productos) ──
   "semaglutide-20mg": {
     id: "semaglutide-20mg",
-    nombre: "Semaglutide 20mg",
+    nombre: "GLP-1 RC 20mg",
     precio: 120.00,
     rating: "5.0",
     pureza: "99.7% Pureza | 20mg",
@@ -79,7 +79,7 @@ const productosData = {
   },
   "semaglutide-30mg": {
     id: "semaglutide-30mg",
-    nombre: "Semaglutide 30mg",
+    nombre: "GLP-1 RC 30mg",
     precio: 155.00,
     rating: "5.0",
     pureza: "99.7% Pureza | 30mg",
@@ -89,7 +89,7 @@ const productosData = {
   },
   "tirzepatide-10mg": {
     id: "tirzepatide-10mg",
-    nombre: "Tirzepatide 10mg",
+    nombre: "GIP/GLP-1 RC 10mg",
     precio: 95.00,
     rating: "4.9",
     pureza: "99.8% Pureza | 10mg",
@@ -100,7 +100,7 @@ const productosData = {
   },
   "tirzepatide-20mg": {
     id: "tirzepatide-20mg",
-    nombre: "Tirzepatide 20mg",
+    nombre: "GIP/GLP-1 RC 20mg",
     precio: 145.00,
     rating: "4.9",
     pureza: "99.8% Pureza | 20mg",
@@ -111,7 +111,7 @@ const productosData = {
   },
   "tirzepatide-30mg": {
     id: "tirzepatide-30mg",
-    nombre: "Tirzepatide 30mg",
+    nombre: "GIP/GLP-1 RC 30mg",
     precio: 185.00,
     rating: "4.9",
     pureza: "99.8% Pureza | 30mg",
@@ -122,7 +122,7 @@ const productosData = {
   },
   "retatrutide-10mg": {
     id: "retatrutide-10mg",
-    nombre: "Retatrutide 10mg",
+    nombre: "Triple RC 10mg",
     precio: 140.00,
     rating: "4.7",
     pureza: "99.4% Pureza | 10mg",
@@ -132,7 +132,7 @@ const productosData = {
   },
   "retatrutide-20mg": {
     id: "retatrutide-20mg",
-    nombre: "Retatrutide 20mg",
+    nombre: "Triple RC 20mg",
     precio: 190.00,
     rating: "4.7",
     pureza: "99.4% Pureza | 20mg",
@@ -142,7 +142,7 @@ const productosData = {
   },
   "retatrutide-30mg": {
     id: "retatrutide-30mg",
-    nombre: "Retatrutide 30mg",
+    nombre: "Triple RC 30mg",
     precio: 240.00,
     rating: "4.7",
     pureza: "99.4% Pureza | 30mg",
@@ -152,13 +152,13 @@ const productosData = {
   },
   "retatrutide-60mg": {
     id: "retatrutide-60mg",
-    nombre: "Retatrutide 60mg",
+    nombre: "Triple RC 60mg",
     precio: 380.00,
     rating: "4.7",
     pureza: "99.4% Pureza | 60mg",
     categoria: "metabolicos",
     imagen: "img/vial-retatrutide-60mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 60mg para investigación en ensays de laboratorio y análisis de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 60mg para investigación en ensayos de laboratorio y análisis de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "aod-9604-5mg": {
     id: "aod-9604-5mg",
@@ -422,7 +422,7 @@ function actualizarNumeroNavGlobal() {
 
 window.actualizarNumeroNavGlobal = actualizarNumeroNavGlobal;
 
-// ── AGREGAR AL CARRITO DESDE EL CATÁLOGO (TAREA 3) ──
+// ── AGREGAR AL CARRITO DESDE EL CATÁLOGO ──
 window.agregarAlCarrito = function(productId) {
   const prod = productosData[productId];
   if (!prod) {
@@ -468,7 +468,8 @@ window.agregarAlCarrito = function(productId) {
     actualizarNumeroNavGlobal();
   }
 
-  alert(`✅ ${prod.nombre} añadido al carrito.`);
+  // ── MENSAJE DE CONFIRMACIÓN (COMENTADO PARA QUE NO MOLESTE) ──
+  // alert(`✅ ${prod.nombre} añadido al carrito.`);
 };
 
 // ── LÓGICA DE LA WEB ──
@@ -487,7 +488,6 @@ document.addEventListener('DOMContentLoaded', () => {
         badgeHTML = `<span style="position: absolute; top: 16px; left: 16px; background: ${badgeColor}; color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; z-index: 10;">${prod.badge}</span>`;
       }
 
-      // ── TAREA 2: BOTÓN "AGREGAR AL CARRITO" (sin tarjeta cliqueable) ──
       let actionBoxHTML = '';
       if (prod.agotado) {
         actionBoxHTML = `
