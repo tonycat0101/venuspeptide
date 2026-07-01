@@ -158,7 +158,7 @@ const productosData = {
     pureza: "99.4% Pureza | 60mg",
     categoria: "metabolicos",
     imagen: "img/vial-retatrutide-60mg.png",
-    descripcion: "Compuesto sintético de alta pureza. Presentación de 60mg para investigación en ensayos de laboratorio y análisis de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
+    descripcion: "Compuesto sintético de alta pureza. Presentación de 60mg para investigación en ensays de laboratorio y análisis de receptores GLP-1, GIP y glucagón en modelos celulares in-vitro. Polvo liofilizado estéril. No apto para consumo humano."
   },
   "aod-9604-5mg": {
     id: "aod-9604-5mg",
@@ -422,6 +422,55 @@ function actualizarNumeroNavGlobal() {
 
 window.actualizarNumeroNavGlobal = actualizarNumeroNavGlobal;
 
+// ── AGREGAR AL CARRITO DESDE EL CATÁLOGO (TAREA 3) ──
+window.agregarAlCarrito = function(productId) {
+  const prod = productosData[productId];
+  if (!prod) {
+    alert('⚠️ Producto no disponible.');
+    return;
+  }
+
+  let cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+
+  // Verificar límite de 10 por producto
+  const itemExistente = cart.find(i => i.id === productId);
+  const cantidadActual = itemExistente ? itemExistente.qty : 0;
+  if (cantidadActual + 1 > 10) {
+    alert(`⚠️ Máximo 10 unidades de ${prod.nombre}.`);
+    return;
+  }
+
+  // Verificar límite de 30 total
+  const totalActual = cart.reduce((sum, item) => sum + item.qty, 0);
+  if (totalActual + 1 > 30) {
+    alert(`⚠️ Máximo 30 unidades por pedido.`);
+    return;
+  }
+
+  // Agregar al carrito
+  if (itemExistente) {
+    itemExistente.qty += 1;
+  } else {
+    cart.push({
+      id: productId,
+      qty: 1,
+      nombre: prod.nombre,
+      precio: prod.precio,
+      precio_original: prod.precio,
+      descuento_aplicado: 0,
+      tipo: 'suelto'
+    });
+  }
+
+  localStorage.setItem('venus_cart', JSON.stringify(cart));
+
+  if (typeof actualizarNumeroNavGlobal === 'function') {
+    actualizarNumeroNavGlobal();
+  }
+
+  alert(`✅ ${prod.nombre} añadido al carrito.`);
+};
+
 // ── LÓGICA DE LA WEB ──
 document.addEventListener('DOMContentLoaded', () => {
   actualizarNumeroNavGlobal();
@@ -438,6 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
         badgeHTML = `<span style="position: absolute; top: 16px; left: 16px; background: ${badgeColor}; color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; z-index: 10;">${prod.badge}</span>`;
       }
 
+      // ── TAREA 2: BOTÓN "AGREGAR AL CARRITO" (sin tarjeta cliqueable) ──
       let actionBoxHTML = '';
       if (prod.agotado) {
         actionBoxHTML = `
@@ -448,9 +498,9 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         actionBoxHTML = `
           <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">$${prod.precio.toFixed(2)} USD</div>
-          <a href="producto.html?id=${prod.id}" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
-            Ver Detalles
-          </a>`;
+          <button onclick="agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+            Agregar al carrito
+          </button>`;
       }
 
       let vialHTML = '';
@@ -528,9 +578,9 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         actionHTML = `
           <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">$${prod.precio.toFixed(2)} USD</div>
-          <a href="producto.html?id=${prod.id}" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
-            Ver Detalles
-          </a>`;
+          <button onclick="agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+            Agregar al carrito
+          </button>`;
       }
 
       gridPopulares.innerHTML += `
