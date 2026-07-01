@@ -134,4 +134,294 @@
         return;
       }
 
-      const cart = JSON.parse(localStorage.getItem('venus_cart'))
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+
+      if (cart.length === 0) {
+        container.innerHTML = `<div class="empty-box"><h2>🛒 Carrito Vacío</h2><p>No tienes productos en tu carrito. Agrega algunos antes de proceder al pago.</p><a href="vertodos.html" class="btn btn-primary">Explorar Péptidos</a></div>`;
+        return;
+      }
+
+      let subtotal = 0;
+      let itemsHTML = '';
+
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (!prod) return;
+
+        const precioUnitario = calcularPrecioItem(item);
+        const totalItem = precioUnitario * item.qty;
+        subtotal += totalItem;
+
+        const descuentoAplicado = item.tipo === 'kit' ? 0.10 : calcularDescuento(item.qty);
+        const badge = item.tipo === 'kit' ? '<span class="discount-badge">Kit 10%</span>' :
+                      (descuentoAplicado > 0 ? `<span class="discount-badge">${Math.round(descuentoAplicado * 100)}% off</span>` : '');
+
+        itemsHTML += `
+          <div class="summary-line">
+            <span>${item.qty}x ${prod.nombre} ${badge}</span>
+            <span style="font-weight: 600; color: var(--text-dark);">$${totalItem.toFixed(2)}</span>
+          </div>`;
+      });
+
+      const envio = subtotal >= 100 ? 0 : 12;
+      const tax = subtotal * 0.06;
+      const total = subtotal + envio + tax;
+
+      container.innerHTML = `
+        <form id="checkoutForm" onsubmit="enviarPedidoFormulario(event)">
+          <div class="checkout-layout">
+            <div>
+              <div class="checkout-card">
+                <h2>📋 Información de Envío (Investigación)</h2>
+                <div class="form-group">
+                  <label class="form-label">Nombre Completo del Investigador / Laboratorio</label>
+                  <input type="text" class="form-input" id="checkoutNombre" required placeholder="Ej. Dr. Alejandro Silva">
+                </div>
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Correo Electrónico <span class="optional">(para confirmación y descuento)</span></label>
+                    <input type="email" class="form-input" id="checkoutEmail" required placeholder="investigacion@ejemplo.com">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Teléfono de Contacto</label>
+                    <input type="tel" class="form-input" id="checkoutTelefono" required placeholder="Ej. +1 (305) 555-0199">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Dirección Completa de Destino</label>
+                  <input type="text" class="form-input" id="checkoutDireccion" required placeholder="Calle, Número, Suite, Edificio o Departamento">
+                </div>
+                <div class="form-row-3">
+                  <div class="form-group"><label class="form-label">Ciudad</label><input type="text" class="form-input" id="checkoutCiudad" required placeholder="Ej. Miami"></div>
+                  <div class="form-group"><label class="form-label">Estado / Provincia</label><input type="text" class="form-input" id="checkoutEstado" required placeholder="Ej. FL"></div>
+                  <div class="form-group"><label class="form-label">Código Postal (ZIP Code)</label><input type="text" class="form-input" id="checkoutZip" required placeholder="Ej. 33101"></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Notas sobre tu pedido <span class="optional">(opcional)</span></label>
+                  <textarea class="form-input textarea" id="checkoutNotas" placeholder="Instrucciones especiales para el envío, indicaciones de entrega, etc."></textarea>
+                </div>
+                <div class="form-group newsletter-checkbox">
+                  <label><input type="checkbox" id="checkoutNewsletter" checked><span style="font-size: 13px; color: var(--text-muted);">📧 Recibir novedades, lanzamientos y ofertas especiales (opcional)</span></label>
+                </div>
+              </div>
+
+              <div class="checkout-card">
+                <h2>🔒 Métodos de Pago Seguros</h2>
+                <div class="payment-options">
+                  <label class="pay-option"><input type="radio" name="metodo_pago" value="Zelle" checked><div class="pay-option-text"><span class="pay-title">Zelle</span></div></label>
+                  <label class="pay-option"><input type="radio" name="metodo_pago" value="CashApp"><div class="pay-option-text"><span class="pay-title">CashApp</span></div></label>
+                  <label class="pay-option"><input type="radio" name="metodo_pago" value="Venmo"><div class="pay-option-text"><span class="pay-title">Venmo</span></div></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="checkout-card" style="position: sticky; top: 100px;">
+              <h2>Resumen del Pedido</h2>
+              <div id="checkoutItemsContainer" class="summary-products-list">${itemsHTML}</div>
+
+              <div class="summary-totals-box">
+                <div class="summary-line"><span>Subtotal</span><span style="font-weight: 600; color: var(--text-dark);">$${subtotal.toFixed(2)}</span></div>
+                <div class="summary-line"><span>Envío</span><span style="font-weight: 600; color: ${envio === 0 ? '#22c55e' : 'var(--text-dark)'};">${envio === 0 ? 'Gratis ✅' : '$' + envio.toFixed(2)}</span></div>
+                <div class="summary-line" id="taxRow" style="${tax > 0 ? '' : 'display:none;'}">
+                  <span>FL State Tax (6%)</span>
+                  <span style="font-weight: 600; color: var(--text-dark);">$${tax.toFixed(2)}</span>
+                </div>
+                <div class="summary-line" id="firstPurchaseRow" style="display:none;">
+                  <span>Descuento primera compra (10%)</span>
+                  <span style="font-weight: 600; color: #16a34a;" id="firstPurchaseDiscount">-$0.00</span>
+                </div>
+                <div class="summary-line grand-total"><span>Total</span><span id="checkoutTotal">$${total.toFixed(2)}</span></div>
+              </div>
+
+              <div class="legal-checkbox-container">
+                <label class="legal-label">
+                  <input type="checkbox" id="checkoutLegal" required>
+                  <span><span class="highlight">✅ Soy mayor de edad (21 años o más)</span> y entiendo que los productos listados en este sitio son <span class="highlight">exclusivamente para uso en investigación</span>. Comprendo que <span class="highlight">NO son para consumo humano ni veterinario</span> bajo ninguna circunstancia. Acepto los <a href="terminos.html" target="_blank">Términos y Condiciones</a>.<span class="error-text" id="legalError">Debes aceptar los términos para continuar.</span></span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px; margin-top: 24px; border-radius: var(--radius-sm); font-size: 15px;">
+                Completar mi Pedido
+              </button>
+            </div>
+          </div>
+        </form>
+      `;
+
+      const legalCheck = document.getElementById('checkoutLegal');
+      const legalError = document.getElementById('legalError');
+      if (legalCheck) {
+        legalCheck.addEventListener('change', () => {
+          if (!legalCheck.checked) legalError.classList.add('visible');
+          else legalError.classList.remove('visible');
+        });
+      }
+    }
+
+    async function enviarPedidoFormulario(e) {
+      e.preventDefault();
+
+      const cart = JSON.parse(localStorage.getItem('venus_cart')) || [];
+
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      if (totalItems > 30) { alert(`⚠️ Máximo 30 unidades por orden. Tienes ${totalItems}.`); return; }
+      for (const item of cart) {
+        if (item.qty > 10) {
+          const prod = window.productosData[item.id];
+          alert(`⚠️ Máximo 10 unidades de ${prod.nombre}. Tienes ${item.qty}.`);
+          return;
+        }
+      }
+
+      const legalChecked = document.getElementById('checkoutLegal').checked;
+      if (!legalChecked) { document.getElementById('legalError').classList.add('visible'); return; }
+
+      const nombre = document.getElementById('checkoutNombre').value.trim();
+      if (!nombre || nombre.length < 2) { alert('Ingresa tu nombre completo.'); return; }
+
+      const email = document.getElementById('checkoutEmail').value.trim();
+      if (!email || !email.includes('@') || !email.includes('.')) { alert('Ingresa un correo válido.'); return; }
+
+      const telefono = document.getElementById('checkoutTelefono').value.trim();
+      if (!telefono || telefono.length < 7) { alert('Ingresa un teléfono válido.'); return; }
+
+      const direccion = document.getElementById('checkoutDireccion').value.trim();
+      if (!direccion || direccion.length < 5) { alert('Ingresa una dirección completa.'); return; }
+
+      const ciudad = document.getElementById('checkoutCiudad').value.trim();
+      if (!ciudad || ciudad.length < 2) { alert('Ingresa tu ciudad.'); return; }
+
+      const estado = document.getElementById('checkoutEstado').value.trim();
+      if (!estado || estado.length < 2) { alert('Ingresa tu estado o provincia.'); return; }
+
+      const zip = document.getElementById('checkoutZip').value.trim();
+      if (!zip || zip.length < 3) { alert('Ingresa un código postal válido.'); return; }
+
+      let subtotal = 0;
+      cart.forEach(item => {
+        const prod = window.productosData[item.id];
+        if (!prod) return;
+        const precioUnitario = calcularPrecioItem(item);
+        subtotal += precioUnitario * item.qty;
+      });
+
+      let descuentoPrimeraCompra = 0;
+      let esPrimeraCompra = false;
+      try {
+        const db = window.db;
+        const collection = window.collection;
+        const query = window.query;
+        const where = window.where;
+        const getDocs = window.getDocs;
+
+        if (db && collection && query && where && getDocs) {
+          const pedidosRef = collection(db, 'pedidos');
+          const q = query(pedidosRef, where('email', '==', email));
+          const snapshot = await getDocs(q);
+          if (snapshot.empty) {
+            esPrimeraCompra = true;
+            descuentoPrimeraCompra = 0.10;
+            console.log('✅ Primera compra detectada. Descuento del 10% aplicado.');
+          } else {
+            console.log('❌ Cliente recurrente. Sin descuento de primera compra.');
+          }
+        }
+      } catch (error) {
+        console.error('❌ Error al verificar primera compra:', error);
+      }
+
+      const descuentoPrimera = descuentoPrimeraCompra * subtotal;
+      const subtotalConDescuento = subtotal - descuentoPrimera;
+      const envio = subtotal >= 100 ? 0 : 12;
+      const tax = subtotalConDescuento * 0.06;
+      const totalFinal = subtotalConDescuento + envio + tax;
+
+      if (esPrimeraCompra && descuentoPrimera > 0) {
+        const row = document.getElementById('firstPurchaseRow');
+        const discountEl = document.getElementById('firstPurchaseDiscount');
+        if (row && discountEl) {
+          row.style.display = 'flex';
+          discountEl.textContent = '-$' + descuentoPrimera.toFixed(2);
+        }
+        const totalEl = document.getElementById('checkoutTotal');
+        if (totalEl) {
+          totalEl.textContent = '$' + totalFinal.toFixed(2);
+        }
+        alert(`🎉 ¡Es tu primera compra! Se aplicó un 10% de descuento. Total: $${totalFinal.toFixed(2)}`);
+      }
+
+      const metodoPago = document.querySelector('input[name="metodo_pago"]:checked').value;
+      const notas = document.getElementById('checkoutNotas').value.trim();
+      const newsletter = document.getElementById('checkoutNewsletter').checked;
+      const codigoReferencia = 'VP-' + Math.floor(1000 + Math.random() * 9000);
+
+      sessionStorage.setItem('pending_order_id', codigoReferencia);
+      sessionStorage.setItem('pending_order_total', totalFinal.toFixed(2));
+      sessionStorage.setItem('pending_order_method', metodoPago);
+
+      localStorage.setItem('checkout_nombre', nombre);
+      localStorage.setItem('checkout_email', email);
+      localStorage.setItem('checkout_telefono', telefono);
+      localStorage.setItem('checkout_direccion', direccion);
+      localStorage.setItem('checkout_ciudad', ciudad);
+      localStorage.setItem('checkout_estado', estado);
+      localStorage.setItem('checkout_zip', zip);
+      localStorage.setItem('checkout_notas', notas);
+      localStorage.setItem('checkout_newsletter', newsletter ? 'si' : 'no');
+      localStorage.setItem('backup_order_id', codigoReferencia);
+      localStorage.setItem('backup_order_total', totalFinal.toFixed(2));
+      localStorage.setItem('backup_order_method', metodoPago);
+
+      sessionStorage.setItem('checkout_nombre', nombre);
+      sessionStorage.setItem('checkout_email', email);
+      sessionStorage.setItem('checkout_telefono', telefono);
+
+      const db = window.db;
+      const doc = window.doc;
+      const setDoc = window.setDoc;
+
+      if (db && doc && setDoc) {
+        try {
+          const orderRef = doc(db, 'pedidos', codigoReferencia);
+          await setDoc(orderRef, {
+            codigo: codigoReferencia,
+            cliente: nombre,
+            email: email,
+            telefono: telefono,
+            direccion: direccion,
+            ciudad: ciudad,
+            estado: estado,
+            zip: zip,
+            productos: cart,
+            subtotal: subtotal,
+            descuento_primera_compra: descuentoPrimeraCompra,
+            descuento_aplicado: descuentoPrimera,
+            envio: envio,
+            tax: tax,
+            total: totalFinal,
+            metodo: metodoPago,
+            notas: notas,
+            newsletter: newsletter,
+            status: 'pendiente',
+            fecha: new Date().toISOString()
+          });
+          console.log('✅ Orden guardada en Firebase correctamente');
+          window.location.href = 'instrucciones.html';
+        } catch (error) {
+          console.error('❌ Error al guardar en Firebase:', error);
+          alert('Hubo un error al procesar tu pedido. Por favor, intenta de nuevo.');
+        }
+      } else {
+        console.warn('⚠️ Firebase no disponible, redirigiendo sin guardar');
+        window.location.href = 'instrucciones.html';
+      }
+    }
+
+    window.enviarPedidoFormulario = enviarPedidoFormulario;
+    window.renderizarCheckout = renderizarCheckout;
+    window.calcularPrecioItem = calcularPrecioItem;
+    window.calcularDescuento = calcularDescuento;
+  </script>
+
+</body>
+</html>
