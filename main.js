@@ -468,7 +468,6 @@ window.agregarAlCarrito = function(productId) {
     actualizarNumeroNavGlobal();
   }
 
-  // ── MENSAJE DE CONFIRMACIÓN (COMENTADO PARA QUE NO MOLESTE) ──
   // alert(`✅ ${prod.nombre} añadido al carrito.`);
 };
 
@@ -498,7 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         actionBoxHTML = `
           <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">$${prod.precio.toFixed(2)} USD</div>
-          <button onclick="agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+          <button onclick="event.stopPropagation(); agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
             Agregar al carrito
           </button>`;
       }
@@ -514,9 +513,10 @@ document.addEventListener('DOMContentLoaded', () => {
         vialHTML = generarVialDinamico(prod);
       }
 
+      // ── TAREA 4: TARJETA CLIQUEABLE CON onclick ──
       gridProductos.innerHTML += `
         <div class="product-wrap" data-cat="${prod.categoria}">
-          <div class="product-card" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div class="product-card" onclick="window.location.href='producto.html?id=${prod.id}'" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--shadow-hover)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-card)'">
             ${badgeHTML}
             ${vialHTML}
             <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 4px 0 0 0;">${prod.nombre}</h3>
@@ -578,13 +578,13 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         actionHTML = `
           <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">$${prod.precio.toFixed(2)} USD</div>
-          <button onclick="agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
+          <button onclick="event.stopPropagation(); agregarAlCarrito('${prod.id}')" class="btn" style="display: block; text-align: center; background: #2563eb; color: white; padding: 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; border: none; cursor: pointer; transition: background 0.2s; width: 100%;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
             Agregar al carrito
           </button>`;
       }
 
       gridPopulares.innerHTML += `
-        <div class="product-card" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div class="product-card" onclick="window.location.href='producto.html?id=${prod.id}'" style="position: relative; background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-card); height: 100%; transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--shadow-hover)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-card)'">
           ${badgeHTML}
           ${vialHTML}
           <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 4px 0 0 0;">${prod.nombre}</h3>
